@@ -156,9 +156,7 @@
 
     function loadSiteMode(mode) {
       const config = siteConfig[mode];
-      document.querySelector("header h1").innerText = config.companyName;
-      document.querySelector("header p").innerText = config.tagline;
-      const logoImg = document.createElement("img");
+          const logoImg = document.createElement("img");
       logoImg.src = config.logo;
       logoImg.className = "logo";
       document.querySelector("header").insertBefore(logoImg, document.querySelector("header h1"));
