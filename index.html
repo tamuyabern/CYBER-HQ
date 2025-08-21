@@ -186,11 +186,18 @@
       const servicesContainer = document.querySelector(".services");
       servicesContainer.innerHTML = '';
       config.services.forEach(service => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `<h3>${service.title}</h3><p>${service.description}</p>`;
-        servicesContainer.appendChild(div);
-      });
+  const div = document.createElement("div");
+  div.className = "card";
+  div.innerHTML = `
+    <img src="${service.image}" alt="${service.title}" style="width:100%;border-radius:8px;">
+    <h3>${service.title}</h3>
+    <p>${service.description}</p>
+    <p><strong>Price: ${service.price}</strong></p>
+    <button>${service.buttonText}</button>
+  `;
+  servicesContainer.appendChild(div);
+});
+
 
       document.querySelector("#contact").innerHTML = `
         <h2>Contact Us</h2>
