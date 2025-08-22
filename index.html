@@ -30,11 +30,11 @@ section{padding:60px 20px;}
 section h2{text-align:center;font-size:2rem;margin-bottom:20px;color:var(--fg);}
 section p.lead{text-align:center;max-width:700px;margin:0 auto 40px;color:var(--muted);font-size:1rem;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform 0.4s,box-shadow 0.4s;opacity:0;transform:translateY(30px);}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform 0.4s,box-shadow 0.4s;opacity:0;transform:translateY(30px);display:flex;flex-direction:column;}
 .card.visible{opacity:1;transform:translateY(0);}
 .card:hover{transform:translateY(-12px) scale(1.05);box-shadow:0 14px 28px rgba(0,0,0,0.2);}
-.card img{height:140px;object-fit:cover;background:#f0f0f0;}
-.pad{padding:16px;}
+.card img{height:200px;width:100%;object-fit:cover;background:#f0f0f0;border-bottom:1px solid var(--border);}
+.pad{padding:12px;}
 .card h3{font-size:1.1rem;}
 .price{font-size:0.95rem;font-weight:700;color:var(--accent);margin-top:8px;}
 .btn{display:inline-block;margin-top:12px;padding:8px 14px;border-radius:8px;background:var(--accent);color:#fff;font-weight:600;transition:background 0.3s;cursor:pointer;}
@@ -97,31 +97,31 @@ footer{padding:40px 20px;text-align:center;color:var(--muted);border-top:1px sol
 <h2>Our Products & Services</h2>
 <div class="grid">
 <article class="card">
-<img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aXBob25lfGVufDB8fDB8fHww" alt="Smartphone">
+<img src="https://picsum.photos/seed/x1/800/600" alt="Smartphone X1">
 <div class="pad">
-<h3>Smartphones</h3>
+<h3>Smartphone X1</h3>
 <p>Latest 2025 model with high-speed processor and dual cameras.</p>
-<div class="price">From as low as KSh 7,000</div>
+<div class="price">KSh 45,000</div>
 <a class="btn" href="https://wa.me/254726717361?text=I want to buy Smartphone X1 for KSh 45,000" target="_blank">Buy Now</a>
 </div>
 </article>
 
 <article class="card">
-<img src="https://images.unsplash.com/photo-1550041473-d296a3a8a18a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGhvbmUlMjByZXBhaXJ8ZW58MHx8MHx8fDA%3D" alt="Repairs">
+<img src="https://picsum.photos/seed/y2/800/600" alt="Smartphone Y2">
 <div class="pad">
-<h3>Repairs</h3>
-<p>We provide laptop and phones repairs and upgrades.</p>
-<div class="price">Please inquire</div>
+<h3>Smartphone Y2</h3>
+<p>Durable phone with long-lasting battery and 128GB storage.</p>
+<div class="price">KSh 38,500</div>
 <a class="btn" href="https://wa.me/254726717361?text=I want to buy Smartphone Y2 for KSh 38,500" target="_blank">Buy Now</a>
 </div>
 </article>
 
 <article class="card">
-<img src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cGhvbmUlMjBhY2Nlc3Nvcmllc3xlbnwwfHwwfHx8MA%3D%3D" alt="Accessories">
+<img src="https://picsum.photos/seed/acc/800/600" alt="Accessories">
 <div class="pad">
 <h3>Phone Accessories</h3>
 <p>Chargers, cases, screen protectors, and more.</p>
-<div class="price">KSh 300 – 3,500</div>
+<div class="price">KSh 500 – 3,500</div>
 <a class="btn" href="https://wa.me/254726717361?text=I want to buy Phone Accessories for KSh 500-3500" target="_blank">Shop Accessories</a>
 </div>
 </article>
