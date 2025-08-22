@@ -32,13 +32,12 @@ section p.lead{text-align:center;max-width:700px;margin:0 auto 40px;color:var(--
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;}
 .card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform 0.4s,box-shadow 0.4s;opacity:0;transform:translateY(30px);}
 .card.visible{opacity:1;transform:translateY(0);}
-.card:hover{transform:translateY(-10px) scale(1.05);box-shadow:0 14px 28px rgba(0,0,0,0.2);}
+.card:hover{transform:translateY(-12px) scale(1.05);box-shadow:0 14px 28px rgba(0,0,0,0.2);}
 .card img{height:180px;object-fit:cover;background:#f0f0f0;}
 .pad{padding:20px;}
 .price{font-weight:700;color:var(--accent);margin-top:8px;}
 .btn{display:inline-block;margin-top:12px;padding:10px 18px;border-radius:8px;background:var(--accent);color:#fff;font-weight:600;transition:background 0.3s;cursor:pointer;}
 .btn:hover{background:var(--accent-hover);}
-.rating{color:#facc15;margin-top:6px;}
 .feedback-container{max-width:900px;margin:0 auto;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:20px;padding-bottom:20px;scroll-behavior:smooth;}
 .feedback-card{min-width:250px;flex:0 0 auto;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;scroll-snap-align:start;opacity:0;transform:translateY(30px);transition:all 0.8s ease;}
 .feedback-card.visible{opacity:1;transform:translateY(0);}
@@ -61,10 +60,6 @@ footer{padding:40px 20px;text-align:center;color:var(--muted);border-top:1px sol
 .top:hover{background:var(--accent-hover);}
 .whatsapp-btn{position:fixed;bottom:80px;right:20px;background:#25D366;color:#fff;border-radius:50%;width:55px;height:55px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 10px rgba(0,0,0,0.2);cursor:pointer;z-index:1000;transition:transform 0.5s;}
 .whatsapp-btn:hover{transform:scale(1.15);}
-.modal-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center;z-index:2000;}
-.modal{background:#fff;padding:24px;border-radius:12px;max-width:400px;width:90%;text-align:center;position:relative;}
-.modal h3{margin-bottom:16px;}
-.modal .close{position:absolute;top:12px;right:12px;font-size:20px;cursor:pointer;}
 </style>
 </head>
 <body data-theme="light">
@@ -85,73 +80,136 @@ footer{padding:40px 20px;text-align:center;color:var(--muted);border-top:1px sol
 </nav>
 </header>
 
-<main class="wrap">
+<main>
+<!-- Hero -->
 <section class="hero">
 <div class="countdown" id="countdown">Offer ends in: 02:15:30</div>
 <h1>Welcome to HQ CYBER</h1>
 <p class="lead">Your one-stop shop for smartphones, gadgets, and premium accessories. Quality products at your fingertips.</p>
 </section>
 
-<!-- About, Services, Feedback, FAQ, Contact same structure as before, just upgraded with scroll animations, countdown, modal, etc. -->
+<!-- About -->
+<section id="about">
+<h2>About Us</h2>
+<p class="lead">HQ CYBER delivers quality phones, gadgets, and accessories. Fast delivery, reliable products, and excellent service. Refunds accepted only on sealed products.</p>
+</section>
 
-<!-- You can reuse the sections from the previous full code and add countdown logic -->
+<!-- Services -->
+<section id="services">
+<h2>Our Products & Services</h2>
+<div class="grid">
+<article class="card">
+<img src="https://picsum.photos/seed/x1/800/600" alt="Smartphone X1">
+<div class="pad">
+<h3>Smartphone X1</h3>
+<p>Latest 2025 model with high-speed processor and dual cameras.</p>
+<div class="price">KSh 45,000</div>
+<a class="btn" href="https://wa.me/254726717361?text=I want to buy Smartphone X1 for KSh 45,000" target="_blank">Buy Now</a>
+</div>
+</article>
+
+<article class="card">
+<img src="https://picsum.photos/seed/y2/800/600" alt="Smartphone Y2">
+<div class="pad">
+<h3>Smartphone Y2</h3>
+<p>Durable phone with long-lasting battery and 128GB storage.</p>
+<div class="price">KSh 38,500</div>
+<a class="btn" href="https://wa.me/254726717361?text=I want to buy Smartphone Y2 for KSh 38,500" target="_blank">Buy Now</a>
+</div>
+</article>
+
+<article class="card">
+<img src="https://picsum.photos/seed/acc/800/600" alt="Accessories">
+<div class="pad">
+<h3>Phone Accessories</h3>
+<p>Chargers, cases, screen protectors, and more.</p>
+<div class="price">KSh 500 – 3,500</div>
+<a class="btn" href="https://wa.me/254726717361?text=I want to buy Phone Accessories for KSh 500-3500" target="_blank">Shop Accessories</a>
+</div>
+</article>
+</div>
+</section>
+
+<!-- Feedback -->
+<section id="feedback">
+<h2>Client Feedback</h2>
+<div class="feedback-container">
+<div class="feedback-card">
+<p>"Excellent service, received my phone the next day!"</p>
+<h4>- Jane K.</h4>
+</div>
+<div class="feedback-card">
+<p>"Affordable repairs and very professional staff."</p>
+<h4>- Mike L.</h4>
+</div>
+<div class="feedback-card">
+<p>"Wide range of accessories, everything I needed."</p>
+<h4>- Sarah W.</h4>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-container">
+<div class="faq-item">
+<p>Do you deliver outside Nairobi?</p>
+<div class="faq-answer">Yes, we deliver nationwide via courier services.</div>
+</div>
+<div class="faq-item">
+<p>What is the warranty on phones?</p>
+<div class="faq-answer">All phones come with a 6-month manufacturer warranty.</div>
+</div>
+<div class="faq-item">
+<p>Can I return accessories?</p>
+<div class="faq-answer">Returns accepted only on sealed, unused accessories.</div>
+</div>
+</div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+<h2>Contact Us</h2>
+<form class="contact-form">
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="email" name="email" placeholder="Your Email" required>
+<textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+<button type="submit">Send Message</button>
+<div class="form-status"></div>
+</form>
+</section>
 </main>
 
 <footer>
-© 2025 HQ CYBER | All rights reserved. <br>
-Email: <a href="mailto:hqcyber254@gmail.com">hqcyber254@gmail.com</a> <br>
+© 2025 HQ CYBER | All rights reserved.<br>
+Email: <a href="mailto:hqcyber254@gmail.com">hqcyber254@gmail.com</a><br>
 <div class="socials">
-<a href="https://facebook.com" target="_blank">Facebook</a> |
-<a href="https://twitter.com" target="_blank">Twitter</a> |
-<a href="https://instagram.com" target="_blank">Instagram</a>
+<a href="#">Facebook</a> |
+<a href="#">Twitter</a> |
+<a href="#">Instagram</a>
 </div>
 </footer>
 
 <a class="top" href="#">↑</a>
 <a class="whatsapp-btn" href="https://wa.me/254726717361" target="_blank">💬</a>
 
-<div class="modal-bg" id="modalBg">
-<div class="modal">
-<span class="close" id="modalClose">&times;</span>
-<h3 id="modalTitle"></h3>
-<p id="modalPrice"></p>
-<a id="modalLink" href="#" target="_blank" class="btn">Chat on WhatsApp</a>
-</div>
-</div>
-
 <script>
 // Scroll progress bar
 window.addEventListener('scroll',()=>{let h=document.body.scrollHeight-window.innerHeight;document.getElementById('progress-bar').style.width=(window.scrollY/h*100)+'%';});
-
 // Scroll fade-in
-const observer = new IntersectionObserver(entries => {entries.forEach(entry => {if(entry.isIntersecting) entry.target.classList.add('visible');});},{threshold:0.2});
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting) entry.target.classList.add('visible');});},{threshold:0.2});
 document.querySelectorAll('.hero, .card, .feedback-card, .contact-form').forEach(el=>observer.observe(el));
-
 // Scroll-top
-const topBtn = document.querySelector('.top');
+const topBtn=document.querySelector('.top');
 window.addEventListener('scroll',()=>{topBtn.style.display=window.scrollY>300?'flex':'none';});
-
 // Theme toggle
 document.getElementById('themeToggle').addEventListener('click',()=>{document.body.dataset.theme=(document.body.dataset.theme==='light')?'dark':'light';});
-
-// Countdown timer example
-function startCountdown(){
-let endTime=new Date();endTime.setHours(endTime.getHours()+2); // 2 hours offer
-let countdownEl=document.getElementById('countdown');
-setInterval(()=>{let now=new Date(),diff=endTime-now,h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);countdownEl.textContent=`Offer ends in: ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;},1000);
-}
-startCountdown();
-
-// Buy modal
-const modalBg=document.getElementById('modalBg'), modalTitle=document.getElementById('modalTitle'), modalPrice=document.getElementById('modalPrice'), modalLink=document.getElementById('modalLink');
-document.querySelectorAll('.buy-btn').forEach(btn=>btn.addEventListener('click',()=>{modalTitle.textContent=btn.dataset.product;modalPrice.textContent=btn.dataset.price;modalLink.href=`https://wa.me/254726717361?text=I want to buy ${encodeURIComponent(btn.dataset.product)} for ${encodeURIComponent(btn.dataset.price)}`;modalBg.style.display='flex';}));
-document.getElementById('modalClose').addEventListener('click',()=>modalBg.style.display='none');
-window.addEventListener('click',e=>{if(e.target===modalBg) modalBg.style.display='none';});
-
+// Countdown timer
+function startCountdown(){let endTime=new Date();endTime.setHours(endTime.getHours()+2);let countdownEl=document.getElementById('countdown');setInterval(()=>{let now=new Date(),diff=endTime-now,h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);countdownEl.textContent=`Offer ends in: ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;},1000);}startCountdown();
 // FAQ toggle
 document.querySelectorAll('.faq-item').forEach(faq=>faq.addEventListener('click',()=>{const ans=faq.querySelector('.faq-answer');ans.style.display=(ans.style.display==='block')?'none':'block';}));
-
-// Contact forms demo
+// Contact form
 document.querySelectorAll('.contact-form').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const s=f.querySelector('.form-status');s.style.color='green';s.textContent='✅ Message sent successfully!';f.reset();}));
 </script>
 </body>
