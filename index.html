@@ -6,7 +6,7 @@
 <title>HQ CYBER</title>
 <style>
 :root{
-  --bg:#eef2f5; --fg:#1f2937; --muted:#6b7280; --card:#fff; --accent:#4f46e5; --accent-hover:#4338ca; --border:#e5e7eb;
+  --bg:#eef2f5; --fg:#1f2937; --muted:#6b7280; --card:#ffffff; --accent:#4f46e5; --accent-hover:#4338ca; --border:#e5e7eb;
 }
 [data-theme="dark"]{
   --bg:#111; --fg:#e6e7eb; --muted:#a8acb3; --card:#161a22; --accent:#4f8cff; --accent-hover:#3b6cd3; --border:#222;
@@ -22,6 +22,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:16px 2
 .nav-links a:hover{color:var(--accent);}
 #progress-bar{position:fixed;top:0;left:0;height:4px;background:var(--accent);width:0%;z-index:1500;transition:width 0.2s;}
 .hero{padding:120px 20px 80px;text-align:center;background:linear-gradient(135deg,var(--accent),#4338ca);color:white;border-radius:12px;margin:20px 0;position:relative;overflow:hidden;}
+.countdown{position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.2);padding:8px 12px;border-radius:8px;font-weight:600;}
 .hero h1{font-size:3rem;margin-bottom:16px;opacity:0;transform:translateY(30px);animation:fadeInUp 1s forwards;}
 .hero p.lead{font-size:1.25rem;color:#e0e7ff;max-width:700px;margin:0 auto;opacity:0;transform:translateY(30px);animation:fadeInUp 1s 0.5s forwards;}
 @keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
@@ -31,8 +32,8 @@ section p.lead{text-align:center;max-width:700px;margin:0 auto 40px;color:var(--
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
 .card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform 0.4s,box-shadow 0.4s;opacity:0;transform:translateY(30px);display:flex;flex-direction:column;}
 .card.visible{opacity:1;transform:translateY(0);}
-.card:hover{transform:translateY(-10px) scale(1.03);box-shadow:0 12px 24px rgba(0,0,0,0.2);}
-.card img{height:220px;width:100%;object-fit:cover;background:#f0f0f0;border-bottom:1px solid var(--border);}
+.card:hover{transform:translateY(-12px) scale(1.05);box-shadow:0 14px 28px rgba(0,0,0,0.2);}
+.card img{height:240px;width:100%;object-fit:cover;background:#f0f0f0;border-bottom:1px solid var(--border);}
 .pad{padding:12px;}
 .card h3{font-size:1.1rem;}
 .price{font-size:0.95rem;font-weight:700;color:var(--accent);margin-top:8px;}
@@ -60,7 +61,12 @@ footer{padding:40px 20px;text-align:center;color:var(--muted);border-top:1px sol
 .top:hover{background:var(--accent-hover);}
 .whatsapp-btn{position:fixed;bottom:80px;right:20px;background:#25D366;color:#fff;border-radius:50%;width:55px;height:55px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 10px rgba(0,0,0,0.2);cursor:pointer;z-index:1000;transition:transform 0.5s;}
 .whatsapp-btn:hover{transform:scale(1.15);}
-@media (max-width:768px){.nav-links{flex-direction:column;background:var(--bg);position:absolute;top:60px;right:0;width:200px;padding:10px;border-left:1px solid var(--border);display:none;}.nav-links.show{display:flex;}}
+
+/* Responsive hero for mobile */
+@media (max-width: 600px){
+  .hero h1{font-size:1.8rem;line-height:1.2;}
+  .hero p.lead{font-size:1rem;}
+}
 </style>
 </head>
 <body data-theme="light">
@@ -78,7 +84,6 @@ footer{padding:40px 20px;text-align:center;color:var(--muted);border-top:1px sol
 <a href="#contact">Contact</a>
 <a id="themeToggle" href="#">🌙</a>
 </div>
-<a id="menuToggle" href="#">☰</a>
 </nav>
 </header>
 
@@ -98,32 +103,32 @@ footer{padding:40px 20px;text-align:center;color:var(--muted);border-top:1px sol
 <h2>Our Products & Services</h2>
 <div class="grid">
 <article class="card">
-<img src="https://images.unsplash.com/photo-1573148195900-7845dcb9b127?q=80&w=1640&auto=format&fit=crop" alt="Smartphone">
+<img src="https://images.unsplash.com/photo-1573148195900-7845dcb9b127?q=80&w=1640&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Smartphone">
 <div class="pad">
 <h3>Smartphones</h3>
 <p>Latest 2025 model with high-speed processor and dual cameras.</p>
-<div class="price">From KSh 7,000</div>
-<a class="btn" href="https://wa.me/254726717361" target="_blank">Buy Now</a>
+<div class="price">From as low as KSh 7,000</div>
+<a class="btn" href="https://wa.me/254726717361?text=I want to buy Smartphone X1 for KSh 45,000" target="_blank">Buy Now</a>
 </div>
 </article>
 
 <article class="card">
-<img src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?q=80&w=1470&auto=format&fit=crop" alt="Repairs">
+<img src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Repairs">
 <div class="pad">
 <h3>Repairs</h3>
 <p>We also do phone and laptop repairs and upgrades.</p>
 <div class="price">Please Inquire</div>
-<a class="btn" href="https://wa.me/254726717361" target="_blank">Inquire</a>
+<a class="btn" href="https://wa.me/254726717361?text=I want to buy Smartphone Y2 for KSh 38,500" target="_blank">Buy Now</a>
 </div>
 </article>
 
 <article class="card">
-<img src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=500&auto=format&fit=crop&q=60" alt="Accessories">
+<img src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cGhvbmUlMjBhY2Nlc3Nvcmllc3xlbnwwfHwwfHx8MA%3D%3D" alt="Accessories">
 <div class="pad">
 <h3>Phone Accessories</h3>
 <p>Chargers, cases, screen protectors, and more.</p>
 <div class="price">KSh 300 – 3,500</div>
-<a class="btn" href="https://wa.me/254726717361" target="_blank">Shop Accessories</a>
+<a class="btn" href="https://wa.me/254726717361?text=I want to buy Phone Accessories for KSh 500-3500" target="_blank">Shop Accessories</a>
 </div>
 </article>
 </div>
@@ -191,23 +196,14 @@ Email: <a href="mailto:hqcyber254@gmail.com">hqcyber254@gmail.com</a><br>
 <a class="whatsapp-btn" href="https://wa.me/254726717361" target="_blank">💬</a>
 
 <script>
-// Scroll progress bar
 window.addEventListener('scroll',()=>{let h=document.body.scrollHeight-window.innerHeight;document.getElementById('progress-bar').style.width=(window.scrollY/h*100)+'%';});
-// Intersection Observer
 const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting) entry.target.classList.add('visible');});},{threshold:0.2});
 document.querySelectorAll('.hero, .card, .feedback-card, .contact-form').forEach(el=>observer.observe(el));
-// Scroll-to-top
 const topBtn=document.querySelector('.top');window.addEventListener('scroll',()=>{topBtn.style.display=window.scrollY>300?'flex':'none';});
-// Theme toggle
 document.getElementById('themeToggle').addEventListener('click',()=>{document.body.dataset.theme=(document.body.dataset.theme==='light')?'dark':'light';});
-// Countdown
 function startCountdown(){let endTime=new Date();endTime.setHours(endTime.getHours()+2);let countdownEl=document.getElementById('countdown');setInterval(()=>{let now=new Date(),diff=endTime-now,h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);countdownEl.textContent=`Offer ends in: ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;},1000);}startCountdown();
-// FAQ toggle
 document.querySelectorAll('.faq-item').forEach(faq=>faq.addEventListener('click',()=>{const ans=faq.querySelector('.faq-answer');ans.style.display=(ans.style.display==='block')?'none':'block';}));
-// Contact form simulation
 document.querySelectorAll('.contact-form').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const s=f.querySelector('.form-status');s.style.color='green';s.textContent='✅ Message sent successfully!';f.reset();}));
-// Mobile nav toggle
-document.getElementById('menuToggle').addEventListener('click',()=>{document.querySelector('.nav-links').classList.toggle('show');});
 </script>
 </body>
 </html>
