@@ -1,275 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>HQ CYBER</title>
-  <meta name="description" content="HQ CYBER - Phones, gadgets & accessories at your fingertips" />
-  <link rel="icon" href="https://via.placeholder.com/32x32.png?text=HQ" type="image/png" />
-  
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
-
   <style>
-    :root { --primary-color: #4f46e5; --secondary-color: #fafafa; --text-color: #333; --background-color: #fff; }
-    body { margin:0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; color:var(--text-color); background:var(--background-color); line-height:1.6; scroll-behavior:smooth; }
-    header { background:var(--primary-color); color:white; padding:2rem; text-align:center; position:relative; }
-    header h1 { margin:0; font-size:2.5rem; }
-    header p { margin:0.5rem 0 0; }
-    header img.logo { max-height:60px; display:block; margin:0 auto 1rem; }
-    nav { display:flex; justify-content:center; gap:1.5rem; padding:1rem; background:#eee; position:sticky; top:0; z-index:1000; flex-wrap:wrap; }
-    nav a { text-decoration:none; color:var(--text-color); font-weight:bold; transition:color 0.3s; }
-    nav a:hover { color:var(--primary-color); }
-    section { padding:3rem 1rem; max-width:1000px; margin:auto; opacity:0; transform:translateY(20px); transition:all 0.8s ease-out; }
-    section.visible { opacity:1; transform:translateY(0); }
-    .hero { text-align:center; background:linear-gradient(to right, var(--primary-color), #6d28d9); color:white; padding:5rem 2rem; border-radius:12px; }
-    .hero h2 { font-size:2.5rem; margin-bottom:1rem; }
-    .hero p { font-size:1.2rem; }
-    .services { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; margin-top:2rem; }
-    .card { padding:2rem; border:none; border-radius:12px; background:var(--secondary-color); text-align:center; box-shadow:0 4px 8px rgba(0,0,0,0.1); transition:transform 0.3s; }
-    .card:hover { transform:translateY(-5px); }
-    .contact-form { display:flex; flex-direction:column; gap:1rem; margin-top:1.5rem; }
-    .contact-form input, .contact-form textarea { padding:0.8rem; border:1px solid #ccc; border-radius:6px; font-size:1rem; }
-    .contact-form button { background:var(--primary-color); color:#fff; padding:0.8rem; border:none; border-radius:6px; cursor:pointer; transition:background 0.3s; }
-    .contact-form button:hover { background:#3333aa; }
-    .form-status { margin-top:1rem; font-weight:bold; }
-    .loading { display:none; margin-top:1rem; }
-    footer { background:#111; color:white; text-align:center; padding:2rem; margin-top:2rem; }
-    footer p { margin:0.5rem 0; }
-    .theme-toggle { cursor:pointer; padding:0.5rem 1rem; background:var(--primary-color); color:#fff; border:none; border-radius:5px; margin-left:1rem; transition:background 0.3s; }
-    .theme-toggle:hover { background:#3333aa; }
-    #backToTop { position:fixed; bottom:20px; right:20px; background:var(--primary-color); color:#fff; border:none; border-radius:50%; width:45px; height:45px; display:none; align-items:center; justify-content:center; cursor:pointer; }
+    :root{--bg:#0f1115;--fg:#e6e7eb;--muted:#a8acb3;--card:#161a22;--accent:#4f8cff}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5}
+    header{position:sticky;top:0;backdrop-filter:saturate(1.5) blur(10px);background:rgba(15,17,21,.7);border-bottom:1px solid #222}
+    .wrap{max-width:1000px;margin:0 auto;padding:16px}
+    nav{display:flex;gap:14px;align-items:center;justify-content:space-between}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600}
+    nav a:hover{color:var(--fg)}
+    .brand{font-weight:800;letter-spacing:.5px}
+    .hero{padding:72px 16px;text-align:center}
+    h1{margin:0 0 8px;font-size:40px}
+    p.lead{margin:0 auto;max-width:700px;color:var(--muted);font-size:18px}
+    section{padding:40px 16px;border-top:1px solid #1e2230}
+    h2{margin:0 0 16px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    .card{background:var(--card);border:1px solid #232837;border-radius:16px;overflow:hidden}
+    .card img{width:100%;height:160px;object-fit:cover;background:#0b0d11}
+    .card .pad{padding:14px}
+    .price{color:#b9ffd3;font-weight:700}
+    .btn{display:inline-block;margin-top:10px;padding:10px 14px;border-radius:10px;background:var(--accent);color:white;text-decoration:none;font-weight:700}
+    footer{padding:30px 16px;text-align:center;color:var(--muted);border-top:1px solid #1e2230}
+    .top{position:fixed;right:18px;bottom:18px;background:var(--card);border:1px solid #232837;border-radius:999px;padding:10px 12px}
   </style>
 </head>
 <body>
   <header>
-    <h1>Company Name</h1>
-    <p>Tagline</p>
+    <div class="wrap">
+      <nav>
+        <div class="brand">HQ CYBER</div>
+        <div>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
   </header>
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
-  </nav>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Hero Title</h1>
+      <p class="lead">Hero text</p>
+    </section>
 
-  <section class="hero">
-    <h2>Hero Title</h2>
-    <p>Hero text</p>
-  </section>
+    <section id="about">
+      <h2>About Us</h2>
+      <p class="lead">About text</p>
+    </section>
 
-  <section id="about">
-    <h2>About Us</h2>
-    <p>About text</p>
-  </section>
+    <section id="services">
+      <h2>Our Products &amp; Services</h2>
+      <div class="grid">
+        <article class="card">
+          <img alt="Phone Model 1" src="https://picsum.photos/seed/x1/800/600" />
+          <div class="pad">
+            <h3>Smartphone X1</h3>
+            <p>Latest 2025 model with high-speed processor and dual cameras.</p>
+            <div class="price">Price: KSh 45,000</div>
+            <a class="btn" href="#contact">Buy Now</a>
+          </div>
+        </article>
 
-  <section id="services">
-  <h2>Our Products & Services</h2>
-  <div class="services">
-   <div class="card">
-  <img src="https://via.placeholder.com/200x150?text=Phone+Model+1" alt="Phone Model 1" style="width:100%;border-radius:8px;">
-  <h3>Smartphone X1</h3>
-  <p>Latest 2025 model with high-speed processor and dual cameras.</p>
-  <p><strong>Price: KSh 45,000</strong></p>
-  <button onclick="window.open('https://wa.me/254726717361?text=I%20want%20to%20buy%20Smartphone%20X1%20for%20KSh%2045,000','_blank')">
-    Buy Now
-  </button>
-</div>
+        <article class="card">
+          <img alt="Phone Model 2" src="https://picsum.photos/seed/y2/800/600" />
+          <div class="pad">
+            <h3>Smartphone Y2</h3>
+            <p>Durable phone with long-lasting battery and 128GB storage.</p>
+            <div class="price">Price: KSh 38,500</div>
+            <a class="btn" href="#contact">Buy Now</a>
+          </div>
+        </article>
 
-<div class="card">
-  <img src="https://via.placeholder.com/200x150?text=Phone+Model+2" alt="Phone Model 2" style="width:100%;border-radius:8px;">
-  <h3>Smartphone Y2</h3>
-  <p>Durable phone with long-lasting battery and 128GB storage.</p>
-  <p><strong>Price: KSh 38,500</strong></p>
-  <button onclick="window.open('https://wa.me/254726717361?text=I%20want%20to%20buy%20Smartphone%20Y2%20for%20KSh%2038,500','_blank')">
-    Buy Now
-  </button>
-</div>
+        <article class="card">
+          <img alt="Accessories" src="https://picsum.photos/seed/acc/800/600" />
+          <div class="pad">
+            <h3>Phone Accessories</h3>
+            <p>Chargers, cases, screen protectors, and more.</p>
+            <div class="price">Price: KSh 500 – 3,500</div>
+            <a class="btn" href="#contact">Shop Accessories</a>
+          </div>
+        </article>
+      </div>
+    </section>
 
-<div class="card">
-  <img src="https://via.placeholder.com/200x150?text=Accessories" alt="Accessories" style="width:100%;border-radius:8px;">
-  <h3>Phone Accessories</h3>
-  <p>Chargers, cases, screen protectors, and more.</p>
-  <p><strong>Price: KSh 500 - 3,500</strong></p>
-  <button onclick="window.open('https://wa.me/254726717361?text=I%20want%20to%20buy%20Phone%20Accessories%20for%20KSh%20500%20-%203,500','_blank')">
-    Shop Accessories
-  </button>
-</div>
+    <section id="contact">
+      <h2>Contact</h2>
+      <p class="lead">Email: info@example.com · Phone: +254 700 000 000</p>
+    </section>
+  </main>
 
-  </div>
-</section>
-
-
-  <section id="contact"></section>
-
-  <footer></footer>
-
-  <button id="backToTop">↑</button>
-
-  <script>
-    const siteConfig = {
-      mode: "demo", // demo or live
-      demo: {
-        companyName: "HQ CYBER",
-        logo: "https://via.placeholder.com/150x60?text=Logo",
-        tagline: "Phones & Accessories at Your Fingertips",
-        heroTitle: "Welcome to HQ CYBER",
-        heroText: "We provide quality phones and accessories for your everyday needs.",
-        aboutText: "HQ CYBER is your trusted source for phones, gadgets, and accessories. We deliver quality and reliability.",
-        services: [
-  { 
-    title: "Smartphone X1", 
-    description: "Latest 2025 model with high-speed processor and dual cameras.",
-    price: "KSh 45,000",
-    image: "https://via.placeholder.com/200x150?text=Phone+Model+1",
-    buttonText: "Buy Now"
-  },
-  { 
-    title: "Smartphone Y2", 
-    description: "Durable phone with long-lasting battery and 128GB storage.",
-    price: "KSh 38,500",
-    image: "https://via.placeholder.com/200x150?text=Phone+Model+2",
-    buttonText: "Buy Now"
-  },
-  { 
-    title: "Phone Accessories", 
-    description: "Chargers, cases, screen protectors, and more.",
-    price: "KSh 500 - 3,500",
-    image: "https://via.placeholder.com/200x150?text=Accessories",
-    buttonText: "Shop Accessories"
-  }
-],
-
-        contact: { email: "hqcyber254@gmail.com", phone: "+254726-717-361" }
-      },
-      live: {
-        companyName: "Client Company",
-        logo: "https://via.placeholder.com/150x60?text=Client",
-        tagline: "Your Trusted Tech Partner",
-        heroTitle: "Welcome to Our Company",
-        heroText: "We deliver premium gadgets and services tailored to your needs.",
-        aboutText: "We are a reliable provider of tech solutions and accessories.",
-        services: [
-          { title: "Custom Smartphones", description: "Exclusive deals and models." },
-          { title: "Tech Accessories", description: "High-quality cables, cases, and more." },
-          { title: "Tech Support", description: "Professional repair and support services." }
-        ],
-        contact: { email: "client@example.com", phone: "+123-456-7890" }
-      },
-      formEndpoint: "https://formspree.io/f/your-form-id",
-      themes: {
-        light: { primaryColor: "#4f46e5", secondaryColor: "#fafafa", textColor: "#333", backgroundColor: "#fff" },
-        dark: { primaryColor: "#222", secondaryColor: "#333", textColor: "#f1f1f1", backgroundColor: "#111" },
-        blue: { primaryColor: "#0077b6", secondaryColor: "#caf0f8", textColor: "#03045e", backgroundColor: "#f0faff" }
-      },
-      currentTheme: "light"
-    };
-
-    function applyTheme(themeName) {
-      const theme = siteConfig.themes[themeName];
-      document.documentElement.style.setProperty("--primary-color", theme.primaryColor);
-      document.documentElement.style.setProperty("--secondary-color", theme.secondaryColor);
-      document.documentElement.style.setProperty("--text-color", theme.textColor);
-      document.documentElement.style.setProperty("--background-color", theme.backgroundColor);
-      siteConfig.currentTheme = themeName;
-    }
-
-    function loadSiteMode(mode) {
-      const config = siteConfig[mode];
-      document.querySelector("header h1").innerText = config.companyName;
-      document.querySelector("header p").innerText = config.tagline;
-      const logoImg = document.createElement("img");
-      logoImg.src = config.logo;
-      logoImg.className = "logo";
-      document.querySelector("header").insertBefore(logoImg, document.querySelector("header h1"));
-
-      document.querySelector(".hero h2").innerText = config.heroTitle;
-      document.querySelector(".hero p").innerText = config.heroText;
-      document.querySelector("#about p").innerText = config.aboutText;
-
-      const servicesContainer = document.querySelector(".services");
-      servicesContainer.innerHTML = '';
-      config.services.forEach(service => {
-  const div = document.createElement("div");
-  div.className = "card";
-  div.innerHTML = `
-    <img src="${service.image}" alt="${service.title}" style="width:100%;border-radius:8px;">
-    <h3>${service.title}</h3>
-    <p>${service.description}</p>
-    <p><strong>Price: ${service.price}</strong></p>
-    <button onclick="window.open('https://wa.me/254726717361?text=I%20want%20to%20buy%20${encodeURIComponent(service.title)}%20for%20${encodeURIComponent(service.price)}','_blank')">
-      ${service.buttonText}
-    </button>
-  `;
-  servicesContainer.appendChild(div);
-});
-
-      document.querySelector("#contact").innerHTML = `
-        <h2>Contact Us</h2>
-        <p>Email: ${config.contact.email}</p>
-        <p>Phone: ${config.contact.phone}</p>
-        <form class="contact-form" id="contactForm" action="${siteConfig.formEndpoint}" method="POST">
-          <input type="text" name="name" placeholder="Your Name" required />
-          <input type="email" name="email" placeholder="Your Email" required />
-          <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-          <button type="submit">Send Message</button>
-          <div class="loading">⏳ Sending...</div>
-          <div class="form-status"></div>
-        </form>
-      `;
-
-      document.querySelector("footer").innerHTML = `
-        <p>© ${new Date().getFullYear()} ${config.companyName}. All rights reserved.</p>
-        <p>Follow us: <a href="#" style="color:#fff;">Facebook</a> | <a href="#" style="color:#fff;">Twitter</a> | <a href="#" style="color:#fff;">Instagram</a></p>
-      `;
-    }
-
-    window.onload = () => {
-      loadSiteMode(siteConfig.mode);
-      applyTheme(siteConfig.currentTheme);
-
-      const nav = document.querySelector("nav");
-      const themeButton = document.createElement("button");
-      themeButton.className = "theme-toggle";
-      themeButton.innerText = "Switch Theme";
-      themeButton.onclick = () => {
-        const themes = Object.keys(siteConfig.themes);
-        let currentIndex = themes.indexOf(siteConfig.currentTheme);
-        let nextTheme = themes[(currentIndex + 1) % themes.length];
-        applyTheme(nextTheme);
-      };
-      nav.appendChild(themeButton);
-
-      const sections = document.querySelectorAll("section");
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("visible"); });
-      }, { threshold: 0.2 });
-      sections.forEach(sec => observer.observe(sec));
-
-      const backToTop = document.getElementById("backToTop");
-      window.addEventListener("scroll", () => { backToTop.style.display = window.scrollY > 300 ? "flex" : "none"; });
-      backToTop.addEventListener("click", () => window.scrollTo({ top:0, behavior:"smooth" }));
-
-      const form = document.getElementById("contactForm");
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const loading = form.querySelector(".loading");
-        const status = form.querySelector(".form-status");
-        loading.style.display = "block";
-        status.innerText = "";
-        try {
-          const response = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { 'Accept':'application/json' } });
-          if (response.ok) { status.style.color="green"; status.innerText="✅ Message sent successfully!"; form.reset(); }
-          else { status.style.color="red"; status.innerText="❌ Something went wrong. Try again."; }
-        } catch(err) { status.style.color="red"; status.innerText="⚠️ Network error. Please try later."; }
-        finally { loading.style.display="none"; }
-      });
-    };
-  </script>
+  <footer>© <span id="y"></span> HQ CYBER</footer>
+  <a class="top" href="#">↑</a>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
