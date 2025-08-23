@@ -4,38 +4,128 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>HQ CYBER</title>
+  <meta name="description" content="HQ CYBER - Smartphones, accessories, and premium services in Kenya. Shop our latest 2025 models with great deals." />
   <style>
-    :root{--bg:#0f1115;--fg:#e6e7eb;--muted:#a8acb3;--card:#161a22;--accent:#4f8cff}
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5}
-    header{position:sticky;top:0;backdrop-filter:saturate(1.5) blur(10px);background:rgba(15,17,21,.7);border-bottom:1px solid #222}
-    .wrap{max-width:1000px;margin:0 auto;padding:16px}
-    nav{display:flex;gap:14px;align-items:center;justify-content:space-between}
-    nav a{color:var(--muted);text-decoration:none;font-weight:600}
-    nav a:hover{color:var(--fg)}
-    .brand{font-weight:800;letter-spacing:.5px}
-    .hero{padding:72px 16px;text-align:center}
-    h1{margin:0 0 8px;font-size:40px}
-    p.lead{margin:0 auto;max-width:700px;color:var(--muted);font-size:18px}
-    section{padding:40px 16px;border-top:1px solid #1e2230}
-    h2{margin:0 0 16px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-    .card{background:var(--card);border:1px solid #232837;border-radius:16px;overflow:hidden}
-    .card img{width:100%;height:160px;object-fit:cover;background:#0b0d11}
-    .card .pad{padding:14px}
-    .price{color:#b9ffd3;font-weight:700}
-    .btn{display:inline-block;margin-top:10px;padding:10px 14px;border-radius:10px;background:var(--accent);color:white;text-decoration:none;font-weight:700}
-    footer{padding:30px 16px;text-align:center;color:var(--muted);border-top:1px solid #1e2230}
-    .top{position:fixed;right:18px;bottom:18px;background:var(--card);border:1px solid #232837;border-radius:999px;padding:10px 12px}
+    :root {
+      --bg: #0f1115;
+      --fg: #e6e7eb;
+      --muted: #a8acb3;
+      --card: #161a22;
+      --accent: #4f8cff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.5;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: saturate(1.5) blur(10px);
+      background: rgba(15,17,21,.7);
+      border-bottom: 1px solid #222;
+      z-index: 1000;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    nav {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--fg); }
+    .brand { font-weight: 800; letter-spacing: .5px; font-size: 20px; }
+    
+    .hero {
+      padding: 100px 16px;
+      text-align: center;
+    }
+    h1 { margin: 0 0 12px; font-size: 46px; }
+    p.lead { margin: 0 auto 24px; max-width: 700px; color: var(--muted); font-size: 18px; }
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background .2s, transform .2s;
+    }
+    .btn:hover { background: #3c6ed8; transform: translateY(-2px); }
+
+    section { padding: 60px 16px; border-top: 1px solid #1e2230; }
+    h2 { margin: 0 0 20px; font-size: 28px; text-align: center; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid #232837;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .card img { width: 100%; height: 180px; object-fit: cover; background: #0b0d11; }
+    .card .pad { padding: 16px; }
+    .price { color: #b9ffd3; font-weight: 700; margin-top: 8px; }
+
+    .testimonials, .faq { max-width: 800px; margin: auto; text-align: left; }
+    .testimonial { margin-bottom: 20px; font-style: italic; color: var(--muted); }
+    .testimonial strong { display: block; margin-top: 6px; color: var(--fg); }
+
+    footer {
+      padding: 40px 16px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid #1e2230;
+      background: #0b0d11;
+    }
+    footer .links { margin-bottom: 12px; }
+    footer a { color: var(--muted); margin: 0 10px; text-decoration: none; }
+    footer a:hover { color: var(--fg); }
+    .socials a { margin: 0 6px; font-size: 20px; }
+
+    .top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: var(--card);
+      border: 1px solid #232837;
+      border-radius: 999px;
+      padding: 10px 14px;
+      transition: background .2s;
+    }
+    .top:hover { background: var(--accent); color: white; }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
-      <nav>
+      <nav aria-label="Main Navigation">
         <div class="brand">HQ CYBER</div>
         <div>
           <a href="#about">About</a>
           <a href="#services">Services</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#faq">FAQ</a>
           <a href="#contact">Contact</a>
         </div>
       </nav>
@@ -44,17 +134,18 @@
 
   <main class="wrap">
     <section class="hero">
-      <h1>Hero Title</h1>
-      <p class="lead">Hero text</p>
+      <h1>Stay Connected with HQ CYBER</h1>
+      <p class="lead">We provide premium smartphones, accessories, and digital solutions in Kenya — trusted by thousands of customers.</p>
+      <a href="https://wa.me/254700000000?text=Hello%20HQ%20CYBER%2C%20I%20would%20like%20to%20inquire%20about%20your%20products." class="btn">Chat on WhatsApp</a>
     </section>
 
     <section id="about">
       <h2>About Us</h2>
-      <p class="lead">About text</p>
+      <p class="lead">At HQ CYBER, we specialize in providing the latest smartphones and essential accessories at competitive prices. With a focus on quality, reliability, and customer satisfaction, we are committed to keeping you connected to what matters most.</p>
     </section>
 
     <section id="services">
-      <h2>Our Products &amp; Services</h2>
+      <h2>Our Products & Services</h2>
       <div class="grid">
         <article class="card">
           <img alt="Phone Model 1" src="https://picsum.photos/seed/x1/800/600" />
@@ -62,7 +153,7 @@
             <h3>Smartphone X1</h3>
             <p>Latest 2025 model with high-speed processor and dual cameras.</p>
             <div class="price">Price: KSh 45,000</div>
-            <a class="btn" href="#contact">Buy Now</a>
+            <a class="btn" href="https://wa.me/254700000000?text=I%20want%20to%20buy%20Smartphone%20X1">Buy on WhatsApp</a>
           </div>
         </article>
 
@@ -72,7 +163,7 @@
             <h3>Smartphone Y2</h3>
             <p>Durable phone with long-lasting battery and 128GB storage.</p>
             <div class="price">Price: KSh 38,500</div>
-            <a class="btn" href="#contact">Buy Now</a>
+            <a class="btn" href="https://wa.me/254700000000?text=I%20want%20to%20buy%20Smartphone%20Y2">Buy on WhatsApp</a>
           </div>
         </article>
 
@@ -82,19 +173,52 @@
             <h3>Phone Accessories</h3>
             <p>Chargers, cases, screen protectors, and more.</p>
             <div class="price">Price: KSh 500 – 3,500</div>
-            <a class="btn" href="#contact">Shop Accessories</a>
+            <a class="btn" href="https://wa.me/254700000000?text=I%20want%20to%20shop%20accessories">Shop on WhatsApp</a>
           </div>
         </article>
       </div>
     </section>
 
+    <section id="testimonials">
+      <h2>What Our Customers Say</h2>
+      <div class="testimonials">
+        <p class="testimonial">“HQ CYBER gave me the best deal on my new phone. Fast service and great quality!” <strong>— John M.</strong></p>
+        <p class="testimonial">“I love the accessories I bought here. Durable and affordable!” <strong>— Grace W.</strong></p>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq">
+        <p><strong>Do you deliver?</strong><br>Yes, we offer delivery across Kenya.</p>
+        <p><strong>What payment methods do you accept?</strong><br>We accept M-Pesa, cash on delivery, and bank transfers.</p>
+      </div>
+    </section>
+
     <section id="contact">
       <h2>Contact</h2>
-      <p class="lead">Email: info@example.com · Phone: +254 700 000 000</p>
+      <p class="lead">
+        📧 <a href="mailto:info@example.com">info@example.com</a> · 
+        📞 <a href="tel:+254700000000">+254 700 000 000</a>
+      </p>
+      <a href="https://wa.me/254700000000?text=Hello%20HQ%20CYBER" class="btn">Message on WhatsApp</a>
     </section>
   </main>
 
-  <footer>© <span id="y"></span> HQ CYBER</footer>
+  <footer>
+    <div class="links">
+      <a href="#about">About</a> | 
+      <a href="#services">Services</a> | 
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="socials">
+      <a href="https://wa.me/254700000000">WhatsApp</a> · 
+      <a href="#">Facebook</a> · 
+      <a href="#">Instagram</a>
+    </div>
+    <p>© <span id="y"></span> HQ CYBER. All Rights Reserved.</p>
+  </footer>
+
   <a class="top" href="#">↑</a>
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
