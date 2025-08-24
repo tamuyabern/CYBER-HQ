@@ -6,13 +6,6 @@
   <title>HQ CYBER</title>
   <meta name="description" content="HQ CYBER - Smartphones, accessories, repairs, and premium services in Kenya. Shop our latest 2025 models with great deals." />
 
-  <!-- SEO & Sharing -->
-  <meta property="og:title" content="HQ CYBER - Smartphones & Services in Kenya" />
-  <meta property="og:description" content="Smartphones, accessories, repairs & digital services at the best prices in Kenya." />
-  <meta property="og:image" content="https://yourdomain.com/preview.jpg" />
-  <meta property="og:url" content="https://yourdomain.com" />
-  <meta name="twitter:card" content="summary_large_image" />
-
   <style>
     :root {
       --bg: #f9fafc;
@@ -21,6 +14,7 @@
       --card: #ffffff;
       --accent: #2563eb;
       --accent-hover: #1d4ed8;
+      --whatsapp: #25D366;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -49,38 +43,36 @@
       margin-left: 16px;
       text-decoration: none;
       font-weight: 600;
+      font-size: 15px; /* slightly smaller */
       transition: color .2s;
     }
     nav a:hover { color: var(--accent); }
     .brand { font-weight: 800; font-size: 20px; color: var(--accent); }
 
     .hero {
-      padding: 100px 16px;
+      padding: 60px 16px; /* reduced height */
       text-align: center;
       background: linear-gradient(120deg, #2563eb, #1e3a8a);
       background-size: 200% 200%;
       color: white;
+      border-radius: 16px; /* rounded edges */
+      margin: 20px 0;
       animation: gradientBG 6s ease infinite;
-      border-bottom: 1px solid #e5e7eb;
     }
-    h1 { font-size: 46px; margin-bottom: 12px; animation: slideUp 1s ease-out; }
-    p.lead { max-width: 700px; margin: 0 auto 24px; color: #e0e7ff; font-size: 18px; }
+    h1 { font-size: 36px; margin-bottom: 12px; }
+    p.lead { max-width: 700px; margin: 0 auto 20px; font-size: 18px; }
     .btn {
       display: inline-block;
       margin-top: 10px;
       padding: 12px 20px;
       border-radius: 10px;
-      background: linear-gradient(45deg, #2563eb, #1e40af);
+      background: var(--whatsapp); /* green button */
       color: white;
       text-decoration: none;
       font-weight: 700;
       transition: background .3s, transform .2s;
-      animation: fadeInUp 1.5s ease-out;
     }
-    .btn:hover { 
-      background: linear-gradient(45deg, #1d4ed8, #1e3a8a); 
-      transform: translateY(-2px) scale(1.05); 
-    }
+    .btn:hover { transform: translateY(-2px) scale(1.05); }
 
     section { padding: 60px 16px; border-top: 1px solid #e5e7eb; }
     h2 { margin-bottom: 24px; font-size: 28px; text-align: center; }
@@ -130,12 +122,46 @@
       margin-bottom: 12px;
       color: var(--accent);
     }
-    .cat-card h3 { margin-bottom: 8px; }
 
     .testimonials, .faq { max-width: 800px; margin: auto; text-align: left; }
     .testimonial { margin-bottom: 20px; font-style: italic; color: var(--muted); opacity: 0; transform: translateY(20px); transition: .6s ease; }
     .testimonial.visible { opacity: 1; transform: translateY(0); }
     .testimonial strong { display: block; margin-top: 6px; color: var(--fg); }
+
+    /* About Us modifications */
+    #about p.lead { color: black; font-style: italic; margin-bottom: 10px; line-height: 1.4; }
+
+    /* Feedback form */
+    form {
+      max-width: 600px;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    input, textarea {
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border .2s, box-shadow .2s;
+    }
+    input:focus, textarea:focus {
+      border: 1px solid var(--accent);
+      outline: none;
+      box-shadow: 0 0 4px var(--accent);
+    }
+    button {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      transition: background .3s, transform .2s;
+    }
+    button:hover { background: var(--accent-hover); transform: translateY(-2px); }
 
     footer {
       padding: 40px 16px;
@@ -154,6 +180,7 @@
     footer a { color: var(--muted); text-decoration: none; transition: color .2s; }
     footer a:hover { color: var(--accent); }
     .footer-info { margin-top: 10px; font-size: 14px; color: var(--muted); }
+    .footer-info p { margin: 4px 0; } /* stacked contact info */
 
     .top {
       position: fixed;
@@ -172,7 +199,7 @@
       position: fixed;
       bottom: 80px;
       right: 18px;
-      background: #25D366;
+      background: var(--whatsapp);
       color: white;
       border-radius: 50%;
       padding: 14px 16px;
@@ -191,7 +218,6 @@
       100% { background-position: 0% 50%; }
     }
     @keyframes slideUp { from {transform:translateY(40px);opacity:0;} to {transform:translateY(0);opacity:1;} }
-    @keyframes fadeInUp { from {opacity:0; transform:translateY(30px);} to {opacity:1; transform:translateY(0);} }
   </style>
 </head>
 <body>
@@ -213,81 +239,25 @@
   <main class="wrap">
     <section class="hero">
       <h1>Stay Connected with HQ CYBER</h1>
-      <p class="lead">We provide premium smartphones, accessories, and digital solutions in Kenya — trusted by thousands of customers.</p>
-      <a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER%2C%20I%20would%20like%20to%20inquire%20about%20your%20products." class="btn">Chat on WhatsApp</a>
+      <p class="lead">Premium smartphones, accessories, and digital solutions in Kenya — trusted by thousands of customers.</p>
+      <a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="btn">Chat on WhatsApp</a>
     </section>
 
     <section id="about">
       <h2>About Us</h2>
-      <p class="lead">At HQ Cyber, we specialize in providing the latest smartphones, accessories, repairs, and digital services at competitive prices. With a focus on quality, reliability, and customer satisfaction, we are committed to keeping you connected to what matters most.</p>
-    </section>
-
-    <section id="services">
-      <h2>Our Products & Services</h2>
-
-      <!-- Categories -->
-      <div class="grid" style="margin-bottom:40px;">
-        <div class="cat-card"><div class="cat-icon">📱</div><h3>Smartphones</h3><p>Latest 2025 models with advanced technology.</p></div>
-        <div class="cat-card"><div class="cat-icon">🎧</div><h3>Accessories</h3><p>Chargers, earphones, cases, and more.</p></div>
-        <div class="cat-card"><div class="cat-icon">🔧</div><h3>Repairs</h3><p>Expert phone repairs and maintenance.</p></div>
-        <div class="cat-card"><div class="cat-icon">💻</div><h3>Digital Services</h3><p>SIM registration, bundles, software support.</p></div>
-      </div>
-
-      <!-- Products -->
-      <div class="grid">
-        <article class="card">
-          <img alt="smartphones" src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=500&auto=format&fit=crop&q=60" />
-          <div class="pad">
-            <h3>Smartphones</h3>
-            <p>Latest 2025 model with high-speed processor and dual cameras.</p>
-            <div class="price">Price: As low as KSh 7,000</div>
-            <a class="btn" href="https://wa.me/254726717361?text=I%20want%20to%20buy%20Smartphone%20X1">Buy on WhatsApp</a>
-          </div>
-        </article>
-        <article class="card">
-          <img alt="Repairs" src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?w=500&auto=format&fit=crop&q=60" />
-          <div class="pad">
-            <h3>Repairs</h3>
-            <p>We do repairs for both phones, laptops and upgrades.</p>
-            <div class="price">Price: Please inquire about pricing</div>
-            <a class="btn" href="https://wa.me/254726717361?text=I%20want%20to%20repair%20my%20device">Request on WhatsApp</a>
-          </div>
-        </article>
-        <article class="card">
-          <img alt="Accessories" src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=500&auto=format&fit=crop&q=60" />
-          <div class="pad">
-            <h3>Phone Accessories</h3>
-            <p>Chargers, cases, screen protectors, and more.</p>
-            <div class="price">Price: KSh 500 – 3,500</div>
-            <a class="btn" href="https://wa.me/254726717361?text=I%20want%20to%20shop%20accessories">Shop on WhatsApp</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="testimonials">
-      <h2>What Our Customers Say</h2>
-      <div class="testimonials">
-        <p class="testimonial">“HQ CYBER gave me the best deal on my new phone. Fast service and great quality!” <strong>— John M.</strong></p>
-        <p class="testimonial">“I love the accessories I bought here. Durable and affordable!” <strong>— Grace W.</strong></p>
-      </div>
-    </section>
-
-    <section id="faq">
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq">
-        <p><strong>Do you deliver?</strong><br>Yes, we offer delivery across Kenya.</p>
-        <p><strong>What payment methods do you accept?</strong><br>We accept M-Pesa, cash on delivery, and bank transfers.</p>
-      </div>
+      <p class="lead">At HQ Cyber, we provide the latest smartphones, accessories, repairs, and digital services at competitive prices. With a focus on quality, reliability, and customer satisfaction, we keep you connected to what matters most.</p>
     </section>
 
     <section id="contact">
-      <h2>Contact</h2>
-      <p class="lead">
-        📧 <a href="mailto:hqcyber254@gmail.com">hqcyber254@gmail.com</a> · 
-        📞 <a href="tel:+254726717361">+254 726 717 361</a>
-      </p>
-      <a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="btn">Message on WhatsApp</a>
+      <h2>Contact & Feedback</h2>
+      <p>📧 <a href="mailto:hqcyber254@gmail.com">hqcyber254@gmail.com</a></p>
+      <p>📞 <a href="tel:+254726717361">+254 726 717 361</a></p>
+      <form id="feedback-form">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <textarea id="message" rows="4" placeholder="Your Feedback / Inquiry..." required></textarea>
+        <button type="submit">Send via WhatsApp</button>
+      </form>
     </section>
   </main>
 
@@ -303,30 +273,34 @@
       <a href="#">Instagram</a>
     </div>
     <div class="footer-info">
-      <p>📍 Nairobi CBD, Kenya · 🕒 Mon–Sat: 8:00 AM – 8:00 PM</p>
+      <p>📍 Eldoret CBD, Kenya</p>
+      <p>🕒 Mon–Sat: 8:00 AM – 8:00 PM</p>
       <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>
     </div>
     <p>© <span id="y"></span> HQ CYBER. All Rights Reserved.</p>
   </footer>
 
-  <!-- Floating buttons -->
   <a class="whatsapp-float" href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" title="Chat on WhatsApp">💬</a>
   <a class="top" href="#">↑</a>
 
   <script>
-    // Update year
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Scroll reveal animations
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-        }
+        if(entry.isIntersecting){ entry.target.classList.add('visible'); }
       });
     }, {threshold: 0.15});
-
     document.querySelectorAll('.card, .cat-card, .testimonial').forEach(el => observer.observe(el));
+
+    document.getElementById("feedback-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
+      const whatsappURL = `https://wa.me/254726717361?text=Hello%20HQ%20CYBER,%0AI'm%20${name}%20(${email}).%0A${message}`;
+      window.open(whatsappURL, "_blank");
+    });
   </script>
 </body>
 </html>
