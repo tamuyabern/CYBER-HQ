@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>HQ TECH & CYBER</title>
-<meta name="description" content="HQ TECH & CYBER - Smartphones, accessories, repairs, and premium services in Kenya. Shop our latest 2025 models with great deals." />
+<title>HQ TECH</title>
+<meta name="description" content="HQ TECH - Smartphones, accessories, repairs, and premium services in Kenya. Shop our latest 2025 models with great deals." />
 
 <style>
 :root {
@@ -88,7 +88,7 @@ h2 { margin-bottom: 16px; font-size: 28px; text-align: center; }
 .card, .cat-card {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 .visible { opacity: 1 !important; transform: translateY(0) !important; }
 
@@ -102,7 +102,7 @@ h2 { margin-bottom: 16px; font-size: 28px; text-align: center; }
 }
 .card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 8px 25px rgba(186, 85, 211, 0.6), 0 0 15px rgba(255, 20, 147, 0.5);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 .card img { width: 100%; height: 180px; object-fit: cover; }
 .card .pad { padding: 16px; }
@@ -114,12 +114,21 @@ h2 { margin-bottom: 16px; font-size: 28px; text-align: center; }
   border-radius: 16px;
   background: var(--card);
   text-align: center;
+  transition: transform .3s, box-shadow .3s;
 }
 .cat-card:hover {
-  box-shadow: 0 8px 25px rgba(186, 85, 211, 0.6), 0 0 15px rgba(255, 20, 147, 0.5);
+  transform: translateY(-6px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 .cat-icon { font-size: 40px; margin-bottom: 12px; color: var(--accent); }
 .cat-card h3 { margin-bottom: 8px; }
+
+.testimonials, .faq { max-width: 800px; margin: auto; text-align: left; }
+.testimonial { margin-bottom: 20px; font-style: italic; color: var(--muted); opacity: 0; transform: translateY(20px); transition: .6s ease; }
+.testimonial.visible { opacity: 1; transform: translateY(0); }
+.testimonial strong { display: block; margin-top: 6px; color: var(--fg); }
+
+.about-text { color: black; font-style: italic; line-height: 1.4; margin-bottom: 12px; }
 
 footer {
   padding: 40px 16px;
@@ -137,6 +146,9 @@ footer .links, footer .socials {
 }
 footer a { color: var(--muted); text-decoration: none; transition: color .2s; }
 footer a:hover { color: var(--accent); }
+.footer-info { margin-top: 10px; font-size: 14px; color: var(--muted); }
+
+.contact-info p { margin-bottom: 8px; }
 
 .top {
   position: fixed;
@@ -151,49 +163,21 @@ footer a:hover { color: var(--accent); }
 }
 .top:hover { background: var(--accent-hover); transform: scale(1.1); }
 
-/* Floating Cart Button */
-.cart-btn {
+.whatsapp-float {
   position: fixed;
   bottom: 80px;
   right: 18px;
-  background: #9333ea;
+  background: #25D366;
   color: white;
   border-radius: 50%;
-  padding: 16px;
+  padding: 14px 16px;
   font-size: 22px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  cursor: pointer;
-}
-.cart-btn:hover { transform: scale(1.15); }
-
-/* Cart Modal */
-.cart-modal {
-  display: none;
-  position: fixed;
-  right: 20px;
-  bottom: 100px;
-  width: 300px;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  padding: 20px;
-  z-index: 2000;
-}
-.cart-modal h3 { margin-bottom: 10px; }
-.cart-items { font-size: 14px; margin-bottom: 15px; }
-.payment-options button {
-  display: block;
-  width: 100%;
-  margin-top: 8px;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
+  transition: transform .2s;
+  text-decoration: none;
   font-weight: bold;
-  cursor: pointer;
 }
-.payment-options button:nth-child(1){ background:#10b981; color:white; }
-.payment-options button:nth-child(2){ background:#3b82f6; color:white; }
-.payment-options button:nth-child(3){ background:#f59e0b; color:white; }
+.whatsapp-float:hover { transform: scale(1.15); }
 
 /* Animations */
 @keyframes gradientBG {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
@@ -204,11 +188,13 @@ footer a:hover { color: var(--accent); }
 <body>
 <header>
 <div class="wrap">
-  <nav>
+  <nav aria-label="Main Navigation">
     <div class="brand">HQ CYBER</div>
     <div>
       <a href="#about">About</a>
       <a href="#services">Services</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
@@ -218,80 +204,142 @@ footer a:hover { color: var(--accent); }
 <main class="wrap">
 <section class="hero">
   <h1>Stay Connected with HQ TECH & CYBER</h1>
-  <p class="lead">Smartphones, accessories, repairs, and cyber services — trusted in Eldoret & beyond.</p>
+  <p class="lead">We provide premium smartphones, accessories, and digital solutions in Kenya — trusted by thousands of customers.</p>
+  <a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="btn">Chat on WhatsApp</a>
+</section>
+
+<section id="about">
+<h2>About Us</h2>
+<p class="about-text">At HQ Tech & Cyber, we specialize in providing the latest smartphones, accessories, repairs, and digital services at competitive prices. With a focus on quality, reliability, and customer satisfaction, we are committed to keeping you connected to what matters most.</p>
 </section>
 
 <section id="services">
 <h2>Our Products & Services</h2>
+<div class="grid" style="margin-bottom:40px;">
+
+  <!-- NEW Cyber Services -->
+  <div class="cat-card">
+    <div class="cat-icon">💻</div>
+    <h3>Cyber Services</h3>
+    <p>Online applications, KRA registration, wedding cards, printing, scanning, and more.</p>
+  </div>
+
+  <!-- Existing -->
+  <div class="cat-card"><div class="cat-icon">📱</div><h3>Smartphones</h3><p>Latest 2025 models with advanced technology.</p></div>
+  <div class="cat-card"><div class="cat-icon">🎧</div><h3>Accessories</h3><p>Chargers, earphones, cases, and more.</p></div>
+  <div class="cat-card"><div class="cat-icon">🔧</div><h3>Repairs</h3><p>Expert phone repairs and maintenance.</p></div>
+  <div class="cat-card"><div class="cat-icon">🌐</div><h3>Digital Services</h3><p>SIM registration, bundles, software support.</p></div>
+</div>
+
 <div class="grid">
   <article class="card">
-    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500" alt="Cyber">
+    <img alt="cyber services" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500&auto=format&fit=crop&q=60" />
     <div class="pad">
       <h3>Cyber Services</h3>
-      <p>Printing, KRA, Online Applications, Invitations</p>
-      <div class="price">From KSh 50</div>
-      <button class="btn add-to-cart" data-item="Cyber Services">Add to Cart</button>
+      <p>Printing, KRA services, Wedding invitations, Online applications.</p>
+      <div class="price">Price: From KSh 50</div>
+      <a class="btn" href="https://wa.me/254726717361?text=I%20want%20Cyber%20Services">Request on WhatsApp</a>
     </div>
   </article>
   <article class="card">
-    <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=500" alt="Phone">
+    <img alt="smartphones" src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=500&auto=format&fit=crop&q=60" />
     <div class="pad">
       <h3>Smartphones</h3>
-      <p>Latest 2025 models.</p>
-      <div class="price">From KSh 7,000</div>
-      <button class="btn add-to-cart" data-item="Smartphone">Add to Cart</button>
+      <p>Latest 2025 model with high-speed processor and dual cameras.</p>
+      <div class="price">Price: As low as KSh 7,000</div>
+      <a class="btn" href="https://wa.me/254726717361?text=I%20want%20to%20buy%20Smartphone%20X1">Buy on WhatsApp</a>
+    </div>
+  </article>
+  <article class="card">
+    <img alt="Repairs" src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?w=500&auto=format&fit=crop&q=60" />
+    <div class="pad">
+      <h3>Repairs</h3>
+      <p>We do repairs for both phones, laptops and upgrades.</p>
+      <div class="price">Price: Please inquire about pricing</div>
+      <a class="btn" href="https://wa.me/254726717361?text=I%20want%20to%20repair%20my%20device">Request on WhatsApp</a>
+    </div>
+  </article>
+  <article class="card">
+    <img alt="Accessories" src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=500&auto=format&fit=crop&q=60" />
+    <div class="pad">
+      <h3>Phone Accessories</h3>
+      <p>Chargers, cases, screen protectors, and more.</p>
+      <div class="price">Price: KSh 500 – 3,500</div>
+      <a class="btn" href="https://wa.me/254726717361?text=I%20want%20to%20shop%20accessories">Shop on WhatsApp</a>
     </div>
   </article>
 </div>
 </section>
 
+<section id="testimonials">
+<h2>What Our Customers Say</h2>
+<div class="testimonials">
+  <p class="testimonial">“HQ TECH & CYBER gave me the best deal on my new phone. Fast service and great quality!” <strong>— Rotich Elvis.</strong></p>
+  <p class="testimonial">“I love the accessories I bought here, ziko Durable na affordable!” <strong>— Wanjiru Grace.</strong></p>
+</div>
+</section>
+
+<section id="faq">
+<h2>Frequently Asked Questions</h2>
+<div class="faq">
+  <p><strong>Do you deliver?</strong><br>Yes, we offer delivery across Kenya.</p>
+  <p><strong>What payment methods do you accept?</strong><br>We accept M-Pesa, cash on delivery, and bank transfers.</p>
+</div>
+</section>
+
+<section id="feedback">
+<h2>Feedback Form</h2>
+<form style="max-width:500px;margin:auto;display:flex;flex-direction:column;gap:12px;">
+  <input type="text" placeholder="Name" required style="padding:10px;border-radius:6px;border:1px solid #ccc;">
+  <input type="email" placeholder="Email" required style="padding:10px;border-radius:6px;border:1px solid #ccc;">
+  <textarea placeholder="Your message" required style="padding:10px;border-radius:6px;border:1px solid #ccc;"></textarea>
+  <button type="submit" class="btn" style="background: var(--accent);">Send Feedback</button>
+</form>
+</section>
+
 <section id="contact">
-<h2>Contact Us</h2>
-<p>📧 hqcyber254@gmail.com</p>
-<p>📞 +254 726 717 361</p>
+<h2>Contact</h2>
+<div class="contact-info">
+  <p>📧 <a href="mailto:hqcyber254@gmail.com">hqcyber254@gmail.com</a></p>
+  <p>📞 <a href="tel:+254726717361">+254 726 717 361</a></p>
+  <p>📍 Eldoret CBD, Kenya</p>
+</div>
+<a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="btn">Message on WhatsApp</a>
 </section>
 </main>
 
 <footer>
+<div class="links">
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#contact">Contact</a>
+</div>
+<div class="socials">
+  <a href="https://wa.me/254726717361">WhatsApp</a>
+  <a href="#">Facebook</a>
+  <a href="#">Instagram</a>
+</div>
+<div class="footer-info">
+  <p>📍 Eldoret CBD, Kenya · 🕒 Mon–Sat: 8:00 AM – 8:00 PM</p>
+  <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>
+</div>
 <p>© <span id="y"></span> HQ CYBER. All Rights Reserved.</p>
 </footer>
 
-<!-- Cart Floating Button -->
-<div class="cart-btn" id="cartBtn">🛒</div>
-
-<!-- Cart Modal -->
-<div class="cart-modal" id="cartModal">
-  <h3>Your Cart</h3>
-  <div class="cart-items" id="cartItems">No items yet</div>
-  <div class="payment-options">
-    <button>M-Pesa</button>
-    <button>Card Payment</button>
-    <button>Bank Transfer</button>
-  </div>
-</div>
-
+<a class="whatsapp-float" href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" title="Chat on WhatsApp">💬</a>
 <a class="top" href="#">↑</a>
 
 <script>
 document.getElementById('y').textContent = new Date().getFullYear();
 
-const cartBtn = document.getElementById("cartBtn");
-const cartModal = document.getElementById("cartModal");
-const cartItems = document.getElementById("cartItems");
-let items = [];
-
-cartBtn.addEventListener("click", () => {
-  cartModal.style.display = cartModal.style.display === "block" ? "none" : "block";
-});
-
-document.querySelectorAll(".add-to-cart").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    const item = btn.getAttribute("data-item");
-    items.push(item);
-    cartItems.textContent = items.join(", ");
-    alert(item + " added to cart!");
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
   });
-});
+}, {threshold: 0.15});
+document.querySelectorAll('.card, .cat-card, .testimonial').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
