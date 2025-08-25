@@ -12,16 +12,15 @@
       --fg: #1a1d29;
       --muted: #5b6370;
       --card: #ffffff;
-      --accent: #2563eb;         /* Blue theme */
+      --accent: #2563eb;         
       --accent-hover: #1d4ed8;
-      --whatsapp: #25D366;       /* Green CTA */
+      --whatsapp: #25D366;       
       --shadow-pink: rgba(255, 20, 147, 0.45);
       --shadow-purple: rgba(147, 51, 234, 0.55);
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;scroll-behavior:smooth}
 
-    /* Header */
     header{position:sticky;top:0;backdrop-filter:saturate(1.5) blur(10px);background:rgba(255,255,255,0.9);border-bottom:1px solid #e5e7eb;z-index:1000}
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
     nav{display:flex;justify-content:space-between;align-items:center}
@@ -29,7 +28,6 @@
     nav a:hover{color:var(--accent)}
     .brand{font-weight:800;font-size:20px;color:var(--accent)}
 
-    /* Hero (reduced height + rounded) */
     .hero{padding:60px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);background-size:200% 200%;color:#fff;border-radius:20px;margin:18px 0 34px}
     .hero h1{font-size:36px;margin-bottom:8px}
     .hero p.lead{max-width:720px;margin:0 auto 14px;color:#e0e7ff;font-size:16px}
@@ -41,7 +39,6 @@
     section{padding:40px 16px;border-top:1px solid #e5e7eb}
     h2{margin-bottom:16px;font-size:28px;text-align:center}
 
-    /* Grids & Cards */
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
     .card,.cat-card{background:var(--card);border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;text-align:center;transition:transform .3s, box-shadow .3s;opacity:0;transform:translateY(24px)}
     .visible{opacity:1 !important;transform:translateY(0) !important}
@@ -51,35 +48,29 @@
     .price{color:#059669;font-weight:700;margin-top:8px}
     .cat-icon{font-size:40px;margin-bottom:10px;color:var(--accent)}
 
-    /* About tweaks */
     .about-text{color:#000;font-style:italic;line-height:1.45;margin:0 auto 10px;max-width:850px;text-align:center}
 
-    /* Testimonials & FAQ */
     .testimonials,.faq{max-width:800px;margin:auto;text-align:left}
     .testimonial{margin-bottom:18px;font-style:italic;color:var(--muted);opacity:0;transform:translateY(16px);transition:.6s ease}
     .testimonial.visible{opacity:1;transform:translateY(0)}
     .testimonial strong{display:block;margin-top:6px;color:var(--fg)}
 
-    /* Contact */
     .contact-info p{margin-bottom:8px}
 
-    /* Footer */
     footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px solid #e5e7eb;background:#f3f4f6}
     footer .links, footer .socials{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:10px}
     footer a{color:var(--muted);text-decoration:none;transition:color .2s}
     footer a:hover{color:var(--accent)}
     .footer-info{margin-top:8px;font-size:14px;color:var(--muted)}
 
-    /* Floating buttons */
     .top{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#fff;border-radius:999px;padding:10px 14px;text-decoration:none;transition:transform .2s}
     .top:hover{transform:scale(1.1)}
     .whatsapp-float{position:fixed;bottom:84px;right:18px;background:var(--whatsapp);color:#fff;border-radius:50%;padding:14px 16px;font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.2);text-decoration:none;font-weight:bold;transition:transform .2s}
     .whatsapp-float:hover{transform:scale(1.12)}
 
-    /* CART: Floating button + Modal */
+    /* CART */
     .cart-btn{position:fixed;bottom:150px;right:18px;background:#9333ea;color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.25);transition:transform .2s}
     .cart-btn:hover{transform:scale(1.12)}
-
     #cartOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
     .cart-modal{background:#fff;border-radius:16px;max-width:520px;width:92%;max-height:82vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25)}
     .cart-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #eee}
@@ -97,8 +88,7 @@
     .pay-bank{background:#f59e0b}
     .close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
 
-    /* Small helper badges */
-    .badge{display:inline-block;background:#eef2ff;color:#3730a3;font-weight:700;padding:2px 10px;border-radius:999px;font-size:12px}
+    .badge{display:inline-block;background:#eef2ff;color:#3730a3;font-weight:700;padding:2px 8px;border-radius:999px;font-size:12px;position:absolute;top:-8px;right:-8px;display:none;}
   </style>
 </head>
 <body>
@@ -121,40 +111,15 @@
 
   <!-- Main -->
   <main class="wrap">
-    <!-- Hero -->
     <section class="hero">
       <h1>Stay Connected with HQ TECH & CYBER</h1>
       <p class="lead">Premium smartphones, accessories, repairs & cyber services — trusted in Eldoret and across Kenya.</p>
       <a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER%20-%20Nahitaji%20msaada/bei" class="btn">Chat on WhatsApp</a>
     </section>
 
-    <!-- About -->
-    <section id="about">
-      <h2>About Us</h2>
-      <p class="about-text">At HQ Tech & Cyber, we provide the latest smartphones, accessories, expert repairs, and full cyber services at competitive prices. We focus on quality, reliability, and friendly support to keep you connected to what matters most.</p>
-    </section>
-
-    <!-- Services -->
+    <!-- Services (example cards) -->
     <section id="services">
       <h2>Our Products & Services</h2>
-
-      <!-- Categories (Cyber Services first) -->
-      <div class="grid" style="margin-bottom:24px;">
-        <div class="cat-card visible">
-          <div class="pad">
-            <div class="cat-icon">💻</div>
-            <h3>Cyber Services</h3>
-            <p>Online applications, KRA & eCitizen, CV/design & printing, scanning, laminating, wedding/invitation cards.</p>
-            <span class="badge">From KSh 50</span>
-          </div>
-        </div>
-        <div class="cat-card visible"><div class="pad"><div class="cat-icon">📱</div><h3>Smartphones</h3><p>Latest 2025 models with advanced tech and great prices.</p></div></div>
-        <div class="cat-card visible"><div class="pad"><div class="cat-icon">🎧</div><h3>Accessories</h3><p>Chargers, earphones, cases, screen protectors & more.</p></div></div>
-        <div class="cat-card visible"><div class="pad"><div class="cat-icon">🔧</div><h3>Repairs</h3><p>Phones & laptops: screens, batteries, software & upgrades.</p></div></div>
-        <div class="cat-card visible"><div class="pad"><div class="cat-icon">🌐</div><h3>Digital Services</h3><p>SIM registration, data bundles, device setup & backups.</p></div></div>
-      </div>
-
-      <!-- Product/Service Cards -->
       <div class="grid">
         <article class="card">
           <img alt="Cyber services" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&auto=format&fit=crop&q=60" />
@@ -181,102 +146,14 @@
             </div>
           </div>
         </article>
-
-        <article class="card">
-          <img alt="Repairs" src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?w=800&auto=format&fit=crop&q=60" />
-          <div class="pad">
-            <h3>Repairs</h3>
-            <p>Phones & laptops — diagnostics, parts replacement, software fixes.</p>
-            <div class="price">Request a quote</div>
-            <div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
-              <button class="btn-blue add-cart" data-name="Repair Service" data-price="0">Add to Cart</button>
-              <a class="btn" href="https://wa.me/254726717361?text=Nahitaji%20Repair">WhatsApp</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <img alt="Accessories" src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=800&auto=format&fit=crop&q=60" />
-          <div class="pad">
-            <h3>Phone Accessories</h3>
-            <p>Cases, chargers, cables, power banks, screen protectors & more.</p>
-            <div class="price">KSh 500 – 3,500</div>
-            <div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
-              <button class="btn-blue add-cart" data-name="Accessories" data-price="1000">Add to Cart</button>
-              <a class="btn" href="https://wa.me/254726717361?text=Nataka%20Accessories">WhatsApp</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section id="testimonials">
-      <h2>What Our Customers Say</h2>
-      <div class="testimonials">
-        <p class="testimonial">“HQ TECH & CYBER gave me the best deal on my new phone. Fast service and great quality!” <strong>— Rotich Elvis</strong></p>
-        <p class="testimonial">“I love the accessories I bought here, ziko durable na affordable!” <strong>— Wanjiru Grace</strong></p>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq">
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq">
-        <p><strong>Do you deliver?</strong><br>Yes — we deliver across Kenya. Same-day in Eldoret CBD when possible.</p>
-        <p><strong>Payment methods?</strong><br>M-Pesa, cash on delivery, and bank transfers. Card available on request.</p>
-        <p><strong>Warranty?</strong><br>Most devices come with a warranty. Ask for details per model.</p>
-      </div>
-    </section>
-
-    <!-- Feedback Form -->
-    <section id="feedback">
-      <h2>Feedback Form</h2>
-      <form id="feedbackForm" style="max-width:520px;margin:auto;display:flex;flex-direction:column;gap:12px;">
-        <input type="text" placeholder="Name" required style="padding:10px;border-radius:8px;border:1px solid #d1d5db;">
-        <input type="email" placeholder="Email" required style="padding:10px;border-radius:8px;border:1px solid #d1d5db;">
-        <textarea placeholder="Your message" required rows="4" style="padding:10px;border-radius:8px;border:1px solid #d1d5db;"></textarea>
-        <button type="submit" class="btn-blue" style="padding:12px 16px;border:none;border-radius:10px;font-weight:700;">Send Feedback</button>
-      </form>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <div class="contact-info" style="text-align:center">
-        <p>📧 <a href="mailto:hqcyber254@gmail.com">hqcyber254@gmail.com</a></p>
-        <p>📞 <a href="tel:+254726717361">+254 726 717 361</a></p>
-        <p>📍 Eldoret CBD, Kenya</p>
-      </div>
-      <div style="text-align:center;margin-top:8px;">
-        <a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="btn">Message on WhatsApp</a>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer>
-    <div class="links">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <div class="socials">
-      <a href="https://wa.me/254726717361">WhatsApp</a>
-      <a href="#">Facebook</a>
-      <a href="#">Instagram</a>
-    </div>
-    <div class="footer-info">
-      <p>📍 Eldoret CBD, Kenya · 🕒 Mon–Sat: 8:00 AM – 8:00 PM</p>
-      <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>
-    </div>
-    <p>© <span id="y"></span> HQ CYBER. All Rights Reserved.</p>
-  </footer>
-
   <!-- Floating Buttons -->
-  <button class="cart-btn" id="cartBtn" title="Open Cart">🛒</button>
+  <button class="cart-btn" id="cartBtn" title="Open Cart">
+    🛒 <span id="cartBadge" class="badge">0</span>
+  </button>
   <a class="whatsapp-float" href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" title="Chat on WhatsApp">💬</a>
   <a class="top" href="#" title="Back to top">↑</a>
 
@@ -301,39 +178,33 @@
   </div>
 
   <script>
-    // Year in footer
-    document.getElementById('y').textContent = new Date().getFullYear();
-
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-    },{threshold:0.15});
-    document.querySelectorAll('.card, .cat-card, .testimonial').forEach(el=>observer.observe(el));
-
-    // Feedback form (mock submit)
-    document.getElementById('feedbackForm')?.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      alert('Asante! Your feedback has been noted.');
-      e.target.reset();
-    });
-
-    // CART LOGIC (front-end mock)
-    const cartState = [];
+    // CART LOGIC
+    const cartState = JSON.parse(localStorage.getItem('cartState')||'[]');
     const cartBtn = document.getElementById('cartBtn');
     const cartOverlay = document.getElementById('cartOverlay');
     const cartItemsEl = document.getElementById('cartItems');
     const cartTotalEl = document.getElementById('cartTotal');
+    const cartBadge = document.getElementById('cartBadge');
 
     function toggleCart(show){
       cartOverlay.style.display = show ? 'flex' : 'none';
     }
     cartBtn.addEventListener('click', ()=> toggleCart(true));
 
+    function updateBadge(){
+      const totalQty = cartState.reduce((sum,i)=>sum+i.qty,0);
+      cartBadge.textContent = totalQty;
+      cartBadge.style.display = totalQty>0 ? 'inline-block' : 'none';
+    }
+
     function addToCart(name, price){
       const item = cartState.find(i=>i.name===name);
       if(item){ item.qty += 1; }
       else { cartState.push({name, price: Number(price)||0, qty:1}); }
       renderCart();
+      updateBadge();
+      localStorage.setItem('cartState', JSON.stringify(cartState));
+      showToast(`${name} added to cart`);
     }
 
     function changeQty(name, delta){
@@ -345,14 +216,21 @@
         cartState.splice(idx,1);
       }
       renderCart();
+      updateBadge();
+      localStorage.setItem('cartState', JSON.stringify(cartState));
     }
 
     function removeItem(name){
       const idx = cartState.findIndex(i=>i.name===name);
-      if(idx>-1){ cartState.splice(idx,1); renderCart(); }
+      if(idx>-1){ cartState.splice(idx,1); renderCart(); updateBadge(); localStorage.setItem('cartState', JSON.stringify(cartState)); }
     }
 
-    function clearCart(){ cartState.length = 0; renderCart(); }
+    function clearCart(){ 
+      cartState.length = 0; 
+      renderCart(); 
+      updateBadge(); 
+      localStorage.setItem('cartState', JSON.stringify(cartState)); 
+    }
 
     function renderCart(){
       if(cartState.length===0){
@@ -383,9 +261,6 @@
       btn.addEventListener('click', ()=>{
         const { name, price } = btn.dataset;
         addToCart(name, price);
-        // Small toast
-        btn.textContent = 'Added ✓';
-        setTimeout(()=>{ btn.textContent = 'Add to Cart'; }, 1000);
       });
     });
 
@@ -396,7 +271,28 @@
       alert(method + ' selected. Total: KSh ' + total.toLocaleString() + '\n(This is a front-end demo)');
     }
 
-    // Expose some functions for inline handlers
+    // Toast notification
+    function showToast(msg){
+      const toast = document.createElement('div');
+      toast.textContent = msg;
+      toast.style.position = 'fixed';
+      toast.style.bottom = '220px';
+      toast.style.right = '18px';
+      toast.style.background = '#2563eb';
+      toast.style.color = '#fff';
+      toast.style.padding = '10px 16px';
+      toast.style.borderRadius = '8px';
+      toast.style.boxShadow = '0 4px 12px rgba(0,0,0,.3)';
+      toast.style.zIndex = 1500;
+      document.body.appendChild(toast);
+      setTimeout(()=> toast.remove(), 1500);
+    }
+
+    // Initial render
+    renderCart();
+    updateBadge();
+
+    // Expose functions
     window.toggleCart = toggleCart;
     window.changeQty = changeQty;
     window.removeItem = removeItem;
