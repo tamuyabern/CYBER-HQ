@@ -64,7 +64,7 @@ p.lead { max-width: 700px; margin: 0 auto 16px; color: #e0e7ff; font-size: 16px;
   display: inline-block;
   margin-top: 10px;
   padding: 12px 20px;
-  border-radius: 30px; /* Rounded edges */
+  border-radius: 10px;
   background: #25D366;
   color: white;
   text-decoration: none;
@@ -78,7 +78,7 @@ p.lead { max-width: 700px; margin: 0 auto 16px; color: #e0e7ff; font-size: 16px;
 }
 
 section { padding: 40px 16px; border-top: 1px solid #e5e7eb; }
-h2 { margin-bottom: 16px; font-size: 26px; text-align: center; }
+h2 { margin-bottom: 16px; font-size: 28px; text-align: center; }
 
 .grid {
   display: grid;
@@ -179,48 +179,43 @@ footer a:hover { color: var(--accent); }
 }
 .whatsapp-float:hover { transform: scale(1.15); }
 
-/* Floating cart with counter */
+/* Floating Cart */
 .cart-float {
   position: fixed;
   bottom: 150px;
   right: 18px;
-  background: var(--accent);
+  background: #ff9800;
   color: white;
   border-radius: 50%;
   padding: 14px 16px;
   font-size: 22px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   transition: transform .2s;
-  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
 }
 .cart-float:hover { transform: scale(1.15); }
-.cart-count {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #e11d48;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 4px 6px;
-  border-radius: 50%;
-}
 
-/* Responsive headers */
-@media (max-width: 600px) {
-  nav a {
-    font-size: 12px;
-    margin-left: 8px;
-  }
-  h2 {
-    font-size: 20px;
-  }
+/* Modal */
+#cart-modal {
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:2000;
+  justify-content:center;
+  align-items:center;
 }
-
-/* Animations */
-@keyframes gradientBG {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-@keyframes slideUp { from {transform:translateY(40px);opacity:0;} to {transform:translateY(0);opacity:1;} }
-@keyframes fadeInUp { from {opacity:0; transform:translateY(30px);} to {opacity:1; transform:translateY(0);} }
+#cart-modal .box {
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  max-width:400px;
+  width:90%;
+  text-align:center;
+}
+#cart-modal .btn { display:block; width:100%; margin:8px 0; }
 </style>
 </head>
 <body>
@@ -254,55 +249,19 @@ footer a:hover { color: var(--accent); }
 <section id="services">
 <h2>Our Products & Services</h2>
 <div class="grid" style="margin-bottom:40px;">
-  <!-- Cyber Services -->
+
+  <!-- NEW Cyber Services -->
   <div class="cat-card">
     <div class="cat-icon">💻</div>
     <h3>Cyber Services</h3>
     <p>Online applications, KRA registration, wedding cards, printing, scanning, and more.</p>
   </div>
+
+  <!-- Existing -->
   <div class="cat-card"><div class="cat-icon">📱</div><h3>Smartphones</h3><p>Latest 2025 models with advanced technology.</p></div>
   <div class="cat-card"><div class="cat-icon">🎧</div><h3>Accessories</h3><p>Chargers, earphones, cases, and more.</p></div>
   <div class="cat-card"><div class="cat-icon">🔧</div><h3>Repairs</h3><p>Expert phone repairs and maintenance.</p></div>
   <div class="cat-card"><div class="cat-icon">🌐</div><h3>Digital Services</h3><p>SIM registration, bundles, software support.</p></div>
-</div>
-
-<div class="grid">
-  <article class="card">
-    <img alt="cyber services" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500&auto=format&fit=crop&q=60" />
-    <div class="pad">
-      <h3>Cyber Services</h3>
-      <p>Printing, KRA services, Wedding invitations, Online applications.</p>
-      <div class="price">Price: From KSh 50</div>
-      <button class="btn add-to-cart">Add to Cart</button>
-    </div>
-  </article>
-  <article class="card">
-    <img alt="smartphones" src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=500&auto=format&fit=crop&q=60" />
-    <div class="pad">
-      <h3>Smartphones</h3>
-      <p>Latest 2025 model with high-speed processor and dual cameras.</p>
-      <div class="price">Price: As low as KSh 7,000</div>
-      <button class="btn add-to-cart">Add to Cart</button>
-    </div>
-  </article>
-  <article class="card">
-    <img alt="Repairs" src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?w=500&auto=format&fit=crop&q=60" />
-    <div class="pad">
-      <h3>Repairs</h3>
-      <p>We do repairs for both phones, laptops and upgrades.</p>
-      <div class="price">Price: Please inquire about pricing</div>
-      <button class="btn add-to-cart">Add to Cart</button>
-    </div>
-  </article>
-  <article class="card">
-    <img alt="Accessories" src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=500&auto=format&fit=crop&q=60" />
-    <div class="pad">
-      <h3>Phone Accessories</h3>
-      <p>Chargers, cases, screen protectors, and more.</p>
-      <div class="price">Price: KSh 500 – 3,500</div>
-      <button class="btn add-to-cart">Add to Cart</button>
-    </div>
-  </article>
 </div>
 </section>
 
@@ -320,16 +279,6 @@ footer a:hover { color: var(--accent); }
   <p><strong>Do you deliver?</strong><br>Yes, we offer delivery across Kenya.</p>
   <p><strong>What payment methods do you accept?</strong><br>We accept M-Pesa, cash on delivery, and bank transfers.</p>
 </div>
-</section>
-
-<section id="feedback">
-<h2>Feedback Form</h2>
-<form style="max-width:500px;margin:auto;display:flex;flex-direction:column;gap:12px;">
-  <input type="text" placeholder="Name" required style="padding:10px;border-radius:6px;border:1px solid #ccc;">
-  <input type="email" placeholder="Email" required style="padding:10px;border-radius:6px;border:1px solid #ccc;">
-  <textarea placeholder="Your message" required style="padding:10px;border-radius:6px;border:1px solid #ccc;"></textarea>
-  <button type="submit" class="btn" style="background: var(--accent);">Send Feedback</button>
-</form>
 </section>
 
 <section id="contact">
@@ -361,9 +310,23 @@ footer a:hover { color: var(--accent); }
 <p>© <span id="y"></span> HQ CYBER. All Rights Reserved.</p>
 </footer>
 
+<!-- Floating Buttons -->
+<a class="cart-float" href="javascript:void(0)" onclick="openCart()" title="Checkout">🛒</a>
 <a class="whatsapp-float" href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" title="Chat on WhatsApp">💬</a>
-<a class="cart-float" title="View Cart">🛒<span class="cart-count" id="cart-count">0</span></a>
 <a class="top" href="#">↑</a>
+
+<!-- Cart Modal -->
+<div id="cart-modal">
+  <div class="box">
+    <h3>Choose Payment Option</h3>
+    <button onclick="payMpesa()" class="btn" style="background:#34b233;">Pay with M-Pesa</button>
+    <button onclick="payCard()" class="btn" style="background:#2563eb;">Pay with Card</button>
+    <button onclick="payBank()" class="btn" style="background:#6b7280;">Bank Transfer</button>
+    <a href="https://wa.me/254726717361?text=I%20want%20to%20checkout" class="btn" style="background:#25D366;">Checkout on WhatsApp</a>
+    <br><br>
+    <button onclick="closeCart()" style="background:#e11d48;color:white;padding:8px 14px;border:none;border-radius:8px;cursor:pointer;">Close</button>
+  </div>
+</div>
 
 <script>
 document.getElementById('y').textContent = new Date().getFullYear();
@@ -377,15 +340,21 @@ const observer = new IntersectionObserver(entries => {
 }, {threshold: 0.15});
 document.querySelectorAll('.card, .cat-card, .testimonial').forEach(el => observer.observe(el));
 
-// Floating cart counter
-let cartCount = 0;
-const cartBadge = document.getElementById('cart-count');
-document.querySelectorAll('.add-to-cart').forEach(btn => {
-  btn.addEventListener('click', () => {
-    cartCount++;
-    cartBadge.textContent = cartCount;
-  });
-});
+function openCart() {
+  document.getElementById('cart-modal').style.display = 'flex';
+}
+function closeCart() {
+  document.getElementById('cart-modal').style.display = 'none';
+}
+function payMpesa() {
+  alert("📲 Here you can integrate Safaricom Daraja API for M-Pesa STK push.");
+}
+function payCard() {
+  alert("💳 Card payments integration can be added here.");
+}
+function payBank() {
+  alert("🏦 Show bank account details or payment instructions.");
+}
 </script>
 </body>
 </html>
