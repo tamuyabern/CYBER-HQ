@@ -1,106 +1,94 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>HQ TECH & CYBER</title>
-<style>
-  body{font-family:system-ui,sans-serif;margin:0;padding:0;background:#f9fafc;color:#1a1d29;}
-  .wrap{max-width:1100px;margin:0 auto;padding:16px;}
-  header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;padding:12px;z-index:1000;}
-  nav{display:flex;justify-content:space-between;align-items:center;}
-  nav a{margin-left:12px;text-decoration:none;color:#5b6370;font-weight:600;font-size:14px;}
-  nav a:hover{color:#2563eb;}
-  .brand{font-weight:800;font-size:20px;color:#2563eb;}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HQ TECH & CYBER</title>
+  <meta name="description" content="HQ TECH & CYBER - Smartphones, accessories, repairs, cyber services and premium tech solutions in Kenya." />
+  <style>
+    :root {
+      --bg: #f9fafc;
+      --fg: #1a1d29;
+      --muted: #5b6370;
+      --card: #ffffff;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --whatsapp: #25D366;
+      --shadow-pink: rgba(255, 20, 147, 0.45);
+      --shadow-purple: rgba(147, 51, 234, 0.55);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;scroll-behavior:smooth}
 
-  .hero{padding:60px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);color:#fff;border-radius:20px;margin:18px 0 34px;}
-  .hero h1{font-size:36px;margin-bottom:8px;}
-  .hero p{max-width:720px;margin:0 auto 14px;font-size:16px;color:#e0e7ff;}
-  .btn{display:inline-block;padding:12px 20px;border-radius:10px;background:#25D366;color:#fff;text-decoration:none;font-weight:700;transition:transform .2s;}
-  .btn:hover{transform:scale(1.05);}
-  .btn-blue{background:#2563eb;color:#fff;}
-  .btn-blue:hover{background:#1d4ed8;}
+    header{position:sticky;top:0;backdrop-filter:saturate(1.5) blur(10px);background:rgba(255,255,255,0.9);border-bottom:1px solid #e5e7eb;z-index:1000}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    nav{display:flex;justify-content:space-between;align-items:center}
+    nav a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;font-size:14px;transition:color .2s}
+    nav a:hover{color:var(--accent)}
+    .brand{font-weight:800;font-size:20px;color:var(--accent)}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
-  .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;text-align:center;padding:16px;}
-  .card img{width:100%;height:180px;object-fit:cover;border-radius:12px;}
-  .price{color:#059669;font-weight:700;margin-top:8px;}
-  .add-cart{cursor:pointer;}
+    .hero{padding:60px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);background-size:200% 200%;color:#fff;border-radius:20px;margin:18px 0 34px}
+    .hero h1{font-size:36px;margin-bottom:8px}
+    .hero p.lead{max-width:720px;margin:0 auto 14px;color:#e0e7ff;font-size:16px}
+    .btn{display:inline-block;margin-top:10px;padding:12px 20px;border-radius:10px;background:var(--whatsapp);color:#fff;text-decoration:none;font-weight:700;transition:transform .2s,filter .2s}
+    .btn:hover{transform:translateY(-2px) scale(1.03);filter:brightness(1.05)}
+    .btn-blue{background:var(--accent);color:#fff}
+    .btn-blue:hover{background:var(--accent-hover)}
 
-  /* Floating cart button */
-  .cart-btn {
-    position: fixed;
-    bottom: 80px;
-    right: 18px;
-    background:#9333ea;
-    color:#fff;
-    border:none;
-    border-radius:50%;
-    padding:14px 16px;
-    font-size:20px;
-    cursor:pointer;
-    box-shadow:0 6px 16px rgba(0,0,0,.25);
-    z-index:9999;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
+    section{padding:40px 16px;border-top:1px solid #e5e7eb}
+    h2{margin-bottom:16px;font-size:28px;text-align:center}
 
-  /* Bounce animation */
-  @keyframes bounce {
-    0%, 100% { transform: scale(1); }
-    30% { transform: scale(1.3); }
-    50% { transform: scale(0.9); }
-    70% { transform: scale(1.1); }
-  }
-  .bounce {
-    animation: bounce 0.5s;
-  }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+    .card,.cat-card{background:var(--card);border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;text-align:center;transition:transform .3s, box-shadow .3s;opacity:0;transform:translateY(24px)}
+    .visible{opacity:1 !important;transform:translateY(0) !important}
+    .card:hover,.cat-card:hover{transform:translateY(-8px);box-shadow:0 10px 28px var(--shadow-purple), 0 0 18px var(--shadow-pink)}
+    .card img{width:100%;height:180px;object-fit:cover}
+    .pad{padding:16px}
+    .price{color:#059669;font-weight:700;margin-top:8px}
+    .cat-icon{font-size:40px;margin-bottom:10px;color:var(--accent)}
 
-  /* Badge */
-  .cart-badge {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background:red;
-    color:#fff;
-    font-size:12px;
-    font-weight:700;
-    padding:2px 6px;
-    border-radius:50%;
-  }
+    .about-text{color:#000;font-style:italic;line-height:1.45;margin:0 auto 10px;max-width:850px;text-align:center}
 
-  /* Cart modal */
-  #cartOverlay {
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    align-items:center;
-    justify-content:center;
-    z-index:1200;
-  }
-  .cart-modal{
-    background:#fff;
-    border-radius:16px;
-    max-width:520px;
-    width:92%;
-    max-height:82vh;
-    overflow:auto;
-    padding:16px;
-  }
-  .cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:8px 0;}
-  .qty{display:flex;align-items:center;gap:6px;}
-  .qty button{width:26px;height:26px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer;}
-  .remove{border:none;background:#ef4444;color:#fff;border-radius:6px;padding:4px 8px;cursor:pointer;}
-  .totals{display:flex;justify-content:space-between;margin-top:10px;font-weight:700;}
-  .pay-actions{display:grid;gap:8px;margin-top:12px;}
-  .pay-actions button{padding:10px;border:none;border-radius:10px;font-weight:700;color:#fff;cursor:pointer;}
-  .pay-mpesa{background:#10b981;}
-  .pay-card{background:#2563eb;}
-  .pay-bank{background:#f59e0b;}
-  .close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer;}
-</style>
+    .testimonial{margin-bottom:18px;font-style:italic;color:var(--muted);opacity:0;transform:translateY(16px);transition:.6s ease}
+    .testimonial.visible{opacity:1;transform:translateY(0)}
+    .testimonial strong{display:block;margin-top:6px;color:var(--fg)}
+
+    .contact-info p{margin-bottom:8px}
+
+    footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px solid #e5e7eb;background:#f3f4f6}
+    footer .links, footer .socials{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:10px}
+    footer a{color:var(--muted);text-decoration:none;transition:color .2s}
+    footer a:hover{color:var(--accent)}
+    .footer-info{margin-top:8px;font-size:14px;color:var(--muted)}
+
+    .top{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#fff;border-radius:999px;padding:10px 14px;text-decoration:none;transition:transform .2s}
+    .top:hover{transform:scale(1.1)}
+    .whatsapp-float{position:fixed;bottom:84px;right:18px;background:var(--whatsapp);color:#fff;border-radius:50%;padding:14px 16px;font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.2);text-decoration:none;font-weight:bold;transition:transform .2s}
+    .whatsapp-float:hover{transform:scale(1.12)}
+
+    .cart-btn{position:fixed;bottom:150px;right:18px;background:#9333ea;color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.25);transition:transform .2s}
+    .cart-btn:hover{transform:scale(1.12)}
+    .cart-badge{position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;width:20px;height:20px;font-size:12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+    #cartOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
+    .cart-modal{background:#fff;border-radius:16px;max-width:520px;width:92%;max-height:82vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+    .cart-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #eee}
+    .cart-body{padding:14px 18px}
+    .cart-items{display:flex;flex-direction:column;gap:10px}
+    .cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:8px 0}
+    .qty{display:flex;align-items:center;gap:6px}
+    .qty button{width:26px;height:26px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer}
+    .remove{border:none;background:#ef4444;color:#fff;border-radius:6px;padding:4px 8px;cursor:pointer}
+    .totals{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
+    .pay-actions{display:grid;gap:8px;margin-top:12px}
+    .pay-actions button{padding:10px;border:none;border-radius:10px;font-weight:700;color:#fff;cursor:pointer}
+    .pay-mpesa{background:#10b981}
+    .pay-card{background:#2563eb}
+    .pay-bank{background:#f59e0b}
+    .close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
+
+    .badge{display:inline-block;background:#eef2ff;color:#3730a3;font-weight:700;padding:2px 10px;border-radius:999px;font-size:12px}
+  </style>
 </head>
 <body>
 
@@ -111,137 +99,191 @@
       <div>
         <a href="#about">About</a>
         <a href="#services">Services</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#faq">FAQ</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#contact">Contact</a>
       </div>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
+  <!-- Hero -->
   <section class="hero">
-    <h1>HQ TECH & CYBER</h1>
-    <p>Premium smartphones, accessories, repairs & cyber services.</p>
+    <h1>Stay Connected with HQ TECH & CYBER</h1>
+    <p class="lead">Premium smartphones, accessories, repairs & cyber services — trusted in Eldoret and across Kenya.</p>
+    <a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="btn">Chat on WhatsApp</a>
   </section>
 
+  <!-- Services (example with Add to Cart buttons) -->
   <section id="services">
-    <h2>Our Products</h2>
+    <h2>Our Products & Services</h2>
     <div class="grid">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=800" alt="Smartphone">
-        <h3>Smartphone</h3>
-        <p>Latest models</p>
-        <div class="price">KSh 7000</div>
-        <button class="btn-blue add-cart" data-name="Smartphone" data-price="7000">Add to Cart</button>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=800" alt="Accessory">
-        <h3>Accessories</h3>
-        <p>Chargers, cables, cases</p>
-        <div class="price">KSh 1000</div>
-        <button class="btn-blue add-cart" data-name="Accessories" data-price="1000">Add to Cart</button>
-      </div>
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=800&auto=format&fit=crop&q=60" alt="Smartphone">
+        <div class="pad">
+          <h3>Smartphone</h3>
+          <p>Latest 2025 models with fast performance and great cameras.</p>
+          <div class="price">From KSh 7,000</div>
+          <div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
+            <button class="btn-blue add-cart" data-name="Smartphone" data-price="7000">Add to Cart</button>
+            <a class="btn" href="https://wa.me/254726717361?text=Nataka%20simu">WhatsApp</a>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=800&auto=format&fit=crop&q=60" alt="Accessories">
+        <div class="pad">
+          <h3>Accessories</h3>
+          <p>Cases, chargers, cables, power banks, screen protectors & more.</p>
+          <div class="price">KSh 500 – 3,500</div>
+          <div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
+            <button class="btn-blue add-cart" data-name="Accessories" data-price="1000">Add to Cart</button>
+            <a class="btn" href="https://wa.me/254726717361?text=Nataka%20Accessories">WhatsApp</a>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 </main>
 
-<!-- Floating cart button -->
-<button class="cart-btn" id="cartBtn">🛒<span class="cart-badge" id="cartBadge">0</span></button>
+<!-- Footer -->
+<footer>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="socials">
+    <a href="https://wa.me/254726717361">WhatsApp</a>
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
+  </div>
+  <div class="footer-info">
+    <p>📍 Eldoret CBD, Kenya · 🕒 Mon–Sat: 8:00 AM – 8:00 PM</p>
+    <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>
+  </div>
+  <p>© <span id="y"></span> HQ CYBER. All Rights Reserved.</p>
+</footer>
+
+<!-- Floating Buttons -->
+<button class="cart-btn" id="cartBtn" title="Open Cart">🛒
+  <div class="cart-badge" id="cartBadge">0</div>
+</button>
+<a class="whatsapp-float" href="https://wa.me/254726717361" title="Chat on WhatsApp">💬</a>
+<a class="top" href="#" title="Back to top">↑</a>
 
 <!-- Cart Modal -->
 <div id="cartOverlay">
   <div class="cart-modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <div class="cart-head">
       <strong>Your Cart</strong>
       <button class="close-cart" onclick="toggleCart(false)">Close</button>
     </div>
-    <div id="cartItems"></div>
-    <div class="totals"><span>Total</span><span id="cartTotal">KSh 0</span></div>
-    <div class="pay-actions">
-      <button class="pay-mpesa" onclick="mockPay('M-Pesa')">Pay with M-Pesa</button>
-      <button class="pay-card" onclick="mockPay('Card')">Pay with Card</button>
-      <button class="pay-bank" onclick="mockPay('Bank Transfer')">Bank Transfer</button>
-      <button class="close-cart" onclick="clearCart()">Clear Cart</button>
+    <div class="cart-body">
+      <div id="cartItems" class="cart-items"></div>
+      <div class="totals"><span>Total</span><span id="cartTotal">KSh 0</span></div>
+      <div class="pay-actions">
+        <button class="pay-mpesa" onclick="mockPay('M-Pesa')">Pay with M-Pesa</button>
+        <button class="pay-card" onclick="mockPay('Card')">Pay with Card</button>
+        <button class="pay-bank" onclick="mockPay('Bank Transfer')">Bank Transfer</button>
+        <button class="close-cart" onclick="clearCart()">Clear Cart</button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+
   const cartState = [];
   const cartBtn = document.getElementById('cartBtn');
-  const cartBadge = document.getElementById('cartBadge');
   const cartOverlay = document.getElementById('cartOverlay');
   const cartItemsEl = document.getElementById('cartItems');
   const cartTotalEl = document.getElementById('cartTotal');
+  const cartBadge = document.getElementById('cartBadge');
 
-  function toggleCart(show){ cartOverlay.style.display = show ? 'flex' : 'none'; }
-  cartBtn.addEventListener('click', ()=>toggleCart(true));
+  function toggleCart(show){
+    cartOverlay.style.display = show ? 'flex' : 'none';
+  }
+  cartBtn.addEventListener('click', ()=> toggleCart(true));
 
   function addToCart(name, price){
     const item = cartState.find(i=>i.name===name);
-    if(item){ item.qty += 1; } 
-    else { cartState.push({name, price:Number(price), qty:1}); }
+    if(item){ item.qty += 1; }
+    else { cartState.push({name, price: Number(price)||0, qty:1}); }
     renderCart();
-    // Add bounce
-    cartBtn.classList.add('bounce');
-    setTimeout(()=>cartBtn.classList.remove('bounce'),500);
   }
 
   function changeQty(name, delta){
     const item = cartState.find(i=>i.name===name);
     if(!item) return;
     item.qty += delta;
-    if(item.qty<=0){ cartState.splice(cartState.findIndex(i=>i.name===name),1); }
+    if(item.qty<=0){
+      const idx = cartState.findIndex(i=>i.name===name);
+      cartState.splice(idx,1);
+    }
     renderCart();
   }
 
-  function removeItem(name){ cartState.splice(cartState.findIndex(i=>i.name===name),1); renderCart(); }
+  function removeItem(name){
+    const idx = cartState.findIndex(i=>i.name===name);
+    if(idx>-1){ cartState.splice(idx,1); renderCart(); }
+  }
 
-  function clearCart(){ cartState.length=0; renderCart(); }
+  function clearCart(){ cartState.length = 0; renderCart(); }
 
   function renderCart(){
     if(cartState.length===0){
-      cartItemsEl.innerHTML='<p>Your cart is empty.</p>';
-      cartTotalEl.textContent='KSh 0';
-      cartBadge.textContent='0';
+      cartItemsEl.innerHTML = '<p>Your cart is empty.</p>';
+      cartTotalEl.textContent = 'KSh 0';
+      cartBadge.textContent = '0';
       return;
     }
-    let total=0;
+    let total = 0;
+    let count = 0;
     cartItemsEl.innerHTML = cartState.map(i=>{
-      total += i.price*i.qty;
-      return `
-        <div class="cart-row">
-          <span>${i.name}</span>
-          <div class="qty">
-            <button onclick="changeQty('${i.name}',-1)">-</button>
-            <strong>${i.qty}</strong>
-            <button onclick="changeQty('${i.name}',1)">+</button>
-          </div>
-          <span>KSh ${i.price}</span>
-          <button class="remove" onclick="removeItem('${i.name}')">Remove</button>
-        </div>`;
+      total += i.price * i.qty;
+      count += i.qty;
+      return `<div class="cart-row">
+        <span>${i.name}</span>
+        <div class="qty">
+          <button onclick="changeQty('${i.name.replace(/'/g,"\\'")}',-1)">-</button>
+          <strong>${i.qty}</strong>
+          <button onclick="changeQty('${i.name.replace(/'/g,"\\'")}',1)">+</button>
+        </div>
+        <span>KSh ${i.price}</span>
+        <button class="remove" onclick="removeItem('${i.name.replace(/'/g,"\\'")}')">Remove</button>
+      </div>`;
     }).join('');
-    cartTotalEl.textContent='KSh '+total.toLocaleString();
-    cartBadge.textContent = cartState.reduce((s,i)=>s+i.qty,0);
+    cartTotalEl.textContent = 'KSh ' + total.toLocaleString();
+    cartBadge.textContent = count;
   }
 
   document.querySelectorAll('.add-cart').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      addToCart(btn.dataset.name, btn.dataset.price);
-      btn.textContent='Added ✓';
-      setTimeout(()=>btn.textContent='Add to Cart',1000);
+    btn.addEventListener('click', ()=>{
+      const { name, price } = btn.dataset;
+      addToCart(name, price);
+      btn.textContent = 'Added ✓';
+      setTimeout(()=>{ btn.textContent = 'Add to Cart'; },1000);
     });
   });
 
   function mockPay(method){
-    if(cartState.length===0){ alert('Your cart is empty'); return; }
-    const total = cartState.reduce((s,i)=>s+i.price*i.qty,0);
-    alert(`${method} selected. Total: KSh ${total.toLocaleString()} (Demo Front-end)`);
+    if(cartState.length===0){ alert('Your cart is empty.'); return; }
+    const total = cartState.reduce((s,i)=> s + (i.price*i.qty), 0);
+    alert(method + ' selected. Total: KSh ' + total.toLocaleString() + '\n(This is a front-end demo)');
   }
 
-  window.toggleCart=toggleCart;
-  window.changeQty=changeQty;
-  window.removeItem=removeItem;
-  window.clearCart=clearCart;
-  window.mockPay=mockPay;
+  window.toggleCart = toggleCart;
+  window.changeQty = changeQty;
+  window.removeItem = removeItem;
+  window.clearCart = clearCart;
+  window.mockPay = mockPay;
 </script>
+
 </body>
 </html>
