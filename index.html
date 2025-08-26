@@ -121,9 +121,7 @@ h2{margin-bottom:16px;font-size:22px;text-align:center}
       </div>
       <div>
         <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#testimonials">Testimonials</a>
-        <a href="#faq">FAQ</a>
+        <a href="#categories">Products</a>
         <a href="#feedback">Feedback</a>
         <a href="#contact">Contact</a>
         <a href="#" id="loginBtn">Login/Register</a>
@@ -138,7 +136,7 @@ h2{margin-bottom:16px;font-size:22px;text-align:center}
     <p class="lead">Premium smartphones, accessories, repairs & cyber services — trusted in Eldoret and across Kenya.</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
       <a class="btn" href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" target="_blank">Chat on WhatsApp</a>
-      <a class="btn-blue" href="#services">Shop Now</a>
+      <a class="btn-blue" href="#categories">Shop Now</a>
     </div>
   </section>
 
@@ -148,45 +146,74 @@ h2{margin-bottom:16px;font-size:22px;text-align:center}
     <p class="about-text">At HQ Tech & Cyber, we provide the latest smartphones, accessories, expert repairs, and full cyber services at competitive prices. We focus on quality, reliability, and friendly support to keep you connected to what matters most.</p>
   </section>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <h2>Our Products & Services</h2>
-    <div class="grid">
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=1200&q=60&auto=format&fit=crop" alt="Smartphones">
-        <div class="pad">
-          <h3>Smartphone</h3>
-          <p>Latest models 2025 with great performance.</p>
-          <div class="price">KSh 7,000</div>
-          <button class="btn-blue add-cart" data-name="Smartphone" data-price="7000">Add to Cart</button>
-        </div>
-      </article>
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?w=1200&q=60&auto=format&fit=crop" alt="Repairs">
-        <div class="pad">
-          <h3>Repairs</h3>
-          <p>Phone & laptop repairs, diagnostics, software fixes.</p>
-          <div class="price">Request quote</div>
-          <button class="btn-blue add-cart" data-name="Repair Service" data-price="0">Add to Cart</button>
-        </div>
-      </article>
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=1200&q=60&auto=format&fit=crop" alt="Accessories">
-        <div class="pad">
-          <h3>Accessories</h3>
-          <p>Cases, chargers, cables, power banks & more.</p>
-          <div class="price">KSh 500 – 3,500</div>
-          <button class="btn-blue add-cart" data-name="Accessories" data-price="1000">Add to Cart</button>
-        </div>
-      </article>
-    </div>
-  </section>
+  <!-- CATEGORIES & PRODUCTS -->
+  <section id="categories">
+    <h2>Products & Categories</h2>
 
-  <!-- TESTIMONIALS -->
-  <section id="testimonials">
-    <h2>What Our Customers Say</h2>
-    <div class="testimonials">
-      <p class="testimonial">“HQ TECH & CYBER gave me the best deal on my new phone. Fast service and great quality!” <strong>— Rotich Elvis</strong></p>
+    <h3>Smartphones</h3>
+    <div class="grid" id="smartphones">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=1200&q=60&auto=format&fit=crop" alt="Smartphone 1">
+        <div class="pad">
+          <h4>iPhone 15</h4>
+          <p>Latest Apple flagship</p>
+          <div class="price">KSh 120,000</div>
+          <button class="btn-blue add-cart" data-name="iPhone 15" data-price="120000">Add to Cart</button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1200&q=60&auto=format&fit=crop" alt="Smartphone 2">
+        <div class="pad">
+          <h4>Samsung Galaxy S25</h4>
+          <p>Latest Samsung flagship</p>
+          <div class="price">KSh 110,000</div>
+          <button class="btn-blue add-cart" data-name="Samsung Galaxy S25" data-price="110000">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <h3>Accessories</h3>
+    <div class="grid" id="accessories">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=1200&q=60&auto=format&fit=crop" alt="Charger">
+        <div class="pad">
+          <h4>Fast Charger</h4>
+          <p>Quick charging USB-C</p>
+          <div class="price">KSh 2,500</div>
+          <button class="btn-blue add-cart" data-name="Fast Charger" data-price="2500">Add to Cart</button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1562136540-4f02786c1d8a?w=1200&q=60&auto=format&fit=crop" alt="Powerbank">
+        <div class="pad">
+          <h4>Powerbank 10,000mAh</h4>
+          <p>Portable and fast charging</p>
+          <div class="price">KSh 3,500</div>
+          <button class="btn-blue add-cart" data-name="Powerbank 10,000mAh" data-price="3500">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <h3>Repairs</h3>
+    <div class="grid" id="repairs">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?w=1200&q=60&auto=format&fit=crop" alt="Screen Repair">
+        <div class="pad">
+          <h4>Screen Repair</h4>
+          <p>Phone screen replacement</p>
+          <div class="price">KSh 8,000</div>
+          <button class="btn-blue add-cart" data-name="Screen Repair" data-price="8000">Add to Cart</button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1581091215362-9e51f48f4d4a?w=1200&q=60&auto=format&fit=crop" alt="Battery Replacement">
+        <div class="pad">
+          <h4>Battery Replacement</h4>
+          <p>Original battery swap</p>
+          <div class="price">KSh 5,500</div>
+          <button class="btn-blue add-cart" data-name="Battery Replacement" data-price="5500">Add to Cart</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -216,7 +243,7 @@ h2{margin-bottom:16px;font-size:22px;text-align:center}
 <footer>
   <div class="links">
     <a href="#about">About</a>
-    <a href="#services">Services</a>
+    <a href="#categories">Products</a>
     <a href="#feedback">Feedback</a>
     <a href="#contact">Contact</a>
   </div>
@@ -237,41 +264,37 @@ h2{margin-bottom:16px;font-size:22px;text-align:center}
     </div>
     <div class="cart-body">
       <div class="cart-items"></div>
-      <div class="totals"><span>Total:</span><span class="cart-total">KSh 0</span></div>
-      <div class="pay-actions">
-        <button class="pay-mpesa">Pay with M-Pesa</button>
-        <button class="pay-card">Pay with Card</button>
-      </div>
+      <div class="totals">Total: <span class="cart-total">KSh 0</span></div>
     </div>
   </div>
 </div>
 
-<!-- Login/Register Modal -->
+<!-- Auth Modal -->
 <div id="authOverlay">
   <div class="auth-modal">
     <h3 id="authTitle">Login</h3>
-    <input type="email" id="authEmail" placeholder="Email">
-    <input type="password" id="authPassword" placeholder="Password">
+    <input type="email" placeholder="Email" id="authEmail">
+    <input type="password" placeholder="Password" id="authPassword">
     <button id="authSubmit">Login</button>
     <button class="switch" id="switchAuth">Switch to Register</button>
-    <p id="authMessage" style="text-align:center;color:red;"></p>
+    <p id="authMessage" style="color:red;font-size:14px;text-align:center"></p>
   </div>
 </div>
 
 <script>
-/* ===== Firebase config ===== */
+// ===== Firebase Setup =====
 const firebaseConfig = {
   apiKey: "AIzaSyARasJlK67rXBKIiA01UIYi77Nk6PCMhZw",
   authDomain: "hq-cyber.firebaseapp.com",
   projectId: "hq-cyber",
   storageBucket: "hq-cyber.appspot.com",
   messagingSenderId: "406818676837",
-  appId: "1:406818676837:web:example"
+  appId: "1:406818676837:web:1234567890abcdef"
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-/* ===== Cart ===== */
+// ===== Cart =====
 let cart = [];
 const cartBtn = document.querySelector('.cart-btn');
 const cartBadge = document.querySelector('.cart-badge');
@@ -283,23 +306,18 @@ const closeCartBtn = document.querySelector('.close-cart');
 function updateCart() {
   cartBadge.textContent = cart.reduce((a,b)=>a+b.qty,0);
   cartItemsEl.innerHTML = '';
-  let total = 0;
+  let total=0;
   cart.forEach((item,i)=>{
-    const row = document.createElement('div');row.className='cart-row';
-    row.innerHTML=`
-      <div>${item.name}</div>
-      <div class="qty">
-        <button onclick="decreaseQty(${i})">-</button>
-        ${item.qty}
-        <button onclick="increaseQty(${i})">+</button>
-      </div>
+    const row=document.createElement('div');
+    row.className='cart-row';
+    row.innerHTML=`<div>${item.name}</div>
+      <div class="qty"><button onclick="decreaseQty(${i})">-</button>${item.qty}<button onclick="increaseQty(${i})">+</button></div>
       <div>KSh ${item.price*item.qty}</div>
-      <button class="remove" onclick="removeItem(${i})">x</button>
-    `;
+      <button class="remove" onclick="removeItem(${i})">x</button>`;
     cartItemsEl.appendChild(row);
-    total += item.price*item.qty;
+    total+=item.price*item.qty;
   });
-  cartTotalEl.textContent = `KSh ${total}`;
+  cartTotalEl.textContent=`KSh ${total}`;
 }
 
 function addToCart(name,price){
@@ -310,17 +328,14 @@ function addToCart(name,price){
 }
 
 function increaseQty(i){cart[i].qty++;updateCart();}
-function decreaseQty(i){if(cart[i].qty>1)cart[i].qty--;else removeItem(i);updateCart();}
+function decreaseQty(i){if(cart[i].qty>1) cart[i].qty--;else removeItem(i);updateCart();}
 function removeItem(i){cart.splice(i,1);updateCart();}
 
-cartBtn.addEventListener('click',()=>{cartOverlay.style.display='flex';});
-closeCartBtn.addEventListener('click',()=>{cartOverlay.style.display='none';});
+cartBtn.addEventListener('click',()=>cartOverlay.style.display='flex');
+closeCartBtn.addEventListener('click',()=>cartOverlay.style.display='none');
+document.querySelectorAll('.add-cart').forEach(btn=>btn.addEventListener('click',()=>addToCart(btn.dataset.name,parseInt(btn.dataset.price))));
 
-document.querySelectorAll('.add-cart').forEach(btn=>{
-  btn.addEventListener('click',()=>addToCart(btn.dataset.name,parseInt(btn.dataset.price)));
-});
-
-/* ===== Auth ===== */
+// ===== Auth =====
 const authOverlay = document.getElementById('authOverlay');
 const loginBtn = document.getElementById('loginBtn');
 const authTitle = document.getElementById('authTitle');
@@ -329,9 +344,9 @@ const authPassword = document.getElementById('authPassword');
 const authSubmit = document.getElementById('authSubmit');
 const switchAuth = document.getElementById('switchAuth');
 const authMessage = document.getElementById('authMessage');
-let isLogin = true;
+let isLogin=true;
 
-loginBtn.addEventListener('click',()=>{authOverlay.style.display='flex';});
+loginBtn.addEventListener('click',()=>authOverlay.style.display='flex');
 switchAuth.addEventListener('click',()=>{
   isLogin=!isLogin;
   authTitle.textContent=isLogin?'Login':'Register';
@@ -340,27 +355,22 @@ switchAuth.addEventListener('click',()=>{
 });
 
 authSubmit.addEventListener('click',()=>{
-  const email=authEmail.value;
-  const pass=authPassword.value;
+  const email=authEmail.value, pass=authPassword.value;
   if(isLogin){
-    auth.signInWithEmailAndPassword(email,pass).then(()=>{authOverlay.style.display='none';}).catch(e=>authMessage.textContent=e.message);
-  }else{
-    auth.createUserWithEmailAndPassword(email,pass).then(()=>{authOverlay.style.display='none';}).catch(e=>authMessage.textContent=e.message);
+    auth.signInWithEmailAndPassword(email,pass).then(()=>authOverlay.style.display='none').catch(e=>authMessage.textContent=e.message);
+  } else {
+    auth.createUserWithEmailAndPassword(email,pass).then(()=>authOverlay.style.display='none').catch(e=>authMessage.textContent=e.message);
   }
 });
 
-/* ===== Feedback ===== */
-const feedbackForm=document.getElementById('feedbackForm');
-feedbackForm.addEventListener('submit',e=>{
-  e.preventDefault();alert('Thank you for your feedback!');feedbackForm.reset();
+// ===== Feedback =====
+document.getElementById('feedbackForm').addEventListener('submit',e=>{
+  e.preventDefault(); alert('Thank you for your feedback!'); e.target.reset();
 });
 
-/* ===== Scroll animation ===== */
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
-},{threshold:0.1});
+// ===== Scroll Animation =====
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
 document.querySelectorAll('.card,.cat-card,.hero,h2,.about-text,.testimonial').forEach(el=>observer.observe(el));
-
 </script>
 </body>
 </html>
