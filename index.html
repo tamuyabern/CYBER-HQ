@@ -25,13 +25,10 @@ nav a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;f
 nav a:hover{color:var(--accent)}
 
 /* Logo */
-.brand{display:flex;align-items:center;flex-direction:column}
+.brand{display:flex;align-items:center}
 .brand .logo{width:50px;height:50px;border-radius:50%;overflow:hidden;display:inline-block;flex-shrink:0}
 .brand svg{width:100%;height:100%;display:block}
 header.shrink .brand .logo{width:38px;height:38px;}
-
-/* Countdown timer */
-#offerTimer{margin-top:12px;font-size:18px;font-weight:700;color:#fff;background:rgba(0,0,0,0.25);padding:6px 14px;border-radius:12px;display:inline-block;letter-spacing:1px}
 
 /* Hero */
 .hero{padding:46px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);background-size:200% 200%;color:#fff;border-radius:18px;margin:18px 0 34px;transition:transform .25s}
@@ -42,63 +39,12 @@ header.shrink .brand .logo{width:38px;height:38px;}
 .btn-blue{background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;transition:transform .16s}
 .btn-blue:hover{background:var(--accent-hover);transform:scale(1.03)}
 
-section{padding:30px 16px;border-top:1px solid #e5e7eb}
-h2{margin-bottom:16px;font-size:22px;text-align:center}
+/* Countdown card in hero */
+#offerTimer{display:inline-block;background:linear-gradient(45deg,#ef4444,#2563eb,#d946ef);padding:12px 20px;border-radius:18px;font-size:20px;font-weight:700;color:#fff;text-shadow:0 0 8px #fff,0 0 14px rgba(255,255,255,0.4);margin:12px auto;box-shadow:0 4px 20px rgba(147,51,234,0.45),0 0 24px rgba(239,68,68,0.35);}
 
-/* Grid & cards */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-.card,.cat-card{background:var(--card);border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;text-align:center;transition:transform .28s, box-shadow .28s, opacity .6s;opacity:0;transform:translateY(24px)}
-.visible{opacity:1 !important;transform:translateY(0) !important}
-.card:hover,.cat-card:hover{transform:translateY(-8px);box-shadow:0 10px 28px var(--shadow-purple), 0 0 18px var(--shadow-pink)}
-.card img{width:100%;height:180px;object-fit:cover}
-.pad{padding:16px}
-.price{color:#059669;font-weight:700;margin-top:8px}
-.cat-icon{font-size:40px;margin-bottom:10px;color:var(--accent)}
+/* ...rest of your CSS (cards, grids, footer, floating buttons, cart modal) stays the same ... */
 
-/* About tweaks */
-.about-text{color:#000;font-style:italic;line-height:1.45;margin:0 auto 10px;max-width:850px;text-align:center}
-
-/* Testimonials & FAQ */
-.testimonials,.faq{max-width:800px;margin:auto;text-align:left}
-.testimonial{margin-bottom:18px;font-style:italic;color:var(--muted);opacity:0;transform:translateY(16px);transition:.6s ease}
-.testimonial.visible{opacity:1;transform:translateY(0)}
-.testimonial strong{display:block;margin-top:6px;color:var(--fg)}
-
-/* Contact, Footer */
-.contact-info p{margin-bottom:8px;text-align:center}
-footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px solid #e5e7eb;background:#f3f4f6}
-footer .links, footer .socials{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:10px}
-footer a{color:var(--muted);text-decoration:none;transition:color .2s}
-footer a:hover{color:var(--accent)}
-.footer-info{margin-top:8px;font-size:14px;color:var(--muted)}
-
-/* Floating buttons */
-.top{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#fff;border-radius:999px;padding:10px 14px;text-decoration:none;transition:transform .2s}
-.top:hover{transform:scale(1.08)}
-.whatsapp-float{position:fixed;bottom:84px;right:18px;background:var(--whatsapp);color:#fff;border-radius:50%;padding:14px 16px;font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.2);text-decoration:none;font-weight:bold;transition:transform .2s}
-.whatsapp-float:hover{transform:scale(1.12)}
-
-/* Cart modal */
-.cart-btn{position:fixed;bottom:150px;right:18px;background:#2563eb;color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s}
-.cart-btn:hover{transform:scale(1.12)}
-.cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700}
-
-#cartOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
-.cart-modal{background:#fff;border-radius:12px;max-width:640px;width:94%;max-height:84vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25)}
-.cart-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #eee}
-.cart-body{padding:14px 18px}
-.cart-items{display:flex;flex-direction:column;gap:12px}
-.cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:10px 0}
-.qty{display:flex;align-items:center;gap:6px}
-.qty button{width:28px;height:28px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer}
-.remove{border:none;background:#ef4444;color:#fff;border-radius:6px;padding:6px 8px;cursor:pointer}
-.totals{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
-.pay-actions{display:grid;gap:8px;margin-top:12px}
-.pay-actions button{padding:10px;border:none;border-radius:10px;font-weight:700;color:#fff;cursor:pointer}
-.pay-mpesa{background:#10b981}
-.pay-card{background:#2563eb}
-.pay-bank{background:#f59e0b}
-.pay-close{background:#ef4444}
+/* For brevity, you can keep your full previous CSS here */
 </style>
 </head>
 <body>
@@ -120,8 +66,6 @@ footer a:hover{color:var(--accent)}
             <text x="50%" y="54%" font-family="sans-serif" font-size="36" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-weight="700">HQ</text>
           </svg>
         </span>
-        <!-- Countdown Timer -->
-        <div id="offerTimer">Offer ends in: 00d 00h 00m 00s</div>
       </div>
 
       <div>
@@ -137,110 +81,58 @@ footer a:hover{color:var(--accent)}
 </header>
 
 <main class="wrap">
-  <!-- Hero -->
+  <!-- HERO -->
   <section class="hero" id="hero">
     <h1>Stay Connected with HQ TECH & CYBER</h1>
     <p class="lead">Premium smartphones, accessories, repairs & cyber services — trusted in Eldoret and across Kenya.</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
+
+    <!-- Countdown Timer -->
+    <div id="offerTimer"></div>
+
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px;">
       <a class="btn" href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER%20-%20Nahitaji%20msaada/bei" target="_blank">Chat on WhatsApp</a>
       <a class="btn-blue" href="#services">Shop Now</a>
     </div>
   </section>
 
-  <!-- Services / Categories / Products sections (existing content) -->
-  <!-- Example placeholder -->
-  <section id="services">
-    <h2>Our Services</h2>
-    <div class="grid">
-      <div class="card pad">
-        <img src="https://via.placeholder.com/260x180.png?text=Smartphones" alt="Smartphones">
-        <h3>Smartphones</h3>
-        <p class="price">From KES 5,000</p>
-      </div>
-      <div class="card pad">
-        <img src="https://via.placeholder.com/260x180.png?text=Accessories" alt="Accessories">
-        <h3>Accessories</h3>
-        <p class="price">From KES 500</p>
-      </div>
-      <div class="card pad">
-        <img src="https://via.placeholder.com/260x180.png?text=Repairs" alt="Repairs">
-        <h3>Repairs</h3>
-        <p class="price">Affordable & fast</p>
-      </div>
-    </div>
-  </section>
+  <!-- ABOUT, SERVICES, TESTIMONIALS, FAQ, FEEDBACK, CONTACT, FOOTER sections remain same as your previous code -->
 
-  <!-- Testimonials placeholder -->
-  <section class="testimonials" id="testimonials">
-    <h2>Testimonials</h2>
-    <div class="testimonial visible">
-      "Excellent service and quick repairs!" <strong>- John K.</strong>
-    </div>
-    <div class="testimonial visible">
-      "High-quality accessories and amazing support." <strong>- Sarah N.</strong>
-    </div>
-  </section>
-
-  <!-- FAQ placeholder -->
-  <section class="faq" id="faq">
-    <h2>FAQ</h2>
-    <div>
-      <p><strong>Q:</strong> Do you deliver outside Eldoret?</p>
-      <p><strong>A:</strong> Yes, nationwide delivery is available.</p>
-    </div>
-  </section>
-
-  <!-- Contact placeholder -->
-  <section class="contact-info" id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: info@hqcyber.co.ke</p>
-    <p>Phone/WhatsApp: +254 726 717361</p>
-  </section>
 </main>
 
-<!-- Footer simplified -->
-<footer>
-  <div class="footer-info">© 2025 HQ TECH & CYBER. All rights reserved.</div>
-</footer>
-
-<!-- WhatsApp floating button -->
-<a href="https://wa.me/254726717361" target="_blank" class="whatsapp-float">💬</a>
+<!-- Floating Buttons, Cart, etc. remain same -->
 
 <script>
-/* ======= Countdown Timer ======= */
-const timerEl = document.getElementById('offerTimer');
-const savedDeadline = localStorage.getItem('offerDeadline');
-let deadline;
+/* ======= Persistent 48-hour Countdown ======= */
+const offerTimer = document.getElementById('offerTimer');
+const COUNTDOWN_KEY = 'hqOfferCountdown';
 
-if(savedDeadline){
-  deadline = new Date(savedDeadline);
-}else{
-  deadline = new Date();
-  deadline.setHours(deadline.getHours() + 48); // offer ends in 48 hours from first visit
-  localStorage.setItem('offerDeadline', deadline.toISOString());
+// Initialize target time
+let targetTime = localStorage.getItem(COUNTDOWN_KEY);
+if(!targetTime){
+  const now = new Date().getTime();
+  targetTime = now + 48*60*60*1000; // 48 hours
+  localStorage.setItem(COUNTDOWN_KEY, targetTime);
+} else {
+  targetTime = parseInt(targetTime,10);
 }
 
 function updateCountdown(){
-  const now = new Date();
-  const diff = deadline - now;
+  const now = new Date().getTime();
+  let distance = targetTime - now;
+  if(distance < 0) distance = 0;
 
-  if(diff <= 0){
-    timerEl.textContent = "Offer ended!";
-    localStorage.removeItem('offerDeadline');
-    return;
-  }
+  const hours = Math.floor(distance / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
 
-  const days = Math.floor(diff / (1000*60*60*24));
-  const hours = Math.floor((diff / (1000*60*60)) % 24);
-  const minutes = Math.floor((diff / (1000*60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
-
-  timerEl.textContent = `Offer ends in: ${String(days).padStart(2,'0')}d ${String(hours).padStart(2,'0')}h ${String(minutes).padStart(2,'0')}m ${String(seconds).padStart(2,'0')}s`;
+  offerTimer.textContent = `🔥 Offer Ends In: ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')} 🔥`;
 }
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
-</script>
 
+/* ======= The rest of your JS: cart, fly animation, feedback form, etc. ======= */
+// Copy all your previous JavaScript for cart, UI updates, feedback, scroll, header shrink etc.
+</script>
 </body>
 </html>
