@@ -30,8 +30,8 @@ nav a:hover{color:var(--accent)}
 .brand svg{width:100%;height:100%;display:block}
 header.shrink .brand .logo{width:38px;height:38px;}
 
-/* Countdown */
-#offerCountdown{margin-top:12px;font-size:18px;font-weight:700;color:#fff;text-shadow:0 0 6px #000;}
+/* Countdown timer */
+#offerTimer{margin-top:12px;font-size:18px;font-weight:700;color:#fff;background:rgba(0,0,0,0.25);padding:6px 14px;border-radius:12px;display:inline-block;letter-spacing:1px}
 
 /* Hero */
 .hero{padding:46px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);background-size:200% 200%;color:#fff;border-radius:18px;margin:18px 0 34px;transition:transform .25s}
@@ -98,14 +98,7 @@ footer a:hover{color:var(--accent)}
 .pay-mpesa{background:#10b981}
 .pay-card{background:#2563eb}
 .pay-bank{background:#f59e0b}
-.close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
-
-/* Fly-to-cart animation */
-@keyframes flyToCart {
-  to { transform: translate(var(--tx), var(--ty)) scale(0.08); opacity:0; }
-}
-.fly-img{position:fixed;z-index:2000;pointer-events:none;width:70px;height:70px;border-radius:8px;object-fit:cover;transition:opacity .2s;animation:flyToCart .7s forwards}
-@media (max-width:480px){ .fly-img{width:56px;height:56px} .hero h1{font-size:22px} }
+.pay-close{background:#ef4444}
 </style>
 </head>
 <body>
@@ -127,7 +120,8 @@ footer a:hover{color:var(--accent)}
             <text x="50%" y="54%" font-family="sans-serif" font-size="36" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-weight="700">HQ</text>
           </svg>
         </span>
-        <div id="offerCountdown">🔥 Offer ends in: 00d 00h 00m 00s 🔥</div>
+        <!-- Countdown Timer -->
+        <div id="offerTimer">Offer ends in: 00d 00h 00m 00s</div>
       </div>
 
       <div>
@@ -143,7 +137,7 @@ footer a:hover{color:var(--accent)}
 </header>
 
 <main class="wrap">
-  <!-- HERO -->
+  <!-- Hero -->
   <section class="hero" id="hero">
     <h1>Stay Connected with HQ TECH & CYBER</h1>
     <p class="lead">Premium smartphones, accessories, repairs & cyber services — trusted in Eldoret and across Kenya.</p>
@@ -153,140 +147,100 @@ footer a:hover{color:var(--accent)}
     </div>
   </section>
 
-  <!-- About, Services, Testimonials, FAQ, Feedback, Contact -->
-  <!-- ... keep all your previous sections ... -->
+  <!-- Services / Categories / Products sections (existing content) -->
+  <!-- Example placeholder -->
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="grid">
+      <div class="card pad">
+        <img src="https://via.placeholder.com/260x180.png?text=Smartphones" alt="Smartphones">
+        <h3>Smartphones</h3>
+        <p class="price">From KES 5,000</p>
+      </div>
+      <div class="card pad">
+        <img src="https://via.placeholder.com/260x180.png?text=Accessories" alt="Accessories">
+        <h3>Accessories</h3>
+        <p class="price">From KES 500</p>
+      </div>
+      <div class="card pad">
+        <img src="https://via.placeholder.com/260x180.png?text=Repairs" alt="Repairs">
+        <h3>Repairs</h3>
+        <p class="price">Affordable & fast</p>
+      </div>
+    </div>
+  </section>
 
+  <!-- Testimonials placeholder -->
+  <section class="testimonials" id="testimonials">
+    <h2>Testimonials</h2>
+    <div class="testimonial visible">
+      "Excellent service and quick repairs!" <strong>- John K.</strong>
+    </div>
+    <div class="testimonial visible">
+      "High-quality accessories and amazing support." <strong>- Sarah N.</strong>
+    </div>
+  </section>
+
+  <!-- FAQ placeholder -->
+  <section class="faq" id="faq">
+    <h2>FAQ</h2>
+    <div>
+      <p><strong>Q:</strong> Do you deliver outside Eldoret?</p>
+      <p><strong>A:</strong> Yes, nationwide delivery is available.</p>
+    </div>
+  </section>
+
+  <!-- Contact placeholder -->
+  <section class="contact-info" id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: info@hqcyber.co.ke</p>
+    <p>Phone/WhatsApp: +254 726 717361</p>
+  </section>
 </main>
 
-<!-- Footer and Floating Buttons -->
+<!-- Footer simplified -->
 <footer>
-  <div class="links">
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#faq">FAQ</a>
-    <a href="#feedback">Feedback</a>
-    <a href="#contact">Contact</a>
-  </div>
-  <div class="socials" style="margin-bottom:8px;">
-    <a href="https://wa.me/254726717361" target="_blank">💬 WhatsApp</a>
-    <a href="https://facebook.com/hqcyber" target="_blank">📘 Facebook</a>
-    <a href="https://instagram.com/hqcyber" target="_blank">📸 Instagram</a>
-  </div>
   <div class="footer-info">© 2025 HQ TECH & CYBER. All rights reserved.</div>
 </footer>
 
-<a href="#top" class="top" title="Back to top">↑</a>
-<a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="whatsapp-float" title="Chat on WhatsApp" target="_blank">💬</a>
-<button class="cart-btn" aria-label="Open cart">🛒 <span class="cart-badge">0</span></button>
-<div id="cartOverlay" aria-hidden="true">
-  <div class="cart-modal" role="dialog" aria-modal="true" aria-label="Shopping cart">
-    <div class="cart-head">
-      <h3>Your Cart</h3>
-      <button class="close-cart" aria-label="Close cart">✕</button>
-    </div>
-    <div class="cart-body">
-      <div class="cart-items"></div>
-      <div class="totals" style="margin-top:12px;">
-        <span>Total:</span><span class="cart-total">KSh 0</span>
-      </div>
-      <div class="pay-actions" style="margin-top:12px;">
-        <button class="pay-mpesa">Pay with M-Pesa</button>
-        <button class="pay-card">Pay with Card</button>
-        <button class="pay-bank">Pay with Bank</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- WhatsApp floating button -->
+<a href="https://wa.me/254726717361" target="_blank" class="whatsapp-float">💬</a>
 
 <script>
-// ===== Countdown Timer =====
-let endTime = localStorage.getItem('offerEndTime');
-if(!endTime){
-  let now = new Date().getTime();
-  endTime = now + 48*60*60*1000; // 48h offer
-  localStorage.setItem('offerEndTime', endTime);
+/* ======= Countdown Timer ======= */
+const timerEl = document.getElementById('offerTimer');
+const savedDeadline = localStorage.getItem('offerDeadline');
+let deadline;
+
+if(savedDeadline){
+  deadline = new Date(savedDeadline);
+}else{
+  deadline = new Date();
+  deadline.setHours(deadline.getHours() + 48); // offer ends in 48 hours from first visit
+  localStorage.setItem('offerDeadline', deadline.toISOString());
 }
-const countdownEl = document.getElementById('offerCountdown');
+
 function updateCountdown(){
-  const now = new Date().getTime();
-  let distance = endTime - now;
-  if(distance<0) distance=0;
-  const days = Math.floor(distance/(1000*60*60*24));
-  const hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-  const minutes = Math.floor((distance%(1000*60*60))/(1000*60));
-  const seconds = Math.floor((distance%(1000*60))/1000);
-  countdownEl.textContent = `🔥 Offer ends in: ${days}d ${hours}h ${minutes}m ${seconds}s 🔥`;
+  const now = new Date();
+  const diff = deadline - now;
+
+  if(diff <= 0){
+    timerEl.textContent = "Offer ended!";
+    localStorage.removeItem('offerDeadline');
+    return;
+  }
+
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff / (1000*60*60)) % 24);
+  const minutes = Math.floor((diff / (1000*60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  timerEl.textContent = `Offer ends in: ${String(days).padStart(2,'0')}d ${String(hours).padStart(2,'0')}h ${String(minutes).padStart(2,'0')}m ${String(seconds).padStart(2,'0')}s`;
 }
-setInterval(updateCountdown,1000);
+
 updateCountdown();
-
-// ===== Cart logic =====
-const cartBtn = document.querySelector('.cart-btn');
-const cartOverlay = document.getElementById('cartOverlay');
-const cartItemsEl = document.querySelector('.cart-items');
-const cartTotalEl = document.querySelector('.cart-total');
-const cartBadge = document.querySelector('.cart-badge');
-const closeCartBtn = document.querySelector('.close-cart');
-
-let cart = [];
-try { cart = JSON.parse(localStorage.getItem('hqCart') || '[]'); } catch(e){ cart = []; }
-
-function updateCartUI(){
-  cartItemsEl.innerHTML = '';
-  let total = 0;
-  cart.forEach((item, idx) => {
-    const row = document.createElement('div');
-    row.className = 'cart-row';
-    row.innerHTML = `
-      <span style="font-weight:600">${escapeHtml(item.name)}</span>
-      <div class="qty">
-        <button class="dec" type="button">-</button>
-        <span>${item.qty}</span>
-        <button class="inc" type="button">+</button>
-      </div>
-      <span>KSh ${formatNumber(item.price * item.qty)}</span>
-      <button class="remove" type="button">Remove</button>
-    `;
-    cartItemsEl.appendChild(row);
-
-    row.querySelector('.inc').addEventListener('click', () => { item.qty++; updateCartUI(); });
-    row.querySelector('.dec').addEventListener('click', () => {
-      if(item.qty>1){ item.qty--; } else { cart.splice(idx,1); }
-      updateCartUI();
-    });
-    row.querySelector('.remove').addEventListener('click', () => { cart.splice(idx,1); updateCartUI(); });
-
-    total += item.price * item.qty;
-  });
-
-  cartTotalEl.textContent = 'KSh ' + formatNumber(total);
-  cartBadge.textContent = cart.reduce((s,i)=>s+i.qty,0);
-  localStorage.setItem('hqCart', JSON.stringify(cart));
-}
-
-// Add-to-cart buttons
-document.querySelectorAll('.add-cart').forEach(btn => {
-  btn.addEventListener('click', function(){
-    const name = btn.dataset.name;
-    const price = parseInt(btn.dataset.price) || 0;
-    const existing = cart.find(i => i.name === name);
-    if(existing) existing.qty++;
-    else cart.push({name, price, qty:1});
-    updateCartUI();
-  });
-});
-
-// Cart open/close
-cartBtn.addEventListener('click', ()=> { cartOverlay.style.display = 'flex'; cartOverlay.setAttribute('aria-hidden','false'); });
-closeCartBtn.addEventListener('click', ()=> { cartOverlay.style.display = 'none'; cartOverlay.setAttribute('aria-hidden','true'); });
-cartOverlay.addEventListener('click', (e)=> { if(e.target === cartOverlay) { cartOverlay.style.display = 'none'; } });
-
-// Helpers
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-function formatNumber(n){ return n.toLocaleString('en-KE'); }
-
-updateCartUI();
+setInterval(updateCountdown, 1000);
 </script>
+
 </body>
 </html>
