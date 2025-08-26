@@ -249,7 +249,20 @@ footer a:hover{color:var(--accent)}
 
   <style>
 .faq p {
-  margin-bottom: 16px; /* Adjust spacing as needed */
+  margin-bottom: 16px; /* spacing between items */
+  line-height: 1.5;
+  position: relative;
+  padding-left: 24px; /* space for bullet */
+}
+
+/* Colored bullet before each FAQ answer */
+.faq p::before {
+  content: "✦"; /* bullet character */
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent); /* uses your accent color */
+  font-size: 18px;
   line-height: 1.5;
 }
 </style>
