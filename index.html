@@ -249,21 +249,19 @@ footer a:hover{color:var(--accent)}
 
   <style>
 .faq p {
+  display: flex;
+  align-items: flex-start; /* aligns bullet with first line of text */
+  gap: 10px; /* space between bullet and text */
   margin-bottom: 16px; /* spacing between items */
   line-height: 1.5;
-  position: relative;
-  padding-left: 24px; /* space for bullet */
 }
 
-/* Colored bullet before each FAQ answer */
+/* Colored bullet */
 .faq p::before {
   content: "✦"; /* bullet character */
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--accent); /* uses your accent color */
+  color: var(--accent);
   font-size: 18px;
-  line-height: 1.5;
+  flex-shrink: 0; /* prevents bullet from shrinking */
 }
 </style>
 
