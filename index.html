@@ -12,74 +12,63 @@
   --fg: #1a1d29;
   --muted: #5b6370;
   --card: #ffffff;
-  --accent: #2563eb; /* Blue theme */
+  --accent: #2563eb; 
   --accent-hover: #1d4ed8;
-  --whatsapp: #25D366; /* Green CTA */
+  --whatsapp: #25D366; 
   --shadow-pink: rgba(255, 20, 147, 0.45);
   --shadow-purple: rgba(147, 51, 234, 0.55);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;scroll-behavior:smooth}
 
-/* Header */
 header{position:sticky;top:0;backdrop-filter:saturate(1.5) blur(10px);background:rgba(255,255,255,0.9);border-bottom:1px solid #e5e7eb;z-index:1000}
 .wrap{max-width:1100px;margin:0 auto;padding:16px}
 nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
 nav a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;font-size:14px;transition:color .2s}
 nav a:hover{color:var(--accent)}
-.brand img{height:40px}
+.brand img{height:40px;}
 
 /* Hero */
-.hero{padding:50px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);background-size:200% 200%;color:#fff;border-radius:20px;margin:18px 0 34px;transition:transform .3s}
-.hero:hover{transform:scale(1.02)}
+.hero{padding:50px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);background-size:200% 200%;color:#fff;border-radius:20px;margin:18px 0 34px}
 .hero h1{font-size:28px;margin-bottom:8px}
 .hero p.lead{max-width:720px;margin:0 auto 14px;color:#e0e7ff;font-size:14px}
 .btn{display:inline-block;margin-top:10px;padding:10px 16px;border-radius:10px;background:var(--whatsapp);color:#fff;text-decoration:none;font-weight:700;transition:transform .2s,filter .2s}
-.btn:hover{transform:translateY(-2px) scale(1.05);filter:brightness(1.05)}
+.btn:hover{transform:translateY(-2px) scale(1.03);filter:brightness(1.05)}
 .btn-blue{background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;transition:transform .2s}
 .btn-blue:hover{background:var(--accent-hover);transform:scale(1.05)}
 
-/* Section Titles */
 section{padding:30px 16px;border-top:1px solid #e5e7eb}
 h2{margin-bottom:16px;font-size:22px;text-align:center}
 
-/* Grids & Cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-.card,.cat-card{background:var(--card);border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;text-align:center;transition:transform .3s, box-shadow .3s, opacity .6s;opacity:0;transform:translateY(24px)}
+.card,.cat-card{background:var(--card);border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;text-align:center;transition:transform .3s, box-shadow .3s;opacity:0;transform:translateY(24px)}
 .visible{opacity:1 !important;transform:translateY(0) !important}
-.card:hover,.cat-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 10px 28px var(--shadow-purple), 0 0 18px var(--shadow-pink)}
-.card img{width:100%;height:180px;object-fit:cover;transition:transform .3s}
-.card img:hover{transform:scale(1.05)}
+.card:hover,.cat-card:hover{transform:translateY(-8px);box-shadow:0 10px 28px var(--shadow-purple), 0 0 18px var(--shadow-pink)}
+.card img{width:100%;height:180px;object-fit:cover}
 .pad{padding:16px}
 .price{color:#059669;font-weight:700;margin-top:8px}
 .cat-icon{font-size:40px;margin-bottom:10px;color:var(--accent)}
 
-/* About tweaks */
 .about-text{color:#000;font-style:italic;line-height:1.45;margin:0 auto 10px;max-width:850px;text-align:center}
 
-/* Testimonials & FAQ */
 .testimonials,.faq{max-width:800px;margin:auto;text-align:left}
 .testimonial{margin-bottom:18px;font-style:italic;color:var(--muted);opacity:0;transform:translateY(16px);transition:.6s ease}
 .testimonial.visible{opacity:1;transform:translateY(0)}
 .testimonial strong{display:block;margin-top:6px;color:var(--fg)}
 
-/* Contact */
-.contact-info p{margin-bottom:8px;text-align:center}
+.contact-info p{margin-bottom:8px}
 
-/* Footer */
 footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px solid #e5e7eb;background:#f3f4f6}
 footer .links, footer .socials{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:10px}
 footer a{color:var(--muted);text-decoration:none;transition:color .2s}
 footer a:hover{color:var(--accent)}
 .footer-info{margin-top:8px;font-size:14px;color:var(--muted)}
 
-/* Floating buttons */
 .top{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#fff;border-radius:999px;padding:10px 14px;text-decoration:none;transition:transform .2s}
 .top:hover{transform:scale(1.1)}
 .whatsapp-float{position:fixed;bottom:84px;right:18px;background:var(--whatsapp);color:#fff;border-radius:50%;padding:14px 16px;font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.2);text-decoration:none;font-weight:bold;transition:transform .2s}
 .whatsapp-float:hover{transform:scale(1.12)}
 
-/* CART: Floating button + Modal + badge */
 .cart-btn{position:fixed;bottom:150px;right:18px;background:#2563eb;color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.25);transition:transform .2s}
 .cart-btn:hover{transform:scale(1.12)}
 .cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700}
@@ -95,16 +84,12 @@ footer a:hover{color:var(--accent)}
 .remove{border:none;background:#ef4444;color:#fff;border-radius:6px;padding:4px 8px;cursor:pointer}
 .totals{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
 .pay-actions{display:grid;gap:8px;margin-top:12px}
-.pay-actions button{padding:10px;border:none;border-radius:10px;font-weight:700;color:#fff;cursor:pointer;transition:transform .2s}
+.pay-actions button{padding:10px;border:none;border-radius:10px;font-weight:700;color:#fff;cursor:pointer}
 .pay-mpesa{background:#10b981}
-.pay-mpesa:hover{transform:scale(1.05)}
 .pay-card{background:#2563eb}
-.pay-card:hover{transform:scale(1.05)}
 .pay-bank{background:#f59e0b}
-.pay-bank:hover{transform:scale(1.05)}
 .close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
 
-/* Small helper badges */
 .badge{display:inline-block;background:#eef2ff;color:#3730a3;font-weight:700;padding:2px 10px;border-radius:999px;font-size:12px}
 </style>
 </head>
@@ -112,9 +97,7 @@ footer a:hover{color:var(--accent)}
 <header>
   <div class="wrap">
     <nav aria-label="Main Navigation">
-      <div class="brand">
-        <img src="images/hq-logo.png" alt="HQ CYBER" style="height:40px;">
-      </div>
+      <div class="brand"><img src="images/hq-logo.png" alt="HQ Cyber Logo"></div>
       <div>
         <a href="#about">About</a>
         <a href="#services">Services</a>
@@ -128,6 +111,7 @@ footer a:hover{color:var(--accent)}
 </header>
 
 <main class="wrap">
+<!-- Hero -->
 <section class="hero">
 <h1>Stay Connected with HQ TECH & CYBER</h1>
 <p class="lead">Premium smartphones, accessories, repairs & cyber services — trusted in Eldoret and across Kenya.</p>
@@ -137,27 +121,178 @@ footer a:hover{color:var(--accent)}
 </div>
 </section>
 
-<!-- Remaining sections (About, Services, Testimonials, FAQ, Feedback, Contact) remain exactly as before -->
+<!-- About -->
+<section id="about">
+<h2>About Us</h2>
+<p class="about-text">At HQ Tech & Cyber, we provide the latest smartphones, accessories, expert repairs, and full cyber services at competitive prices. We focus on quality, reliability, and friendly support to keep you connected to what matters most.</p>
+</section>
 
+<!-- Services -->
+<section id="services">
+<h2>Our Products & Services</h2>
+<div class="grid" style="margin-bottom:24px;">
+  <div class="cat-card visible">
+    <div class="pad">
+      <div class="cat-icon">💻</div>
+      <h3>Cyber Services</h3>
+      <p>Online applications, KRA & eCitizen, CV/design & printing, scanning, laminating, wedding/invitation cards.</p>
+      <span class="badge">From KSh 50</span>
+    </div>
+  </div>
+  <div class="cat-card visible">
+    <div class="pad"><div class="cat-icon">📱</div><h3>Smartphones</h3><p>Latest 2025 models with advanced tech and great prices.</p></div>
+  </div>
+  <div class="cat-card visible">
+    <div class="pad"><div class="cat-icon">🎧</div><h3>Accessories</h3><p>Chargers, earphones, cases, screen protectors & more.</p></div>
+  </div>
+  <div class="cat-card visible">
+    <div class="pad"><div class="cat-icon">🔧</div><h3>Repairs</h3><p>Phones & laptops: screens, batteries, software & upgrades.</p></div>
+  </div>
+  <div class="cat-card visible">
+    <div class="pad"><div class="cat-icon">🌐</div><h3>Digital Services</h3><p>SIM registration, data bundles, device setup & backups.</p></div>
+  </div>
+</div>
+
+<div class="grid">
+<article class="card">
+<img alt="Cyber services" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&auto=format&fit=crop&q=60" />
+<div class="pad">
+<h3>Cyber Services</h3>
+<p>Printing, KRA services, eCitizen, wedding invitations, scanning & more.</p>
+<div class="price">From KSh 50</div>
+<div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
+  <button class="btn-blue add-cart" data-name="Cyber Services" data-price="50">Add to Cart</button>
+  <a class="btn" href="https://wa.me/254726717361?text=Nahitaji%20Huduma%20za%20Cyber">WhatsApp</a>
+</div>
+</div>
+</article>
+
+<article class="card">
+<img alt="Smartphones" src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=800&auto=format&fit=crop&q=60" />
+<div class="pad">
+<h3>Smartphones</h3>
+<p>Latest 2025 models with fast performance and great cameras.</p>
+<div class="price">From KSh 7,000</div>
+<div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
+  <button class="btn-blue add-cart" data-name="Smartphone" data-price="7000">Add to Cart</button>
+  <a class="btn" href="https://wa.me/254726717361?text=Nataka%20simu">WhatsApp</a>
+</div>
+</div>
+</article>
+
+<article class="card">
+<img alt="Repairs" src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?w=800&auto=format&fit=crop&q=60" />
+<div class="pad">
+<h3>Repairs</h3>
+<p>Phones & laptops — diagnostics, parts replacement, software fixes.</p>
+<div class="price">Request a quote</div>
+<div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
+  <button class="btn-blue add-cart" data-name="Repair Service" data-price="0">Add to Cart</button>
+  <a class="btn" href="https://wa.me/254726717361?text=Nahitaji%20Repair">WhatsApp</a>
+</div>
+</div>
+</article>
+
+<article class="card">
+<img alt="Accessories" src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=800&auto=format&fit=crop&q=60" />
+<div class="pad">
+<h3>Phone Accessories</h3>
+<p>Cases, chargers, cables, power banks, screen protectors & more.</p>
+<div class="price">KSh 500 – 3,500</div>
+<div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
+  <button class="btn-blue add-cart" data-name="Accessories" data-price="1000">Add to Cart</button>
+  <a class="btn" href="https://wa.me/254726717361?text=Nataka%20Accessories">WhatsApp</a>
+</div>
+</div>
+</article>
+</div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+<h2>What Our Customers Say</h2>
+<div class="testimonials">
+<p class="testimonial">“HQ TECH & CYBER gave me the best deal on my new phone. Fast service and great quality!” <strong>— Rotich Elvis</strong></p>
+<p class="testimonial">“I love the accessories I bought here, ziko durable na affordable!” <strong>— Wanjiru Grace</strong></p>
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+<h2>Frequently Asked Questions</h2>
+<div class="faq">
+<p><strong>Do you deliver?</strong><br>Yes — we deliver across Kenya. Same-day in Eldoret CBD when possible.</p>
+<p><strong>Payment methods?</strong><br>M-Pesa, cash on delivery, and bank transfers. Card available on request.</p>
+<p><strong>Warranty?</strong><br>Most devices come with a warranty. Ask for details per model.</p>
+</div>
+</section>
+
+<!-- Feedback -->
+<section id="feedback">
+<h2>Feedback Form</h2>
+<form id="feedbackForm" style="max-width:520px;margin:auto;display:flex;flex-direction:column;gap:12px;">
+<input type="text" placeholder="Name" required style="padding:10px;border-radius:8px;border:1px solid #d1d5db;">
+<input type="email" placeholder="Email" required style="padding:10px;border-radius:8px;border:1px solid #d1d5db;">
+<textarea placeholder="Your message" required rows="4" style="padding:10px;border-radius:8px;border:1px solid #d1d5db;"></textarea>
+<button type="submit" class="btn-blue" style="padding:12px 16px;border:none;border-radius:10px;font-weight:700;">Send Feedback</button>
+</form>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+<h2>Contact</h2>
+<div class="contact-info" style="text-align:center;">
+<p>📍 Eldoret, Kenya</p>
+<p>📞 +254 726 717361</p>
+<p>📧 info@hqcyber.co.ke</p>
+</div>
+</section>
+</main>
+
+<!-- Floating Buttons -->
+<a href="#top" class="top">↑</a>
+<a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="whatsapp-float">💬</a>
+
+<!-- Cart -->
+<button class="cart-btn">🛒 <span class="cart-badge">0</span></button>
+<div id="cartOverlay">
+<div class="cart-modal">
+<div class="cart-head">
+<h3>Your Cart</h3>
+<button class="close-cart">✖</button>
+</div>
+<div class="cart-body">
+<div class="cart-items"></div>
+<div class="totals">Total: KSh <span class="total-amount">0</span></div>
+<div class="pay-actions">
+<button class="pay-actions-btn pay-mpesa">Pay via M-Pesa</button>
+<button class="pay-actions-btn pay-card">Pay via Card</button>
+<button class="pay-actions-btn pay-bank">Pay via Bank</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Footer -->
 <footer>
-  <div class="links">
+    <div class="links">
     <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#testimonials">Testimonials</a>
     <a href="#faq">FAQ</a>
+    <a href="#feedback">Feedback</a>
     <a href="#contact">Contact</a>
   </div>
   <div class="socials">
-    <a href="https://wa.me/254726717361" target="_blank">💬 WhatsApp</a>
-    <a href="https://www.facebook.com/HQCyber" target="_blank">📘 Facebook</a>
-    <a href="https://www.instagram.com/HQCyber" target="_blank">📸 Instagram</a>
+    <a href="https://wa.me/254726717361" target="_blank">WhatsApp</a>
+    <a href="https://facebook.com/hqcyber" target="_blank">Facebook</a>
+    <a href="https://instagram.com/hqcyber" target="_blank">Instagram</a>
   </div>
   <div class="footer-info">
     &copy; 2025 HQ TECH & CYBER. All rights reserved.
   </div>
 </footer>
 
-<!-- Floating Buttons, Cart, and Script remain exactly as before -->
 <script>
 // Fade-in on scroll
 function scrollAppear() {
@@ -205,6 +340,7 @@ function updateCart() {
   cartBadge.textContent = cart.reduce((sum,i)=>sum+i.qty,0);
 }
 
+// Animate towards cart
 function animateToCart(btn){
   const cartPos = cartBtn.getBoundingClientRect();
   const btnPos = btn.getBoundingClientRect();
@@ -265,3 +401,4 @@ document.querySelectorAll('.pay-actions-btn').forEach(btn=>{
 </script>
 </body>
 </html>
+
