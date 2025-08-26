@@ -227,6 +227,7 @@ footer a:hover{color:var(--accent)}
 
       <!-- ====== NEW SHOES SALE SECTION ====== -->
       <article class="card">
+        <span class="sale-badge">SALE</span>
         <img src="https://images.unsplash.com/photo-1579338559194-a162d19bf842?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Men's Wear">
         <div class="pad">
           <h3>Men's Wear</h3>
@@ -240,6 +241,7 @@ footer a:hover{color:var(--accent)}
       </article>
 
       <article class="card">
+        <span class="sale-badge">SALE</span>
         <img src="https://plus.unsplash.com/premium_photo-1723826752957-0a9a82c2cc80?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Lady's Wear">
         <div class="pad">
           <h3>Lady's Wear</h3>
@@ -291,6 +293,21 @@ footer a:hover{color:var(--accent)}
   font-size: 18px;
   line-height: 1.5;
 }
+
+.sale-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ef4444;
+  color: #fff;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  z-index: 2;
+}
+
+.card { position: relative; } /* ensure badge positions correctly */
 </style>
 
   <!-- FEEDBACK -->
