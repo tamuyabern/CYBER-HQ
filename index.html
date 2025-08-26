@@ -30,11 +30,13 @@ nav a:hover{color:var(--accent)}
 .brand svg{width:100%;height:100%;display:block}
 header.shrink .brand .logo{width:38px;height:38px;}
 
+/* Countdown */
+#offerCountdown{margin-top:12px;font-size:18px;font-weight:700;color:#fff;text-shadow:0 0 6px #000;}
+
 /* Hero */
 .hero{padding:46px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);background-size:200% 200%;color:#fff;border-radius:18px;margin:18px 0 34px;transition:transform .25s}
 .hero h1{font-size:28px;margin-bottom:8px}
 .hero p.lead{max-width:720px;margin:0 auto 14px;color:#e0e7ff;font-size:15px}
-#offerCountdown{font-size:18px;font-weight:700;margin-top:12px}
 .btn{display:inline-block;margin-top:10px;padding:10px 16px;border-radius:10px;background:var(--whatsapp);color:#fff;text-decoration:none;font-weight:700;transition:transform .16s,filter .16s}
 .btn:hover{transform:translateY(-2px) scale(1.03);filter:brightness(1.04)}
 .btn-blue{background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;transition:transform .16s}
@@ -125,6 +127,7 @@ footer a:hover{color:var(--accent)}
             <text x="50%" y="54%" font-family="sans-serif" font-size="36" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-weight="700">HQ</text>
           </svg>
         </span>
+        <div id="offerCountdown">🔥 Offer ends in: 00d 00h 00m 00s 🔥</div>
       </div>
 
       <div>
@@ -144,41 +147,18 @@ footer a:hover{color:var(--accent)}
   <section class="hero" id="hero">
     <h1>Stay Connected with HQ TECH & CYBER</h1>
     <p class="lead">Premium smartphones, accessories, repairs & cyber services — trusted in Eldoret and across Kenya.</p>
-    <p id="offerCountdown">🔥 Offer ends in: 00d 00h 00m 00s 🔥</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
       <a class="btn" href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER%20-%20Nahitaji%20msaada/bei" target="_blank">Chat on WhatsApp</a>
       <a class="btn-blue" href="#services">Shop Now</a>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <h2>About Us</h2>
-    <p class="about-text">At HQ Tech & Cyber, we provide the latest smartphones, accessories, expert repairs, and full cyber services at competitive prices. We focus on quality, reliability, and friendly support to keep you connected to what matters most.</p>
-  </section>
-
-  <!-- SERVICES -->
-  <section id="services">
-    <h2>Our Products & Services</h2>
-    <div class="grid" style="margin-bottom:22px;">
-      <div class="cat-card visible">
-        <div class="pad"><div class="cat-icon">💻</div><h3>Cyber Services</h3><p>Online applications, KRA & eCitizen, CV/design & printing, scanning, laminating, wedding/invitation cards.</p></div>
-      </div>
-      <div class="cat-card visible"><div class="pad"><div class="cat-icon">📱</div><h3>Smartphones</h3><p>Latest 2025 models with advanced tech and great prices.</p></div></div>
-      <div class="cat-card visible"><div class="pad"><div class="cat-icon">🎧</div><h3>Accessories</h3><p>Chargers, earphones, cases, screen protectors & more.</p></div></div>
-      <div class="cat-card visible"><div class="pad"><div class="cat-icon">🔧</div><h3>Repairs</h3><p>Phones & laptops: screens, batteries, software & upgrades.</p></div></div>
-      <div class="cat-card visible"><div class="pad"><div class="cat-icon">🌐</div><h3>Digital Services</h3><p>SIM registration, data bundles, device setup & backups.</p></div></div>
-    </div>
-
-    <div class="grid">
-      <!-- Products omitted for brevity, use your existing product cards -->
-    </div>
-  </section>
-
-  <!-- Other sections (Testimonials, FAQ, Feedback, Contact, Footer) remain unchanged -->
+  <!-- About, Services, Testimonials, FAQ, Feedback, Contact -->
+  <!-- ... keep all your previous sections ... -->
 
 </main>
 
+<!-- Footer and Floating Buttons -->
 <footer>
   <div class="links">
     <a href="#about">About</a>
@@ -196,38 +176,117 @@ footer a:hover{color:var(--accent)}
   <div class="footer-info">© 2025 HQ TECH & CYBER. All rights reserved.</div>
 </footer>
 
-<!-- Floating Buttons & Cart Modal remain unchanged -->
+<a href="#top" class="top" title="Back to top">↑</a>
+<a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="whatsapp-float" title="Chat on WhatsApp" target="_blank">💬</a>
+<button class="cart-btn" aria-label="Open cart">🛒 <span class="cart-badge">0</span></button>
+<div id="cartOverlay" aria-hidden="true">
+  <div class="cart-modal" role="dialog" aria-modal="true" aria-label="Shopping cart">
+    <div class="cart-head">
+      <h3>Your Cart</h3>
+      <button class="close-cart" aria-label="Close cart">✕</button>
+    </div>
+    <div class="cart-body">
+      <div class="cart-items"></div>
+      <div class="totals" style="margin-top:12px;">
+        <span>Total:</span><span class="cart-total">KSh 0</span>
+      </div>
+      <div class="pay-actions" style="margin-top:12px;">
+        <button class="pay-mpesa">Pay with M-Pesa</button>
+        <button class="pay-card">Pay with Card</button>
+        <button class="pay-bank">Pay with Bank</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-/* ======= Cart & UI scripts remain unchanged (reuse your existing script) ======= */
-
-/* ======= Countdown Timer ======= */
-const countdownEl = document.getElementById('offerCountdown');
-let offerEnd = localStorage.getItem('hqOfferEnd');
-if(!offerEnd){
-  const now = new Date();
-  offerEnd = new Date(now.getTime() + 3*24*60*60*1000).getTime();
-  localStorage.setItem('hqOfferEnd', offerEnd);
-} else {
-  offerEnd = parseInt(offerEnd);
+// ===== Countdown Timer =====
+let endTime = localStorage.getItem('offerEndTime');
+if(!endTime){
+  let now = new Date().getTime();
+  endTime = now + 48*60*60*1000; // 48h offer
+  localStorage.setItem('offerEndTime', endTime);
 }
+const countdownEl = document.getElementById('offerCountdown');
 function updateCountdown(){
   const now = new Date().getTime();
-  const distance = offerEnd - now;
-  if(distance <= 0){
-    countdownEl.textContent = "🔥 Offer has ended 🔥";
-    clearInterval(countdownInterval);
-    localStorage.removeItem('hqOfferEnd');
-    return;
-  }
-  const days = Math.floor(distance / (1000*60*60*24));
-  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-  const seconds = Math.floor((distance % (1000*60)) / 1000);
+  let distance = endTime - now;
+  if(distance<0) distance=0;
+  const days = Math.floor(distance/(1000*60*60*24));
+  const hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((distance%(1000*60*60))/(1000*60));
+  const seconds = Math.floor((distance%(1000*60))/1000);
   countdownEl.textContent = `🔥 Offer ends in: ${days}d ${hours}h ${minutes}m ${seconds}s 🔥`;
 }
-const countdownInterval = setInterval(updateCountdown, 1000);
+setInterval(updateCountdown,1000);
 updateCountdown();
+
+// ===== Cart logic =====
+const cartBtn = document.querySelector('.cart-btn');
+const cartOverlay = document.getElementById('cartOverlay');
+const cartItemsEl = document.querySelector('.cart-items');
+const cartTotalEl = document.querySelector('.cart-total');
+const cartBadge = document.querySelector('.cart-badge');
+const closeCartBtn = document.querySelector('.close-cart');
+
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem('hqCart') || '[]'); } catch(e){ cart = []; }
+
+function updateCartUI(){
+  cartItemsEl.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, idx) => {
+    const row = document.createElement('div');
+    row.className = 'cart-row';
+    row.innerHTML = `
+      <span style="font-weight:600">${escapeHtml(item.name)}</span>
+      <div class="qty">
+        <button class="dec" type="button">-</button>
+        <span>${item.qty}</span>
+        <button class="inc" type="button">+</button>
+      </div>
+      <span>KSh ${formatNumber(item.price * item.qty)}</span>
+      <button class="remove" type="button">Remove</button>
+    `;
+    cartItemsEl.appendChild(row);
+
+    row.querySelector('.inc').addEventListener('click', () => { item.qty++; updateCartUI(); });
+    row.querySelector('.dec').addEventListener('click', () => {
+      if(item.qty>1){ item.qty--; } else { cart.splice(idx,1); }
+      updateCartUI();
+    });
+    row.querySelector('.remove').addEventListener('click', () => { cart.splice(idx,1); updateCartUI(); });
+
+    total += item.price * item.qty;
+  });
+
+  cartTotalEl.textContent = 'KSh ' + formatNumber(total);
+  cartBadge.textContent = cart.reduce((s,i)=>s+i.qty,0);
+  localStorage.setItem('hqCart', JSON.stringify(cart));
+}
+
+// Add-to-cart buttons
+document.querySelectorAll('.add-cart').forEach(btn => {
+  btn.addEventListener('click', function(){
+    const name = btn.dataset.name;
+    const price = parseInt(btn.dataset.price) || 0;
+    const existing = cart.find(i => i.name === name);
+    if(existing) existing.qty++;
+    else cart.push({name, price, qty:1});
+    updateCartUI();
+  });
+});
+
+// Cart open/close
+cartBtn.addEventListener('click', ()=> { cartOverlay.style.display = 'flex'; cartOverlay.setAttribute('aria-hidden','false'); });
+closeCartBtn.addEventListener('click', ()=> { cartOverlay.style.display = 'none'; cartOverlay.setAttribute('aria-hidden','true'); });
+cartOverlay.addEventListener('click', (e)=> { if(e.target === cartOverlay) { cartOverlay.style.display = 'none'; } });
+
+// Helpers
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function formatNumber(n){ return n.toLocaleString('en-KE'); }
+
+updateCartUI();
 </script>
 </body>
 </html>
