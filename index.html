@@ -25,10 +25,13 @@ nav a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;f
 nav a:hover{color:var(--accent)}
 
 /* Logo */
-.brand{display:flex;align-items:center}
+.brand{display:flex;align-items:center;flex-direction:column;text-align:center}
 .brand .logo{width:50px;height:50px;border-radius:50%;overflow:hidden;display:inline-block;flex-shrink:0}
 .brand svg{width:100%;height:100%;display:block}
 header.shrink .brand .logo{width:38px;height:38px;}
+
+/* Countdown timer */
+#countdown{margin-top:10px;font-size:18px;font-weight:700;color:#fff;}
 
 /* Hero */
 .hero{padding:46px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);background-size:200% 200%;color:#fff;border-radius:18px;margin:18px 0 34px;transition:transform .25s}
@@ -39,8 +42,8 @@ header.shrink .brand .logo{width:38px;height:38px;}
 .btn-blue{background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;transition:transform .16s}
 .btn-blue:hover{background:var(--accent-hover);transform:scale(1.03)}
 
-/* Countdown card in hero */
-#offerTimer{display:inline-block;background:linear-gradient(45deg,#ef4444,#2563eb,#d946ef);padding:12px 20px;border-radius:18px;font-size:20px;font-weight:700;color:#fff;text-shadow:0 0 8px #fff,0 0 14px rgba(255,255,255,0.4);margin:12px auto;box-shadow:0 4px 20px rgba(147,51,234,0.45),0 0 24px rgba(239,68,68,0.35);}
+section{padding:30px 16px;border-top:1px solid #e5e7eb}
+h2{margin-bottom:16px;font-size:22px;text-align:center}
 
 /* Grid & cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
@@ -74,35 +77,6 @@ footer a:hover{color:var(--accent)}
 .top:hover{transform:scale(1.08)}
 .whatsapp-float{position:fixed;bottom:84px;right:18px;background:var(--whatsapp);color:#fff;border-radius:50%;padding:14px 16px;font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.2);text-decoration:none;font-weight:bold;transition:transform .2s}
 .whatsapp-float:hover{transform:scale(1.12)}
-
-/* Cart modal */
-.cart-btn{position:fixed;bottom:150px;right:18px;background:#2563eb;color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s}
-.cart-btn:hover{transform:scale(1.12)}
-.cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700}
-
-#cartOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
-.cart-modal{background:#fff;border-radius:12px;max-width:640px;width:94%;max-height:84vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25)}
-.cart-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #eee}
-.cart-body{padding:14px 18px}
-.cart-items{display:flex;flex-direction:column;gap:12px}
-.cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:10px 0}
-.qty{display:flex;align-items:center;gap:6px}
-.qty button{width:28px;height:28px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer}
-.remove{border:none;background:#ef4444;color:#fff;border-radius:6px;padding:6px 8px;cursor:pointer}
-.totals{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
-.pay-actions{display:grid;gap:8px;margin-top:12px}
-.pay-actions button{padding:10px;border:none;border-radius:10px;font-weight:700;color:#fff;cursor:pointer}
-.pay-mpesa{background:#10b981}
-.pay-card{background:#2563eb}
-.pay-bank{background:#f59e0b}
-.close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
-
-/* Fly-to-cart animation */
-@keyframes flyToCart {
-  to { transform: translate(var(--tx), var(--ty)) scale(0.08); opacity:0; }
-}
-.fly-img{position:fixed;z-index:2000;pointer-events:none;width:70px;height:70px;border-radius:8px;object-fit:cover;transition:opacity .2s;animation:flyToCart .7s forwards}
-@media (max-width:480px){ .fly-img{width:56px;height:56px} }
 </style>
 </head>
 <body>
@@ -124,7 +98,9 @@ footer a:hover{color:var(--accent)}
             <text x="50%" y="54%" font-family="sans-serif" font-size="36" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-weight="700">HQ</text>
           </svg>
         </span>
+        <div id="countdown">🔥 Offer ends in: --:--:--:-- 🔥</div>
       </div>
+
       <div>
         <a href="#about">About</a>
         <a href="#services">Services</a>
@@ -142,91 +118,143 @@ footer a:hover{color:var(--accent)}
   <section class="hero" id="hero">
     <h1>Stay Connected with HQ TECH & CYBER</h1>
     <p class="lead">Premium smartphones, accessories, repairs & cyber services — trusted in Eldoret and across Kenya.</p>
-
-    <!-- Countdown Timer -->
-    <div id="offerTimer"></div>
-
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px;">
-      <a class="btn" href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER%20-%20Nahitaji%20msaada/bei" target="_blank">Chat on WhatsApp</a>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
+      <a class="btn" href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" target="_blank">Chat on WhatsApp</a>
       <a class="btn-blue" href="#services">Shop Now</a>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section id="about" class="about">
-    <h2 style="text-align:center;margin-bottom:12px;">About HQ TECH & CYBER</h2>
-    <p class="about-text">We specialize in providing top-notch tech solutions including smartphones, accessories, cyber services, and repair solutions across Kenya. Our mission is to ensure reliable service and premium customer satisfaction.</p>
+  <section id="about">
+    <h2>About Us</h2>
+    <p class="about-text">We provide the latest smartphones, accessories, expert repairs, and full cyber services. Quality, reliability, and friendly support to keep you connected.</p>
   </section>
 
   <!-- SERVICES -->
-  <section id="services" class="services">
-    <h2 style="text-align:center;margin-bottom:12px;">Our Services</h2>
-    <div class="grid">
-      <div class="card">
-        <img src="https://via.placeholder.com/300x180?text=Smartphones" alt="Smartphones">
-        <div class="pad">
-          <h3>Smartphones</h3>
-          <p class="price">From KES 15,000</p>
-        </div>
+  <section id="services">
+    <h2>Our Products & Services</h2>
+
+    <div class="grid" style="margin-bottom:22px;">
+      <div class="cat-card visible">
+        <div class="pad"><div class="cat-icon">💻</div><h3>Cyber Services</h3><p>Printing, KRA & eCitizen, CV/design, scanning, laminating, invitations.</p></div>
       </div>
-      <div class="card">
-        <img src="https://via.placeholder.com/300x180?text=Accessories" alt="Accessories">
-        <div class="pad">
-          <h3>Accessories</h3>
-          <p class="price">From KES 500</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://via.placeholder.com/300x180?text=Repairs" alt="Repairs">
-        <div class="pad">
-          <h3>Repairs</h3>
-          <p class="price">Affordable rates</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://via.placeholder.com/300x180?text=Cyber+Services" alt="Cyber Services">
-        <div class="pad">
-          <h3>Cyber Services</h3>
-          <p class="price">KES 50/hour</p>
-        </div>
-      </div>
+      <div class="cat-card visible"><div class="pad"><div class="cat-icon">📱</div><h3>Smartphones</h3><p>Latest models with advanced tech.</p></div></div>
+      <div class="cat-card visible"><div class="pad"><div class="cat-icon">🎧</div><h3>Accessories</h3><p>Chargers, earphones, cases, screen protectors & more.</p></div></div>
+      <div class="cat-card visible"><div class="pad"><div class="cat-icon">🔧</div><h3>Repairs</h3><p>Phones & laptops: screens, batteries, software & upgrades.</p></div></div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS, FAQ, FEEDBACK, CONTACT, FOOTER sections -->
-  <!-- For brevity, keep all your previous sections as-is -->
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonials">
+      <p class="testimonial">“HQ TECH & CYBER gave me the best deal on my new phone. Fast service and great quality!” <strong>— Rotich Elvis</strong></p>
+      <p class="testimonial">“I love the accessories I bought here, ziko durable na affordable!” <strong>— Wanjiru Grace</strong></p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq">
+      <p><strong>Do you deliver?</strong><br>Yes — we deliver across Kenya. Same-day in Eldoret CBD when possible.</p>
+      <p><strong>Payment methods?</strong><br>M-Pesa, cash on delivery, and bank transfers. Card available on request.</p>
+      <p><strong>Warranty?</strong><br>Most devices come with a warranty. Ask for details per model.</p>
+    </div>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section id="feedback">
+    <h2>Feedback Form</h2>
+    <form id="feedbackForm" style="max-width:520px;margin:auto;display:flex;flex-direction:column;gap:12px;">
+      <input type="text" name="name" placeholder="Name" required style="padding:10px;border-radius:8px;border:1px solid #d1d5db;">
+      <input type="email" name="email" placeholder="Email" required style="padding:10px;border-radius:8px;border:1px solid #d1d5db;">
+      <textarea name="message" placeholder="Your message" required rows="4" style="padding:10px;border-radius:8px;border:1px solid #d1d5db;"></textarea>
+      <button type="submit" class="btn-blue" style="padding:12px 16px;border:none;border-radius:10px;font-weight:700;">Send Feedback</button>
+    </form>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact-info">
+      <p>📍 Eldoret, Kenya</p>
+      <p>📞 +254 726 717361</p>
+      <p>📧 info@hqcyber.co.ke</p>
+    </div>
+  </section>
 </main>
 
-<!-- Floating buttons -->
-<a href="#top" class="top">↑</a>
-<a href="https://wa.me/254726717361" class="whatsapp-float" target="_blank">💬</a>
-<button class="cart-btn">🛒<span class="cart-badge">0</span></button>
+<!-- FOOTER -->
+<footer>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#faq">FAQ</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="socials" style="margin-bottom:8px;">
+    <a href="https://wa.me/254726717361" target="_blank">💬 WhatsApp</a>
+    <a href="https://facebook.com/hqcyber" target="_blank">📘 Facebook</a>
+    <a href="https://instagram.com/hqcyber" target="_blank">📸 Instagram</a>
+  </div>
+  <div class="footer-info">© 2025 HQ TECH & CYBER. All rights reserved.</div>
+</footer>
+
+<!-- Floating Buttons -->
+<a href="#top" class="top" title="Back to top">↑</a>
+<a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="whatsapp-float" title="Chat on WhatsApp" target="_blank">💬</a>
 
 <script>
-/* ======= Persistent 48-hour Countdown ======= */
-const offerTimer = document.getElementById('offerTimer');
-const COUNTDOWN_KEY = 'hqOfferCountdown';
-let targetTime = localStorage.getItem(COUNTDOWN_KEY);
-if(!targetTime){
-  const now = new Date().getTime();
-  targetTime = now + 48*60*60*1000; 
-  localStorage.setItem(COUNTDOWN_KEY, targetTime);
-} else {
-  targetTime = parseInt(targetTime,10);
+// Countdown timer
+let offerEnd = localStorage.getItem('hqOfferEnd');
+if(!offerEnd){
+  const now = new Date();
+  // 3 days from now
+  offerEnd = new Date(now.getTime() + 3*24*60*60*1000);
+  localStorage.setItem('hqOfferEnd', offerEnd);
 }
-function updateCountdown(){
-  const now = new Date().getTime();
-  let distance = targetTime - now;
-  if(distance < 0) distance = 0;
-  const hours = Math.floor(distance / (1000*60*60));
-  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-  const seconds = Math.floor((distance % (1000*60)) / 1000);
-  offerTimer.textContent = `🔥 Offer Ends In: ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')} 🔥`;
-}
-updateCountdown();
-setInterval(updateCountdown,1000);
+offerEnd = new Date(offerEnd);
 
-/* ======= Keep all previous JS: cart, feedback, animations, header shrink, etc. ======= */
+function updateCountdown(){
+  const now = new Date();
+  let diff = offerEnd - now;
+  if(diff<0) diff = 0;
+  const days = Math.floor(diff/(1000*60*60*24));
+  const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const mins = Math.floor((diff%(1000*60*60))/(1000*60));
+  const secs = Math.floor((diff%(1000*60))/1000);
+  document.getElementById('countdown').textContent = `🔥 Offer ends in: ${days}d ${hours}h ${mins}m ${secs}s 🔥`;
+}
+setInterval(updateCountdown,1000);
+updateCountdown();
+
+// Feedback form simple alert
+const feedbackForm = document.getElementById('feedbackForm');
+feedbackForm && feedbackForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  alert('Thank you for your feedback!');
+  feedbackForm.reset();
+});
+
+// Scroll effects
+function revealOnScroll(){
+  document.querySelectorAll('.card, .cat-card, .testimonial').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 60) el.classList.add('visible');
+  });
+}
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
+
+window.addEventListener('scroll', ()=> {
+  const header = document.querySelector('header');
+  if(window.scrollY > 50) header.classList.add('shrink');
+  else header.classList.remove('shrink');
+});
+
 </script>
 </body>
 </html>
