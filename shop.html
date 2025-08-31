@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HQ TECH & CYBER Shop</title>
+<meta name="description" content="Shop premium smartphones, accessories, repairs, and more at HQ TECH & CYBER" />
+
+<style>
+:root{
+  --bg:#f9fafc; --fg:#1a1d29; --muted:#5b6370; --card:#fff;
+  --accent:#2563eb; --accent-hover:#1d4ed8; --btn:#25D366;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000;background:#fff;padding:12px;border-bottom:1px solid #e5e7eb}
+header a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;font-size:14px;transition:color .2s}
+header a:hover{color:var(--accent)}
+h2{text-align:center;margin:24px 0;font-size:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin:24px 0}
+.card{background:var(--card);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.card img{width:100%;height:160px;object-fit:cover}
+.card-body{padding:12px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.card-body h3{font-size:16px;margin-bottom:6px}
+.card-body p{font-size:14px;color:var(--muted);margin-bottom:10px}
+.card-body .price{font-weight:700;color:var(--accent);margin-bottom:8px}
+.card-body button{background:var(--btn);color:#fff;border:none;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer;transition:transform .16s}
+.card-body button:hover{transform:scale(1.05)}
+.cart-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);display:none;justify-content:center;align-items:center;z-index:999}
+.cart-content{background:#fff;padding:18px;border-radius:12px;max-width:400px;width:90%;max-height:80%;overflow-y:auto;position:relative}
+.cart-content h3{margin-bottom:12px;text-align:center}
+.cart-item{display:flex;justify-content:space-between;margin-bottom:10px}
+.cart-item span{font-weight:500}
+.close-cart{position:absolute;top:10px;right:10px;background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer}
+.top{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#fff;border-radius:999px;padding:10px 14px;text-decoration:none;transition:transform .2s}
+.top:hover{transform:scale(1.08)}
+</style>
+</head>
+<body>
+<a id="top"></a>
+<header>
+  <div><strong>HQ TECH & CYBER</strong></div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+  </div>
+</header>
+
+<main class="wrap">
+<h2>Shop Products</h2>
+
+<div class="grid" id="productGrid">
+  <!-- Cards will be inserted here by JS -->
+</div>
+</main>
+
+<!-- Cart Modal -->
+<div class="cart-modal" id="cartModal">
+  <div class="cart-content">
+    <button class="close-cart" id="closeCart">X</button>
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <p id="cartTotal"></p>
+  </div>
+</div>
+
+<a href="#top" class="top" title="Back to top">↑</a>
+
+<script>
+// PRODUCTS DATA
+const products = [
+  {id:1,name:"iPhone 14 Pro",price:120000,img:"https://via.placeholder.com/220x160?text=iPhone+14+Pro"},
+  {id:2,name:"Samsung Galaxy S23",price:95000,img:"https://via.placeholder.com/220x160?text=Samsung+S23"},
+  {id:3,name:"Headphones",price:4500,img:"https://via.placeholder.com/220x160?text=Headphones"},
+  {id:4,name:"Phone Case",price:1200,img:"https://via.placeholder.com/220x160?text=Phone+Case"},
+  {id:5,name:"Laptop Repair",price:5000,img:"https://via.placeholder.com/220x160?text=Laptop+Repair"},
+  {id:6,name:"Smartwatch",price:7500,img:"https://via.placeholder.com/220x160?text=Smartwatch"},
+  {id:7,name:"Gaming Mouse",price:3000,img:"https://via.placeholder.com/220x160?text=Gaming+Mouse"},
+  {id:8,name:"Shoes",price:2500,img:"https://via.placeholder.com/220x160?text=Shoes"}
+];
+
+const productGrid = document.getElementById('productGrid');
+const cartModal = document.getElementById('cartModal');
+const cartItemsEl = document.getElementById('cartItems');
+const cartTotalEl = document.getElementById('cartTotal');
+const closeCart = document.getElementById('closeCart');
+
+let cart = [];
+
+// Render products
+function renderProducts(){
+  productGrid.innerHTML = '';
+  products.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.name}">
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <p class="price">KES ${p.price.toLocaleString()}</p>
+        <button onclick="addToCart(${p.id})">Add to Cart</button>
+      </div>
+    `;
+    productGrid.appendChild(card);
+  });
+}
+
+// Add to cart
+function addToCart(id){
+  const product = products.find(p=>p.id===id);
+  const exist = cart.find(item=>item.id===id);
+  if(exist) exist.qty++;
+  else cart.push({...product,qty:1});
+  showCart();
+}
+
+// Show cart modal
+function showCart(){
+  cartModal.style.display = 'flex';
+  renderCart();
+}
+
+// Close cart
+closeCart.addEventListener('click', ()=>cartModal.style.display='none');
+
+// Render cart items
+function renderCart(){
+  cartItemsEl.innerHTML = '';
+  if(cart.length===0) cartItemsEl.innerHTML='<p>Your cart is empty</p>';
+  else{
+    let total = 0;
+    cart.forEach(item=>{
+      total += item.price*item.qty;
+      const div = document.createElement('div');
+      div.className='cart-item';
+      div.innerHTML = `<span>${item.name} x ${item.qty}</span> <span>KES ${ (item.price*item.qty).toLocaleString() }</span>`;
+      cartItemsEl.appendChild(div);
+    });
+    cartTotalEl.textContent = 'Total: KES ' + total.toLocaleString();
+  }
+}
+
+// Save cart to localStorage
+window.addEventListener('beforeunload', ()=>localStorage.setItem('cart',JSON.stringify(cart)));
+
+// Load cart from localStorage
+window.addEventListener('load', ()=>{
+  const saved = localStorage.getItem('cart');
+  if(saved) cart = JSON.parse(saved);
+});
+
+renderProducts();
+</script>
+</body>
+</html>
