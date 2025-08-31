@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>HQ TECH & CYBER - Shop</title>
+<title>HQ TECH & CYBER</title>
 <style>
 :root{
   --bg:#f9fafc; --fg:#1a1d29; --muted:#5b6370; --card:#fff;
@@ -12,7 +12,9 @@
   --shadow-purple: rgba(147,51,234,0.55);
 }
 body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5;margin:0;padding:0}
-header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;z-index:1000;padding:12px 0;text-align:center;font-weight:700}
+header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;z-index:1000;padding:12px 0;text-align:center;font-weight:700;display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+nav button{background:none;border:none;font-weight:700;font-size:16px;margin-left:10px;cursor:pointer;color:var(--accent)}
+nav button:hover{color:var(--accent-hover)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin:16px 0}
 .card{position:relative;background:var(--card);border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;transition:transform .28s, box-shadow .28s}
 .card:hover{transform:translateY(-6px);box-shadow:0 10px 28px var(--shadow-purple),0 0 18px var(--shadow-pink)}
@@ -47,9 +49,15 @@ header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;z-i
 </head>
 <body>
 
-<header>HQ TECH & CYBER - SHOP</header>
+<header>
+  <span>HQ TECH & CYBER</span>
+  <nav>
+    <button onclick="showHome()">Home</button>
+    <button onclick="showShop()">Shop</button>
+  </nav>
+</header>
 
-<main id="shopContainer" style="padding:16px;"></main>
+<main id="mainContent" style="padding:16px;"></main>
 
 <!-- Cart Button -->
 <button id="cartBtn">🛒 <span id="cartBadge">0</span></button>
@@ -74,7 +82,7 @@ header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e5e7eb;z-i
 </div>
 
 <script>
-const shopContainer=document.getElementById('shopContainer');
+const mainContent=document.getElementById('mainContent');
 const cartBtn=document.getElementById('cartBtn');
 const cartOverlay=document.getElementById('cartOverlay');
 const cartItemsEl=document.querySelector('.cart-items');
@@ -144,7 +152,7 @@ function addToCart(id){
 }
 
 function renderShop(){
-  shopContainer.innerHTML='';
+  mainContent.innerHTML='';
   categories.forEach(cat=>{
     const catDiv=document.createElement('div');
     catDiv.innerHTML=`<h3>${cat.name}</h3><div class="grid"></div>`;
@@ -162,14 +170,22 @@ function renderShop(){
       </div>`;
       grid.appendChild(card);
     });
-    shopContainer.appendChild(catDiv);
+    mainContent.appendChild(catDiv);
   });
+}
+
+function showHome(){
+  mainContent.innerHTML='<h2>Welcome to HQ TECH & CYBER</h2><p>Click Shop to explore products.</p>';
+}
+
+function showShop(){
+  renderShop();
 }
 
 cartBtn.addEventListener('click',()=>{cartOverlay.style.display='flex';cartOverlay.setAttribute('aria-hidden','false')});
 closeCartBtn.addEventListener('click',()=>{cartOverlay.style.display='none';cartOverlay.setAttribute('aria-hidden','true')});
 cartOverlay.addEventListener('click',e=>{if(e.target===cartOverlay){cartOverlay.style.display='none'}});
-renderShop();updateCartUI();
+showHome();updateCartUI();
 </script>
 
 </body>
