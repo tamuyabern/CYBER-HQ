@@ -23,12 +23,12 @@ h2{text-align:center;margin:24px 0;font-size:22px}
 .card{background:var(--card);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s;position:relative}
 .card:hover{transform:translateY(-3px)}
 .card img{width:100%;height:160px;object-fit:cover}
-.card-body{padding:12px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.card-body{padding:12px;flex:1;display:flex;flex-direction:column;justify-content:space-between;position:relative}
 .card-body h4{font-size:16px;margin-bottom:6px}
 .card-body p{font-size:14px;color:var(--muted);margin-bottom:10px}
 .card-body .price{font-weight:700;color:var(--accent);margin-bottom:8px}
-.card-body button{background:var(--btn);color:#fff;border:none;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer;transition:transform .16s}
-.card-body button:hover{transform:scale(1.05)}
+.card-body button,.cart-icon{background:none;border:none;cursor:pointer;position:absolute;top:10px;right:10px;width:32px;height:32px}
+.cart-icon img{width:100%;height:100%}
 .sale-badge{position:absolute;top:10px;left:10px;background:#ef4444;color:#fff;font-weight:700;padding:4px 8px;border-radius:6px;font-size:12px;z-index:2}
 .cart-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);display:none;justify-content:center;align-items:center;z-index:999}
 .cart-content{background:#fff;padding:18px;border-radius:12px;max-width:400px;width:90%;max-height:80%;overflow-y:auto;position:relative}
@@ -68,15 +68,52 @@ h2{text-align:center;margin:24px 0;font-size:22px}
 <a href="#top" class="top" title="Back to top">↑</a>
 
 <script>
+// Cart icon image URL
+const cartImg = "https://cdn-icons-png.flaticon.com/512/34/34568.png";
+
 // CATEGORIES WITH PRODUCTS/SERVICES
 const categories = [
   {name:"Cyber Services", items:[{id:1,name:"Cyber Services",price:0,img:"https://via.placeholder.com/220x160?text=Cyber+Services",addCart:false}]},
-  {name:"Smartphones", items:[{id:2,name:"Smartphone X",price:7000,img:"https://via.placeholder.com/220x160?text=Smartphone+X",addCart:true},{id:3,name:"Smartphone Y",price:9000,img:"https://via.placeholder.com/220x160?text=Smartphone+Y",addCart:true}]},
-  {name:"Accessories", items:[{id:4,name:"Headphones",price:500,img:"https://via.placeholder.com/220x160?text=Headphones",addCart:true},{id:5,name:"Chargers",price:300,img:"https://via.placeholder.com/220x160?text=Chargers",addCart:true}]},
-  {name:"Repairs", items:[{id:6,name:"Phone Repair",price:0,img:"https://via.placeholder.com/220x160?text=Phone+Repair",addCart:false}]},
-  {name:"Digital Services", items:[{id:7,name:"Printing",price:100,img:"https://via.placeholder.com/220x160?text=Printing",addCart:true},{id:8,name:"Scanning",price:50,img:"https://via.placeholder.com/220x160?text=Scanning",addCart:true}]},
-  {name:"Men's Wear", items:[{id:9,name:"Shirts",price:500,img:"https://via.placeholder.com/220x160?text=Shirts",addCart:true},{id:10,name:"Pants",price:700,img:"https://via.placeholder.com/220x160?text=Pants",addCart:true}]},
-  {name:"Lady's Wear", items:[{id:11,name:"Dresses",price:300,img:"https://via.placeholder.com/220x160?text=Dresses",addCart:true},{id:12,name:"Skirts",price:250,img:"https://via.placeholder.com/220x160?text=Skirts",addCart:true}]}
+  {name:"Smartphones", items:[
+    {id:2,name:"Smartphone 1",price:7000,img:"https://via.placeholder.com/220x160?text=Smartphone+1",addCart:true},
+    {id:3,name:"Smartphone 2",price:7500,img:"https://via.placeholder.com/220x160?text=Smartphone+2",addCart:true},
+    {id:4,name:"Smartphone 3",price:8000,img:"https://via.placeholder.com/220x160?text=Smartphone+3",addCart:true},
+    {id:5,name:"Smartphone 4",price:8500,img:"https://via.placeholder.com/220x160?text=Smartphone+4",addCart:true},
+    {id:6,name:"Smartphone 5",price:9000,img:"https://via.placeholder.com/220x160?text=Smartphone+5",addCart:true},
+    {id:7,name:"Smartphone 6",price:9500,img:"https://via.placeholder.com/220x160?text=Smartphone+6",addCart:true}
+  ]},
+  {name:"Accessories", items:[
+    {id:8,name:"Headphones",price:500,img:"https://via.placeholder.com/220x160?text=Headphones",addCart:true},
+    {id:9,name:"Chargers",price:300,img:"https://via.placeholder.com/220x160?text=Chargers",addCart:true},
+    {id:10,name:"USB Cable",price:150,img:"https://via.placeholder.com/220x160?text=USB+Cable",addCart:true},
+    {id:11,name:"Power Bank",price:1200,img:"https://via.placeholder.com/220x160?text=Power+Bank",addCart:true},
+    {id:12,name:"Earbuds",price:700,img:"https://via.placeholder.com/220x160?text=Earbuds",addCart:true},
+    {id:13,name:"Memory Card",price:400,img:"https://via.placeholder.com/220x160?text=Memory+Card",addCart:true},
+    {id:14,name:"Phone Case",price:350,img:"https://via.placeholder.com/220x160?text=Phone+Case",addCart:true},
+    {id:15,name:"Screen Protector",price:200,img:"https://via.placeholder.com/220x160?text=Screen+Protector",addCart:true}
+  ]},
+  {name:"Repairs", items:[{id:16,name:"Phone Repair",price:0,img:"https://via.placeholder.com/220x160?text=Phone+Repair",addCart:false}]},
+  {name:"Digital Services", items:[
+    {id:17,name:"Printing Service",price:0,img:"https://via.placeholder.com/220x160?text=Printing",addCart:false}
+  ]},
+  {name:"Men's Wear", items:[
+    {id:18,name:"Shirt 1",price:500,img:"https://via.placeholder.com/220x160?text=Shirt+1",addCart:true},
+    {id:19,name:"Shirt 2",price:550,img:"https://via.placeholder.com/220x160?text=Shirt+2",addCart:true},
+    {id:20,name:"Shirt 3",price:600,img:"https://via.placeholder.com/220x160?text=Shirt+3",addCart:true},
+    {id:21,name:"Pants 1",price:700,img:"https://via.placeholder.com/220x160?text=Pants+1",addCart:true},
+    {id:22,name:"Pants 2",price:750,img:"https://via.placeholder.com/220x160?text=Pants+2",addCart:true},
+    {id:23,name:"Pants 3",price:800,img:"https://via.placeholder.com/220x160?text=Pants+3",addCart:true}
+  ]},
+  {name:"Lady's Wear", items:[
+    {id:24,name:"Dress 1",price:300,img:"https://via.placeholder.com/220x160?text=Dress+1",addCart:true},
+    {id:25,name:"Dress 2",price:350,img:"https://via.placeholder.com/220x160?text=Dress+2",addCart:true},
+    {id:26,name:"Dress 3",price:400,img:"https://via.placeholder.com/220x160?text=Dress+3",addCart:true},
+    {id:27,name:"Skirt 1",price:250,img:"https://via.placeholder.com/220x160?text=Skirt+1",addCart:true},
+    {id:28,name:"Skirt 2",price:300,img:"https://via.placeholder.com/220x160?text=Skirt+2",addCart:true},
+    {id:29,name:"Blouse 1",price:350,img:"https://via.placeholder.com/220x160?text=Blouse+1",addCart:true},
+    {id:30,name:"Blouse 2",price:400,img:"https://via.placeholder.com/220x160?text=Blouse+2",addCart:true},
+    {id:31,name:"Blouse 3",price:450,img:"https://via.placeholder.com/220x160?text=Blouse+3",addCart:true}
+  ]}
 ];
 
 const shopContainer = document.getElementById('shopContainer');
@@ -88,7 +125,6 @@ const cartCounter = document.getElementById('cartCounter');
 
 let cart = [];
 
-// Render shop with categories
 function renderShop(){
   shopContainer.innerHTML='';
   categories.forEach(cat=>{
@@ -101,10 +137,11 @@ function renderShop(){
       card.className='card';
       card.innerHTML=`
         <img src="${p.img}" alt="${p.name}">
+        ${p.addCart?`<span class="sale-badge">Sale</span>`:''}
         <div class="card-body">
           <h4>${p.name}</h4>
-          ${p.addCart?`<p class="price">KES ${p.price.toLocaleString()}</p>`:''}
-          ${p.addCart?`<button onclick="addToCart(${p.id})">Add to Cart</button>`:''}
+          ${p.price>0?`<p class="price">KES ${p.price.toLocaleString()}</p>`:''}
+          ${p.addCart?`<button class="cart-icon" onclick="addToCart(${p.id})"><img src="${cartImg}" alt="Add to cart"></button>`:''}
         </div>
       `;
       grid.appendChild(card);
@@ -113,7 +150,6 @@ function renderShop(){
   });
 }
 
-// Add to cart
 function addToCart(id){
   let allItems = categories.flatMap(c=>c.items);
   const product = allItems.find(p=>p.id===id);
@@ -124,16 +160,13 @@ function addToCart(id){
   updateCounter();
 }
 
-// Show cart modal
 function showCart(){
   cartModal.style.display='flex';
   renderCart();
 }
 
-// Close cart
 closeCart.addEventListener('click', ()=>cartModal.style.display='none');
 
-// Render cart items
 function renderCart(){
   cartItemsEl.innerHTML='';
   if(cart.length===0) cartItemsEl.innerHTML='<p>Your cart is empty</p>';
@@ -150,13 +183,11 @@ function renderCart(){
   }
 }
 
-// Update cart counter
 function updateCounter(){
   const totalQty = cart.reduce((sum,item)=>sum+item.qty,0);
   cartCounter.textContent=totalQty;
 }
 
-// Save/load cart
 window.addEventListener('beforeunload', ()=>localStorage.setItem('cart',JSON.stringify(cart)));
 window.addEventListener('load', ()=>{
   const saved=localStorage.getItem('cart');
