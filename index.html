@@ -104,29 +104,20 @@ footer a:hover{color:var(--accent)}
 .fly-img{position:fixed;z-index:2000;pointer-events:none;width:70px;height:70px;border-radius:8px;object-fit:cover;transition:opacity .2s;animation:flyToCart .7s forwards}
 @media (max-width:480px){ .fly-img{width:56px;height:56px} .hero h1{font-size:22px} }
 
-.faq p {
-  margin-bottom: 16px;
-  line-height: 1.5;
-  position: relative;
-  padding-left: 24px;
-}
-.faq p::before {
-  content: "✦";
+.sale-badge {
   position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--accent);
-  font-size: 18px;
-  line-height: 1.5;
+  top: 10px;
+  left: 10px;
+  background: #ef4444;
+  color: #fff;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  z-index: 2;
 }
-.sale-badge {position: absolute; top: 10px; left: 10px; background: #ef4444; color: #fff; font-weight:700; padding:4px 8px; border-radius:6px; font-size:12px; z-index:2;}
-.card { position: relative; }
-@keyframes pulsePrice {
-  0% { transform: scale(1); color: #10b981; text-shadow: 0 0 2px #10b981; }
-  50% { transform: scale(1.15); color: #059669; text-shadow: 0 0 8px #059669; }
-  100% { transform: scale(1); color: #10b981; text-shadow: 0 0 2px #10b981; }
-}
-.price.sale { font-weight:700; animation: pulsePrice 1s infinite; }
+
+.card { position: relative; } 
 </style>
 </head>
 <body>
@@ -138,12 +129,18 @@ footer a:hover{color:var(--accent)}
       <div class="brand">
         <span class="logo" aria-hidden="true">
           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HQ Cyber logo">
-            <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#ef4444"/><stop offset="1" stop-color="#2563eb"/></linearGradient></defs>
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#ef4444"/>
+                <stop offset="1" stop-color="#2563eb"/>
+              </linearGradient>
+            </defs>
             <circle cx="50" cy="50" r="48" fill="url(#g1)"/>
             <text x="50%" y="54%" font-family="sans-serif" font-size="36" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-weight="700">HQ</text>
           </svg>
         </span>
       </div>
+
       <div>
         <a href="#about">About</a>
         <a href="#services">Services</a>
@@ -172,76 +169,38 @@ footer a:hover{color:var(--accent)}
     <p class="about-text">At HQ Tech & Cyber, we provide the latest smartphones, accessories, expert repairs, and full cyber services at competitive prices. We focus on quality, reliability, and friendly support to keep you connected to what matters most.</p>
   </section>
 
-  <!-- SERVICES -->
+  <!-- SERVICES / PRODUCTS -->
   <section id="services">
     <h2>Our Products & Services</h2>
-    <div class="grid" style="margin-bottom:22px;">
-      <div class="cat-card visible"><div class="pad"><div class="cat-icon">💻</div><h3>Cyber Services</h3><p>Online applications, KRA & eCitizen, CV/design & printing, scanning, laminating, wedding/invitation cards.</p></div></div>
-      <div class="cat-card visible"><div class="pad"><div class="cat-icon">📱</div><h3>Smartphones</h3><p>Latest 2025 models with advanced tech and great prices.</p></div></div>
-      <div class="cat-card visible"><div class="pad"><div class="cat-icon">🎧</div><h3>Accessories</h3><p>Chargers, earphones, cases, screen protectors & more.</p></div></div>
-      <div class="cat-card visible"><div class="pad"><div class="cat-icon">🔧</div><h3>Repairs</h3><p>Phones & laptops: screens, batteries, software & upgrades.</p></div></div>
-      <div class="cat-card visible"><div class="pad"><div class="cat-icon">🌐</div><h3>Digital Services</h3><p>SIM registration, data bundles, device setup & backups.</p></div></div>
-    </div>
-
-    <!-- Products Grid -->
     <div class="grid">
-      <!-- Cyber Services -->
+      <!-- Example Cards with Add to Cart -->
       <article class="card">
-        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=60&auto=format&fit=crop" alt="Cyber services image">
+        <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=1200&q=60&auto=format&fit=crop" alt="Smartphone">
         <div class="pad">
-          <h3>Cyber Services</h3>
-          <p>Printing, KRA services, eCitizen, wedding invitations, scanning & more.</p>
-          <div class="price">From KSh 50</div>
+          <h3>Smartphone XYZ</h3>
+          <p>Latest 2025 model with fast performance and great camera.</p>
+          <div class="price">7000</div>
+          <button class="btn-blue add-cart" data-name="Smartphone XYZ" data-price="7000">Add to Cart</button>
         </div>
       </article>
-      <!-- Smartphones -->
+
       <article class="card">
-        <a href="smartphones.html"><img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=1200&q=60&auto=format&fit=crop" alt="Smartphones"></a>
+        <img src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?w=1200&q=60&auto=format&fit=crop" alt="Laptop Repair">
         <div class="pad">
-          <h3><a href="smartphones.html">Smartphones</a></h3>
-          <p>Latest 2025 models with fast performance and great cameras.</p>
-          <div class="price">From KSh 7,000</div>
-          <a class="btn-blue" href="smartphones.html">View More</a>
+          <h3>Laptop Repair</h3>
+          <p>Screen replacement, battery & software fixes.</p>
+          <div class="price">1500</div>
+          <button class="btn-blue add-cart" data-name="Laptop Repair" data-price="1500">Add to Cart</button>
         </div>
       </article>
-      <!-- Repairs -->
+
       <article class="card">
-        <a href="repairs.html"><img src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?w=1200&q=60&auto=format&fit=crop" alt="Repairs"></a>
+        <img src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=1200&q=60&auto=format&fit=crop" alt="Accessories">
         <div class="pad">
-          <h3><a href="repairs.html">Repairs</a></h3>
-          <p>Phones & laptops — diagnostics, parts replacement, software fixes.</p>
-          <div class="price">Request a quote</div>
-          <a class="btn-blue" href="repairs.html">View More</a>
-        </div>
-      </article>
-      <!-- Accessories -->
-      <article class="card">
-        <a href="accessories.html"><img src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=1200&q=60&auto=format&fit=crop" alt="Accessories"></a>
-        <div class="pad">
-          <h3><a href="accessories.html">Phone Accessories</a></h3>
-          <p>Cases, chargers, cables, power banks, screen protectors & more.</p>
-          <div class="price">KSh 300 – 3,500</div>
-          <a class="btn-blue" href="accessories.html">View More</a>
-        </div>
-      </article>
-      <!-- Men’s Wear -->
-      <article class="card">
-        <a href="mens-wear.html"><img src="https://images.unsplash.com/photo-1579338559194-a162d19bf842?q=60&w=1200&auto=format&fit=crop" alt="Men's Wear"></a>
-        <div class="pad">
-          <h3><a href="mens-wear.html">Men's Shoes</a></h3>
-          <p>Quality sneakers & shoes for daily wear.</p>
-          <div class="price">KSh 1,500 – 4,000</div>
-          <a class="btn-blue" href="mens-wear.html">View More</a>
-        </div>
-      </article>
-      <!-- Lady’s Wear -->
-      <article class="card">
-        <a href="ladies-wear.html"><img src="https://images.unsplash.com/photo-1528701800489-34d3f93b5a0c?q=60&w=1200&auto=format&fit=crop" alt="Ladies Shoes"></a>
-        <div class="pad">
-          <h3><a href="ladies-wear.html">Ladies Shoes</a></h3>
-          <p>Trendy heels, sneakers & flats.</p>
-          <div class="price sale">KSh 1,200 – 3,500</div>
-          <a class="btn-blue" href="ladies-wear.html">View More</a>
+          <h3>Phone Accessories</h3>
+          <p>Chargers, cables, power banks & screen protectors.</p>
+          <div class="price">500</div>
+          <button class="btn-blue add-cart" data-name="Phone Accessories" data-price="500">Add to Cart</button>
         </div>
       </article>
     </div>
@@ -249,38 +208,30 @@ footer a:hover{color:var(--accent)}
 
   <!-- TESTIMONIALS -->
   <section id="testimonials">
-    <h2>Testimonials</h2>
+    <h2>What Our Customers Say</h2>
     <div class="testimonials">
-      <div class="testimonial visible">
-        "HQ Cyber helped me get my phone repaired in no time. Highly recommend!" <strong>- James K.</strong>
-      </div>
-      <div class="testimonial visible">
-        "Best cyber services in town. Friendly staff and great prices." <strong>- Sarah M.</strong>
-      </div>
+      <p class="testimonial">“HQ TECH & CYBER gave me the best deal on my new phone. Fast service and great quality!” <strong>— Rotich Elvis</strong></p>
+      <p class="testimonial">“I love the accessories I bought here, ziko durable na affordable!” <strong>— Wanjiru Grace</strong></p>
     </div>
   </section>
 
   <!-- FAQ -->
   <section id="faq">
-    <h2>FAQ</h2>
+    <h2>Frequently Asked Questions</h2>
     <div class="faq">
-      <p>Do you deliver products nationwide?</p>
-      <p>Yes, we deliver anywhere in Kenya with secure shipping options.</p>
-      <p>Do you offer warranty on repairs?</p>
-      <p>Yes, all repairs come with a 3-month warranty on parts and labor.</p>
-      <p>Can I pay via M-Pesa or card?</p>
-      <p>Absolutely, we accept M-Pesa, card, and bank transfers.</p>
+      <p><strong>Do you deliver?</strong><br>&#x2726; Yes — we deliver across Kenya. Same-day in Eldoret CBD when possible.</p>
+      <p><strong>Payment methods?</strong><br>&#x2726; Mpesa, card, bank transfer accepted.</p>
     </div>
   </section>
 
   <!-- FEEDBACK -->
   <section id="feedback">
-    <h2>Send Us Feedback</h2>
-    <form style="max-width:600px;margin:auto;display:flex;flex-direction:column;gap:12px">
-      <input type="text" placeholder="Your Name" required style="padding:10px;border-radius:8px;border:1px solid #ccc">
-      <input type="email" placeholder="Your Email" required style="padding:10px;border-radius:8px;border:1px solid #ccc">
-      <textarea placeholder="Your Feedback" rows="4" required style="padding:10px;border-radius:8px;border:1px solid #ccc"></textarea>
-      <button type="submit" class="btn-blue">Submit Feedback</button>
+    <h2>Leave Your Feedback</h2>
+    <form style="max-width:500px;margin:auto;display:flex;flex-direction:column;gap:12px;">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea placeholder="Your Feedback" rows="4" required></textarea>
+      <button type="submit" class="btn-blue">Submit</button>
     </form>
   </section>
 
@@ -289,43 +240,32 @@ footer a:hover{color:var(--accent)}
     <h2>Contact Us</h2>
     <div class="contact-info">
       <p>📍 Eldoret, Kenya</p>
-      <p>📞 +254 726 717 361</p>
-      <p>✉️ info@hqcyber.com</p>
-      <p>💬 <a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER">Chat on WhatsApp</a></p>
+      <p>📞 +254 726 717361</p>
+      <p>📧 hqtechcyber@gmail.com</p>
+      <a href="https://wa.me/254726717361" class="btn">Chat on WhatsApp</a>
     </div>
   </section>
 </main>
 
-<!-- Footer -->
-<footer>
-  <div class="links">
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#faq">FAQ</a>
-    <a href="#feedback">Feedback</a>
-    <a href="#contact">Contact</a>
-  </div>
-  <div class="footer-info">&copy; 2025 HQ TECH & CYBER. All rights reserved.</div>
-</footer>
-
-<!-- Floating / Cart Buttons -->
+<!-- Floating Buttons -->
 <a href="#top" class="top">↑</a>
-<a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="whatsapp-float">💬</a>
-<button class="cart-btn" id="cartBtn">🛒<span class="cart-badge" id="cartCount">0</span></button>
+<a href="https://wa.me/254726717361" class="whatsapp-float" target="_blank">💬</a>
+<button class="cart-btn">
+  🛒 <span class="cart-badge" id="cartCount">0</span>
+</button>
+
+<!-- Cart Modal -->
 <div id="cartOverlay">
   <div class="cart-modal">
     <div class="cart-head">
-      <h3>Your Cart</h3>
-      <button class="close-cart" id="closeCart">X</button>
+      <h3>Shopping Cart</h3>
+      <button class="close-cart" onclick="toggleCart()">✕</button>
     </div>
     <div class="cart-body">
       <div class="cart-items" id="cartItems"></div>
-      <div class="totals">
-        <span>Total:</span><span id="cartTotal">KSh 0</span>
-      </div>
+      <div class="totals">Total: KES <span id="cartTotal">0</span></div>
       <div class="pay-actions">
-        <button class="pay-mpesa">Pay with M-Pesa</button>
+        <button class="pay-mpesa">Pay with Mpesa</button>
         <button class="pay-card">Pay with Card</button>
         <button class="pay-bank">Bank Transfer</button>
       </div>
@@ -334,39 +274,72 @@ footer a:hover{color:var(--accent)}
 </div>
 
 <script>
-// Simple cart logic
-const cartBtn = document.getElementById('cartBtn'), closeCart = document.getElementById('closeCart'),
-      cartOverlay = document.getElementById('cartOverlay'), cartItemsEl = document.getElementById('cartItems'),
-      cartCount = document.getElementById('cartCount'), cartTotal = document.getElementById('cartTotal');
-let cart = JSON.parse(localStorage.getItem('hqCart') || '[]');
+/* HEADER SHRINK */
+window.addEventListener('scroll',()=>document.querySelector('header').classList.toggle('shrink',window.scrollY>40));
 
-function updateCart() {
-  cartItemsEl.innerHTML = '';
-  let total = 0;
+/* SHOW ANIMATION */
+const faders=document.querySelectorAll('.card,.testimonial');
+const appearOptions={threshold:0.2};
+const appearOnScroll=new IntersectionObserver((entries,observer)=>{
+  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}});
+},appearOptions);
+faders.forEach(fader=>appearOnScroll.observe(fader));
+
+/* CART LOGIC */
+let cart=JSON.parse(localStorage.getItem('cart')||'[]');
+const cartCount=document.getElementById('cartCount');
+const cartItems=document.getElementById('cartItems');
+const cartTotal=document.getElementById('cartTotal');
+
+function updateCart(){
+  cartCount.textContent=cart.length;
+  cartItems.innerHTML='';
+  let total=0;
   cart.forEach((item,i)=>{
-    const row = document.createElement('div'); row.className='cart-row';
-    row.innerHTML = `<span>${item.name}</span><span>${item.price}</span>
-      <div class="qty"><button onclick="decrease(${i})">-</button>${item.qty}<button onclick="increase(${i})">+</button></div>
-      <button class="remove" onclick="remove(${i})">X</button>`;
-    cartItemsEl.appendChild(row);
-    total += item.price*item.qty;
+    total+=item.price;
+    const row=document.createElement('div'); row.className='cart-row';
+    row.innerHTML=`
+      <div>${item.name}</div>
+      <div>KES ${item.price}</div>
+      <div class="qty">
+        <button onclick="decreaseQty(${i})">-</button>
+        <span>1</span>
+        <button onclick="increaseQty(${i})">+</button>
+      </div>
+      <button class="remove" onclick="removeItem(${i})">Remove</button>`;
+    cartItems.appendChild(row);
   });
-  cartCount.textContent = cart.reduce((s,it)=>s+it.qty,0);
-  cartTotal.textContent = 'KSh '+total;
-  localStorage.setItem('hqCart',JSON.stringify(cart));
+  cartTotal.textContent=total;
+  localStorage.setItem('cart',JSON.stringify(cart));
 }
-function addToCart(name,price){ 
-  const existing = cart.find(it=>it.name===name);
-  if(existing){ existing.qty++; } else { cart.push({name,price,qty:1}); }
-  updateCart();
-}
-function remove(i){ cart.splice(i,1); updateCart(); }
-function increase(i){ cart[i].qty++; updateCart(); }
-function decrease(i){ cart[i].qty--; if(cart[i].qty<1) remove(i); else updateCart(); }
 
-cartBtn.onclick=()=>cartOverlay.style.display='flex';
-closeCart.onclick=()=>cartOverlay.style.display='none';
+function addToCart(name,price){
+  cart.push({name,price}); updateCart();
+}
+
+document.querySelectorAll('.add-cart').forEach(btn=>{
+  btn.addEventListener('click',()=>addToCart(btn.dataset.name,Number(btn.dataset.price)));
+});
+
+function toggleCart(){document.getElementById('cartOverlay').style.display=document.getElementById('cartOverlay').style.display==='flex'?'none':'flex';}
+document.querySelector('.cart-btn').addEventListener('click',toggleCart);
+
+function removeItem(i){cart.splice(i,1);updateCart();}
+function increaseQty(i){cart[i].price+=cart[i].price;updateCart();}
+function decreaseQty(i){if(cart[i].price>0){cart[i].price-=cart[i].price;} updateCart();}
+
+/* INITIAL UPDATE */
 updateCart();
 </script>
+
+<footer>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-info">© 2025 HQ TECH & CYBER. All rights reserved.</div>
+</footer>
 </body>
 </html>
