@@ -8,7 +8,7 @@
 :root{
   --bg:#f8f9fa; --fg:#1a1d29; --muted:#5b6370; --card:#fff;
   --accent:#2563eb; --accent-hover:#1d4ed8; --accent-light:#e0f2ff;
-  --whatsapp:#25D366; --shadow: rgba(0,0,0,0.12);
+  --shadow: rgba(0,0,0,0.12);
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui, sans-serif;}
 body{background:var(--bg);color:var(--fg);line-height:1.6;}
@@ -25,7 +25,7 @@ section{padding:40px 16px}
 section h2{margin-bottom:24px;font-size:26px;text-align:center;color:var(--accent);position:relative;}
 section h2::after{content:"";width:60px;height:4px;background:var(--accent);display:block;margin:8px auto 0;border-radius:2px;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{background:var(--card);border-radius:14px;overflow:hidden;text-align:center;box-shadow:0 4px 12px var(--shadow);transition:transform .3s, box-shadow .3s;}
+.card{background:var(--card);border-radius:14px;overflow:hidden;text-align:center;box-shadow:0 4px 12px var(--shadow);transition:transform .3s, box-shadow .3s;position:relative;}
 .card:hover{transform:translateY(-6px);box-shadow:0 8px 28px var(--shadow);}
 .card img{width:100%;height:180px;object-fit:cover}
 .pad{padding:14px}
@@ -54,6 +54,10 @@ footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px sol
 .pay-card{background:#2563eb}
 .pay-bank{background:#f59e0b}
 .close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
+/* MOBILE TWO CARDS */
+@media(max-width:640px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
@@ -166,10 +170,30 @@ function updateCartUI(){
   cartBadge.textContent=cart.reduce((a,b)=>a+b.qty,0);
 }
 
+// Fly-to-cart animation
+function flyToCart(img, event){
+  const flyImg = img.cloneNode(true);
+  flyImg.style.position='absolute';
+  flyImg.style.zIndex=1000;
+  flyImg.style.width=img.offsetWidth+'px';
+  flyImg.style.height=img.offsetHeight+'px';
+  flyImg.style.top=img.getBoundingClientRect().top+'px';
+  flyImg.style.left=img.getBoundingClientRect().left+'px';
+  document.body.appendChild(flyImg);
+  const cartRect = cartBtn.getBoundingClientRect();
+  flyImg.animate([
+    {transform:`translate(0,0) scale(1)`,opacity:1},
+    {transform:`translate(${cartRect.left - img.getBoundingClientRect().left}px,${cartRect.top - img.getBoundingClientRect().top}px) scale(0.1)`,opacity:0.6}
+  ],{duration:800,easing:'ease-in-out'});
+  setTimeout(()=>document.body.removeChild(flyImg),800);
+}
+
 document.querySelectorAll('.add-cart').forEach(btn=>{
   btn.addEventListener('click',e=>{
     const name=e.target.dataset.name;
     const price=parseInt(e.target.dataset.price);
+    const img=e.target.closest('.card').querySelector('img');
+    flyToCart(img,e);
     const exist=cart.find(c=>c.name===name);
     if(exist) exist.qty++; else cart.push({name,price,qty:1});
     updateCartUI();
