@@ -104,17 +104,29 @@ footer a:hover{color:var(--accent)}
 .fly-img{position:fixed;z-index:2000;pointer-events:none;width:70px;height:70px;border-radius:8px;object-fit:cover;transition:opacity .2s;animation:flyToCart .7s forwards}
 @media (max-width:480px){ .fly-img{width:56px;height:56px} .hero h1{font-size:22px} }
 
-/* FAQ bullets */
-.faq p { margin-bottom:16px; line-height:1.5; position:relative; padding-left:24px; }
-.faq p::before { content: "✦"; position:absolute; left:0; top:0; color: var(--accent); font-size:18px; line-height:1.5; }
-
-/* Sale badge */
-.sale-badge{position:absolute;top:10px;left:10px;background:#ef4444;color:#fff;font-weight:700;padding:4px 8px;border-radius:6px;font-size:12px;z-index:2}
-.card{position:relative}
-
-/* Price animation */
-@keyframes pulsePrice{0%{transform:scale(1);color:#10b981;text-shadow:0 0 2px #10b981}50%{transform:scale(1.15);color:#059669;text-shadow:0 0 8px #059669}100%{transform:scale(1);color:#10b981;text-shadow:0 0 2px #10b981}}
-.price.sale{font-weight:700;animation:pulsePrice 1s infinite;}
+.faq p {
+  margin-bottom: 16px;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 24px;
+}
+.faq p::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-size: 18px;
+  line-height: 1.5;
+}
+.sale-badge {position: absolute; top: 10px; left: 10px; background: #ef4444; color: #fff; font-weight:700; padding:4px 8px; border-radius:6px; font-size:12px; z-index:2;}
+.card { position: relative; }
+@keyframes pulsePrice {
+  0% { transform: scale(1); color: #10b981; text-shadow: 0 0 2px #10b981; }
+  50% { transform: scale(1.15); color: #059669; text-shadow: 0 0 8px #059669; }
+  100% { transform: scale(1); color: #10b981; text-shadow: 0 0 2px #10b981; }
+}
+.price.sale { font-weight:700; animation: pulsePrice 1s infinite; }
 </style>
 </head>
 <body>
@@ -126,18 +138,12 @@ footer a:hover{color:var(--accent)}
       <div class="brand">
         <span class="logo" aria-hidden="true">
           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HQ Cyber logo">
-            <defs>
-              <linearGradient id="g1" x1="0" x2="1">
-                <stop offset="0" stop-color="#ef4444"/>
-                <stop offset="1" stop-color="#2563eb"/>
-              </linearGradient>
-            </defs>
+            <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#ef4444"/><stop offset="1" stop-color="#2563eb"/></linearGradient></defs>
             <circle cx="50" cy="50" r="48" fill="url(#g1)"/>
             <text x="50%" y="54%" font-family="sans-serif" font-size="36" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-weight="700">HQ</text>
           </svg>
         </span>
       </div>
-
       <div>
         <a href="#about">About</a>
         <a href="#services">Services</a>
@@ -170,172 +176,197 @@ footer a:hover{color:var(--accent)}
   <section id="services">
     <h2>Our Products & Services</h2>
     <div class="grid" style="margin-bottom:22px;">
-      <div class="cat-card visible">
-        <div class="pad"><div class="cat-icon">💻</div><h3>Cyber Services</h3><p>Online applications, KRA & eCitizen, CV/design & printing, scanning, laminating, wedding/invitation cards.</p></div>
-      </div>
+      <div class="cat-card visible"><div class="pad"><div class="cat-icon">💻</div><h3>Cyber Services</h3><p>Online applications, KRA & eCitizen, CV/design & printing, scanning, laminating, wedding/invitation cards.</p></div></div>
       <div class="cat-card visible"><div class="pad"><div class="cat-icon">📱</div><h3>Smartphones</h3><p>Latest 2025 models with advanced tech and great prices.</p></div></div>
       <div class="cat-card visible"><div class="pad"><div class="cat-icon">🎧</div><h3>Accessories</h3><p>Chargers, earphones, cases, screen protectors & more.</p></div></div>
       <div class="cat-card visible"><div class="pad"><div class="cat-icon">🔧</div><h3>Repairs</h3><p>Phones & laptops: screens, batteries, software & upgrades.</p></div></div>
       <div class="cat-card visible"><div class="pad"><div class="cat-icon">🌐</div><h3>Digital Services</h3><p>SIM registration, data bundles, device setup & backups.</p></div></div>
     </div>
 
+    <!-- Products Grid -->
     <div class="grid">
-      <!-- SMARTPHONES -->
+      <!-- Cyber Services -->
       <article class="card">
-        <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=1200&q=60&auto=format&fit=crop" alt="Smartphone XYZ">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=60&auto=format&fit=crop" alt="Cyber services image">
         <div class="pad">
-          <h3>Smartphone XYZ</h3>
-          <p>Latest 2025 model with fast performance and great camera.</p>
-          <div class="price">KSh 7,000</div>
-          <button class="add-cart" data-name="Smartphone XYZ" data-price="7000">Add to Cart</button>
+          <h3>Cyber Services</h3>
+          <p>Printing, KRA services, eCitizen, wedding invitations, scanning & more.</p>
+          <div class="price">From KSh 50</div>
         </div>
       </article>
-
-      <!-- ACCESSORIES -->
+      <!-- Smartphones -->
       <article class="card">
-        <img src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=1200&q=60&auto=format&fit=crop" alt="Accessories">
+        <a href="smartphones.html"><img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=1200&q=60&auto=format&fit=crop" alt="Smartphones"></a>
         <div class="pad">
-          <h3>Phone Accessories</h3>
+          <h3><a href="smartphones.html">Smartphones</a></h3>
+          <p>Latest 2025 models with fast performance and great cameras.</p>
+          <div class="price">From KSh 7,000</div>
+          <a class="btn-blue" href="smartphones.html">View More</a>
+        </div>
+      </article>
+      <!-- Repairs -->
+      <article class="card">
+        <a href="repairs.html"><img src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?w=1200&q=60&auto=format&fit=crop" alt="Repairs"></a>
+        <div class="pad">
+          <h3><a href="repairs.html">Repairs</a></h3>
+          <p>Phones & laptops — diagnostics, parts replacement, software fixes.</p>
+          <div class="price">Request a quote</div>
+          <a class="btn-blue" href="repairs.html">View More</a>
+        </div>
+      </article>
+      <!-- Accessories -->
+      <article class="card">
+        <a href="accessories.html"><img src="https://images.unsplash.com/photo-1677145503755-5a8c581671fe?w=1200&q=60&auto=format&fit=crop" alt="Accessories"></a>
+        <div class="pad">
+          <h3><a href="accessories.html">Phone Accessories</a></h3>
           <p>Cases, chargers, cables, power banks, screen protectors & more.</p>
           <div class="price">KSh 300 – 3,500</div>
-          <button class="add-cart" data-name="Accessories Set" data-price="500">Add to Cart</button>
+          <a class="btn-blue" href="accessories.html">View More</a>
         </div>
       </article>
-
-      <!-- MEN'S SHOES -->
+      <!-- Men’s Wear -->
       <article class="card">
-        <img src="https://images.unsplash.com/photo-1579338559194-a162d19bf842?q=80&w=687&auto=format&fit=crop" alt="Men's Sneakers">
+        <a href="mens-wear.html"><img src="https://images.unsplash.com/photo-1579338559194-a162d19bf842?q=60&w=1200&auto=format&fit=crop" alt="Men's Wear"></a>
         <div class="pad">
-          <h3>Men's Sneakers</h3>
-          <p>Comfortable everyday sneakers available in all sizes.</p>
-          <div class="price">From KSh 500</div>
-          <button class="add-cart" data-name="Men's Sneakers" data-price="500">Add to Cart</button>
+          <h3><a href="mens-wear.html">Men's Shoes</a></h3>
+          <p>Quality sneakers & shoes for daily wear.</p>
+          <div class="price">KSh 1,500 – 4,000</div>
+          <a class="btn-blue" href="mens-wear.html">View More</a>
         </div>
       </article>
-
-      <!-- LADY'S SHOES -->
+      <!-- Lady’s Wear -->
       <article class="card">
-        <img src="https://plus.unsplash.com/premium_photo-1723826752957-0a9a82c2cc80?q=80&w=1170&auto=format&fit=crop" alt="Lady's Shoes">
+        <a href="ladies-wear.html"><img src="https://images.unsplash.com/photo-1528701800489-34d3f93b5a0c?q=60&w=1200&auto=format&fit=crop" alt="Ladies Shoes"></a>
         <div class="pad">
-          <h3>Lady's Shoes</h3>
-          <p>Elegant and stylish shoes for all occasions.</p>
-          <div class="price">From KSh 600</div>
-          <button class="add-cart" data-name="Lady's Shoes" data-price="600">Add to Cart</button>
+          <h3><a href="ladies-wear.html">Ladies Shoes</a></h3>
+          <p>Trendy heels, sneakers & flats.</p>
+          <div class="price sale">KSh 1,200 – 3,500</div>
+          <a class="btn-blue" href="ladies-wear.html">View More</a>
         </div>
       </article>
     </div>
   </section>
 
-  <!-- CART BUTTON -->
-  <button class="cart-btn">
-    🛒 <span class="cart-badge" id="cart-count">0</span>
-  </button>
-
-  <div id="cartOverlay">
-    <div class="cart-modal">
-      <div class="cart-head">
-        <h3>Shopping Cart</h3>
-        <button class="close-cart">✕</button>
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <h2>Testimonials</h2>
+    <div class="testimonials">
+      <div class="testimonial visible">
+        "HQ Cyber helped me get my phone repaired in no time. Highly recommend!" <strong>- James K.</strong>
       </div>
-      <div class="cart-body">
-        <div class="cart-items" id="cart-items"></div>
-        <div class="totals">
-          <span>Total:</span>
-          <span id="cart-total">KSh 0</span>
-        </div>
-        <div class="pay-actions">
-          <button class="pay-mpesa">Pay via M-Pesa</button>
-          <button class="pay-card">Pay via Card</button>
-          <button class="pay-bank">Pay via Bank</button>
-        </div>
+      <div class="testimonial visible">
+        "Best cyber services in town. Friendly staff and great prices." <strong>- Sarah M.</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2>FAQ</h2>
+    <div class="faq">
+      <p>Do you deliver products nationwide?</p>
+      <p>Yes, we deliver anywhere in Kenya with secure shipping options.</p>
+      <p>Do you offer warranty on repairs?</p>
+      <p>Yes, all repairs come with a 3-month warranty on parts and labor.</p>
+      <p>Can I pay via M-Pesa or card?</p>
+      <p>Absolutely, we accept M-Pesa, card, and bank transfers.</p>
+    </div>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section id="feedback">
+    <h2>Send Us Feedback</h2>
+    <form style="max-width:600px;margin:auto;display:flex;flex-direction:column;gap:12px">
+      <input type="text" placeholder="Your Name" required style="padding:10px;border-radius:8px;border:1px solid #ccc">
+      <input type="email" placeholder="Your Email" required style="padding:10px;border-radius:8px;border:1px solid #ccc">
+      <textarea placeholder="Your Feedback" rows="4" required style="padding:10px;border-radius:8px;border:1px solid #ccc"></textarea>
+      <button type="submit" class="btn-blue">Submit Feedback</button>
+    </form>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-info">
+      <p>📍 Eldoret, Kenya</p>
+      <p>📞 +254 726 717 361</p>
+      <p>✉️ info@hqcyber.com</p>
+      <p>💬 <a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER">Chat on WhatsApp</a></p>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#faq">FAQ</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-info">&copy; 2025 HQ TECH & CYBER. All rights reserved.</div>
+</footer>
+
+<!-- Floating / Cart Buttons -->
+<a href="#top" class="top">↑</a>
+<a href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" class="whatsapp-float">💬</a>
+<button class="cart-btn" id="cartBtn">🛒<span class="cart-badge" id="cartCount">0</span></button>
+<div id="cartOverlay">
+  <div class="cart-modal">
+    <div class="cart-head">
+      <h3>Your Cart</h3>
+      <button class="close-cart" id="closeCart">X</button>
+    </div>
+    <div class="cart-body">
+      <div class="cart-items" id="cartItems"></div>
+      <div class="totals">
+        <span>Total:</span><span id="cartTotal">KSh 0</span>
+      </div>
+      <div class="pay-actions">
+        <button class="pay-mpesa">Pay with M-Pesa</button>
+        <button class="pay-card">Pay with Card</button>
+        <button class="pay-bank">Bank Transfer</button>
       </div>
     </div>
   </div>
-</main>
-
-<a href="#top" class="top">⬆</a>
-<a href="https://wa.me/254726717361" target="_blank" class="whatsapp-float">💬</a>
+</div>
 
 <script>
-/* SCROLL ANIMATION */
-window.addEventListener('scroll', ()=>document.querySelector('header').classList.toggle('shrink', window.scrollY>40));
+// Simple cart logic
+const cartBtn = document.getElementById('cartBtn'), closeCart = document.getElementById('closeCart'),
+      cartOverlay = document.getElementById('cartOverlay'), cartItemsEl = document.getElementById('cartItems'),
+      cartCount = document.getElementById('cartCount'), cartTotal = document.getElementById('cartTotal');
+let cart = JSON.parse(localStorage.getItem('hqCart') || '[]');
 
-/* CART LOGIC */
-const cartBtn=document.querySelector('.cart-btn'),
-      cartOverlay=document.getElementById('cartOverlay'),
-      closeCart=document.querySelector('.close-cart'),
-      cartItems=document.getElementById('cart-items'),
-      cartCount=document.getElementById('cart-count'),
-      cartTotal=document.getElementById('cart-total');
-
-let cart=JSON.parse(localStorage.getItem('cart'))||[];
-updateCartUI();
-
-document.querySelectorAll('.add-cart').forEach(btn=>{
-  btn.addEventListener('click', e=>{
-    const name=btn.dataset.name, price=parseInt(btn.dataset.price);
-    const existing=cart.find(i=>i.name===name);
-    if(existing){ existing.qty+=1 } else { cart.push({name,price,qty:1}) }
-    flyToCart(btn);
-    updateCartUI();
-    localStorage.setItem('cart',JSON.stringify(cart));
+function updateCart() {
+  cartItemsEl.innerHTML = '';
+  let total = 0;
+  cart.forEach((item,i)=>{
+    const row = document.createElement('div'); row.className='cart-row';
+    row.innerHTML = `<span>${item.name}</span><span>${item.price}</span>
+      <div class="qty"><button onclick="decrease(${i})">-</button>${item.qty}<button onclick="increase(${i})">+</button></div>
+      <button class="remove" onclick="remove(${i})">X</button>`;
+    cartItemsEl.appendChild(row);
+    total += item.price*item.qty;
   });
-});
-
-cartBtn.addEventListener('click', ()=>cartOverlay.style.display='flex');
-closeCart.addEventListener('click', ()=>cartOverlay.style.display='none');
-
-function updateCartUI(){
-  cartItems.innerHTML='';
-  let total=0, qtySum=0;
-  cart.forEach(item=>{
-    total+=item.price*item.qty;
-    qtySum+=item.qty;
-    const row=document.createElement('div'); row.className='cart-row';
-    row.innerHTML=`
-      <span>${item.name}</span>
-      <div class="qty">
-        <button onclick="changeQty('${item.name}',-1)">-</button>
-        ${item.qty}
-        <button onclick="changeQty('${item.name}',1)">+</button>
-      </div>
-      <span>KSh ${item.price}</span>
-      <button class="remove" onclick="removeItem('${item.name}')">x</button>
-    `;
-    cartItems.appendChild(row);
-  });
-  cartTotal.textContent='KSh '+total;
-  cartCount.textContent=qtySum;
+  cartCount.textContent = cart.reduce((s,it)=>s+it.qty,0);
+  cartTotal.textContent = 'KSh '+total;
+  localStorage.setItem('hqCart',JSON.stringify(cart));
 }
-
-function changeQty(name,delta){
-  const item=cart.find(i=>i.name===name);
-  if(!item) return;
-  item.qty+=delta;
-  if(item.qty<=0) cart=cart.filter(i=>i.name!==name);
-  updateCartUI(); localStorage.setItem('cart',JSON.stringify(cart));
+function addToCart(name,price){ 
+  const existing = cart.find(it=>it.name===name);
+  if(existing){ existing.qty++; } else { cart.push({name,price,qty:1}); }
+  updateCart();
 }
+function remove(i){ cart.splice(i,1); updateCart(); }
+function increase(i){ cart[i].qty++; updateCart(); }
+function decrease(i){ cart[i].qty--; if(cart[i].qty<1) remove(i); else updateCart(); }
 
-function removeItem(name){
-  cart=cart.filter(i=>i.name!==name);
-  updateCartUI(); localStorage.setItem('cart',JSON.stringify(cart));
-}
-
-/* FLY TO CART ANIMATION */
-function flyToCart(btn){
-  const img=btn.closest('.card').querySelector('img');
-  const fly=document.createElement('img');
-  fly.src=img.src;
-  fly.className='fly-img';
-  document.body.appendChild(fly);
-  const rect=img.getBoundingClientRect(),
-        cartRect=cartBtn.getBoundingClientRect();
-  fly.style.left=rect.left+'px';
-  fly.style.top=rect.top+'px';
-  fly.style.setProperty('--tx', (cartRect.left-rect.left)+'px');
-  fly.style.setProperty('--ty', (cartRect.top-rect.top)+'px');
-  fly.addEventListener('animationend', ()=>fly.remove());
-}
+cartBtn.onclick=()=>cartOverlay.style.display='flex';
+closeCart.onclick=()=>cartOverlay.style.display='none';
+updateCart();
 </script>
 </body>
 </html>
