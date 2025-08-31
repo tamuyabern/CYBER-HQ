@@ -17,7 +17,8 @@ nav{display:flex;justify-content:space-between;align-items:center;max-width:1100
 nav a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;}
 nav a:hover{color:var(--accent);}
 main{max-width:1100px;margin:18px auto;padding:0 16px;}
-h2{margin:18px 0;text-align:center;font-size:22px;color:var(--accent);}
+h2{margin:18px 0;text-align:center;font-size:24px;color:var(--accent);font-weight:700;position:relative;}
+h2::after{content:'';display:block;width:80px;height:4px;background:var(--accent);margin:8px auto 0;border-radius:2px;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:34px;}
 .card{background:var(--card);border-radius:12px;overflow:hidden;text-align:center;position:relative;transition:transform .25s, box-shadow .25s;box-shadow:0 4px 12px rgba(0,0,0,0.05);}
 .card:hover{transform:translateY(-6px);box-shadow:0 14px 28px var(--shadow-purple),0 0 18px var(--shadow-pink);}
@@ -56,6 +57,7 @@ h2{margin:18px 0;text-align:center;font-size:22px;color:var(--accent);}
 
 <h2>Smartphones</h2>
 <div class="grid" id="smartphones">
+  <!-- 6 smartphone cards -->
   <div class="card"><span class="sale-badge">SALE</span><img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400" alt="Smartphone 1"><div class="pad"><h3>Smartphone 1</h3><div class="price">KSh 7,000</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Smartphone 1" data-price="7000">Add to Cart</button></div></div>
   <div class="card"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400" alt="Smartphone 2"><div class="pad"><h3>Smartphone 2</h3><div class="price">KSh 8,500</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Smartphone 2" data-price="8500">Add to Cart</button></div></div>
   <div class="card"><img src="https://images.unsplash.com/photo-1510552776732-41a0e4f8a7a7?w=400" alt="Smartphone 3"><div class="pad"><h3>Smartphone 3</h3><div class="price">KSh 9,000</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Smartphone 3" data-price="9000">Add to Cart</button></div></div>
@@ -64,12 +66,24 @@ h2{margin:18px 0;text-align:center;font-size:22px;color:var(--accent);}
   <div class="card"><img src="https://images.unsplash.com/photo-1580910051071-56b43a4c218c?w=400" alt="Smartphone 6"><div class="pad"><h3>Smartphone 6</h3><div class="price">KSh 9,500</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Smartphone 6" data-price="9500">Add to Cart</button></div></div>
 </div>
 
-<!-- Other sections (Accessories, Digital Services, Mens, Ladies) follow same structure -->
-<!-- Add the same payment info <div class="payment">Paid/Cash</div> inside each card -->
+<h2>Accessories</h2>
+<div class="grid" id="accessories">
+  <!-- 8 accessories cards -->
+  <div class="card"><img src="https://images.unsplash.com/photo-1580894894513-8f0c6a68edeb?w=400" alt="Accessory 1"><div class="pad"><h3>Accessory 1</h3><div class="price">KSh 500</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Accessory 1" data-price="500">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1580894894513-8f0c6a68edeb?w=400" alt="Accessory 2"><div class="pad"><h3>Accessory 2</h3><div class="price">KSh 600</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Accessory 2" data-price="600">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1580894894513-8f0c6a68edeb?w=400" alt="Accessory 3"><div class="pad"><h3>Accessory 3</h3><div class="price">KSh 450</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Accessory 3" data-price="450">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1580894894513-8f0c6a68edeb?w=400" alt="Accessory 4"><div class="pad"><h3>Accessory 4</h3><div class="price">KSh 700</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Accessory 4" data-price="700">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1580894894513-8f0c6a68edeb?w=400" alt="Accessory 5"><div class="pad"><h3>Accessory 5</h3><div class="price">KSh 550</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Accessory 5" data-price="550">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1580894894513-8f0c6a68edeb?w=400" alt="Accessory 6"><div class="pad"><h3>Accessory 6</h3><div class="price">KSh 400</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Accessory 6" data-price="400">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1580894894513-8f0c6a68edeb?w=400" alt="Accessory 7"><div class="pad"><h3>Accessory 7</h3><div class="price">KSh 650</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Accessory 7" data-price="650">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1580894894513-8f0c6a68edeb?w=400" alt="Accessory 8"><div class="pad"><h3>Accessory 8</h3><div class="price">KSh 600</div><div class="payment">Paid/Cash</div><button class="btn add-cart" data-name="Accessory 8" data-price="600">Add to Cart</button></div></div>
+</div>
+
+<!-- Continue Digital Services (1 card, no price), Mens Wear (6), Ladies Wear (8) following same structure -->
 
 </main>
 
-<!-- Cart button & modal -->
+<!-- Cart button & modal (same as before) -->
 <button class="cart-btn">🛒 <span class="cart-badge">0</span></button>
 <div id="cartOverlay">
   <div class="cart-modal">
@@ -87,6 +101,7 @@ h2{margin:18px 0;text-align:center;font-size:22px;color:var(--accent);}
 </div>
 
 <script>
+// Cart logic same as previous polished code
 let cart = JSON.parse(localStorage.getItem('hqCart')||'[]');
 const cartBtn = document.querySelector('.cart-btn');
 const cartOverlay = document.getElementById('cartOverlay');
