@@ -6,52 +6,36 @@
 <title>HQ TECH & CYBER Shop</title>
 <style>
 :root{
-  --bg:#f9fafc; --fg:#1a1d29; --muted:#5b6370; --card:#fff;
-  --accent:#2563eb; --accent-hover:#1d4ed8; --whatsapp:#25D366;
-  --shadow-pink: rgba(255,20,147,0.45);
-  --shadow-purple: rgba(147,51,234,0.55);
+  --bg:#f8f9fa; --fg:#1a1d29; --muted:#5b6370; --card:#fff;
+  --accent:#2563eb; --accent-hover:#1d4ed8; --accent-light:#e0f2ff;
+  --whatsapp:#25D366; --shadow: rgba(0,0,0,0.12);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;scroll-behavior:smooth}
-header{position:sticky;top:0;backdrop-filter:saturate(1.5) blur(10px);background:rgba(255,255,255,0.95);border-bottom:1px solid #e5e7eb;z-index:1000;transition:all .28s}
-header.shrink{padding:6px 0;background:rgba(255,255,255,0.98);box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui, sans-serif;}
+body{background:var(--bg);color:var(--fg);line-height:1.6;}
 .wrap{max-width:1100px;margin:0 auto;padding:16px}
-nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
-nav a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;font-size:14px;transition:color .2s}
+header{position:sticky;top:0;backdrop-filter:blur(10px);background:rgba(255,255,255,0.95);border-bottom:1px solid #e5e7eb;z-index:1000;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:10px 0}
+nav a{color:var(--muted);margin-left:14px;text-decoration:none;font-weight:600;font-size:14px;transition:color .2s}
 nav a:hover{color:var(--accent)}
-.brand{display:flex;align-items:center}
-.brand .logo{width:50px;height:50px;border-radius:50%;overflow:hidden;display:inline-block;flex-shrink:0}
-.brand svg{width:100%;height:100%;display:block}
-header.shrink .brand .logo{width:38px;height:38px}
-.hero{padding:46px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);background-size:200% 200%;color:#fff;border-radius:18px;margin:18px 0 34px;transition:transform .25s}
-.hero h1{font-size:28px;margin-bottom:8px}
-.hero p.lead{max-width:720px;margin:0 auto 14px;color:#e0e7ff;font-size:15px}
-.btn{display:inline-block;margin-top:10px;padding:10px 16px;border-radius:10px;background:var(--whatsapp);color:#fff;text-decoration:none;font-weight:700;transition:transform .16s,filter .16s}
-.btn:hover{transform:translateY(-2px) scale(1.03);filter:brightness(1.04)}
-.btn-blue{background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;transition:transform .16s}
-.btn-blue:hover{background:var(--accent-hover);transform:scale(1.03)}
-section{padding:30px 16px;border-top:1px solid #e5e7eb}
-h2{margin-bottom:16px;font-size:22px;text-align:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-.card,.cat-card{background:var(--card);border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;text-align:center;transition:transform .28s, box-shadow .28s, opacity .6s;opacity:0;transform:translateY(24px);position:relative}
-.visible{opacity:1 !important;transform:translateY(0) !important}
-.card:hover,.cat-card:hover{transform:translateY(-8px);box-shadow:0 10px 28px var(--shadow-purple),0 0 18px var(--shadow-pink)}
+.brand{font-weight:700;font-size:18px;color:var(--accent)}
+.hero{padding:50px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);color:#fff;border-radius:18px;margin:20px 0}
+.hero h1{font-size:32px;margin-bottom:12px}
+.hero p{font-size:16px;color:#dbeafe}
+section{padding:40px 16px}
+section h2{margin-bottom:24px;font-size:26px;text-align:center;color:var(--accent);position:relative;}
+section h2::after{content:"";width:60px;height:4px;background:var(--accent);display:block;margin:8px auto 0;border-radius:2px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:var(--card);border-radius:14px;overflow:hidden;text-align:center;box-shadow:0 4px 12px var(--shadow);transition:transform .3s, box-shadow .3s;}
+.card:hover{transform:translateY(-6px);box-shadow:0 8px 28px var(--shadow);}
 .card img{width:100%;height:180px;object-fit:cover}
-.pad{padding:16px}
-.price{color:#059669;font-weight:700;margin-top:8px}
-.cat-icon{font-size:40px;margin-bottom:10px;color:var(--accent)}
+.pad{padding:14px}
+.card h3{font-size:16px;margin-bottom:6px}
+.price{color:#059669;font-weight:700;margin-bottom:10px}
 .sale-badge{position:absolute;top:10px;left:10px;background:#ef4444;color:#fff;font-weight:700;padding:4px 8px;border-radius:6px;font-size:12px;z-index:2}
-.price.sale{animation:pulsePrice 1s infinite}
-@keyframes pulsePrice{0%{transform:scale(1);color:#10b981;text-shadow:0 0 2px #10b981}50%{transform:scale(1.15);color:#059669;text-shadow:0 0 8px #059669}100%{transform:scale(1);color:#10b981;text-shadow:0 0 2px #10b981}}
-footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px solid #e5e7eb;background:#f3f4f6}
-footer .links,footer .socials{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:10px}
-footer a{color:var(--muted);text-decoration:none;transition:color .2s}
-footer a:hover{color:var(--accent)}
-.top{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#fff;border-radius:999px;padding:10px 14px;text-decoration:none;transition:transform .2s}
-.top:hover{transform:scale(1.08)}
-.whatsapp-float{position:fixed;bottom:84px;right:18px;background:var(--whatsapp);color:#fff;border-radius:50%;padding:14px 16px;font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.2);text-decoration:none;font-weight:bold;transition:transform .2s}
-.whatsapp-float:hover{transform:scale(1.12)}
-.cart-btn{position:fixed;bottom:150px;right:18px;background:#2563eb;color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s}
+.btn-blue{background:var(--accent);color:#fff;padding:8px 14px;border-radius:10px;font-weight:700;cursor:pointer;transition:transform .2s}
+.btn-blue:hover{background:var(--accent-hover);transform:scale(1.05)}
+footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px solid #e5e7eb;}
+.cart-btn{position:fixed;bottom:150px;right:18px;background:var(--accent);color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s}
 .cart-btn:hover{transform:scale(1.12)}
 .cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700}
 #cartOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
@@ -70,18 +54,13 @@ footer a:hover{color:var(--accent)}
 .pay-card{background:#2563eb}
 .pay-bank{background:#f59e0b}
 .close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
-.fly-img{position:fixed;z-index:2000;pointer-events:none;width:70px;height:70px;border-radius:8px;object-fit:cover;transition:opacity .2s;animation:flyToCart .7s forwards}
-@keyframes flyToCart{to{transform:translate(var(--tx),var(--ty)) scale(0.08);opacity:0}}
 </style>
 </head>
 <body>
-<a id="top"></a>
 <header>
   <div class="wrap">
     <nav>
-      <div class="brand">
-        <span class="logo"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="url(#grad)"/><text x="50%" y="54%" font-size="36" fill="#fff" text-anchor="middle" dominant-baseline="middle">HQ</text></svg></span>
-      </div>
+      <div class="brand">HQ Cyber</div>
       <div>
         <a href="https://salehqcyber.netlify.app">HOME</a>
         <a href="#shop">Shop</a>
@@ -93,7 +72,7 @@ footer a:hover{color:var(--accent)}
 <main class="wrap">
 <section class="hero">
   <h1>HQ TECH & CYBER Shop</h1>
-  <p class="lead">Browse our products and add to cart!</p>
+  <p>Browse our products and add to cart!</p>
 </section>
 
 <section id="shop">
@@ -114,7 +93,6 @@ footer a:hover{color:var(--accent)}
 </section>
 </main>
 
-<!-- Cart modal -->
 <button class="cart-btn">🛒 <span class="cart-badge">0</span></button>
 <div id="cartOverlay">
   <div class="cart-modal">
@@ -137,8 +115,7 @@ footer a:hover{color:var(--accent)}
 </div>
 
 <script>
-// product data
-const products = {
+const products={
   smartphones:[{name:"Phone 1",price:7000},{name:"Phone 2",price:8500},{name:"Phone 3",price:9500},{name:"Phone 4",price:10500},{name:"Phone 5",price:12000},{name:"Phone 6",price:15000}],
   accessories:[{name:"Case",price:500},{name:"Charger",price:700},{name:"Earphones",price:1200},{name:"Powerbank",price:1800},{name:"Screen Protector",price:300},{name:"Cable",price:400},{name:"Holder",price:250},{name:"Bluetooth Speaker",price:2500}],
   digital:[{name:"SIM registration & Setup",price:0}],
@@ -146,24 +123,22 @@ const products = {
   ladieswear:[{name:"Shoes 1",price:1000},{name:"Shoes 2",price:1200},{name:"Shoes 3",price:1500},{name:"Shoes 4",price:1800},{name:"Shoes 5",price:2000},{name:"Shoes 6",price:2200},{name:"Shoes 7",price:2500},{name:"Shoes 8",price:2800}]
 };
 
-// render products
 function renderProducts(id, arr){
-  const container = document.getElementById(id);
+  const container=document.getElementById(id);
   arr.forEach(p=>{
-    const card = document.createElement('div');
-    card.className='card visible';
-    card.innerHTML=`<img src="https://via.placeholder.com/300x180?text=${encodeURIComponent(p.name)}" alt="${p.name}">
-      <div class="pad">
-        <h3>${p.name}</h3>
-        <div class="price">${p.price>0? "KSh "+p.price : ""}</div>
-        <button class="btn-blue add-cart" data-name="${p.name}" data-price="${p.price}">Add to Cart</button>
-      </div>`;
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`<div style="position:relative;"><img src="https://via.placeholder.com/300x180?text=${encodeURIComponent(p.name)}" alt="${p.name}">
+    ${p.price>0?'<div class="sale-badge">KSh '+p.price+'</div>':''}</div>
+    <div class="pad">
+      <h3>${p.name}</h3>
+      <button class="btn-blue add-cart" data-name="${p.name}" data-price="${p.price}">Add to Cart</button>
+    </div>`;
     container.appendChild(card);
   });
 }
 Object.keys(products).forEach(k=>renderProducts(k,products[k]));
 
-// cart logic
 let cart=[];
 const cartItemsEl=document.querySelector('.cart-items');
 const cartTotalEl=document.querySelector('.cart-total');
@@ -191,7 +166,6 @@ function updateCartUI(){
   cartBadge.textContent=cart.reduce((a,b)=>a+b.qty,0);
 }
 
-// add to cart
 document.querySelectorAll('.add-cart').forEach(btn=>{
   btn.addEventListener('click',e=>{
     const name=e.target.dataset.name;
@@ -202,7 +176,6 @@ document.querySelectorAll('.add-cart').forEach(btn=>{
   });
 });
 
-// increment/decrement/remove
 cartItemsEl.addEventListener('click',e=>{
   const idx=e.target.dataset.idx;
   if(e.target.classList.contains('inc')){cart[idx].qty++; updateCartUI()}
@@ -210,11 +183,9 @@ cartItemsEl.addEventListener('click',e=>{
   if(e.target.classList.contains('remove')){cart.splice(idx,1); updateCartUI()}
 });
 
-// open/close cart
 cartBtn.addEventListener('click',()=>{document.getElementById('cartOverlay').style.display='flex'})
 closeCartBtn.addEventListener('click',()=>{document.getElementById('cartOverlay').style.display='none'})
 
-// checkout
 checkoutBtn.addEventListener('click',()=>{
   const paymentMethod=document.getElementById('payment-method').value;
   if(cart.length===0){alert("Your cart is empty!"); return;}
