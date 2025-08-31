@@ -1,41 +1,40 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HQ TECH & CYBER Shop</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HQ TECH & CYBER - Shop</title>
 <style>
 :root{
-  --bg:#f8f9fa; --fg:#1a1d29; --muted:#5b6370; --card:#fff;
-  --accent:#2563eb; --accent-hover:#1d4ed8; --accent-light:#e0f2ff;
-  --shadow: rgba(0,0,0,0.12);
+  --bg:#f9fafc; --fg:#1a1d29; --muted:#5b6370; --card:#fff;
+  --accent:#2563eb; --accent-hover:#1d4ed8; --whatsapp:#25D366;
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui, sans-serif;}
-body{background:var(--bg);color:var(--fg);line-height:1.6;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;scroll-behavior:smooth}
+
+/* Header */
+header{position:sticky;top:0;background:rgba(255,255,255,0.95);border-bottom:1px solid #e5e7eb;z-index:1000}
 .wrap{max-width:1100px;margin:0 auto;padding:16px}
-header{position:sticky;top:0;backdrop-filter:blur(10px);background:rgba(255,255,255,0.95);border-bottom:1px solid #e5e7eb;z-index:1000;}
-nav{display:flex;justify-content:space-between;align-items:center;padding:10px 0}
-nav a{color:var(--muted);margin-left:14px;text-decoration:none;font-weight:600;font-size:14px;transition:color .2s}
+nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+nav a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;font-size:14px;transition:color .2s}
 nav a:hover{color:var(--accent)}
-.brand{font-weight:700;font-size:18px;color:var(--accent)}
-.hero{padding:50px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);color:#fff;border-radius:18px;margin:20px 0}
-.hero h1{font-size:32px;margin-bottom:12px}
-.hero p{font-size:16px;color:#dbeafe}
-section{padding:40px 16px}
-section h2{margin-bottom:24px;font-size:26px;text-align:center;color:var(--accent);position:relative;}
-section h2::after{content:"";width:60px;height:4px;background:var(--accent);display:block;margin:8px auto 0;border-radius:2px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{background:var(--card);border-radius:14px;overflow:hidden;text-align:center;box-shadow:0 4px 12px var(--shadow);transition:transform .3s, box-shadow .3s;position:relative;}
-.card:hover{transform:translateY(-6px);box-shadow:0 8px 28px var(--shadow);}
-.card img{width:100%;height:180px;object-fit:cover}
-.pad{padding:14px}
-.card h3{font-size:16px;margin-bottom:6px}
-.price{color:#059669;font-weight:700;margin-bottom:10px}
-.sale-badge{position:absolute;top:10px;left:10px;background:#ef4444;color:#fff;font-weight:700;padding:4px 8px;border-radius:6px;font-size:12px;z-index:2}
-.btn-blue{background:var(--accent);color:#fff;padding:8px 14px;border-radius:10px;font-weight:700;cursor:pointer;transition:transform .2s}
-.btn-blue:hover{background:var(--accent-hover);transform:scale(1.05)}
-footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px solid #e5e7eb;}
-.cart-btn{position:fixed;bottom:150px;right:18px;background:var(--accent);color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s}
+.brand{display:flex;align-items:center}
+.brand .logo{width:50px;height:50px;border-radius:50%;overflow:hidden;display:inline-block;flex-shrink:0}
+
+/* Grid & cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:30px}
+.card{background:var(--card);border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;text-align:center;transition:transform .28s;position:relative}
+.card img{width:100%;height:140px;object-fit:cover}
+.card .pad{padding:10px}
+.card h3{font-size:16px;margin:8px 0;color:var(--accent);font-weight:700}
+.card .price{font-weight:700;color:#059669;margin-bottom:8px}
+.card button{padding:6px 10px;border:none;border-radius:6px;background:var(--whatsapp);color:#fff;font-weight:600;cursor:pointer;transition:transform .2s}
+.card button:hover{transform:scale(1.05)}
+
+.sale-badge{position:absolute;top:8px;left:8px;background:#ef4444;color:#fff;padding:3px 6px;border-radius:6px;font-size:11px;font-weight:700;z-index:2}
+
+/* Cart modal */
+.cart-btn{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s}
 .cart-btn:hover{transform:scale(1.12)}
 .cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700}
 #cartOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
@@ -54,49 +53,99 @@ footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px sol
 .pay-card{background:#2563eb}
 .pay-bank{background:#f59e0b}
 .close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
-/* MOBILE TWO CARDS */
-@media(max-width:640px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-}
+
+/* Responsive */
+@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
+
 <header>
   <div class="wrap">
     <nav>
-      <div class="brand">HQ Cyber</div>
+      <div class="brand">
+        <a href="https://salehqcyber.netlify.app"><span class="logo">🏠</span></a>
+      </div>
       <div>
-        <a href="https://salehqcyber.netlify.app">HOME</a>
-        <a href="#shop">Shop</a>
+        <a href="#smartphones">Smartphones</a>
+        <a href="#accessories">Accessories</a>
+        <a href="#digital">Digital Services</a>
+        <a href="#mens">Men's Wear</a>
+        <a href="#ladys">Lady's Wear</a>
       </div>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
-<section class="hero">
-  <h1>HQ TECH & CYBER Shop</h1>
-  <p>Browse our products and add to cart!</p>
-</section>
 
-<section id="shop">
+<!-- Smartphones -->
+<section id="smartphones">
 <h2>Smartphones</h2>
-<div class="grid" id="smartphones"></div>
-
-<h2>Accessories</h2>
-<div class="grid" id="accessories"></div>
-
-<h2>Digital Services</h2>
-<div class="grid" id="digital"></div>
-
-<h2>Men's Wear</h2>
-<div class="grid" id="menswear"></div>
-
-<h2>Lady's Wear</h2>
-<div class="grid" id="ladieswear"></div>
+<div class="grid">
+  <div class="card"><img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Smartphone 1</h3><div class="price">KSh 7,000</div><button class="add-cart" data-name="Smartphone 1" data-price="7000">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1580910051077-2f2a59cd524b?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Smartphone 2</h3><div class="price">KSh 8,500</div><button class="add-cart" data-name="Smartphone 2" data-price="8500">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1611078485663-0ac8a59b7f2c?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Smartphone 3</h3><div class="price">KSh 9,200</div><button class="add-cart" data-name="Smartphone 3" data-price="9200">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1580910060115-1f2a59cd124a?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Smartphone 4</h3><div class="price">KSh 10,000</div><button class="add-cart" data-name="Smartphone 4" data-price="10000">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1611078485741-5ac8a59b9e4f?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Smartphone 5</h3><div class="price">KSh 11,500</div><button class="add-cart" data-name="Smartphone 5" data-price="11500">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1580910051011-2c2a59cd123f?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Smartphone 6</h3><div class="price">KSh 12,000</div><button class="add-cart" data-name="Smartphone 6" data-price="12000">Add to Cart</button></div></div>
+</div>
 </section>
+
+<!-- Accessories -->
+<section id="accessories">
+<h2>Accessories</h2>
+<div class="grid">
+  <div class="card"><img src="https://images.unsplash.com/photo-1581092918366-1c6e4b7c8e99?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Charger</h3><div class="price">KSh 500</div><button class="add-cart" data-name="Charger" data-price="500">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1581092918355-3c6e4b7c8e88?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Headphones</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Headphones" data-price="1200">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1581092918344-2c6e4b7c8e77?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Power Bank</h3><div class="price">KSh 900</div><button class="add-cart" data-name="Power Bank" data-price="900">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1581092918333-1c6e4b7c8e66?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>USB Cable</h3><div class="price">KSh 300</div><button class="add-cart" data-name="USB Cable" data-price="300">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1581092918322-2c6e4b7c8e55?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Case</h3><div class="price">KSh 400</div><button class="add-cart" data-name="Case" data-price="400">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1581092918311-1c6e4b7c8e44?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Screen Protector</h3><div class="price">KSh 350</div><button class="add-cart" data-name="Screen Protector" data-price="350">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1581092918300-2c6e4b7c8e33?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Bluetooth Speaker</h3><div class="price">KSh 1,800</div><button class="add-cart" data-name="Bluetooth Speaker" data-price="1800">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1581092918299-1c6e4b7c8e22?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Memory Card</h3><div class="price">KSh 700</div><button class="add-cart" data-name="Memory Card" data-price="700">Add to Cart</button></div></div>
+</div>
+</section>
+
+<!-- Digital Services -->
+<section id="digital">
+<h2>Digital Services</h2>
+<div class="grid">
+  <div class="card"><img src="https://images.unsplash.com/photo-1581091012184-3cf6f77e7eaa?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>SIM Registration & Setup</h3><button class="add-cart" data-name="Digital Service" data-price="0">Add to Cart</button></div></div>
+</div>
+</section>
+
+<!-- Men's Wear -->
+<section id="mens">
+<h2>Men's Wear</h2>
+<div class="grid">
+  <div class="card"><img src="https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Sneakers 1</h3><div class="price">KSh 1,500</div><button class="add-cart" data-name="Sneakers 1" data-price="1500">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1579338559195-b162d19bf843?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Shirt 1</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Shirt 1" data-price="1200">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1579338559196-c162d19bf844?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Jeans 1</h3><div class="price">KSh 1,800</div><button class="add-cart" data-name="Jeans 1" data-price="1800">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1579338559197-d162d19bf845?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Sneakers 2</h3><div class="price">KSh 1,600</div><button class="add-cart" data-name="Sneakers 2" data-price="1600">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1579338559198-e162d19bf846?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Shirt 2</h3><div class="price">KSh 1,400</div><button class="add-cart" data-name="Shirt 2" data-price="1400">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1579338559199-f162d19bf847?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Jeans 2</h3><div class="price">KSh 1,900</div><button class="add-cart" data-name="Jeans 2" data-price="1900">Add to Cart</button></div></div>
+</div>
+</section>
+
+<!-- Lady's Wear -->
+<section id="ladys">
+<h2>Lady's Wear</h2>
+<div class="grid">
+  <div class="card"><img src="https://images.unsplash.com/photo-1520975914821-758c7f1d13ec?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 1</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Heels 1" data-price="1200">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1520975914822-758c7f1d13ed?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 1</h3><div class="price">KSh 1,500</div><button class="add-cart" data-name="Dress 1" data-price="1500">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1520975914823-758c7f1d13ee?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 2</h3><div class="price">KSh 1,300</div><button class="add-cart" data-name="Heels 2" data-price="1300">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1520975914824-758c7f1d13ef?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 2</h3><div class="price">KSh 1,600</div><button class="add-cart" data-name="Dress 2" data-price="1600">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1520975914825-758c7f1d13f0?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 3</h3><div class="price">KSh 1,250</div><button class="add-cart" data-name="Heels 3" data-price="1250">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1520975914826-758c7f1d13f1?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 3</h3><div class="price">KSh 1,550</div><button class="add-cart" data-name="Dress 3" data-price="1550">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1520975914827-758c7f1d13f2?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 4</h3><div class="price">KSh 1,350</div><button class="add-cart" data-name="Heels 4" data-price="1350">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1520975914828-758c7f1d13f3?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 4</h3><div class="price">KSh 1,650</div><button class="add-cart" data-name="Dress 4" data-price="1650">Add to Cart</button></div></div>
+</div>
+</section>
+
 </main>
 
+<!-- Cart -->
 <button class="cart-btn">🛒 <span class="cart-badge">0</span></button>
 <div id="cartOverlay">
   <div class="cart-modal">
@@ -106,50 +155,27 @@ footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px sol
     </div>
     <div class="cart-body">
       <div class="cart-items"></div>
-      <div class="totals">Total: <span class="cart-total">KSh 0</span></div>
-      <label for="payment-method">Payment Method:</label>
-      <select id="payment-method">
-        <option value="mpesa">M-Pesa</option>
-        <option value="bank">Bank Transfer</option>
-        <option value="card">Card</option>
-      </select>
-      <button id="checkout-btn" class="btn-blue">Checkout</button>
+      <div class="totals">
+        <span>Total:</span><span class="cart-total">KSh 0</span>
+      </div>
+      <div class="pay-actions">
+        <button class="pay-mpesa">Pay with M-Pesa</button>
+        <button class="pay-card">Pay with Card</button>
+        <button class="pay-bank">Pay with Bank</button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-const products={
-  smartphones:[{name:"Phone 1",price:7000},{name:"Phone 2",price:8500},{name:"Phone 3",price:9500},{name:"Phone 4",price:10500},{name:"Phone 5",price:12000},{name:"Phone 6",price:15000}],
-  accessories:[{name:"Case",price:500},{name:"Charger",price:700},{name:"Earphones",price:1200},{name:"Powerbank",price:1800},{name:"Screen Protector",price:300},{name:"Cable",price:400},{name:"Holder",price:250},{name:"Bluetooth Speaker",price:2500}],
-  digital:[{name:"SIM registration & Setup",price:0}],
-  menswear:[{name:"Sneakers 1",price:1200},{name:"Sneakers 2",price:1500},{name:"Sneakers 3",price:1700},{name:"Sneakers 4",price:2000},{name:"Sneakers 5",price:2200},{name:"Sneakers 6",price:2500}],
-  ladieswear:[{name:"Shoes 1",price:1000},{name:"Shoes 2",price:1200},{name:"Shoes 3",price:1500},{name:"Shoes 4",price:1800},{name:"Shoes 5",price:2000},{name:"Shoes 6",price:2200},{name:"Shoes 7",price:2500},{name:"Shoes 8",price:2800}]
-};
-
-function renderProducts(id, arr){
-  const container=document.getElementById(id);
-  arr.forEach(p=>{
-    const card=document.createElement('div');
-    card.className='card';
-    card.innerHTML=`<div style="position:relative;"><img src="https://via.placeholder.com/300x180?text=${encodeURIComponent(p.name)}" alt="${p.name}">
-    ${p.price>0?'<div class="sale-badge">KSh '+p.price+'</div>':''}</div>
-    <div class="pad">
-      <h3>${p.name}</h3>
-      <button class="btn-blue add-cart" data-name="${p.name}" data-price="${p.price}">Add to Cart</button>
-    </div>`;
-    container.appendChild(card);
-  });
-}
-Object.keys(products).forEach(k=>renderProducts(k,products[k]));
-
-let cart=[];
-const cartItemsEl=document.querySelector('.cart-items');
-const cartTotalEl=document.querySelector('.cart-total');
-const cartBadge=document.querySelector('.cart-badge');
-const cartBtn=document.querySelector('.cart-btn');
-const closeCartBtn=document.querySelector('.close-cart');
-const checkoutBtn=document.getElementById('checkout-btn');
+const cartBtn = document.querySelector('.cart-btn');
+const cartOverlay = document.getElementById('cartOverlay');
+const cartItemsEl = document.querySelector('.cart-items');
+const cartTotalEl = document.querySelector('.cart-total');
+const cartBadge = document.querySelector('.cart-badge');
+const closeCartBtn = document.querySelector('.close-cart');
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem('hqCart')||'[]'); } catch(e){ cart=[]; }
 
 function updateCartUI(){
   cartItemsEl.innerHTML='';
@@ -157,67 +183,38 @@ function updateCartUI(){
   cart.forEach((item,idx)=>{
     const row=document.createElement('div');
     row.className='cart-row';
-    row.innerHTML=`<div>${item.name}</div>
-      <div class="qty">
-        <button data-idx="${idx}" class="dec">-</button>${item.qty}<button data-idx="${idx}" class="inc">+</button>
-      </div>
-      <div>KSh ${item.price*item.qty}</div>
-      <button data-idx="${idx}" class="remove">x</button>`;
+    row.innerHTML=`
+      <span>${item.name}</span>
+      <div class="qty"><button class="dec">-</button><span>${item.qty}</span><button class="inc">+</button></div>
+      <span>KSh ${item.price*item.qty}</span>
+      <button class="remove">Remove</button>`;
     cartItemsEl.appendChild(row);
+    row.querySelector('.inc').addEventListener('click',()=>{item.qty++; updateCartUI();});
+    row.querySelector('.dec').addEventListener('click',()=>{if(item.qty>1){item.qty--}else{cart.splice(idx,1)}; updateCartUI();});
+    row.querySelector('.remove').addEventListener('click',()=>{cart.splice(idx,1); updateCartUI();});
     total+=item.price*item.qty;
   });
   cartTotalEl.textContent='KSh '+total;
-  cartBadge.textContent=cart.reduce((a,b)=>a+b.qty,0);
-}
-
-// Fly-to-cart animation
-function flyToCart(img, event){
-  const flyImg = img.cloneNode(true);
-  flyImg.style.position='absolute';
-  flyImg.style.zIndex=1000;
-  flyImg.style.width=img.offsetWidth+'px';
-  flyImg.style.height=img.offsetHeight+'px';
-  flyImg.style.top=img.getBoundingClientRect().top+'px';
-  flyImg.style.left=img.getBoundingClientRect().left+'px';
-  document.body.appendChild(flyImg);
-  const cartRect = cartBtn.getBoundingClientRect();
-  flyImg.animate([
-    {transform:`translate(0,0) scale(1)`,opacity:1},
-    {transform:`translate(${cartRect.left - img.getBoundingClientRect().left}px,${cartRect.top - img.getBoundingClientRect().top}px) scale(0.1)`,opacity:0.6}
-  ],{duration:800,easing:'ease-in-out'});
-  setTimeout(()=>document.body.removeChild(flyImg),800);
+  cartBadge.textContent=cart.reduce((s,i)=>s+i.qty,0);
+  localStorage.setItem('hqCart',JSON.stringify(cart));
 }
 
 document.querySelectorAll('.add-cart').forEach(btn=>{
-  btn.addEventListener('click',e=>{
-    const name=e.target.dataset.name;
-    const price=parseInt(e.target.dataset.price);
-    const img=e.target.closest('.card').querySelector('img');
-    flyToCart(img,e);
-    const exist=cart.find(c=>c.name===name);
-    if(exist) exist.qty++; else cart.push({name,price,qty:1});
+  btn.addEventListener('click',()=>{
+    const name=btn.dataset.name;
+    const price=parseInt(btn.dataset.price)||0;
+    const existing=cart.find(i=>i.name===name);
+    if(existing) existing.qty++; else cart.push({name,price,qty:1});
     updateCartUI();
+    cartBtn.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:300});
   });
 });
 
-cartItemsEl.addEventListener('click',e=>{
-  const idx=e.target.dataset.idx;
-  if(e.target.classList.contains('inc')){cart[idx].qty++; updateCartUI()}
-  if(e.target.classList.contains('dec')){cart[idx].qty>1?cart[idx].qty--:null; updateCartUI()}
-  if(e.target.classList.contains('remove')){cart.splice(idx,1); updateCartUI()}
-});
+cartBtn.addEventListener('click',()=>{cartOverlay.style.display='flex';});
+closeCartBtn.addEventListener('click',()=>{cartOverlay.style.display='none';});
 
-cartBtn.addEventListener('click',()=>{document.getElementById('cartOverlay').style.display='flex'})
-closeCartBtn.addEventListener('click',()=>{document.getElementById('cartOverlay').style.display='none'})
-
-checkoutBtn.addEventListener('click',()=>{
-  const paymentMethod=document.getElementById('payment-method').value;
-  if(cart.length===0){alert("Your cart is empty!"); return;}
-  alert(`Thank you for your order! Payment method: ${paymentMethod}`);
-  cart=[];
-  updateCartUI();
-  document.getElementById('cartOverlay').style.display='none';
-});
+updateCartUI();
 </script>
+
 </body>
 </html>
