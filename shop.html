@@ -24,7 +24,8 @@ nav a:hover{color:var(--accent)}
 /* Grid & cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:30px}
 .card{background:var(--card);border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;text-align:center;transition:transform .28s;position:relative}
-.card img{width:100%;height:140px;object-fit:cover}
+.card img{width:100%;height:140px;object-fit:cover;transition:transform .3s}
+.card:hover img{transform:scale(1.05);}
 .card .pad{padding:10px}
 .card h3{font-size:16px;margin:8px 0;color:var(--accent);font-weight:700}
 .card .price{font-weight:700;color:#059669;margin-bottom:8px}
@@ -34,7 +35,7 @@ nav a:hover{color:var(--accent)}
 .sale-badge{position:absolute;top:8px;left:8px;background:#ef4444;color:#fff;padding:3px 6px;border-radius:6px;font-size:11px;font-weight:700;z-index:2}
 
 /* Cart modal */
-.cart-btn{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s}
+.cart-btn{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s;z-index:999}
 .cart-btn:hover{transform:scale(1.12)}
 .cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700}
 #cartOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
@@ -64,7 +65,7 @@ nav a:hover{color:var(--accent)}
   <div class="wrap">
     <nav>
       <div class="brand">
-        <a href="https://salehqcyber.netlify.app"><span class="logo">🏠</span></a>
+        <a href="https://salehqcyber.netlify.app" style="font-weight:700;color:var(--accent);text-decoration:none;font-size:16px;">Home</a>
       </div>
       <div>
         <a href="#smartphones">Smartphones</a>
@@ -96,14 +97,15 @@ nav a:hover{color:var(--accent)}
 <section id="accessories">
 <h2>Accessories</h2>
 <div class="grid">
-  <div class="card"><img src="https://cdn.mafrservices.com/sys-master-root/hc9/h40/28762187202590/169104_main.jpg?im=Resize=480=300&h=200&fit=crop" alt=""><div class="pad"><h3>Charger</h3><div class="price">KSh 500</div><button class="add-cart" data-name="Charger" data-price="500">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images-cdn.ubuy.qa/65ef95ab90212d1553760f04-wireless-bluetooth-headphones-over-ear.jpg=300&h=200&fit=crop" alt=""><div class="pad"><h3>Headphones</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Headphones" data-price="1200">Add to Cart</button></div></div>
-  <div class="card"><img src="https://i0.wp.com/givtmobile.com/wp-content/uploads/2021/03/51ojzIimRXL._SL1200_.jpg?fit=1200%2C1200&ssl=1=300&h=200&fit=crop" alt=""><div class="pad"><h3>Power Bank</h3><div class="price">KSh 900</div><button class="add-cart" data-name="Power Bank" data-price="900">Add to Cart</button></div></div>
-  <div class="card"><img src="https://www.mychoice.qa/cdn/shop/files/71JFIYI7fXL._SX425.webp?v=1723578618&width=1445=300&h=200&fit=crop" alt=""><div class="pad"><h3>USB Cable</h3><div class="price">KSh 300</div><button class="add-cart" data-name="USB Cable" data-price="300">Add to Cart</button></div></div>
-  <div class="card"><img src="https://coconutcases.com/cdn/shop/files/01_fd1c86d1-2785-4cdf-8f2c-29fae71b3fd2.jpg?v=1737188679&width=1604=300&h=200&fit=crop" alt=""><div class="pad"><h3>Case</h3><div class="price">KSh 400</div><button class="add-cart" data-name="Case" data-price="400">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images-cdn.ubuy.co.in/63c6eaf5c41ea11c75185a93-jetech-screen-protector-for-iphone-11.jpg=300&h=200&fit=crop" alt=""><div class="pad"><h3>Screen Protector</h3><div class="price">KSh 350</div><button class="add-cart" data-name="Screen Protector" data-price="350">Add to Cart</button></div></div>
-  <div class="card"><img src="https://www.boat-lifestyle.com/cdn/shop/files/Stone_SpinXPro_1_b3503890-50f6-4cd1-9138-0bd90874391e_1300x.png?v=1709717442=300&h=200&fit=crop" alt=""><div class="pad"><h3>Bluetooth Speaker</h3><div class="price">KSh 1,800</div><button class="add-cart" data-name="Bluetooth Speaker" data-price="1800">Add to Cart</button></div></div>
-  <div class="card"><img src="https://m.media-amazon.com/images/I/61JSbfLd3dL._UF1000,1000_QL80_.jpg=300&h=200&fit=crop" alt=""><div class="pad"><h3>Memory Card</h3><div class="price">KSh 700</div><button class="add-cart" data-name="Memory Card" data-price="700">Add to Cart</button></div></div>
+<!-- 8 cards -->
+<div class="card"><img src="https://cdn.mafrservices.com/sys-master-root/hc9/h40/28762187202590/169104_main.jpg?im=Resize=480=300&h=200&fit=crop" alt=""><div class="pad"><h3>Charger</h3><div class="price">KSh 500</div><button class="add-cart" data-name="Charger" data-price="500">Add to Cart</button></div></div>
+<div class="card"><img src="https://images-cdn.ubuy.qa/65ef95ab90212d1553760f04-wireless-bluetooth-headphones-over-ear.jpg=300&h=200&fit=crop" alt=""><div class="pad"><h3>Headphones</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Headphones" data-price="1200">Add to Cart</button></div></div>
+<div class="card"><img src="https://i0.wp.com/givtmobile.com/wp-content/uploads/2021/03/51ojzIimRXL._SL1200_.jpg?fit=1200%2C1200&ssl=1=300&h=200&fit=crop" alt=""><div class="pad"><h3>Power Bank</h3><div class="price">KSh 900</div><button class="add-cart" data-name="Power Bank" data-price="900">Add to Cart</button></div></div>
+<div class="card"><img src="https://www.mychoice.qa/cdn/shop/files/71JFIYI7fXL._SX425.webp?v=1723578618&width=1445=300&h=200&fit=crop" alt=""><div class="pad"><h3>USB Cable</h3><div class="price">KSh 300</div><button class="add-cart" data-name="USB Cable" data-price="300">Add to Cart</button></div></div>
+<div class="card"><img src="https://coconutcases.com/cdn/shop/files/01_fd1c86d1-2785-4cdf-8f2c-29fae71b3fd2.jpg?v=1737188679&width=1604=300&h=200&fit=crop" alt=""><div class="pad"><h3>Case</h3><div class="price">KSh 400</div><button class="add-cart" data-name="Case" data-price="400">Add to Cart</button></div></div>
+<div class="card"><img src="https://images-cdn.ubuy.co.in/63c6eaf5c41ea11c75185a93-jetech-screen-protector-for-iphone-11.jpg=300&h=200&fit=crop" alt=""><div class="pad"><h3>Screen Protector</h3><div class="price">KSh 350</div><button class="add-cart" data-name="Screen Protector" data-price="350">Add to Cart</button></div></div>
+<div class="card"><img src="https://www.boat-lifestyle.com/cdn/shop/files/Stone_SpinXPro_1_b3503890-50f6-4cd1-9138-0bd90874391e_1300x.png?v=1709717442=300&h=200&fit=crop" alt=""><div class="pad"><h3>Bluetooth Speaker</h3><div class="price">KSh 1,800</div><button class="add-cart" data-name="Bluetooth Speaker" data-price="1800">Add to Cart</button></div></div>
+<div class="card"><img src="https://m.media-amazon.com/images/I/61JSbfLd3dL._UF1000,1000_QL80_.jpg=300&h=200&fit=crop" alt=""><div class="pad"><h3>Memory Card</h3><div class="price">KSh 700</div><button class="add-cart" data-name="Memory Card" data-price="700">Add to Cart</button></div></div>
 </div>
 </section>
 
@@ -111,11 +113,11 @@ nav a:hover{color:var(--accent)}
 <section id="digital">
 <h2>Digital Services</h2>
 <div class="grid">
-  <div class="card"><img src="https://images.unsplash.com/photo-1581091012184-3cf6f77e7eaa?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>SIM Registration & Setup</h3><button class="add-cart" data-name="Digital Service" data-price="0">Add to Cart</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1581091012184-3cf6f77e7eaa?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>SIM Registration & Setup</h3><button class="add-cart" data-name="Digital Service" data-price="0">Add to Cart</button></div></div>
 </div>
 </section>
 
-<!-- Men's Wear -->
+<!-- Men’s Wear -->
 <section id="mens">
 <h2>Men's Wear</h2>
 <div class="grid">
@@ -128,7 +130,7 @@ nav a:hover{color:var(--accent)}
 </div>
 </section>
 
-<!-- Lady's Wear -->
+<!-- Lady’s Wear -->
 <section id="ladys">
 <h2>Lady's Wear</h2>
 <div class="grid">
@@ -136,30 +138,28 @@ nav a:hover{color:var(--accent)}
   <div class="card"><img src="https://images.unsplash.com/photo-1520975914822-758c7f1d13ed?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 1</h3><div class="price">KSh 1,500</div><button class="add-cart" data-name="Dress 1" data-price="1500">Add to Cart</button></div></div>
   <div class="card"><img src="https://images.unsplash.com/photo-1520975914823-758c7f1d13ee?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 2</h3><div class="price">KSh 1,300</div><button class="add-cart" data-name="Heels 2" data-price="1300">Add to Cart</button></div></div>
   <div class="card"><img src="https://images.unsplash.com/photo-1520975914824-758c7f1d13ef?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 2</h3><div class="price">KSh 1,600</div><button class="add-cart" data-name="Dress 2" data-price="1600">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914825-758c7f1d13f0?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 3</h3><div class="price">KSh 1,250</div><button class="add-cart" data-name="Heels 3" data-price="1250">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914826-758c7f1d13f1?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 3</h3><div class="price">KSh 1,550</div><button class="add-cart" data-name="Dress 3" data-price="1550">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914827-758c7f1d13f2?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 4</h3><div class="price">KSh 1,350</div><button class="add-cart" data-name="Heels 4" data-price="1350">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914828-758c7f1d13f3?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 4</h3><div class="price">KSh 1,650</div><button class="add-cart" data-name="Dress 4" data-price="1650">Add to Cart</button></div></div>
 </div>
 </section>
 
 </main>
 
-<!-- Cart -->
-<button class="cart-btn">🛒 <span class="cart-badge">0</span></button>
+<!-- Floating Cart Button -->
+<button class="cart-btn">🛒<span class="cart-badge" id="cart-count">0</span></button>
+
+<!-- Cart Overlay -->
 <div id="cartOverlay">
   <div class="cart-modal">
     <div class="cart-head">
       <h3>Your Cart</h3>
-      <button class="close-cart">✕</button>
+      <button class="close-cart">✖</button>
     </div>
     <div class="cart-body">
-      <div class="cart-items"></div>
+      <div class="cart-items" id="cartItems"></div>
       <div class="totals">
-        <span>Total:</span><span class="cart-total">KSh 0</span>
+        <span>Total:</span><span id="cartTotal">KSh 0</span>
       </div>
       <div class="pay-actions">
-        <button class="pay-mpesa">Pay with M-Pesa</button>
+        <button class="pay-mpesa">Pay with MPesa</button>
         <button class="pay-card">Pay with Card</button>
         <button class="pay-bank">Pay with Bank</button>
       </div>
@@ -168,52 +168,72 @@ nav a:hover{color:var(--accent)}
 </div>
 
 <script>
+// Cart logic
+let cart = [];
 const cartBtn = document.querySelector('.cart-btn');
 const cartOverlay = document.getElementById('cartOverlay');
-const cartItemsEl = document.querySelector('.cart-items');
-const cartTotalEl = document.querySelector('.cart-total');
-const cartBadge = document.querySelector('.cart-badge');
-const closeCartBtn = document.querySelector('.close-cart');
-let cart = [];
-try { cart = JSON.parse(localStorage.getItem('hqCart')||'[]'); } catch(e){ cart=[]; }
+const closeCart = document.querySelector('.close-cart');
+const cartItems = document.getElementById('cartItems');
+const cartCount = document.getElementById('cart-count');
+const cartTotal = document.getElementById('cartTotal');
 
-function updateCartUI(){
-  cartItemsEl.innerHTML='';
+function updateCart(){
+  cartItems.innerHTML = '';
   let total=0;
-  cart.forEach((item,idx)=>{
-    const row=document.createElement('div');
-    row.className='cart-row';
-    row.innerHTML=`
-      <span>${item.name}</span>
-      <div class="qty"><button class="dec">-</button><span>${item.qty}</span><button class="inc">+</button></div>
-      <span>KSh ${item.price*item.qty}</span>
-      <button class="remove">Remove</button>`;
-    cartItemsEl.appendChild(row);
-    row.querySelector('.inc').addEventListener('click',()=>{item.qty++; updateCartUI();});
-    row.querySelector('.dec').addEventListener('click',()=>{if(item.qty>1){item.qty--}else{cart.splice(idx,1)}; updateCartUI();});
-    row.querySelector('.remove').addEventListener('click',()=>{cart.splice(idx,1); updateCartUI();});
-    total+=item.price*item.qty;
+  cart.forEach((item,i)=>{
+    total+=item.price;
+    let div=document.createElement('div');
+    div.className='cart-row';
+    div.innerHTML=`<span>${item.name}</span><div class="qty">1</div><span>KSh ${item.price}</span><button class="remove" data-index="${i}">Remove</button>`;
+    cartItems.appendChild(div);
   });
-  cartTotalEl.textContent='KSh '+total;
-  cartBadge.textContent=cart.reduce((s,i)=>s+i.qty,0);
-  localStorage.setItem('hqCart',JSON.stringify(cart));
+  cartCount.textContent=cart.length;
+  cartTotal.textContent='KSh '+total;
+  document.querySelectorAll('.remove').forEach(btn=>btn.onclick=e=>{
+    const idx=btn.dataset.index;
+    cart.splice(idx,1);
+    updateCart();
+  });
 }
 
+// Add to cart animation
 document.querySelectorAll('.add-cart').forEach(btn=>{
-  btn.addEventListener('click',()=>{
+  btn.onclick=e=>{
     const name=btn.dataset.name;
-    const price=parseInt(btn.dataset.price)||0;
-    const existing=cart.find(i=>i.name===name);
-    if(existing) existing.qty++; else cart.push({name,price,qty:1});
-    updateCartUI();
-    cartBtn.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:300});
-  });
+    const price=parseInt(btn.dataset.price);
+    const card=btn.closest('.card');
+    const img=card.querySelector('img');
+    // Clone and animate
+    const imgClone=img.cloneNode(true);
+    const rect=img.getBoundingClientRect();
+    imgClone.style.position='fixed';
+    imgClone.style.top=rect.top+'px';
+    imgClone.style.left=rect.left+'px';
+    imgClone.style.width=rect.width+'px';
+    imgClone.style.height=rect.height+'px';
+    imgClone.style.transition='all 0.8s ease-in-out';
+    imgClone.style.zIndex=9999;
+    document.body.appendChild(imgClone);
+    const cartRect=cartBtn.getBoundingClientRect();
+    setTimeout(()=>{
+      imgClone.style.top=cartRect.top+'px';
+      imgClone.style.left=cartRect.left+'px';
+      imgClone.style.width='20px';
+      imgClone.style.height='20px';
+      imgClone.style.opacity='0.4';
+    },10);
+    setTimeout(()=>{document.body.removeChild(imgClone)},820);
+    // Add to cart
+    cart.push({name,price});
+    updateCart();
+  }
 });
 
-cartBtn.addEventListener('click',()=>{cartOverlay.style.display='flex';});
-closeCartBtn.addEventListener('click',()=>{cartOverlay.style.display='none';});
-
-updateCartUI();
+cartBtn.onclick=e=>cartOverlay.style.display='flex';
+closeCart.onclick=e=>cartOverlay.style.display='none';
+cartOverlay.onclick=e=>{
+  if(e.target==cartOverlay) cartOverlay.style.display='none';
+};
 </script>
 
 </body>
