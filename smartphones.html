@@ -5,138 +5,156 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smartphones - SalehgCyber</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    header { padding: 20px; background: #0077cc; color: white; display: flex; justify-content: space-between; align-items: center; }
+    header nav a { color: white; margin-left: 15px; text-decoration: none; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
+    .card { border: 1px solid #ccc; border-radius: 5px; overflow: hidden; background: #fff; }
+    .card img { width: 100%; height: auto; }
+    .pad { padding: 10px; }
+    .price { font-weight: bold; margin: 10px 0; }
+    .btn-blue { background: #0077cc; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; }
+    .btn-blue:hover { background: #005fa3; }
+    .cart-float { position: fixed; bottom: 20px; right: 20px; background: #0077cc; color: white; padding: 12px 18px; border-radius: 50px; cursor: pointer; z-index: 1000; }
+    .whatsapp-float { position: fixed; bottom: 80px; right: 20px; background: #25d366; color: white; padding: 12px 18px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Smartphones Collection</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="smartphones.html">Smartphones</a>
-      <a href="accessories.html">Accessories</a>
-      <a href="repairs.html">Repairs</a>
-      <a href="mens-wear.html">Men's Wear</a>
-      <a href="ladies-wear.html">Ladies' Wear</a>
-    </nav>
-  </header>
 
-  <main class="grid">
-    <!-- Card 1 -->
-    <article class="card">
-      <img src="https://via.placeholder.com/400x300" alt="Smartphone 1">
-      <div class="pad">
-        <h3>Smartphone 1</h3>
-        <p>Powerful and sleek with modern design.</p>
-        <div class="price">From KSh 7,500</div>
-        <button class="btn-blue">Add to Cart</button>
-      </div>
-    </article>
+<header>
+  <h1>Smartphones</h1>
+  <nav>
+    <a href="index.html">Home</a>
+  </nav>
+</header>
 
-    <!-- Card 2 -->
-    <article class="card">
-      <img src="https://via.placeholder.com/400x300" alt="Smartphone 2">
-      <div class="pad">
-        <h3>Smartphone 2</h3>
-        <p>Perfect for multitasking and gaming.</p>
-        <div class="price">From KSh 12,000</div>
-        <button class="btn-blue">Add to Cart</button>
-      </div>
-    </article>
+<main class="grid">
+  <!-- 10 Product Cards -->
+  <!-- Card 1 -->
+  <article class="card">
+    <img src="https://via.placeholder.com/400x300" alt="Smartphone 1">
+    <div class="pad">
+      <h3>Smartphone 1</h3>
+      <p>Powerful and sleek with modern design.</p>
+      <div class="price">From KSh 7,500</div>
+      <button class="btn-blue" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </article>
 
-    <!-- Card 3 -->
-    <article class="card">
-      <img src="https://via.placeholder.com/400x300" alt="Smartphone 3">
-      <div class="pad">
-        <h3>Smartphone 3</h3>
-        <p>Great battery life and stunning display.</p>
-        <div class="price">From KSh 9,000</div>
-        <button class="btn-blue">Add to Cart</button>
-      </div>
-    </article>
+  <!-- Card 2 -->
+  <article class="card">
+    <img src="https://via.placeholder.com/400x300" alt="Smartphone 2">
+    <div class="pad">
+      <h3>Smartphone 2</h3>
+      <p>Perfect for multitasking and gaming.</p>
+      <div class="price">From KSh 12,000</div>
+      <button class="btn-blue" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </article>
 
-    <!-- Card 4 -->
-    <article class="card">
-      <img src="https://via.placeholder.com/400x300" alt="Smartphone 4">
-      <div class="pad">
-        <h3>Smartphone 4</h3>
-        <p>Compact and stylish design with fast charging.</p>
-        <div class="price">From KSh 8,200</div>
-        <button class="btn-blue">Add to Cart</button>
-      </div>
-    </article>
+  <!-- Card 3 -->
+  <article class="card">
+    <img src="https://via.placeholder.com/400x300" alt="Smartphone 3">
+    <div class="pad">
+      <h3>Smartphone 3</h3>
+      <p>Great battery life and stunning display.</p>
+      <div class="price">From KSh 9,000</div>
+      <button class="btn-blue" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </article>
 
-    <!-- Card 5 -->
-    <article class="card">
-      <img src="https://via.placeholder.com/400x300" alt="Smartphone 5">
-      <div class="pad">
-        <h3>Smartphone 5</h3>
-        <p>High-performance camera and storage options.</p>
-        <div class="price">From KSh 15,000</div>
-        <button class="btn-blue">Add to Cart</button>
-      </div>
-    </article>
+  <!-- Card 4 -->
+  <article class="card">
+    <img src="https://via.placeholder.com/400x300" alt="Smartphone 4">
+    <div class="pad">
+      <h3>Smartphone 4</h3>
+      <p>Compact and stylish design with fast charging.</p>
+      <div class="price">From KSh 8,200</div>
+      <button class="btn-blue" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </article>
 
-    <!-- Card 6 -->
-    <article class="card">
-      <img src="https://via.placeholder.com/400x300" alt="Smartphone 6">
-      <div class="pad">
-        <h3>Smartphone 6</h3>
-        <p>Affordable with premium feel.</p>
-        <div class="price">From KSh 6,000</div>
-        <button class="btn-blue">Add to Cart</button>
-      </div>
-    </article>
+  <!-- Card 5 -->
+  <article class="card">
+    <img src="https://via.placeholder.com/400x300" alt="Smartphone 5">
+    <div class="pad">
+      <h3>Smartphone 5</h3>
+      <p>High-performance camera and storage options.</p>
+      <div class="price">From KSh 15,000</div>
+      <button class="btn-blue" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </article>
 
-    <!-- Card 7 -->
-    <article class="card">
-      <img src="https://via.placeholder.com/400x300" alt="Smartphone 7">
-      <div class="pad">
-        <h3>Smartphone 7</h3>
-        <p>Durable build with dual SIM support.</p>
-        <div class="price">From KSh 10,500</div>
-        <button class="btn-blue">Add to Cart</button>
-      </div>
-    </article>
+  <!-- Card 6 -->
+  <article class="card">
+    <img src="https://via.placeholder.com/400x300" alt="Smartphone 6">
+    <div class="pad">
+      <h3>Smartphone 6</h3>
+      <p>Affordable with premium feel.</p>
+      <div class="price">From KSh 6,000</div>
+      <button class="btn-blue" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </article>
 
-    <!-- Card 8 -->
-    <article class="card">
-      <img src="https://via.placeholder.com/400x300" alt="Smartphone 8">
-      <div class="pad">
-        <h3>Smartphone 8</h3>
-        <p>Fast processor and clear cameras.</p>
-        <div class="price">From KSh 13,000</div>
-        <button class="btn-blue">Add to Cart</button>
-      </div>
-    </article>
+  <!-- Card 7 -->
+  <article class="card">
+    <img src="https://via.placeholder.com/400x300" alt="Smartphone 7">
+    <div class="pad">
+      <h3>Smartphone 7</h3>
+      <p>Durable build with dual SIM support.</p>
+      <div class="price">From KSh 10,500</div>
+      <button class="btn-blue" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </article>
 
-    <!-- Card 9 -->
-    <article class="card">
-      <img src="https://via.placeholder.com/400x300" alt="Smartphone 9">
-      <div class="pad">
-        <h3>Smartphone 9</h3>
-        <p>Perfect for students and everyday use.</p>
-        <div class="price">From KSh 5,500</div>
-        <button class="btn-blue">Add to Cart</button>
-      </div>
-    </article>
+  <!-- Card 8 -->
+  <article class="card">
+    <img src="https://via.placeholder.com/400x300" alt="Smartphone 8">
+    <div class="pad">
+      <h3>Smartphone 8</h3>
+      <p>Fast processor and clear cameras.</p>
+      <div class="price">From KSh 13,000</div>
+      <button class="btn-blue" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </article>
 
-    <!-- Card 10 -->
-    <article class="card">
-      <img src="https://via.placeholder.com/400x300" alt="Smartphone 10">
-      <div class="pad">
-        <h3>Smartphone 10</h3>
-        <p>Premium flagship with unmatched performance.</p>
-        <div class="price">From KSh 25,000</div>
-        <button class="btn-blue">Add to Cart</button>
-      </div>
-    </article>
-  </main>
+  <!-- Card 9 -->
+  <article class="card">
+    <img src="https://via.placeholder.com/400x300" alt="Smartphone 9">
+    <div class="pad">
+      <h3>Smartphone 9</h3>
+      <p>Perfect for students and everyday use.</p>
+      <div class="price">From KSh 5,500</div>
+      <button class="btn-blue" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </article>
 
-  <!-- Floating WhatsApp -->
-  <a href="https://wa.me/254700000000" target="_blank" class="whatsapp-float">💬 Chat on WhatsApp</a>
+  <!-- Card 10 -->
+  <article class="card">
+    <img src="https://via.placeholder.com/400x300" alt="Smartphone 10">
+    <div class="pad">
+      <h3>Smartphone 10</h3>
+      <p>Premium flagship with unmatched performance.</p>
+      <div class="price">From KSh 25,000</div>
+      <button class="btn-blue" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </article>
+</main>
 
-  <!-- Floating Cart -->
-  <div id="cart" class="cart-float">🛒 Cart (0)</div>
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/254700000000" target="_blank" class="whatsapp-float">💬 Chat on WhatsApp</a>
 
-  <script src="script.js"></script>
+<!-- Floating Cart -->
+<div id="cart" class="cart-float">🛒 Cart (0)</div>
+
+<script>
+  let cartCount = 0;
+  function addToCart() {
+    cartCount++;
+    document.getElementById('cart').innerText = `🛒 Cart (${cartCount})`;
+  }
+</script>
+
 </body>
 </html>
