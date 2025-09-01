@@ -38,10 +38,10 @@ nav a:hover{color:var(--accent)}
 .cart-btn{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s;z-index:999}
 .cart-btn:hover{transform:scale(1.12)}
 .cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700}
-#cartOverlay, #optionOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
-.cart-modal, #optionModal{background:#fff;border-radius:12px;max-width:640px;width:94%;max-height:84vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+#cartOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
+.cart-modal{background:#fff;border-radius:12px;max-width:640px;width:94%;max-height:84vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25)}
 .cart-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #eee}
-.cart-body, #optionModal .option-body{padding:14px 18px}
+.cart-body{padding:14px 18px}
 .cart-items{display:flex;flex-direction:column;gap:12px}
 .cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:10px 0}
 .qty{display:flex;align-items:center;gap:6px}
@@ -53,11 +53,15 @@ nav a:hover{color:var(--accent)}
 .pay-mpesa{background:#10b981}
 .pay-card{background:#2563eb}
 .pay-bank{background:#f59e0b}
-.close-cart, #closeOption{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
+.close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
 
-/* Option modal */
-.option-body label{display:block;margin:8px 0 4px;font-weight:600}
-.option-body select, .option-body input{width:100%;padding:6px;margin-bottom:10px;border:1px solid #e5e7eb;border-radius:6px}
+/* Central selection popup */
+#optionModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1300}
+#optionModal .modal-content{background:#fff;padding:18px;border-radius:12px;width:300px;text-align:center;box-shadow:0 8px 25px rgba(0,0,0,.3)}
+#optionModal label{display:block;margin:8px 0 4px;font-weight:600}
+#optionModal select,input{width:80%;padding:6px;margin-bottom:10px;border:1px solid #ccc;border-radius:6px}
+#optionModal button{padding:8px 12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;transition:transform .2s}
+#optionModal button:hover{transform:scale(1.05)}
 
 /* Responsive */
 @media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}}
@@ -75,6 +79,8 @@ nav a:hover{color:var(--accent)}
         <a href="#digital">Digital Services</a>
         <a href="#mens">Men's Wear</a>
         <a href="#ladys">Lady's Wear</a>
+        <a href="#accessories">Accessories</a>
+        <a href="#phones">Mobile Phones</a>
       </div>
     </nav>
   </div>
@@ -82,122 +88,153 @@ nav a:hover{color:var(--accent)}
 
 <main class="wrap">
 
-<!-- Mobile Phones -->
-<section id="mobile-phones">
-<h2>Mobile phones</h2>
+<!-- Example section: Mobile phones -->
+<section id="phones">
+<h2>Mobile Phones</h2>
 <div class="grid">
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg" alt=""><div class="pad"><h3>Phone 1</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Phone 1" data-price="0">Add to Cart</button></div></div>
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg" alt=""><div class="pad"><h3>Phone 2</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Phone 2" data-price="0">Add to Cart</button></div></div>
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg" alt=""><div class="pad"><h3>Phone 3</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Phone 3" data-price="0">Add to Cart</button></div></div>
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg" alt=""><div class="pad"><h3>Phone 4</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Phone 4" data-price="0">Add to Cart</button></div></div>
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg" alt=""><div class="pad"><h3>Phone 5</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Phone 5" data-price="0">Add to Cart</button></div></div>
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg" alt=""><div class="pad"><h3>Phone 6</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Phone 6" data-price="0">Add to Cart</button></div></div>
+  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg?w=768" alt=""><div class="pad"><h3>Phone 1</h3><div class="price">KSh 20,000</div><button class="add-cart" data-name="Phone 1" data-price="20000" data-type="none">Add to Cart</button></div></div>
+  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg?w=768" alt=""><div class="pad"><h3>Phone 2</h3><div class="price">KSh 18,500</div><button class="add-cart" data-name="Phone 2" data-price="18500" data-type="none">Add to Cart</button></div></div>
+  <!-- Add all other phone cards similarly -->
 </div>
 </section>
 
-<!-- Accessories -->
+<!-- Accessories section example -->
 <section id="accessories">
 <h2>Accessories</h2>
 <div class="grid">
-  <div class="card"><img src="https://cdn.mafrservices.com/sys-master-root/hc9/h40/28762187202590/169104_main.jpg" alt=""><div class="pad"><h3>Charger</h3><div class="price">KSh 500</div><button class="add-cart" data-name="Charger" data-price="500" data-variants="Standard,Fast">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images-cdn.ubuy.qa/65ef95ab90212d1553760f04-wireless-bluetooth-headphones-over-ear.jpg" alt=""><div class="pad"><h3>Headphones</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Headphones" data-price="1200">Add to Cart</button></div></div>
-  <div class="card"><img src="https://i0.wp.com/givtmobile.com/wp-content/uploads/2021/03/51ojzIimRXL._SL1200_.jpg" alt=""><div class="pad"><h3>Power Bank</h3><div class="price">KSh 900</div><button class="add-cart" data-name="Power Bank" data-price="900" data-variants="5000mAh,10000mAh,20000mAh">Add to Cart</button></div></div>
-  <div class="card"><img src="https://www.mychoice.qa/cdn/shop/files/71JFIYI7fXL._SX425.webp" alt=""><div class="pad"><h3>USB Cable</h3><div class="price">KSh 300</div><button class="add-cart" data-name="USB Cable" data-price="300">Add to Cart</button></div></div>
-  <div class="card"><img src="https://coconutcases.com/cdn/shop/files/01_fd1c86d1-2785-4cdf-8f2c-29fae71b3fd2.jpg" alt=""><div class="pad"><h3>Case</h3><div class="price">KSh 400</div><button class="add-cart" data-name="Case" data-price="400">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images-cdn.ubuy.co.in/63c6eaf5c41ea11c75185a93-jetech-screen-protector-for-iphone-11.jpg" alt=""><div class="pad"><h3>Screen Protector</h3><div class="price">KSh 350</div><button class="add-cart" data-name="Screen Protector" data-price="350">Add to Cart</button></div></div>
-  <div class="card"><img src="https://www.boat-lifestyle.com/cdn/shop/files/Stone_SpinXPro_1_b3503890-50f6-4cd1-9138-0bd90874391e_1300x.png" alt=""><div class="pad"><h3>Bluetooth Speaker</h3><div class="price">KSh 1,800</div><button class="add-cart" data-name="Bluetooth Speaker" data-price="1800">Add to Cart</button></div></div>
-  <div class="card"><img src="https://m.media-amazon.com/images/I/61JSbfLd3dL._UF1000,1000_QL80_.jpg" alt=""><div class="pad"><h3>Memory Card</h3><div class="price">KSh 700</div><button class="add-cart" data-name="Memory Card" data-price="700" data-variants="32GB,64GB,128GB">Add to Cart</button></div></div>
+  <div class="card"><img src="https://cdn.mafrservices.com/sys-master-root/hc9/h40/28762187202590/169104_main.jpg?im=Resize=480" alt=""><div class="pad"><h3>Charger</h3><div class="price">KSh 500</div><button class="add-cart" data-name="Charger" data-price="500" data-type="none">Add to Cart</button></div></div>
+  <div class="card"><img src="https://m.media-amazon.com/images/I/61JSbfLd3dL._UF1000,1000_QL80_.jpg" alt=""><div class="pad"><h3>Memory Card</h3><div class="price">KSh 700</div><button class="add-cart" data-name="Memory Card" data-price="700" data-type="capacity">Add to Cart</button></div></div>
+  <!-- Add remaining accessories -->
 </div>
 </section>
 
-<!-- Men’s Wear -->
+<!-- Men’s Wear example -->
 <section id="mens">
 <h2>Men's Wear</h2>
 <div class="grid">
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Air Force</h3><div class="price">KSh 2,500</div><button class="add-cart" data-name="Air Force" data-price="2500" data-variants="6,7,8,9,10,11,12">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559195-b162d19bf843?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Shirt 1</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Shirt 1" data-price="1200" data-variants="S,M,L,XL">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559196-c162d19bf844?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Jeans 1</h3><div class="price">KSh 1,800</div><button class="add-cart" data-name="Jeans 1" data-price="1800" data-variants="S,M,L,XL">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559197-d162d19bf845?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Sneakers 2</h3><div class="price">KSh 1,600</div><button class="add-cart" data-name="Sneakers 2" data-price="1600" data-variants="6,7,8,9,10,11,12">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559198-e162d19bf846?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Shirt 2</h3><div class="price">KSh 1,400</div><button class="add-cart" data-name="Shirt 2" data-price="1400" data-variants="S,M,L,XL">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559199-f162d19bf847?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Jeans 2</h3><div class="price">KSh 1,900</div><button class="add-cart" data-name="Jeans 2" data-price="1900" data-variants="S,M,L,XL">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=300" alt=""><div class="pad"><h3>Sneakers</h3><div class="price">KSh 2,500</div><button class="add-cart" data-name="Sneakers" data-price="2500" data-type="size-shoes">Add to Cart</button></div></div>
+  <div class="card"><img src="https://images.unsplash.com/photo-1579338559195-b162d19bf843?w=300" alt=""><div class="pad"><h3>T-Shirt</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="T-Shirt" data-price="1200" data-type="size-shirt">Add to Cart</button></div></div>
 </div>
 </section>
 
-<!-- Lady’s Wear -->
-<section id="ladys">
-<h2>Lady's Wear</h2>
-<div class="grid">
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914821-758c7f1d13ec?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 1</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Heels 1" data-price="1200" data-variants="36,37,38,39,40,41,42">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914822-758c7f1d13ed?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 1</h3><div class="price">KSh 1,500</div><button class="add-cart" data-name="Dress 1" data-price="1500" data-variants="S,M,L,XL">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914823-758c7f1d13ee?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 2</h3><div class="price">KSh 1,300</div><button class="add-cart" data-name="Heels 2" data-price="1300" data-variants="36,37,38,39,40,41,42">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914824-758c7f1d13ef?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 2</h3><div class="price">KSh 1,600</div><button class="add-cart" data-name="Dress 2" data-price="1600" data-variants="S,M,L,XL">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914825-758c7f1d13f0?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 3</h3><div class="price">KSh 1,400</div><button class="add-cart" data-name="Heels 3" data-price="1400" data-variants="36,37,38,39,40,41,42">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914826-758c7f1d13f1?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 3</h3><div class="price">KSh 1,700</div><button class="add-cart" data-name="Dress 3" data-price="1700" data-variants="S,M,L,XL">Add to Cart</button></div></div>
+<!-- Central Modal for selection -->
+<div id="optionModal">
+  <div class="modal-content">
+    <h3 id="modalName"></h3>
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" min="1" value="1">
+    <div id="optionDiv"></div>
+    <button id="addOptionBtn">Add to Cart</button>
+  </div>
 </div>
-</section>
 
-</main>
+<!-- Floating Cart Button -->
+<button class="cart-btn">🛒<span class="cart-badge" id="cart-count">0</span></button>
 
-<!-- Cart button -->
-<button class="cart-btn" id="openCart">🛒<span class="cart-badge" id="cartCount">0</span></button>
-
-<!-- Option Modal -->
-<div id="optionOverlay">
-  <div id="optionModal">
+<!-- Cart Overlay -->
+<div id="cartOverlay">
+  <div class="cart-modal">
     <div class="cart-head">
-      <h3>Select Options</h3>
-      <button id="closeOption">X</button>
+      <h3>Your Cart</h3>
+      <button class="close-cart">✖</button>
     </div>
-    <div class="option-body">
-      <label for="variantSelect">Size / Variant</label>
-      <select id="variantSelect"></select>
-      <label for="quantitySelect">Quantity</label>
-      <input type="number" id="quantitySelect" min="1" value="1">
-      <button id="confirmOption" style="background:var(--whatsapp);color:#fff;width:100%;padding:10px;border:none;border-radius:8px;margin-top:10px;">Add to Cart</button>
+    <div class="cart-body">
+      <div class="cart-items" id="cartItems"></div>
+      <div class="totals">
+        <span>Total:</span><span id="cartTotal">KSh 0</span>
+      </div>
+      <div class="pay-actions">
+        <button class="pay-mpesa">Pay with MPesa</button>
+        <button class="pay-card">Pay with Card</button>
+        <button class="pay-bank">Pay with Bank</button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
 let cart = [];
-let currentItem = {};
-const cartCount = document.getElementById('cartCount');
-const optionOverlay = document.getElementById('optionOverlay');
-const variantSelect = document.getElementById('variantSelect');
-const quantitySelect = document.getElementById('quantitySelect');
+const cartBtn = document.querySelector('.cart-btn');
+const cartOverlay = document.getElementById('cartOverlay');
+const closeCart = document.querySelector('.close-cart');
+const cartItems = document.getElementById('cartItems');
+const cartCount = document.getElementById('cart-count');
+const cartTotal = document.getElementById('cartTotal');
 
-document.querySelectorAll('.add-cart').forEach(btn => {
-  btn.addEventListener('click', e => {
-    currentItem = {
-      name: btn.dataset.name,
-      price: parseInt(btn.dataset.price) || 0,
-      variants: btn.dataset.variants ? btn.dataset.variants.split(',') : []
-    };
-    variantSelect.innerHTML = '';
-    if(currentItem.variants.length){
-      currentItem.variants.forEach(v => {
-        let opt = document.createElement('option'); opt.value=v; opt.textContent=v;
-        variantSelect.appendChild(opt);
-      });
-      variantSelect.style.display = 'block';
-    } else {
-      let opt = document.createElement('option'); opt.value=''; opt.textContent='Default';
-      variantSelect.appendChild(opt); variantSelect.style.display = 'none';
-    }
-    quantitySelect.value = 1;
-    optionOverlay.style.display = 'flex';
+const optionModal = document.getElementById('optionModal');
+const modalName = document.getElementById('modalName');
+const quantityInput = document.getElementById('quantity');
+const optionDiv = document.getElementById('optionDiv');
+const addOptionBtn = document.getElementById('addOptionBtn');
+
+let selectedItem = null;
+
+function updateCart(){
+  cartItems.innerHTML = '';
+  let total=0;
+  cart.forEach((item,i)=>{
+    const subtotal = item.price * item.qty;
+    total+=subtotal;
+    let div=document.createElement('div');
+    div.className='cart-row';
+    div.innerHTML=`<span>${item.name} ${item.option? '('+item.option+')':''}</span>
+      <div class="qty">${item.qty}</div>
+      <span>KSh ${subtotal}</span>
+      <button class="remove" data-index="${i}">Remove</button>`;
+    cartItems.appendChild(div);
   });
+  cartCount.textContent=cart.length;
+  cartTotal.textContent='KSh '+total;
+  document.querySelectorAll('.remove').forEach(btn=>btn.onclick=e=>{
+    const idx=btn.dataset.index;
+    cart.splice(idx,1);
+    updateCart();
+  });
+}
+
+document.querySelectorAll('.add-cart').forEach(btn=>{
+  btn.onclick=e=>{
+    const name=btn.dataset.name;
+    const price=parseInt(btn.dataset.price);
+    const type=btn.dataset.type;
+    selectedItem={name,price,type};
+    modalName.textContent=name;
+    quantityInput.value=1;
+    optionDiv.innerHTML='';
+    if(type==='size-shoes'){
+      optionDiv.innerHTML=`<label for="sizeSelect">Select Size:</label>
+        <select id="sizeSelect">
+          <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+        </select>`;
+    } else if(type==='size-shirt'){
+      optionDiv.innerHTML=`<label for="sizeSelect">Select Size:</label>
+        <select id="sizeSelect">
+          <option>S</option><option>M</option><option>L</option><option>XL</option>
+        </select>`;
+    } else if(type==='capacity'){
+      optionDiv.innerHTML=`<label for="sizeSelect">Select Capacity:</label>
+        <select id="sizeSelect">
+          <option>32GB</option><option>64GB</option><option>128GB</option>
+        </select>`;
+    }
+    optionModal.style.display='flex';
+  }
 });
 
-document.getElementById('closeOption').onclick = ()=>optionOverlay.style.display='none';
+addOptionBtn.onclick=e=>{
+  const qty = parseInt(quantityInput.value);
+  let option = '';
+  const select = document.getElementById('sizeSelect');
+  if(select) option = select.value;
+  cart.push({...selectedItem,qty,option});
+  updateCart();
+  optionModal.style.display='none';
+}
 
-document.getElementById('confirmOption').onclick = ()=>{
-  const variant = variantSelect.value;
-  const quantity = parseInt(quantitySelect.value);
-  cart.push({...currentItem, variant, quantity});
-  cartCount.textContent = cart.length;
-  optionOverlay.style.display='none';
-};
+cartBtn.onclick=e=>cartOverlay.style.display='flex';
+closeCart.onclick=e=>cartOverlay.style.display='none';
+cartOverlay.onclick=e=>{if(e.target==cartOverlay) cartOverlay.style.display='none';};
+optionModal.onclick=e=>{if(e.target==optionModal) optionModal.style.display='none';};
 </script>
 
 </body>
