@@ -71,79 +71,25 @@ nav a:hover{color:var(--accent)}
 </header>
 
 <main class="wrap">
+  <section id="mobile-phones">
+    <h2>Mobile Phones</h2>
+    <div class="grid" id="phonesGrid"></div>
+  </section>
 
-<!-- Mobile Phones -->
-<section id="mobile-phones">
-<h2>Mobile Phones</h2>
-<div class="grid">
-  <div class="card">
-    <img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg" alt="">
-    <div class="pad">
-      <h3>Phone 1</h3>
-      <div class="price">KSh 15000 - 20000</div>
-      <button class="add-cart" data-name="Phone 1" data-variants="64GB:15000,128GB:18000,256GB:20000">Add to Cart</button>
-    </div>
-  </div>
-  <!-- Repeat Phone 2–6 similarly or dynamically -->
-</div>
-</section>
+  <section id="accessories">
+    <h2>Accessories</h2>
+    <div class="grid" id="accessoriesGrid"></div>
+  </section>
 
-<!-- Accessories -->
-<section id="accessories">
-<h2>Accessories</h2>
-<div class="grid">
-  <div class="card">
-    <img src="https://cdn.mafrservices.com/sys-master-root/hc9/h40/28762187202590/169104_main.jpg" alt="">
-    <div class="pad">
-      <h3>Charger</h3>
-      <div class="price">KSh 500</div>
-      <button class="add-cart" data-price="500" data-name="Charger">Add to Cart</button>
-    </div>
-  </div>
-  <div class="card">
-    <img src="https://www.mychoice.qa/cdn/shop/files/71JFIYI7fXL._SX425.webp" alt="">
-    <div class="pad">
-      <h3>USB Cable</h3>
-      <div class="price">Varies</div>
-      <button class="add-cart" data-variants="Type A:300,Type C:400" data-name="USB Cable">Add to Cart</button>
-    </div>
-  </div>
-  <!-- Add other accessories similarly -->
-</div>
-</section>
+  <section id="mens">
+    <h2>Men's Wear</h2>
+    <div class="grid" id="mensGrid"></div>
+  </section>
 
-<!-- Men’s Wear -->
-<section id="mens">
-<h2>Men's Wear</h2>
-<div class="grid">
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=300&h=200&fit=crop" alt="">
-    <div class="pad">
-      <h3>Air Force</h3>
-      <div class="price">Varies</div>
-      <button class="add-cart" data-variants="6:2500,7:2500,8:2500,9:2500,10:2500,11:2500,12:2500" data-name="Air Force">Add to Cart</button>
-    </div>
-  </div>
-  <!-- Repeat other men’s wear -->
-</div>
-</section>
-
-<!-- Lady’s Wear -->
-<section id="ladys">
-<h2>Lady's Wear</h2>
-<div class="grid">
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1520974737036-46c6c1f3b202?w=300&h=200&fit=crop" alt="">
-    <div class="pad">
-      <h3>Dress 1</h3>
-      <div class="price">Varies</div>
-      <button class="add-cart" data-variants="S:2000,M:2000,L:2000,XL:2000" data-name="Dress 1">Add to Cart</button>
-    </div>
-  </div>
-  <!-- Repeat other lady’s wear -->
-</div>
-</section>
-
+  <section id="ladys">
+    <h2>Lady's Wear</h2>
+    <div class="grid" id="ladysGrid"></div>
+  </section>
 </main>
 
 <button class="cart-btn" id="openCart">🛒<span class="cart-badge" id="cartCount">0</span></button>
@@ -187,6 +133,72 @@ nav a:hover{color:var(--accent)}
 </div>
 
 <script>
+// DATA
+const mobilePhones = Array.from({length:6}, (_, i) => ({
+  name: `Phone ${i+1}`,
+  img: 'https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg',
+  variants: {
+    '64GB': 15000 + i*2000,
+    '128GB': 18000 + i*2000,
+    '256GB': 20000 + i*2000
+  }
+}));
+
+const accessories = [
+  {name:'Charger',price:500,img:'https://cdn.mafrservices.com/sys-master-root/hc9/h40/28762187202590/169104_main.jpg'},
+  {name:'Headphones',price:1200,img:'https://images-cdn.ubuy.qa/65ef95ab90212d1553760f04-wireless-bluetooth-headphones-over-ear.jpg'},
+  {name:'Power Bank',variants:{'5000mAh':900,'10000mAh':1400,'20000mAh':2500},img:'https://i0.wp.com/givtmobile.com/wp-content/uploads/2021/03/51ojzIimRXL._SL1200_.jpg'},
+  {name:'USB Cable',variants:{'Type A':300,'Type C':400},img:'https://www.mychoice.qa/cdn/shop/files/71JFIYI7fXL._SX425.webp'},
+  {name:'Case',price:400,img:'https://coconutcases.com/cdn/shop/files/01_fd1c86d1-2785-4cdf-8f2c-29fae71b3fd2.jpg'},
+  {name:'Screen Protector',price:350,img:'https://images-cdn.ubuy.co.in/63c6eaf5c41ea11c75185a93-jetech-screen-protector-for-iphone-11.jpg'},
+  {name:'Bluetooth Speaker',price:1800,img:'https://www.boat-lifestyle.com/cdn/shop/files/Stone_SpinXPro_1_b3503890-50f6-4cd1-9138-0bd90874391e_1300x.png'},
+  {name:'Memory Card',variants:{'32GB':700,'64GB':1200,'128GB':1800},img:'https://m.media-amazon.com/images/I/61JSbfLd3dL._UF1000,1000_QL80_.jpg'}
+];
+
+const mensWear = [
+  {name:'Air Force',variants:{6:2500,7:2500,8:2500,9:2500,10:2500,11:2500,12:2500},img:'https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=300&h=200&fit=crop'},
+  {name:'Shirt 1',variants:{S:1200,M:1200,L:1200,XL:1200},img:'https://images.unsplash.com/photo-1579338559195-b162d19bf843?w=300&h=200&fit=crop'},
+  {name:'Jeans 1',variants:{S:2000,M:2000,L:2000,XL:2000},img:'https://images.unsplash.com/photo-1579338559196-c162d19bf844?w=300&h=200&fit=crop'},
+  {name:'Jacket 1',variants:{S:3500,M:3500,L:3500,XL:3500},img:'https://images.unsplash.com/photo-1579338559197-d162d19bf845?w=300&h=200&fit=crop'},
+  {name:'Sneakers',variants:{6:4000,7:4000,8:4000,9:4000,10:4000,11:4000,12:4000},img:'https://images.unsplash.com/photo-1579338559198-e162d19bf846?w=300&h=200&fit=crop'},
+  {name:'Hoodie',variants:{S:1800,M:1800,L:1800,XL:1800},img:'https://images.unsplash.com/photo-1579338559199-f162d19bf847?w=300&h=200&fit=crop'}
+];
+
+const ladysWear = [
+  {name:'Dress 1',variants:{S:2000,M:2000,L:2000,XL:2000},img:'https://images.unsplash.com/photo-1520974737036-46c6c1f3b202?w=300&h=200&fit=crop'},
+  {name:'Dress 2',variants:{S:2200,M:2200,L:2200,XL:2200},img:'https://images.unsplash.com/photo-1520974737037-46c6c1f3b203?w=300&h=200&fit=crop'},
+  {name:'Heels',variants:{36:2500,37:2500,38:2500,39:2500,40:2500},img:'https://images.unsplash.com/photo-1520974737038-46c6c1f3b204?w=300&h=200&fit=crop'},
+  {name:'Bag',price:1800,img:'https://images.unsplash.com/photo-1520974737039-46c6c1f3b205?w=300&h=200&fit=crop'},
+  {name:'Scarf',price:700,img:'https://images.unsplash.com/photo-1520974737040-46c6c1f3b206?w=300&h=200&fit=crop'},
+  {name:'Top',variants:{S:1000,M:1000,L:1000,XL:1000},img:'https://images.unsplash.com/photo-1520974737041-46c6c1f3b207?w=300&h=200&fit=crop'}
+];
+
+// RENDER FUNCTION
+function renderCards(data, containerId){
+  const container = document.getElementById(containerId);
+  container.innerHTML = data.map(item=>{
+    let variantsData = item.variants ? Object.entries(item.variants).map(([k,v])=>`${k}:${v}`).join(',') : '';
+    let priceText = item.price ? 'KSh '+item.price : 'Varies';
+    return `
+      <div class="card">
+        <img src="${item.img}" alt="">
+        <div class="pad">
+          <h3>${item.name}</h3>
+          <div class="price">${priceText}</div>
+          <button class="add-cart" ${variantsData ? `data-variants="${variantsData}"` : `data-price="${item.price}"`} data-name="${item.name}">Add to Cart</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Generate all sections
+renderCards(mobilePhones, 'phonesGrid');
+renderCards(accessories, 'accessoriesGrid');
+renderCards(mensWear, 'mensGrid');
+renderCards(ladysWear, 'ladysGrid');
+
+// CART LOGIC
 let cart = [];
 let currentItem = {};
 const cartCount = document.getElementById('cartCount');
@@ -200,12 +212,12 @@ const cartTotal = document.getElementById('cartTotal');
 function updateCartUI() {
   cartItems.innerHTML = '';
   let total = 0;
-  cart.forEach((item,index)=>{
+  cart.forEach((item, index) => {
     const row = document.createElement('div');
-    row.className='cart-row';
-    const subtotal = item.price*item.quantity;
-    total+=subtotal;
-    row.innerHTML=`
+    row.className = 'cart-row';
+    const subtotal = item.price * item.quantity;
+    total += subtotal;
+    row.innerHTML = `
       <span>${item.name} (${item.variant})</span>
       <span>KSh ${item.price}</span>
       <span>${item.quantity}</span>
@@ -213,54 +225,58 @@ function updateCartUI() {
     `;
     cartItems.appendChild(row);
   });
-  cartTotal.textContent=`KSh ${total}`;
-  cartCount.textContent=cart.length;
+  cartTotal.textContent = `KSh ${total}`;
+  cartCount.textContent = cart.length;
 }
 
-document.querySelectorAll('.add-cart').forEach(btn=>{
-  btn.addEventListener('click',()=>{
+// Open option modal
+document.addEventListener('click', e=>{
+  if(e.target.classList.contains('add-cart')){
+    const btn = e.target;
     const variantsData = btn.dataset.variants;
-    currentItem={name:btn.dataset.name,variants:[],price:0};
-    variantSelect.innerHTML='';
+    currentItem = {name: btn.dataset.name, variants: [], price: 0};
+    variantSelect.innerHTML = '';
     if(variantsData){
       variantsData.split(',').forEach(v=>{
-        let [name,price]=v.split(':');
-        currentItem.variants.push({name,price:parseInt(price)});
-        let opt=document.createElement('option'); opt.value=name; opt.textContent=`${name} (KSh ${price})`;
+        let [name, price] = v.split(':');
+        currentItem.variants.push({name, price: parseInt(price)});
+        let opt = document.createElement('option'); opt.value=name; opt.textContent=`${name} (KSh ${price})`;
         variantSelect.appendChild(opt);
       });
-      optionOverlay.style.display='flex';
-    }else{
-      currentItem.price=parseInt(btn.dataset.price);
-      currentItem.variant='Default';
-      currentItem.quantity=1;
-      cart.push(currentItem);
-      updateCartUI();
+      currentItem.price = currentItem.variants[0].price;
+      variantSelect.style.display = 'block';
+    } else {
+      currentItem.price = parseInt(btn.dataset.price) || 0;
+      let opt = document.createElement('option'); opt.value='Default'; opt.textContent='Default'; variantSelect.appendChild(opt);
+      variantSelect.style.display = 'none';
     }
-  });
+    quantitySelect.value = 1;
+    optionOverlay.style.display = 'flex';
+  }
 });
 
-document.getElementById('confirmOption').addEventListener('click',()=>{
-  const selVariant=variantSelect.value;
-  const quantity=parseInt(quantitySelect.value);
-  const variantObj=currentItem.variants.find(v=>v.name===selVariant);
-  cart.push({name:currentItem.name,variant:selVariant,price:variantObj.price,quantity});
-  optionOverlay.style.display='none';
-  quantitySelect.value=1;
+document.getElementById('closeOption').onclick = ()=>optionOverlay.style.display='none';
+document.getElementById('confirmOption').onclick = ()=>{
+  const variantName = variantSelect.value;
+  const quantity = parseInt(quantitySelect.value);
+  const price = currentItem.variants.length ? currentItem.variants.find(v=>v.name===variantName).price : currentItem.price;
+  cart.push({name: currentItem.name, variant: variantName, quantity, price});
   updateCartUI();
-});
+  optionOverlay.style.display='none';
+};
 
-document.getElementById('closeOption').addEventListener('click',()=>optionOverlay.style.display='none');
+document.getElementById('openCart').onclick = ()=>cartOverlay.style.display='flex';
+document.getElementById('closeCart').onclick = ()=>cartOverlay.style.display='none';
 
-document.getElementById('openCart').addEventListener('click',()=>cartOverlay.style.display='flex');
-document.getElementById('closeCart').addEventListener('click',()=>cartOverlay.style.display='none');
-
-cartItems.addEventListener('click',e=>{
+// Remove item
+cartItems.addEventListener('click', e=>{
   if(e.target.classList.contains('remove')){
-    cart.splice(e.target.dataset.index,1);
+    const index = parseInt(e.target.dataset.index);
+    cart.splice(index,1);
     updateCartUI();
   }
 });
 </script>
+
 </body>
 </html>
