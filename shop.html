@@ -1,237 +1,196 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>HQ TECH & CYBER - Shop</title>
-<style>
-:root{
-  --bg:#f9fafc; --fg:#1a1d29; --muted:#5b6370; --card:#fff;
-  --accent:#2563eb; --accent-hover:#1d4ed8; --whatsapp:#25D366;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;scroll-behavior:smooth}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HQ TECH & CYBER - Shop</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
+    section { padding:40px 20px; }
+    h2 { text-align:center; margin-bottom:20px; }
 
-/* Header */
-header{position:sticky;top:0;background:rgba(255,255,255,0.95);border-bottom:1px solid #e5e7eb;z-index:1000}
-.wrap{max-width:1100px;margin:0 auto;padding:16px}
-nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
-nav a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;font-size:14px;transition:color .2s}
-nav a:hover{color:var(--accent)}
-.brand{display:flex;align-items:center}
-.brand .logo{width:50px;height:50px;border-radius:50%;overflow:hidden;display:inline-block;flex-shrink:0}
+    .shop-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:20px;
+    }
 
-/* Grid & cards */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:30px}
-.card{background:var(--card);border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;text-align:center;transition:transform .28s;position:relative}
-.card img{width:100%;height:140px;object-fit:cover;transition:transform .3s}
-.card:hover img{transform:scale(1.05);}
-.card .pad{padding:10px}
-.card h3{font-size:16px;margin:8px 0;color:var(--accent);font-weight:700}
-.card .price{font-weight:700;color:#059669;margin-bottom:8px}
-.card button{padding:6px 10px;border:none;border-radius:6px;background:var(--whatsapp);color:#fff;font-weight:600;cursor:pointer;transition:transform .2s}
-.card button:hover{transform:scale(1.05)}
+    .product {
+      background:#fff;
+      border-radius:10px;
+      padding:15px;
+      text-align:center;
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
 
-.sale-badge{position:absolute;top:8px;left:8px;background:#ef4444;color:#fff;padding:3px 6px;border-radius:6px;font-size:11px;font-weight:700;z-index:2}
+    .product img {
+      max-width:100%;
+      border-radius:8px;
+    }
 
-/* Cart modal */
-.cart-btn{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s;z-index:999}
-.cart-btn:hover{transform:scale(1.12)}
-.cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700}
-#cartOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
-.cart-modal{background:#fff;border-radius:12px;max-width:640px;width:94%;max-height:84vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25)}
-.cart-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #eee}
-.cart-body{padding:14px 18px}
-.cart-items{display:flex;flex-direction:column;gap:12px}
-.cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:10px 0}
-.qty{display:flex;align-items:center;gap:6px}
-.qty button{width:28px;height:28px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer}
-.remove{border:none;background:#ef4444;color:#fff;border-radius:6px;padding:6px 8px;cursor:pointer}
-.totals{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
-.pay-actions{display:grid;gap:8px;margin-top:12px}
-.pay-actions button{padding:10px;border:none;border-radius:10px;font-weight:700;color:#fff;cursor:pointer}
-.pay-mpesa{background:#10b981}
-.pay-card{background:#2563eb}
-.pay-bank{background:#f59e0b}
-.close-cart{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
+    .product h3 {
+      margin:10px 0 5px;
+    }
 
-/* Responsive */
-@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}}
-</style>
+    .product p {
+      margin:5px 0;
+      color:#444;
+    }
+
+    .btn {
+      background:#e63946;
+      color:#fff;
+      padding:10px 15px;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      margin-top:10px;
+    }
+
+    /* Modal */
+    .modal {
+      display:none;
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.5);
+      justify-content:center;
+      align-items:center;
+      z-index:1000;
+    }
+
+    .modal-content {
+      background:#fff;
+      padding:20px;
+      border-radius:10px;
+      width:90%;
+      max-width:400px;
+      position:relative;
+      text-align:center;
+    }
+
+    .close {
+      position:absolute;
+      top:10px; right:15px;
+      font-size:20px;
+      cursor:pointer;
+    }
+
+    .modal select, .modal input {
+      margin:10px 0;
+      padding:8px;
+      width:100%;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <nav>
-      <div class="brand">
-        <a href="https://salehqcyber.netlify.app" style="font-weight:700;color:var(--accent);text-decoration:none;font-size:16px;">Home</a>
-      </div>
-      <div>
-        <a href="#digital">Digital Services</a>
-        <a href="#mens">Men's Wear</a>
-        <a href="#ladys">Lady's Wear</a>
-      </div>
-    </nav>
-  </div>
-</header>
+<section id="shop">
+  <h2>Our Shop</h2>
+  <div class="shop-grid">
 
-<main class="wrap">
-
-<!-- Mobile phones -->
-<section id="Mobile phones">
-<h2>Mobile phones</h2>
-<div class="grid">
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg?w=768=300&h=200&fit=crop" alt=""><div class="pad"><h3>Phone 1</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Smartphone 1" data-price="0">Add to Cart</button></div></div>
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg?w=768=300&h=200&fit=crop" alt=""><div class="pad"><h3>Phone 2</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Smartphone 2" data-price="0">Add to Cart</button></div></div>
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg?w=768=300&h=200&fit=crop" alt=""><div class="pad"><h3>Phone 3</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Smartphone 3" data-price="0">Add to Cart</button></div></div>
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg?w=768=300&h=200&fit=crop" alt=""><div class="pad"><h3>Phone 4</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Smartphone 4" data-price="0">Add to Cart</button></div></div>
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg?w=768=300&h=200&fit=crop" alt=""><div class="pad"><h3>Phone 5</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Smartphone 5" data-price="0">Add to Cart</button></div></div>
-  <div class="card"><img src="https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg?w=768=300&h=200&fit=crop" alt=""><div class="pad"><h3>Phone 6</h3><div class="price">Coming soon</div><button class="add-cart" data-name="Smartphone 6" data-price="0">Add to Cart</button></div></div>
-</div>
-</section>
-
-<!-- Accessories -->
-<section id="accessories">
-<h2>Accessories</h2>
-<div class="grid">
-<!-- 8 cards -->
-<div class="card"><img src="https://cdn.mafrservices.com/sys-master-root/hc9/h40/28762187202590/169104_main.jpg?im=Resize=480=300&h=200&fit=crop" alt=""><div class="pad"><h3>Charger</h3><div class="price">KSh 500</div><button class="add-cart" data-name="Charger" data-price="500">Add to Cart</button></div></div>
-<div class="card"><img src="https://images-cdn.ubuy.qa/65ef95ab90212d1553760f04-wireless-bluetooth-headphones-over-ear.jpg=300&h=200&fit=crop" alt=""><div class="pad"><h3>Headphones</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Headphones" data-price="1200">Add to Cart</button></div></div>
-<div class="card"><img src="https://i0.wp.com/givtmobile.com/wp-content/uploads/2021/03/51ojzIimRXL._SL1200_.jpg?fit=1200%2C1200&ssl=1=300&h=200&fit=crop" alt=""><div class="pad"><h3>Power Bank</h3><div class="price">KSh 900</div><button class="add-cart" data-name="Power Bank" data-price="900">Add to Cart</button></div></div>
-<div class="card"><img src="https://www.mychoice.qa/cdn/shop/files/71JFIYI7fXL._SX425.webp?v=1723578618&width=1445=300&h=200&fit=crop" alt=""><div class="pad"><h3>USB Cable</h3><div class="price">KSh 300</div><button class="add-cart" data-name="USB Cable" data-price="300">Add to Cart</button></div></div>
-<div class="card"><img src="https://coconutcases.com/cdn/shop/files/01_fd1c86d1-2785-4cdf-8f2c-29fae71b3fd2.jpg?v=1737188679&width=1604=300&h=200&fit=crop" alt=""><div class="pad"><h3>Case</h3><div class="price">KSh 400</div><button class="add-cart" data-name="Case" data-price="400">Add to Cart</button></div></div>
-<div class="card"><img src="https://images-cdn.ubuy.co.in/63c6eaf5c41ea11c75185a93-jetech-screen-protector-for-iphone-11.jpg=300&h=200&fit=crop" alt=""><div class="pad"><h3>Screen Protector</h3><div class="price">KSh 350</div><button class="add-cart" data-name="Screen Protector" data-price="350">Add to Cart</button></div></div>
-<div class="card"><img src="https://www.boat-lifestyle.com/cdn/shop/files/Stone_SpinXPro_1_b3503890-50f6-4cd1-9138-0bd90874391e_1300x.png?v=1709717442=300&h=200&fit=crop" alt=""><div class="pad"><h3>Bluetooth Speaker</h3><div class="price">KSh 1,800</div><button class="add-cart" data-name="Bluetooth Speaker" data-price="1800">Add to Cart</button></div></div>
-<div class="card"><img src="https://m.media-amazon.com/images/I/61JSbfLd3dL._UF1000,1000_QL80_.jpg=300&h=200&fit=crop" alt=""><div class="pad"><h3>Memory Card</h3><div class="price">KSh 700</div><button class="add-cart" data-name="Memory Card" data-price="700">Add to Cart</button></div></div>
-</div>
-</section>
-
-<!-- Digital Services -->
-<section id="digital">
-<h2>Digital Services</h2>
-<div class="grid">
-<div class="card"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D=300&h=200&fit=crop" alt=""><div class="pad"><h3>SIM Registration & Setup, Online Applications, KRA Services, etc</h3><button class="add-cart" data-name="Digital Service" data-price="0">Add to Cart</button></div></div>
-</div>
-</section>
-
-<!-- Men’s Wear -->
-<section id="mens">
-<h2>Men's Wear</h2>
-<div class="grid">
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Air Force 39-41</h3><div class="price">KSh 2,500</div><button class="add-cart" data-name="Sneakers 1" data-price="1500">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559195-b162d19bf843?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Shirt 1</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Shirt 1" data-price="1200">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559196-c162d19bf844?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Jeans 1</h3><div class="price">KSh 1,800</div><button class="add-cart" data-name="Jeans 1" data-price="1800">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559197-d162d19bf845?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Sneakers 2</h3><div class="price">KSh 1,600</div><button class="add-cart" data-name="Sneakers 2" data-price="1600">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559198-e162d19bf846?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Shirt 2</h3><div class="price">KSh 1,400</div><button class="add-cart" data-name="Shirt 2" data-price="1400">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1579338559199-f162d19bf847?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Jeans 2</h3><div class="price">KSh 1,900</div><button class="add-cart" data-name="Jeans 2" data-price="1900">Add to Cart</button></div></div>
-</div>
-</section>
-
-<!-- Lady’s Wear -->
-<section id="ladys">
-<h2>Lady's Wear</h2>
-<div class="grid">
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914821-758c7f1d13ec?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 1</h3><div class="price">KSh 1,200</div><button class="add-cart" data-name="Heels 1" data-price="1200">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914822-758c7f1d13ed?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 1</h3><div class="price">KSh 1,500</div><button class="add-cart" data-name="Dress 1" data-price="1500">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914823-758c7f1d13ee?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Heels 2</h3><div class="price">KSh 1,300</div><button class="add-cart" data-name="Heels 2" data-price="1300">Add to Cart</button></div></div>
-  <div class="card"><img src="https://images.unsplash.com/photo-1520975914824-758c7f1d13ef?w=300&h=200&fit=crop" alt=""><div class="pad"><h3>Dress 2</h3><div class="price">KSh 1,600</div><button class="add-cart" data-name="Dress 2" data-price="1600">Add to Cart</button></div></div>
-</div>
-</section>
-
-</main>
-
-<!-- Floating Cart Button -->
-<button class="cart-btn">🛒<span class="cart-badge" id="cart-count">0</span></button>
-
-<!-- Cart Overlay -->
-<div id="cartOverlay">
-  <div class="cart-modal">
-    <div class="cart-head">
-      <h3>Your Cart</h3>
-      <button class="close-cart">✖</button>
+    <!-- Memory Card -->
+    <div class="product" 
+         data-name="Memory Card"
+         data-options='[{"size":"16GB","price":800},{"size":"32GB","price":1200},{"size":"64GB","price":2000}]'>
+      <img src="memorycard.jpg" alt="Memory Card">
+      <h3>Memory Card</h3>
+      <p>From KES 800</p>
+      <button class="btn add-to-cart">Add to Cart</button>
     </div>
-    <div class="cart-body">
-      <div class="cart-items" id="cartItems"></div>
-      <div class="totals">
-        <span>Total:</span><span id="cartTotal">KSh 0</span>
-      </div>
-      <div class="pay-actions">
-        <button class="pay-mpesa">Pay with MPesa</button>
-        <button class="pay-card">Pay with Card</button>
-        <button class="pay-bank">Pay with Bank</button>
-      </div>
+
+    <!-- Shoes -->
+    <div class="product"
+         data-name="Running Shoes"
+         data-options='[{"size":"Size 42","price":3000},{"size":"Size 44","price":3100},{"size":"Size 45","price":3200}]'>
+      <img src="shoes.jpg" alt="Shoes">
+      <h3>Running Shoes</h3>
+      <p>From KES 3000</p>
+      <button class="btn add-to-cart">Add to Cart</button>
+    </div>
+
+    <!-- Simple product without size -->
+    <div class="product"
+         data-name="USB Cable"
+         data-options='[{"size":"Standard","price":500}]'>
+      <img src="cable.jpg" alt="USB Cable">
+      <h3>USB Cable</h3>
+      <p>KES 500</p>
+      <button class="btn add-to-cart">Add to Cart</button>
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3 id="modalTitle">Add to Cart</h3>
+      <label for="optionSelect">Choose Size/Capacity:</label>
+      <select id="optionSelect"></select>
+      
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" value="1" min="1" />
+
+      <p><strong>Price: KES <span id="modalPrice">0</span></strong></p>
+      <button class="btn" id="confirmAdd">Confirm</button>
     </div>
   </div>
-</div>
+</section>
 
 <script>
-// Cart logic
-let cart = [];
-const cartBtn = document.querySelector('.cart-btn');
-const cartOverlay = document.getElementById('cartOverlay');
-const closeCart = document.querySelector('.close-cart');
-const cartItems = document.getElementById('cartItems');
-const cartCount = document.getElementById('cart-count');
-const cartTotal = document.getElementById('cartTotal');
+  const modal = document.getElementById("cartModal");
+  const closeBtn = document.querySelector(".close");
+  const optionSelect = document.getElementById("optionSelect");
+  const modalPrice = document.getElementById("modalPrice");
+  const modalTitle = document.getElementById("modalTitle");
+  const confirmAdd = document.getElementById("confirmAdd");
 
-function updateCart(){
-  cartItems.innerHTML = '';
-  let total=0;
-  cart.forEach((item,i)=>{
-    total+=item.price;
-    let div=document.createElement('div');
-    div.className='cart-row';
-    div.innerHTML=`<span>${item.name}</span><div class="qty">1</div><span>KSh ${item.price}</span><button class="remove" data-index="${i}">Remove</button>`;
-    cartItems.appendChild(div);
+  let currentProduct = null;
+  let options = [];
+
+  document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const product = e.target.closest(".product");
+      currentProduct = product.dataset.name;
+      options = JSON.parse(product.dataset.options);
+
+      modalTitle.textContent = "Add " + currentProduct;
+      optionSelect.innerHTML = "";
+
+      options.forEach((opt, i) => {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = opt.size + " - KES " + opt.price;
+        optionSelect.appendChild(option);
+      });
+
+      modalPrice.textContent = options[0].price;
+      modal.style.display = "flex";
+    });
   });
-  cartCount.textContent=cart.length;
-  cartTotal.textContent='KSh '+total;
-  document.querySelectorAll('.remove').forEach(btn=>btn.onclick=e=>{
-    const idx=btn.dataset.index;
-    cart.splice(idx,1);
-    updateCart();
+
+  optionSelect.addEventListener("change", () => {
+    const selected = options[optionSelect.value];
+    modalPrice.textContent = selected.price;
   });
-}
 
-// Add to cart animation
-document.querySelectorAll('.add-cart').forEach(btn=>{
-  btn.onclick=e=>{
-    const name=btn.dataset.name;
-    const price=parseInt(btn.dataset.price);
-    const card=btn.closest('.card');
-    const img=card.querySelector('img');
-    // Clone and animate
-    const imgClone=img.cloneNode(true);
-    const rect=img.getBoundingClientRect();
-    imgClone.style.position='fixed';
-    imgClone.style.top=rect.top+'px';
-    imgClone.style.left=rect.left+'px';
-    imgClone.style.width=rect.width+'px';
-    imgClone.style.height=rect.height+'px';
-    imgClone.style.transition='all 0.8s ease-in-out';
-    imgClone.style.zIndex=9999;
-    document.body.appendChild(imgClone);
-    const cartRect=cartBtn.getBoundingClientRect();
-    setTimeout(()=>{
-      imgClone.style.top=cartRect.top+'px';
-      imgClone.style.left=cartRect.left+'px';
-      imgClone.style.width='20px';
-      imgClone.style.height='20px';
-      imgClone.style.opacity='0.4';
-    },10);
-    setTimeout(()=>{document.body.removeChild(imgClone)},820);
-    // Add to cart
-    cart.push({name,price});
-    updateCart();
-  }
-});
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
 
-cartBtn.onclick=e=>cartOverlay.style.display='flex';
-closeCart.onclick=e=>cartOverlay.style.display='none';
-cartOverlay.onclick=e=>{
-  if(e.target==cartOverlay) cartOverlay.style.display='none';
-};
+  window.addEventListener("click", (e) => {
+    if (e.target == modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  confirmAdd.addEventListener("click", () => {
+    const selected = options[optionSelect.value];
+    const qty = document.getElementById("quantity").value;
+    alert(`${qty} x ${currentProduct} (${selected.size}) added to cart at KES ${selected.price} each.`);
+    modal.style.display = "none";
+  });
 </script>
 
 </body>
