@@ -52,15 +52,24 @@ nav a:hover{color:var(--accent)}
 @media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}}
 
 /* Bigger option image style */
-#optionImage{
-  width:400px;
-  height:auto;
-  object-fit:cover;
-  display:block;
-  margin:0 auto 15px;
-  border-radius:16px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+#optionImage {
+  width: 80%;          /* image takes 80% of modal width */
+  max-width: 400px;    /* won't get too big on desktop */
+  height: auto;        /* keeps aspect ratio */
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 15px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
+@media (max-width: 480px) {
+  #optionImage {
+    width: 95%;        /* almost full width on small screens */
+    max-width: none;
+  }
+}
+
 </style>
 </head>
 <body>
