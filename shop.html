@@ -102,12 +102,20 @@ nav a:hover{color:var(--accent)}
     <button id="closeOption">X</button>
   </div>
   <div class="option-body">
-    <label for="variantSelect">Variant / Size</label>
-    <select id="variantSelect"></select>
-    <label for="quantitySelect">Quantity</label>
-    <input type="number" id="quantitySelect" min="1" value="1">
-    <button id="confirmOption" style="background:var(--whatsapp);color:#fff;width:100%;padding:10px;border:none;border-radius:8px;margin-top:10px;">Add to Cart</button>
+  <img id="optionImage" src="" alt="" style="width:120px;height:120px;object-fit:cover;margin:0 auto 10px;display:block;border-radius:12px;">
+
+  <label for="variantSelect">Variant / Size</label>
+  <select id="variantSelect"></select>
+
+  <label>Quantity</label>
+  <div class="qty">
+    <button id="qtyMinus">-</button>
+    <span id="qtyDisplay">1</span>
+    <button id="qtyPlus">+</button>
   </div>
+
+  <button id="confirmOption" style="background:var(--whatsapp);color:#fff;width:100%;padding:10px;border:none;border-radius:8px;margin-top:10px;">Add to Cart</button>
+</div>
 </div>
 </div>
 
@@ -230,30 +238,36 @@ function updateCartUI() {
 }
 
 // Open option modal
+const optionImage = document.getElementById('optionImage');
+const qtyDisplay = document.getElementById('qtyDisplay');
+let qty = 1;
+
 document.addEventListener('click', e=>{
   if(e.target.classList.contains('add-cart')){
     const btn = e.target;
-    const variantsData = btn.dataset.variants;
-    currentItem = {name: btn.dataset.name, variants: [], price: 0};
-    variantSelect.innerHTML = '';
-    if(variantsData){
-      variantsData.split(',').forEach(v=>{
-        let [name, price] = v.split(':');
-        currentItem.variants.push({name, price: parseInt(price)});
-        let opt = document.createElement('option'); opt.value=name; opt.textContent=`${name} (KSh ${price})`;
-        variantSelect.appendChild(opt);
-      });
-      currentItem.price = currentItem.variants[0].price;
-      variantSelect.style.display = 'block';
-    } else {
-      currentItem.price = parseInt(btn.dataset.price) || 0;
-      let opt = document.createElement('option'); opt.value='Default'; opt.textContent='Default'; variantSelect.appendChild(opt);
-      variantSelect.style.display = 'none';
-    }
-    quantitySelect.value = 1;
-    optionOverlay.style.display = 'flex';
+    optionImage.src = btn.closest('.card').querySelector('img').src; // show product image
+    qty = 1;
+    qtyDisplay.textContent = qty;
+    // rest of your variant logic...
   }
 });
+
+document.getElementById('qtyMinus').onclick = ()=>{
+  if(qty > 1) qty--;
+  qtyDisplay.textContent = qty;
+};
+document.getElementById('qtyPlus').onclick = ()=>{
+  qty++;
+  qtyDisplay.textContent = qty;
+};
+
+document.getElementById('confirmOption').onclick = ()=>{
+  const variantName = variantSelect.value;
+  const price = currentItem.variants.length ? currentItem.variants.find(v=>v.name===variantName).price : currentItem.price;
+  cart.push({name: currentItem.name, variant: variantName, quantity: qty, price});
+  updateCartUI();
+  optionOverlay.style.display='none';
+};
 
 document.getElementById('closeOption').onclick = ()=>optionOverlay.style.display='none';
 document.getElementById('confirmOption').onclick = ()=>{
