@@ -31,120 +31,29 @@ nav a:hover{color:var(--accent)}
 .cart-btn{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s;z-index:999}
 .cart-btn:hover{transform:scale(1.12)}
 .cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700}
-#cartOverlay, #optionOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
-.cart-modal, #optionModal{background:#fff;border-radius:12px;max-width:640px;width:94%;max-height:84vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+#cartOverlay, #optionOverlay, #loginOverlay, #signupOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
+.cart-modal, #optionModal, #loginOverlay div, #signupOverlay div{background:#fff;border-radius:12px;max-width:640px;width:94%;max-height:84vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25);padding:20px;box-sizing:border-box}
 .cart-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #eee}
-.cart-body, #optionModal .option-body{padding:14px 18px}
+.cart-body, #optionModal .option-body, #loginOverlay div, #signupOverlay div{padding:14px 18px}
 .cart-items{display:flex;flex-direction:column;gap:12px}
 .cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:10px 0}
-.qty{display:flex;align-items:center;gap:6px}
-.qty button{width:28px;height:28px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer}
-.remove{border:none;background:#ef4444;color:#fff;border-radius:6px;padding:6px 8px;cursor:pointer}
+.qty{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:20px}
+.qty button{width:38px;height:38px;font-size:18px;border:1px solid #e5e7eb;background:#fff;border-radius:8px;cursor:pointer;transition:transform .2s}
+.qty button:hover{transform:scale(1.1);}
+#qtyDisplay{font-size:18px;min-width:36px;text-align:center;font-weight:600;}
 .totals{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
 .pay-actions{display:grid;gap:8px;margin-top:12px}
 .pay-actions button{padding:10px;border:none;border-radius:10px;font-weight:700;color:#fff;cursor:pointer}
 .pay-mpesa{background:#10b981}
 .pay-card{background:#2563eb}
 .pay-bank{background:#f59e0b}
-.close-cart, #closeOption{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
+.close-cart, #closeOption, #closeLogin, #closeSignup{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
 .option-body label{display:block;margin:8px 0 4px;font-weight:600}
-.option-body select, .option-body input{width:100%;padding:6px;margin-bottom:10px;border:1px solid #e5e7eb;border-radius:6px}
-@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}}
-
-/* Modal container adjustments */
-#optionModal {
-  padding: 20px 18px;
-  box-sizing: border-box;
-}
-
-/* Responsive modal image */
-#optionImage {
-  width: 80%;          
-  max-width: 400px;    
-  height: auto;        
-  object-fit: cover;
-  display: block;
-  margin: 0 auto 20px;  /* more space below image */
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-
-/* Variant select and quantity container */
-.option-body select, .option-body input {
-  margin-bottom: 15px;  /* more space between elements */
-  padding: 10px;
-  font-size: 16px;
-}
-
-/* Quantity adjuster */
-.qty {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.qty button {
-  width: 38px;       
-  height: 38px;
-  font-size: 18px;   
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform .2s;
-}
-
-.qty button:hover {
-  transform: scale(1.1);
-}
-
-#qtyDisplay {
-  font-size: 18px;
-  min-width: 36px;
-  text-align: center;
-  font-weight: 600;
-}
-
-/* Add to Cart button */
-#confirmOption {
-  width: 100%;             /* full width button */
-  padding: 12px 0;
-  font-size: 18px;
-  border-radius: 10px;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: transform .2s;
-}
-
-#confirmOption:hover {
-  transform: scale(1.03);
-}
-
-/* Mobile adjustments */
-@media (max-width: 480px) {
-  #optionImage {
-    width: 95%;
-  }
-  .qty button {
-    width: 42px;
-    height: 42px;
-    font-size: 20px;
-  }
-  #qtyDisplay {
-    font-size: 20px;
-    min-width: 38px;
-  }
-  .option-body select, .option-body input {
-    font-size: 18px;
-  }
-  #confirmOption {
-    font-size: 20px;
-  }
-}
-
-
+.option-body select, .option-body input{width:100%;padding:10px;margin-bottom:15px;border:1px solid #e5e7eb;border-radius:6px;font-size:16px}
+#optionImage{width:80%;max-width:400px;height:auto;object-fit:cover;display:block;margin:0 auto 20px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,0.25)}
+#confirmOption{width:100%;padding:12px 0;font-size:18px;border-radius:10px;margin-top:10px;cursor:pointer;background:var(--whatsapp);color:#fff;transition:transform .2s}
+#confirmOption:hover{transform:scale(1.03)}
+@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}#optionImage{width:95%}.qty button{width:42px;height:42px;font-size:20px}#qtyDisplay{font-size:20px;min-width:38px}.option-body select,.option-body input{font-size:18px}#confirmOption{font-size:20px}}
 </style>
 </head>
 <body>
@@ -160,6 +69,8 @@ nav a:hover{color:var(--accent)}
     <a href="#accessories">Accessories</a>
     <a href="#mens">Men's Wear</a>
     <a href="#ladys">Lady's Wear</a>
+    <a href="#" id="loginBtn">Login</a>
+    <a href="#" id="signupBtn">Signup</a>
   </div>
 </nav>
 </div>
@@ -197,20 +108,16 @@ nav a:hover{color:var(--accent)}
     <button id="closeOption">X</button>
   </div>
   <div class="option-body">
-    <!-- Bigger product image -->
     <img id="optionImage" src="" alt="">
-
     <label for="variantSelect">Variant / Size</label>
     <select id="variantSelect"></select>
-
     <label for="quantitySelect">Quantity</label>
     <div class="qty">
       <button id="qtyMinus">-</button>
       <span id="qtyDisplay">1</span>
       <button id="qtyPlus">+</button>
     </div>
-
-    <button id="confirmOption" style="background:var(--whatsapp);color:#fff;width:100%;padding:10px;border:none;border-radius:8px;margin-top:10px;">Add to Cart</button>
+    <button id="confirmOption">Add to Cart</button>
   </div>
 </div>
 </div>
@@ -236,16 +143,35 @@ nav a:hover{color:var(--accent)}
 </div>
 </div>
 
+<!-- Login Modal -->
+<div id="loginOverlay">
+  <div>
+    <h3>Login</h3>
+    <input type="text" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button id="loginSubmit">Login</button>
+    <button id="closeLogin">Close</button>
+  </div>
+</div>
+
+<!-- Signup Modal -->
+<div id="signupOverlay">
+  <div>
+    <h3>Signup</h3>
+    <input type="text" id="signupName" placeholder="Full Name">
+    <input type="text" id="signupEmail" placeholder="Email">
+    <input type="password" id="signupPassword" placeholder="Password">
+    <button id="signupSubmit">Signup</button>
+    <button id="closeSignup">Close</button>
+  </div>
+</div>
+
 <script>
-// DATA (same as your original)
+// DATA
 const mobilePhones = Array.from({length:6}, (_, i) => ({
   name: `Phone ${i+1}`,
   img: 'https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg',
-  variants: {
-    '64GB': 15000 + i*2000,
-    '128GB': 18000 + i*2000,
-    '256GB': 20000 + i*2000
-  }
+  variants: { '64GB': 15000 + i*2000, '128GB': 18000 + i*2000, '256GB': 20000 + i*2000 }
 }));
 
 const accessories = [
@@ -271,7 +197,7 @@ const mensWear = [
 const ladysWear = [
   {name:'Dress 1',variants:{S:2000,M:1200,L:1200,XL:1000},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/91/189688/2.jpg?1594'},
   {name:'Dress 2',variants:{S:8500,M:8500,L:850,XL:850},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/05/8263523/2.jpg?9289'},
-  {name:'Heels',variants:{36:1800,37:1800,38:1800,39:180000,40:1800},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/05/2568191/1.jpg?5674'},
+  {name:'Heels',variants:{36:1800,37:1800,38:1800,39:1800,40:1800},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/05/2568191/1.jpg?5674'},
   {name:'Bag',price:1800,img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/95/8599671/1.jpg?5229'},
   {name:'Scarf Set',price:1500,img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/01/9591523/1.jpg?6086'},
   {name:'Hipster Panties',variants:{S:1000,M:1000,L:1000,XL:1000},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/64/687823/1.jpg?5727'}
@@ -296,7 +222,6 @@ function renderCards(data, containerId){
   }).join('');
 }
 
-// Generate all sections
 renderCards(mobilePhones, 'phonesGrid');
 renderCards(accessories, 'accessoriesGrid');
 renderCards(mensWear, 'mensGrid');
@@ -305,98 +230,93 @@ renderCards(ladysWear, 'ladysGrid');
 // CART LOGIC
 let cart = [];
 let currentItem = {};
-let quantity = 1;
-
+let currentQty = 1;
 const cartCount = document.getElementById('cartCount');
 const optionOverlay = document.getElementById('optionOverlay');
 const variantSelect = document.getElementById('variantSelect');
-const quantitySelect = document.getElementById('quantitySelect');
 const qtyDisplay = document.getElementById('qtyDisplay');
+const optionImage = document.getElementById('optionImage');
 const cartOverlay = document.getElementById('cartOverlay');
 const cartItems = document.getElementById('cartItems');
 const cartTotal = document.getElementById('cartTotal');
-const optionImage = document.getElementById('optionImage');
-const qtyMinus = document.getElementById('qtyMinus');
-const qtyPlus = document.getElementById('qtyPlus');
 
 function updateCartUI() {
   cartItems.innerHTML = '';
   let total = 0;
-  cart.forEach((item, index) => {
+  cart.forEach((item,index)=>{
     const row = document.createElement('div');
-    row.className = 'cart-row';
-    const subtotal = item.price * item.quantity;
-    total += subtotal;
-    row.innerHTML = `
-      <span>${item.name} (${item.variant})</span>
-      <span>KSh ${item.price}</span>
-      <span>${item.quantity}</span>
-      <button class="remove" data-index="${index}">X</button>
-    `;
+    row.className='cart-row';
+    const subtotal=item.price*item.quantity;
+    total+=subtotal;
+    row.innerHTML=`<span>${item.name} (${item.variant})</span><span>KSh ${item.price}</span><span>${item.quantity}</span><button class="remove" data-index="${index}">X</button>`;
     cartItems.appendChild(row);
   });
-  cartTotal.textContent = `KSh ${total}`;
-  cartCount.textContent = cart.length;
+  cartTotal.textContent=`KSh ${total}`;
+  cartCount.textContent=cart.length;
 }
 
 // Open option modal
 document.addEventListener('click', e=>{
   if(e.target.classList.contains('add-cart')){
-    const btn = e.target;
-    const variantsData = btn.dataset.variants;
-    currentItem = {name: btn.dataset.name, variants: [], price: 0};
-    optionImage.src = btn.dataset.img;
-    variantSelect.innerHTML = '';
-    quantity = 1;
-    qtyDisplay.textContent = quantity;
-
+    const btn=e.target;
+    const variantsData=btn.dataset.variants;
+    currentItem={name:btn.dataset.name,variants:[],price:0,img:btn.dataset.img};
+    optionImage.src=currentItem.img;
+    variantSelect.innerHTML='';
     if(variantsData){
       variantsData.split(',').forEach(v=>{
-        let [name, price] = v.split(':');
-        currentItem.variants.push({name, price: parseInt(price)});
-        let opt = document.createElement('option'); opt.value=name; opt.textContent=`${name} (KSh ${price})`;
-        variantSelect.appendChild(opt);
+        let [name,price]=v.split(':');
+        currentItem.variants.push({name,price:parseInt(price)});
+        let opt=document.createElement('option'); opt.value=name; opt.textContent=`${name} (KSh ${price})`; variantSelect.appendChild(opt);
       });
-      currentItem.price = currentItem.variants[0].price;
-      variantSelect.style.display = 'block';
+      currentItem.price=currentItem.variants[0].price;
+      variantSelect.style.display='block';
     } else {
-      currentItem.price = parseInt(btn.dataset.price) || 0;
-      let opt = document.createElement('option'); opt.value='Default'; opt.textContent='Default'; variantSelect.appendChild(opt);
-      variantSelect.style.display = 'none';
+      currentItem.price=parseInt(btn.dataset.price)||0;
+      let opt=document.createElement('option'); opt.value='Default'; opt.textContent='Default'; variantSelect.appendChild(opt);
+      variantSelect.style.display='none';
     }
-    optionOverlay.style.display = 'flex';
+    currentQty=1; qtyDisplay.textContent=currentQty;
+    optionOverlay.style.display='flex';
   }
 });
 
-document.getElementById('closeOption').onclick = ()=>optionOverlay.style.display='none';
-
-qtyMinus.onclick = ()=>{
-  if(quantity>1){quantity--; qtyDisplay.textContent=quantity;}
-};
-qtyPlus.onclick = ()=>{
-  quantity++; qtyDisplay.textContent=quantity;
-};
-
-document.getElementById('confirmOption').onclick = ()=>{
-  const variantName = variantSelect.value;
-  const price = currentItem.variants.length ? currentItem.variants.find(v=>v.name===variantName).price : currentItem.price;
-  cart.push({name: currentItem.name, variant: variantName, quantity, price});
+document.getElementById('closeOption').onclick=()=>optionOverlay.style.display='none';
+document.getElementById('qtyMinus').onclick=()=>{if(currentQty>1){currentQty--; qtyDisplay.textContent=currentQty;}}
+document.getElementById('qtyPlus').onclick=()=>{currentQty++; qtyDisplay.textContent=currentQty;}
+document.getElementById('confirmOption').onclick=()=>{
+  const variantName=variantSelect.value;
+  const price=currentItem.variants.length ? currentItem.variants.find(v=>v.name===variantName).price : currentItem.price;
+  cart.push({name:currentItem.name,variant:variantName,quantity:currentQty,price});
   updateCartUI();
   optionOverlay.style.display='none';
 };
 
-document.getElementById('openCart').onclick = ()=>cartOverlay.style.display='flex';
-document.getElementById('closeCart').onclick = ()=>cartOverlay.style.display='none';
-
-// Remove item
+document.getElementById('openCart').onclick=()=>cartOverlay.style.display='flex';
+document.getElementById('closeCart').onclick=()=>cartOverlay.style.display='none';
 cartItems.addEventListener('click', e=>{
   if(e.target.classList.contains('remove')){
-    const index = parseInt(e.target.dataset.index);
+    const index=parseInt(e.target.dataset.index);
     cart.splice(index,1);
     updateCartUI();
   }
 });
-</script>
 
+// LOGIN/SIGNUP LOGIC
+document.getElementById('loginBtn').onclick=()=>document.getElementById('loginOverlay').style.display='flex';
+document.getElementById('signupBtn').onclick=()=>document.getElementById('signupOverlay').style.display='flex';
+document.getElementById('closeLogin').onclick=()=>document.getElementById('loginOverlay').style.display='none';
+document.getElementById('closeSignup').onclick=()=>document.getElementById('signupOverlay').style.display='none';
+document.getElementById('loginSubmit').onclick=()=>{
+  const email=document.getElementById('loginEmail').value;
+  alert(`Logging in ${email}`);
+  document.getElementById('loginOverlay').style.display='none';
+};
+document.getElementById('signupSubmit').onclick=()=>{
+  const name=document.getElementById('signupName').value;
+  alert(`Signing up ${name}`);
+  document.getElementById('signupOverlay').style.display='none';
+};
+</script>
 </body>
 </html>
