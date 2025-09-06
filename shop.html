@@ -69,6 +69,65 @@ nav a:hover{color:var(--accent)}
     max-width: none;
   }
 }
+#optionImage {
+  width: 80%;          
+  max-width: 400px;    
+  height: auto;        
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 15px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 480px) {
+  #optionImage {
+    width: 95%;        
+    max-width: none;
+  }
+}
+
+/* Quantity adjuster styling */
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.qty button {
+  width: 36px;       
+  height: 36px;
+  font-size: 18px;   
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+.qty button:hover {
+  transform: scale(1.1);
+}
+
+#qtyDisplay {
+  font-size: 18px;   
+  min-width: 32px;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .qty button {
+    width: 40px;     
+    height: 40px;
+    font-size: 20px;
+  }
+  #qtyDisplay {
+    font-size: 20px;
+    min-width: 36px;
+  }
+}
 
 </style>
 </head>
