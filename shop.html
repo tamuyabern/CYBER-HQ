@@ -37,8 +37,8 @@ nav a:hover{color:var(--accent)}
 .cart-body, #optionModal .option-body{padding:14px 18px}
 .cart-items{display:flex;flex-direction:column;gap:12px}
 .cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:10px 0}
-.qty{display:flex;align-items:center;gap:6px}
-.qty button{width:28px;height:28px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer}
+.qty{display:flex;align-items:center;gap:6px;justify-content:center;margin:8px 0}
+.qty button{width:32px;height:32px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer;font-size:18px;font-weight:700}
 .remove{border:none;background:#ef4444;color:#fff;border-radius:6px;padding:6px 8px;cursor:pointer}
 .totals{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
 .pay-actions{display:grid;gap:8px;margin-top:12px}
@@ -48,7 +48,8 @@ nav a:hover{color:var(--accent)}
 .pay-bank{background:#f59e0b}
 .close-cart, #closeOption{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
 .option-body label{display:block;margin:8px 0 4px;font-weight:600}
-.option-body select, .option-body input{width:100%;padding:6px;margin-bottom:10px;border:1px solid #e5e7eb;border-radius:6px}
+.option-body select{width:100%;padding:6px;margin-bottom:10px;border:1px solid #e5e7eb;border-radius:6px}
+#optionImage{width:120px;height:120px;object-fit:cover;margin:0 auto 10px;display:block;border-radius:12px}
 @media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
@@ -102,20 +103,19 @@ nav a:hover{color:var(--accent)}
     <button id="closeOption">X</button>
   </div>
   <div class="option-body">
-  <img id="optionImage" src="" alt="" style="width:120px;height:120px;object-fit:cover;margin:0 auto 10px;display:block;border-radius:12px;">
+    <img id="optionImage" src="" alt="">
+    <label for="variantSelect">Variant / Size</label>
+    <select id="variantSelect"></select>
 
-  <label for="variantSelect">Variant / Size</label>
-  <select id="variantSelect"></select>
+    <label>Quantity</label>
+    <div class="qty">
+      <button id="qtyMinus">-</button>
+      <span id="qtyDisplay">1</span>
+      <button id="qtyPlus">+</button>
+    </div>
 
-  <label>Quantity</label>
-  <div class="qty">
-    <button id="qtyMinus">-</button>
-    <span id="qtyDisplay">1</span>
-    <button id="qtyPlus">+</button>
+    <button id="confirmOption" style="background:var(--whatsapp);color:#fff;width:100%;padding:10px;border:none;border-radius:8px;margin-top:10px;">Add to Cart</button>
   </div>
-
-  <button id="confirmOption" style="background:var(--whatsapp);color:#fff;width:100%;padding:10px;border:none;border-radius:8px;margin-top:10px;">Add to Cart</button>
-</div>
 </div>
 </div>
 
@@ -141,7 +141,7 @@ nav a:hover{color:var(--accent)}
 </div>
 
 <script>
-// DATA
+// DATA (same as before)
 const mobilePhones = Array.from({length:6}, (_, i) => ({
   name: `Phone ${i+1}`,
   img: 'https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg',
@@ -211,11 +211,13 @@ let cart = [];
 let currentItem = {};
 const cartCount = document.getElementById('cartCount');
 const optionOverlay = document.getElementById('optionOverlay');
+const optionImage = document.getElementById('optionImage');
 const variantSelect = document.getElementById('variantSelect');
-const quantitySelect = document.getElementById('quantitySelect');
+const qtyDisplay = document.getElementById('qtyDisplay');
 const cartOverlay = document.getElementById('cartOverlay');
 const cartItems = document.getElementById('cartItems');
 const cartTotal = document.getElementById('cartTotal');
+let qty = 1;
 
 function updateCartUI() {
   cartItems.innerHTML = '';
@@ -234,33 +236,48 @@ function updateCartUI() {
     cartItems.appendChild(row);
   });
   cartTotal.textContent = `KSh ${total}`;
-  cartCount.textContent = cart.length;
+  cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
 }
 
 // Open option modal
-const optionImage = document.getElementById('optionImage');
-const qtyDisplay = document.getElementById('qtyDisplay');
-let qty = 1;
-
 document.addEventListener('click', e=>{
   if(e.target.classList.contains('add-cart')){
     const btn = e.target;
-    optionImage.src = btn.closest('.card').querySelector('img').src; // show product image
+    const variantsData = btn.dataset.variants;
+    currentItem = {name: btn.dataset.name, variants: [], price: 0};
+    variantSelect.innerHTML = '';
+
+    // Show product image
+    optionImage.src = btn.closest('.card').querySelector('img').src;
+
+    if(variantsData){
+      variantsData.split(',').forEach(v=>{
+        let [name, price] = v.split(':');
+        currentItem.variants.push({name, price: parseInt(price)});
+        let opt = document.createElement('option'); opt.value=name; opt.textContent=`${name} (KSh ${price})`;
+        variantSelect.appendChild(opt);
+      });
+      currentItem.price = currentItem.variants[0].price;
+    } else {
+      currentItem.price = parseInt(btn.dataset.price);
+      let opt = document.createElement('option'); opt.value='Default'; opt.textContent=`KSh ${currentItem.price}`;
+      variantSelect.appendChild(opt);
+    }
     qty = 1;
     qtyDisplay.textContent = qty;
-    // rest of your variant logic...
+    optionOverlay.style.display='flex';
   }
 });
 
+// Quantity controls
 document.getElementById('qtyMinus').onclick = ()=>{
-  if(qty > 1) qty--;
-  qtyDisplay.textContent = qty;
+  if(qty>1) qty--; qtyDisplay.textContent = qty;
 };
 document.getElementById('qtyPlus').onclick = ()=>{
-  qty++;
-  qtyDisplay.textContent = qty;
+  qty++; qtyDisplay.textContent = qty;
 };
 
+// Confirm option
 document.getElementById('confirmOption').onclick = ()=>{
   const variantName = variantSelect.value;
   const price = currentItem.variants.length ? currentItem.variants.find(v=>v.name===variantName).price : currentItem.price;
@@ -269,27 +286,18 @@ document.getElementById('confirmOption').onclick = ()=>{
   optionOverlay.style.display='none';
 };
 
-document.getElementById('closeOption').onclick = ()=>optionOverlay.style.display='none';
-document.getElementById('confirmOption').onclick = ()=>{
-  const variantName = variantSelect.value;
-  const quantity = parseInt(quantitySelect.value);
-  const price = currentItem.variants.length ? currentItem.variants.find(v=>v.name===variantName).price : currentItem.price;
-  cart.push({name: currentItem.name, variant: variantName, quantity, price});
-  updateCartUI();
-  optionOverlay.style.display='none';
-};
-
-document.getElementById('openCart').onclick = ()=>cartOverlay.style.display='flex';
-document.getElementById('closeCart').onclick = ()=>cartOverlay.style.display='none';
-
 // Remove item
 cartItems.addEventListener('click', e=>{
   if(e.target.classList.contains('remove')){
-    const index = parseInt(e.target.dataset.index);
-    cart.splice(index,1);
+    cart.splice(e.target.dataset.index,1);
     updateCartUI();
   }
 });
+
+// Cart overlay toggle
+document.getElementById('openCart').onclick=()=>{cartOverlay.style.display='flex'};
+document.getElementById('closeCart').onclick=()=>{cartOverlay.style.display='none'};
+document.getElementById('closeOption').onclick=()=>{optionOverlay.style.display='none'};
 </script>
 
 </body>
