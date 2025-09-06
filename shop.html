@@ -61,7 +61,7 @@ nav .auth-btn{margin-left:8px;padding:6px 10px;background:var(--accent);color:#f
 <div class="wrap">
 <nav>
   <div class="brand">
-    <a href="https://salehqcyber.netlify.app" style="font-weight:700;color:var(--accent);text-decoration:none;font-size:16px;">Home</a>
+    <a href="#" style="font-weight:700;color:var(--accent);text-decoration:none;font-size:16px;">Home</a>
   </div>
   <div>
     <a href="#mobile-phones">Mobile Phones</a>
@@ -149,9 +149,9 @@ nav .auth-btn{margin-left:8px;padding:6px 10px;background:var(--accent);color:#f
     <button id="closeLogin">X</button>
   </div>
   <div class="login-body">
-    <label for="loginEmail">Email</label>
+    <label>Email</label>
     <input type="email" id="loginEmail">
-    <label for="loginPassword">Password</label>
+    <label>Password</label>
     <input type="password" id="loginPassword">
     <button id="loginSubmit" style="background:var(--accent);color:#fff;width:100%;padding:10px;border:none;border-radius:8px;">Login</button>
   </div>
@@ -166,11 +166,9 @@ nav .auth-btn{margin-left:8px;padding:6px 10px;background:var(--accent);color:#f
     <button id="closeSignup">X</button>
   </div>
   <div class="signup-body">
-    <label for="signupName">Name</label>
-    <input type="text" id="signupName">
-    <label for="signupEmail">Email</label>
+    <label>Email</label>
     <input type="email" id="signupEmail">
-    <label for="signupPassword">Password</label>
+    <label>Password</label>
     <input type="password" id="signupPassword">
     <button id="signupSubmit" style="background:var(--accent);color:#fff;width:100%;padding:10px;border:none;border-radius:8px;">Signup</button>
   </div>
@@ -178,38 +176,57 @@ nav .auth-btn{margin-left:8px;padding:6px 10px;background:var(--accent);color:#f
 </div>
 
 <script>
-// PRODUCT DATA
-const mobilePhones = [{name:'Phone 1',img:'https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg',variants:{'64GB':15000,'128GB':18000,'256GB':20000}}];
-// (Add the rest of products as in your previous code, including accessories, mensWear, ladysWear)
+// === PRODUCTS ===
+const mobilePhones = [
+  {name: "Phone 1", variants: {"64GB":15000,"128GB":18000}, img:"https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg"},
+  {name: "Phone 2", variants: {"64GB":16000,"128GB":19000}, img:"https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg"}
+];
+const accessories = [
+  {name:'Charger',price:500,img:'https://cdn.mafrservices.com/sys-master-root/hc9/h40/28762187202590/169104_main.jpg'},
+  {name:'Power Bank',variants:{'5000mAh':900,'10000mAh':1400},img:'https://i0.wp.com/givtmobile.com/wp-content/uploads/2021/03/51ojzIimRXL._SL1200_.jpg'}
+];
+const mensWear = [
+  {name:'Shirt 1',variants:{S:1200,M:1200,L:1200},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/04/9453071/1.jpg?3709'}
+];
+const ladysWear = [
+  {name:'Dress 1',variants:{S:2000,M:2500,L:3000},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/91/189688/2.jpg?1594'}
+];
 
+// === RENDER CARDS ===
 function renderCards(data, containerId){
-  const container=document.getElementById(containerId);
-  container.innerHTML=data.map(item=>{
-    let variantsData=item.variants?Object.entries(item.variants).map(([k,v])=>`${k}:${v}`).join(','):'';
-    let priceText=item.price?'KSh '+item.price:'Varies';
+  const container = document.getElementById(containerId);
+  container.innerHTML = data.map(item=>{
+    let variantsData = item.variants ? Object.entries(item.variants).map(([k,v])=>`${k}:${v}`).join(',') : '';
+    let priceText = item.price ? 'KSh '+item.price : 'Varies';
     return `<div class="card">
-      <img src="${item.img}" alt="">
-      <div class="pad">
-        <h3>${item.name}</h3>
-        <div class="price">${priceText}</div>
-        <button class="add-cart" ${variantsData?`data-variants="${variantsData}"`:`data-price="${item.price}"`} data-name="${item.name}" data-img="${item.img}">Add to Cart</button>
-      </div>
-    </div>`;
+        <img src="${item.img}" alt="">
+        <div class="pad">
+          <h3>${item.name}</h3>
+          <div class="price">${priceText}</div>
+          <button class="add-cart" ${variantsData ? `data-variants="${variantsData}"` : `data-price="${item.price}"`} data-name="${item.name}" data-img="${item.img}">Add to Cart</button>
+        </div>
+      </div>`;
   }).join('');
 }
-renderCards(mobilePhones,'phonesGrid');
-// (Render other sections similarly)
 
-// CART LOGIC
-let cart=[]; let currentItem={}; let currentQty=1;
+renderCards(mobilePhones,'phonesGrid');
+renderCards(accessories,'accessoriesGrid');
+renderCards(mensWear,'mensGrid');
+renderCards(ladysWear,'ladysGrid');
+
+// === CART LOGIC ===
+let cart=[];
+let currentItem={};
 const cartCount=document.getElementById('cartCount');
 const optionOverlay=document.getElementById('optionOverlay');
 const variantSelect=document.getElementById('variantSelect');
-const qtyDisplay=document.getElementById('qtyDisplay');
-const optionImage=document.getElementById('optionImage');
+const quantitySelect=document.getElementById('quantitySelect');
 const cartOverlay=document.getElementById('cartOverlay');
 const cartItems=document.getElementById('cartItems');
 const cartTotal=document.getElementById('cartTotal');
+const optionImage=document.getElementById('optionImage');
+const qtyDisplay=document.getElementById('qtyDisplay');
+let currentQty=1;
 
 function updateCartUI(){
   cartItems.innerHTML='';
@@ -226,7 +243,7 @@ function updateCartUI(){
   cartCount.textContent=cart.length;
 }
 
-// OPTION MODAL LOGIC
+// ADD TO CART WITH OPTION
 document.addEventListener('click',e=>{
   if(e.target.classList.contains('add-cart')){
     const btn=e.target;
@@ -234,66 +251,79 @@ document.addEventListener('click',e=>{
     currentItem={name:btn.dataset.name,variants:[],price:0,img:btn.dataset.img};
     optionImage.src=currentItem.img;
     variantSelect.innerHTML='';
+    currentQty=1; qtyDisplay.textContent=currentQty;
+
     if(variantsData){
       variantsData.split(',').forEach(v=>{
         let [name,price]=v.split(':');
         currentItem.variants.push({name,price:parseInt(price)});
-        let opt=document.createElement('option'); opt.value=name; opt.textContent=`${name} (KSh ${price})`; variantSelect.appendChild(opt);
+        let opt=document.createElement('option'); opt.value=name; opt.textContent=`${name} (KSh ${price})`;
+        variantSelect.appendChild(opt);
       });
       currentItem.price=currentItem.variants[0].price;
       variantSelect.style.display='block';
     } else {
-      currentItem.price=parseInt(btn.dataset.price)||0;
-      let opt=document.createElement('option'); opt.value='Default'; opt.textContent='Default'; variantSelect.appendChild(opt);
+      currentItem.price=parseInt(btn.dataset.price) || 0;
+      let opt=document.createElement('option'); opt.value='Default'; opt.textContent='Default';
+      variantSelect.appendChild(opt);
       variantSelect.style.display='none';
     }
-    currentQty=1; qtyDisplay.textContent=currentQty;
     optionOverlay.style.display='flex';
   }
 });
+
 document.getElementById('closeOption').onclick=()=>optionOverlay.style.display='none';
-document.getElementById('qtyMinus').onclick=()=>{if(currentQty>1){currentQty--;qtyDisplay.textContent=currentQty;}}
-document.getElementById('qtyPlus').onclick=()=>{currentQty++;qtyDisplay.textContent=currentQty;}
+document.getElementById('qtyMinus').onclick=()=>{
+  if(currentQty>1){currentQty--; qtyDisplay.textContent=currentQty;}
+};
+document.getElementById('qtyPlus').onclick=()=>{
+  currentQty++; qtyDisplay.textContent=currentQty;
+};
 document.getElementById('confirmOption').onclick=()=>{
   const variantName=variantSelect.value;
-  const price=currentItem.variants.length?currentItem.variants.find(v=>v.name===variantName).price:currentItem.price;
-  cart.push({name:currentItem.name,variant:variantName,quantity:currentQty,price});
+  cart.push({name:currentItem.name,variant:variantName,quantity:currentQty,price:currentItem.variants.length?currentItem.variants.find(v=>v.name===variantName).price:currentItem.price});
   updateCartUI();
   optionOverlay.style.display='none';
 };
+
 document.getElementById('openCart').onclick=()=>cartOverlay.style.display='flex';
 document.getElementById('closeCart').onclick=()=>cartOverlay.style.display='none';
-cartItems.addEventListener('click',e=>{if(e.target.classList.contains('remove')){const index=parseInt(e.target.dataset.index);cart.splice(index,1);updateCartUI();}});
+cartItems.addEventListener('click',e=>{
+  if(e.target.classList.contains('remove')){
+    const index=parseInt(e.target.dataset.index);
+    cart.splice(index,1);
+    updateCartUI();
+  }
+});
 
-// LOGIN/SIGNUP LOGIC WITH LOCALSTORAGE
-document.getElementById('loginBtn').onclick=()=>document.getElementById('loginOverlay').style.display='flex';
-document.getElementById('signupBtn').onclick=()=>document.getElementById('signupOverlay').style.display='flex';
-document.getElementById('closeLogin').onclick=()=>document.getElementById('loginOverlay').style.display='none';
-document.getElementById('closeSignup').onclick=()=>document.getElementById('signupOverlay').style.display='none';
+// === LOGIN/SIGNUP ===
+const loginOverlay=document.getElementById('loginOverlay');
+const signupOverlay=document.getElementById('signupOverlay');
 
-function getUsers(){return JSON.parse(localStorage.getItem('users')||'[]');}
-function saveUsers(users){localStorage.setItem('users',JSON.stringify(users));}
+document.getElementById('loginBtn').onclick=()=>loginOverlay.style.display='flex';
+document.getElementById('signupBtn').onclick=()=>signupOverlay.style.display='flex';
+document.getElementById('closeLogin').onclick=()=>loginOverlay.style.display='none';
+document.getElementById('closeSignup').onclick=()=>signupOverlay.style.display='none';
 
 document.getElementById('signupSubmit').onclick=()=>{
-  const name=document.getElementById('signupName').value;
   const email=document.getElementById('signupEmail').value;
   const pass=document.getElementById('signupPassword').value;
-  if(!name||!email||!pass){alert('Fill all fields');return;}
-  let users=getUsers();
-  if(users.some(u=>u.email===email)){alert('Email already exists');return;}
-  users.push({name,email,password:pass});
-  saveUsers(users);
-  alert('Signup successful'); document.getElementById('signupOverlay').style.display='none';
+  if(email && pass){
+    localStorage.setItem('user_'+email,pass);
+    alert('Signup successful!');
+    signupOverlay.style.display='none';
+  } else {alert('Fill both fields');}
 };
 
 document.getElementById('loginSubmit').onclick=()=>{
   const email=document.getElementById('loginEmail').value;
   const pass=document.getElementById('loginPassword').value;
-  let users=getUsers();
-  const user=users.find(u=>u.email===email && u.password===pass);
-  if(user){alert('Welcome '+user.name);document.getElementById('loginOverlay').style.display='none';}
-  else{alert('Invalid email or password');}
+  if(localStorage.getItem('user_'+email)===pass){
+    alert('Login successful!');
+    loginOverlay.style.display='none';
+  } else {alert('Invalid credentials');}
 };
 </script>
+
 </body>
 </html>
