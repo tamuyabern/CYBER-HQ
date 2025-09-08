@@ -6,196 +6,185 @@
   <title>Marketplace - HQ Tech & Cyber</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #111;
-      color: #fff;
-    }
-
-    header {
-      background-color: #000;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      font-size: 26px;
-      font-weight: bold;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 20px auto;
-      padding: 0 15px;
-    }
-
-    .login-form, .add-item-form {
-      background: #222;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 30px;
-    }
-
-    input, textarea, button {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #555;
+      font-family: Arial, sans-serif;
       background: #111;
       color: #fff;
     }
 
-    input::placeholder, textarea::placeholder {
+    header {
+      background: #000;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .sidebar {
+      background: #1a1a1a;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
+      border-bottom: 1px solid #444;
+      padding-bottom: 8px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 8px 0;
+      border-bottom: 1px solid #333;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: #1c1c1c;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+      transition: transform 0.2s;
+    }
+
+    .product-card:hover {
+      transform: scale(1.02);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 12px;
+    }
+
+    .product-info h4 {
+      margin: 0 0 5px;
+    }
+
+    .product-info p {
+      margin: 0 0 5px;
+      font-size: 14px;
       color: #aaa;
     }
 
-    button {
-      background-color: #fff;
+    .price {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .phone {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    .post-form {
+      background: #1c1c1c;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 8px;
+    }
+
+    .post-form input, .post-form textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #333;
+      color: #fff;
+    }
+
+    .post-form button {
+      width: 100%;
+      padding: 12px;
+      background: #fff;
       color: #000;
       border: none;
+      border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
     }
 
-    button:hover {
-      background-color: #ccc;
+    .post-form button:hover {
+      background: #ccc;
     }
-
-    .item-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .item-card {
-      background: #222;
-      padding: 15px;
-      border-radius: 12px;
-    }
-
-    .item-card img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 10px;
-    }
-
-    .item-card h3 {
-      margin: 0 0 10px;
-      font-size: 20px;
-      color: #fff;
-    }
-
-    .item-card p {
-      margin: 5px 0;
-      font-size: 16px;
-      color: #ccc;
-    }
-
-    .item-card .phone {
-      font-weight: bold;
-      color: #fff;
-    }
-
-    .hidden {
-      display: none;
-    }
-
   </style>
 </head>
 <body>
 
-  <header>Marketplace</header>
+  <header>
+    HQ Marketplace
+  </header>
 
   <div class="container">
-
-    <!-- Login / Signup Form -->
-    <div class="login-form" id="loginForm">
-      <h2>Login / Signup</h2>
-      <input type="text" id="username" placeholder="Enter your name" required>
-      <button onclick="login()">Login / Signup</button>
+    <!-- Sidebar categories -->
+    <div class="sidebar">
+      <h3>Categories</h3>
+      <ul>
+        <li>Vehicles</li>
+        <li>Phones</li>
+        <li>Electronics</li>
+        <li>Fashion</li>
+        <li>Furniture</li>
+      </ul>
     </div>
 
-    <!-- Add Item Form -->
-    <div class="add-item-form hidden" id="addItemForm">
-      <h2>Post Your Item</h2>
-      <input type="text" id="itemTitle" placeholder="Item Name" required>
-      <textarea id="itemDescription" placeholder="Item Description" rows="3" required></textarea>
-      <input type="text" id="itemPrice" placeholder="Price (KES)" required>
-      <input type="text" id="itemPhone" placeholder="Phone Number" required>
-      <input type="text" id="itemImage" placeholder="Image URL (optional)">
-      <button onclick="addItem()">Post Item</button>
-      <p>Logged in as <span id="userDisplay"></span> <button onclick="logout()">Logout</button></p>
-    </div>
+    <!-- Products -->
+    <div class="products">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/250x180" alt="Product">
+        <div class="product-info">
+          <h4>Toyota Corolla 2010</h4>
+          <p class="price">Ksh 650,000</p>
+          <p>Very clean, well maintained, automatic.</p>
+          <p class="phone">📞 0712 345 678</p>
+        </div>
+      </div>
 
-    <!-- Item Listings -->
-    <div class="item-list" id="itemList">
-      <!-- Items will appear here -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/250x180" alt="Product">
+        <div class="product-info">
+          <h4>iPhone 12 Pro</h4>
+          <p class="price">Ksh 95,000</p>
+          <p>256GB, Silver, almost new.</p>
+          <p class="phone">📞 0798 123 456</p>
+        </div>
+      </div>
     </div>
-
   </div>
 
-  <script>
-    let currentUser = '';
-
-    function login() {
-      const username = document.getElementById('username').value.trim();
-      if (!username) {
-        alert('Please enter your name');
-        return;
-      }
-      currentUser = username;
-      document.getElementById('loginForm').classList.add('hidden');
-      document.getElementById('addItemForm').classList.remove('hidden');
-      document.getElementById('userDisplay').innerText = currentUser;
-    }
-
-    function logout() {
-      currentUser = '';
-      document.getElementById('loginForm').classList.remove('hidden');
-      document.getElementById('addItemForm').classList.add('hidden');
-    }
-
-    function addItem() {
-      if (!currentUser) {
-        alert('Please login first');
-        return;
-      }
-
-      const title = document.getElementById('itemTitle').value;
-      const description = document.getElementById('itemDescription').value;
-      const price = document.getElementById('itemPrice').value;
-      const phone = document.getElementById('itemPhone').value;
-      const image = document.getElementById('itemImage').value;
-
-      if (!title || !description || !price || !phone) {
-        alert('Please fill all required fields');
-        return;
-      }
-
-      const itemList = document.getElementById('itemList');
-
-      const itemCard = document.createElement('div');
-      itemCard.className = 'item-card';
-      itemCard.innerHTML = `
-        ${image ? `<img src="${image}" alt="${title}">` : ''}
-        <h3>${title}</h3>
-        <p>${description}</p>
-        <p>Price: KES ${price}</p>
-        <p class="phone">Contact: ${phone}</p>
-        <p>Seller: ${currentUser}</p>
-      `;
-
-      itemList.prepend(itemCard);
-
-      // Clear form
-      document.getElementById('itemTitle').value = '';
-      document.getElementById('itemDescription').value = '';
-      document.getElementById('itemPrice').value = '';
-      document.getElementById('itemPhone').value = '';
-      document.getElementById('itemImage').value = '';
-    }
-  </script>
+  <!-- Form for sellers -->
+  <div class="post-form">
+    <h3>Post Your Product</h3>
+    <input type="text" placeholder="Product Name">
+    <input type="text" placeholder="Price">
+    <textarea placeholder="Product Description"></textarea>
+    <input type="text" placeholder="Phone Number">
+    <input type="file">
+    <button>Submit Product</button>
+  </div>
 
 </body>
 </html>
