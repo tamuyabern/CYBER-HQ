@@ -1,614 +1,323 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>HQ Marketplace</title>
-<style>
-  :root{
-    --green: #00a651;
-    --green-dark:#008f45;
-    --muted:#666;
-    --bg:#f5f6f8;
-    --card:#fff;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-    background:var(--bg);
-    color:#222;
-    -webkit-font-smoothing:antialiased;
-  }
-  header{
-    background:var(--green);
-    color:#fff;
-    padding:14px 18px;
-    display:flex;
-    align-items:center;
-    gap:18px;
-    justify-content:space-between;
-  }
-  .brand {
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
-  .back-home {
-    background:rgba(255,255,255,0.15);
-    color:#fff;
-    border:none;
-    padding:8px 12px;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:700;
-  }
-  .header-actions { display:flex; gap:12px; align-items:center; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HQ Cyber Marketplace</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  main.container{
-    max-width:1200px;
-    margin:20px auto;
-    padding:0 16px 60px;
-  }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4fdf4;
+      color: #222;
+    }
 
-  /* marketplace CTA */
-  .market-cta {
-    display:flex;
-    justify-content:center;
-    margin:18px 0;
-  }
-  .market-cta a {
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding:14px 28px;
-    background:linear-gradient(135deg,var(--green),var(--green-dark));
-    color:#fff;
-    border-radius:28px;
-    text-decoration:none;
-    font-weight:800;
-    box-shadow:0 12px 30px rgba(0,0,0,.12);
-    transition:transform .18s, box-shadow .18s;
-  }
-  .market-cta a:hover{ transform:translateY(-4px); box-shadow:0 18px 40px rgba(0,0,0,.18); }
+    header {
+      background: #00a651;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-  /* layout */
-  .layout{
-    display:grid;
-    grid-template-columns:260px 1fr;
-    gap:20px;
-  }
-  @media(max-width:880px){
-    .layout{ grid-template-columns:1fr; }
-    .sidebar{ order:2 }
-  }
+    header h1 {
+      font-size: 1.5rem;
+    }
 
-  /* sidebar */
-  .sidebar{
-    background:var(--card);
-    border-radius:10px;
-    padding:14px;
-    box-shadow:0 6px 18px rgba(0,0,0,.06);
-    height:fit-content;
-  }
-  .sidebar h3{ margin:0 0 8px; color:var(--green); }
-  .cat-list{ list-style:none; padding:0; margin:0; }
-  .cat-list li{
-    padding:10px 8px; border-radius:8px; cursor:pointer; margin-bottom:6px;
-    color:#333; display:flex; justify-content:space-between; align-items:center;
-  }
-  .cat-list li:hover{ background:#f0fdf4; color:var(--green); font-weight:700; }
-  .cat-list li.active{ background:linear-gradient(90deg, rgba(0,166,81,0.12), rgba(0,166,81,0.06)); border:1px solid rgba(0,166,81,0.12); color:var(--green); font-weight:800; }
+    nav {
+      display: flex;
+      overflow-x: auto;
+      padding: 10px;
+      gap: 10px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
 
-  /* products grid */
-  .controls{ display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; }
-  .products-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-    gap:18px;
-  }
-  .card{
-    background:var(--card);
-    border-radius:10px;
-    overflow:hidden;
-    box-shadow:0 6px 18px rgba(0,0,0,.06);
-    transition:transform .14s;
-    display:flex;
-    flex-direction:column;
-  }
-  .card:hover{ transform:translateY(-4px); }
-  .card img{ width:100%; height:160px; object-fit:cover; display:block; }
-  .card-body{ padding:12px 14px; flex:1; display:flex; flex-direction:column; gap:8px; }
-  .title{ font-weight:800; color:#111; font-size:16px; }
-  .desc{ color:var(--muted); font-size:13px; min-height:36px; }
-  .meta{ display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:auto; }
-  .price{ color:var(--green); font-weight:900; }
-  .phone{ color:#333; font-size:13px; }
-  .badge{ font-size:11px; padding:5px 8px; border-radius:6px; background:#f0fdf4; color:var(--green); font-weight:700; }
+    nav button {
+      flex: 0 0 auto;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 20px;
+      background: #00a651;
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
 
-  /* post form modal */
-  .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.5); display:none; align-items:center; justify-content:center; z-index:1200; padding:20px; }
-  .modal{ width:100%; max-width:780px; background:var(--card); border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,.4); max-height:90vh; overflow:auto; }
-  .modal-header{ padding:14px 18px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
-  .modal-body{ padding:16px 18px; display:grid; gap:10px; }
-  .form-row{ display:flex; gap:10px; }
-  .form-col{ flex:1; display:flex; flex-direction:column; gap:8px; }
-  input[type="text"], input[type="number"], input[type="tel"], select, textarea { padding:10px; border-radius:8px; border:1px solid #ddd; font-size:14px; width:100%; background:#fff; color:#111; }
-  textarea{ resize:vertical; min-height:80px; }
-  .small{ width:140px; }
-  .btn-row{ display:flex; gap:10px; margin-top:6px; }
-  .btn { padding:10px 14px; border-radius:8px; border:none; cursor:pointer; font-weight:800; }
-  .btn.primary{ background:var(--green); color:#fff; }
-  .btn.ghost{ background:#f3f4f6; color:#111; border:1px solid #e6e6e6; }
+    nav button:hover {
+      background: #008a45;
+    }
 
-  /* quick detail modal */
-  .detail-modal .modal-body{ padding:12px 16px; }
-  .detail-img{ width:100%; height:280px; object-fit:cover; border-radius:6px; }
+    .market-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: white;
+      border-bottom: 1px solid #eee;
+    }
 
-  /* empty message */
-  .empty { text-align:center; padding:40px; color:var(--muted); background:linear-gradient(180deg,#fff,#fff); border-radius:10px; }
+    .market-header button {
+      background: #ff9800;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-  /* utility */
-  .muted { color:var(--muted); font-size:13px; }
-</style>
+    .market-header button:hover {
+      background: #e68900;
+    }
+
+    #products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 15px;
+      padding: 15px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .product h3 {
+      font-size: 1rem;
+      margin: 8px 0 4px;
+      color: #00a651;
+    }
+
+    .product p {
+      font-size: 0.85rem;
+      margin: 2px 0;
+      color: #444;
+    }
+
+    .product strong {
+      color: #000;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 10px;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 15px;
+      color: #00a651;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button.submit {
+      margin-top: 15px;
+      width: 100%;
+      background: #00a651;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button.submit:hover {
+      background: #008a45;
+    }
+
+    .back-home {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .back-home a {
+      text-decoration: none;
+      background: #00a651;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="brand">
-    <a class="back-home" href="index.html">← Back to Home</a>
-    <div style="font-weight:900; font-size:18px; letter-spacing:1px;">HQ Marketplace</div>
-  </div>
-  <div class="header-actions">
-    <div class="muted" id="totalCount">0 listings</div>
-    <a class="back-home" id="openPostBtn" href="javascript:void(0)" style="background:white;color:var(--green);">Post Your Product</a>
-  </div>
-</header>
+  <header>
+    <h1>HQ Cyber Marketplace</h1>
+  </header>
 
-<main class="container">
-  <div class="market-cta">
-    <a href="marketplace.html">🛒 Visit Marketplace</a>
+  <div class="market-header">
+    <h2>Latest Listings</h2>
+    <button id="openModal">+ Post Product</button>
   </div>
 
-  <div class="layout">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <h3>Categories</h3>
-      <ul class="cat-list" id="categoryList">
-        <!-- categories inserted here -->
-      </ul>
+  <nav>
+    <button onclick="filterCategory('all')">All</button>
+    <button onclick="filterCategory('vehicles')">Vehicles</button>
+    <button onclick="filterCategory('electronics')">Electronics</button>
+    <button onclick="filterCategory('fashion')">Fashion</button>
+    <button onclick="filterCategory('home')">Home & Furniture</button>
+    <button onclick="filterCategory('others')">Others</button>
+  </nav>
 
-      <div style="height:12px"></div>
-      <h3>Filter by region</h3>
-      <select id="regionFilter" style="width:100%; padding:8px; border-radius:8px; border:1px solid #eee; margin-top:8px;">
-        <option value="">All regions</option>
-        <option>Nairobi</option><option>Mombasa</option><option>Kisumu</option><option>Eldoret</option><option>Nakuru</option>
-      </select>
+  <section id="products"></section>
 
-      <div style="height:14px"></div>
-      <button class="btn ghost" id="clearFilterBtn">Clear filters</button>
-    </aside>
-
-    <!-- Products + controls -->
-    <section>
-      <div class="controls">
-        <div>
-          <select id="sortSelect" style="padding:8px; border-radius:8px; border:1px solid #eee;">
-            <option value="new">Newest</option>
-            <option value="price-asc">Price: Low → High</option>
-            <option value="price-desc">Price: High → Low</option>
-          </select>
-        </div>
-        <div style="display:flex; gap:8px;">
-          <input id="searchInput" placeholder="Search items (name, description)..." style="padding:8px; border-radius:8px; border:1px solid #eee; width:260px;" />
-          <button class="btn ghost" id="searchBtn">Search</button>
-        </div>
-      </div>
-
-      <div id="productsWrap">
-        <div id="productsGrid" class="products-grid"></div>
-        <div id="emptyMsg" class="empty" style="display:none">No items found. Be the first to post!</div>
-      </div>
-    </section>
+  <div class="back-home">
+    <a href="index.html">← Back to Home</a>
   </div>
 
-  <!-- Post modal -->
-  <div id="postModal" class="modal-backdrop">
-    <div class="modal" role="dialog" aria-modal="true">
-      <div class="modal-header">
-        <strong>Post Your Product</strong>
-        <div><button id="closePost" class="btn ghost">Close</button></div>
-      </div>
+  <!-- Modal -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <h2>Post Your Product</h2>
+      <form id="productForm">
+        <label>Product Name</label>
+        <input type="text" id="name" required>
 
-      <div class="modal-body">
-        <div class="form-row">
-          <div class="form-col">
-            <label>Product Name *</label>
-            <input id="p_name" type="text" placeholder="e.g. Toyota Wish 2008" />
-          </div>
-          <div class="form-col small">
-            <label>Price (KES) *</label>
-            <input id="p_price" type="number" placeholder="e.g. 2500000" />
-          </div>
-        </div>
+        <label>Price</label>
+        <input type="text" id="price" required>
 
-        <div>
-          <label>Description *</label>
-          <textarea id="p_desc" placeholder="Short description"></textarea>
-        </div>
+        <label>Description</label>
+        <textarea id="description" required></textarea>
 
-        <div class="form-row">
-          <div class="form-col small">
-            <label>Condition *</label>
-            <select id="p_condition">
-              <option>Used</option>
-              <option>New</option>
-            </select>
-          </div>
+        <label>Condition</label>
+        <select id="condition">
+          <option>Brand New</option>
+          <option>Used</option>
+        </select>
 
-          <div class="form-col">
-            <label>Category *</label>
-            <select id="p_category"></select>
-          </div>
-        </div>
+        <label>Category</label>
+        <select id="category" required>
+          <option value="vehicles">Vehicles</option>
+          <option value="electronics">Electronics</option>
+          <option value="fashion">Fashion</option>
+          <option value="home">Home & Furniture</option>
+          <option value="others">Others</option>
+        </select>
 
-        <div class="form-row">
-          <div class="form-col small">
-            <label>Region *</label>
-            <select id="p_region">
-              <option>Nairobi</option><option>Mombasa</option><option>Kisumu</option><option>Nakuru</option><option>Eldoret</option>
-            </select>
-          </div>
-          <div class="form-col small">
-            <label>Phone *</label>
-            <input id="p_phone" type="tel" placeholder="07xx xxx xxx" />
-          </div>
-          <div class="form-col">
-            <label>Color (optional)</label>
-            <input id="p_color" type="text" placeholder="e.g. Black" />
-          </div>
-        </div>
+        <label>Region/Location</label>
+        <input type="text" id="location" required>
 
-        <!-- dynamic extra attributes area -->
-        <div id="extraAttrs"></div>
+        <label>Phone Number</label>
+        <input type="text" id="phone" required>
 
-        <div>
-          <label>Image (optional)</label>
-          <input id="p_image" type="file" accept="image/*" />
-          <div id="previewWrap" style="margin-top:8px"></div>
-        </div>
+        <label>Image URL</label>
+        <input type="url" id="image" placeholder="Paste image link" required>
 
-        <div class="btn-row">
-          <button id="submitPost" class="btn primary">Post Item</button>
-          <button id="resetForm" class="btn ghost">Reset</button>
-        </div>
-      </div>
+        <button type="submit" class="submit">Post Item</button>
+      </form>
     </div>
   </div>
 
-  <!-- Detail modal -->
-  <div id="detailModal" class="modal-backdrop detail-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <strong id="detailTitle">Item</strong>
-        <div><button id="closeDetail" class="btn ghost">Close</button></div>
-      </div>
-      <div class="modal-body">
-        <img id="detailImg" class="detail-img" src="" alt="">
-        <p id="detailDesc" class="muted"></p>
-        <p><strong>Price: </strong><span id="detailPrice"></span></p>
-        <p><strong>Condition: </strong><span id="detailCond"></span></p>
-        <p><strong>Category: </strong><span id="detailCat"></span></p>
-        <p><strong>Region: </strong><span id="detailRegion"></span></p>
-        <p><strong>Phone: </strong><span id="detailPhone"></span></p>
-        <div id="detailExtra"></div>
-      </div>
-    </div>
-  </div>
+  <script>
+    const modal = document.getElementById("productModal");
+    const openModal = document.getElementById("openModal");
+    const form = document.getElementById("productForm");
+    const productsContainer = document.getElementById("products");
 
-</main>
+    // Open modal
+    openModal.onclick = () => modal.style.display = "flex";
+    // Close modal if clicked outside
+    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
 
-<script>
-/* ========== App data & helpers ========== */
-const LS_KEY = 'hq_marketplace_items_v1';
-const categories = [
-  { id: 'all', label: 'All Categories' },
-  { id: 'vehicles', label: 'Vehicles' },
-  { id: 'phones', label: 'Mobile Phones' },
-  { id: 'electronics', label: 'Electronics' },
-  { id: 'kitchen', label: 'Kitchen' },
-  { id: 'fashion', label: 'Fashion' },
-  { id: 'furniture', label: 'Furniture' },
-  { id: 'others', label: 'Others' }
-];
+    let products = JSON.parse(localStorage.getItem("products")) || [];
 
-// dynamic extra attribute templates per category
-const extraTemplates = {
-  vehicles: [
-    { id: 'year', label: 'Year', type: 'number', placeholder: 'e.g. 2015' },
-    { id: 'engine_cc', label: 'Engine (cc)', type: 'text', placeholder: 'e.g. 2200' },
-    { id: 'transmission', label: 'Transmission', type: 'select', options:['Automatic','Manual'] },
-    { id: 'mileage', label: 'Mileage (km)', type: 'text', placeholder:'e.g. 120000' }
-  ],
-  phones: [
-    { id: 'ram', label: 'RAM', type: 'text', placeholder:'e.g. 4GB' },
-    { id: 'storage', label: 'Storage', type: 'text', placeholder:'e.g. 128GB' },
-    { id: 'brand', label: 'Brand', type: 'text', placeholder:'e.g. Samsung' }
-  ],
-  electronics: [
-    { id:'brand', label:'Brand', type:'text', placeholder:'e.g. Sony' },
-    { id:'warranty', label:'Warranty', type:'text', placeholder:'e.g. 6 months' }
-  ],
-  kitchen: [
-    { id:'brand', label:'Brand', type:'text', placeholder:'e.g. Philips' },
-    { id:'material', label:'Material', type:'text', placeholder:'e.g. Stainless steel' }
-  ],
-  fashion: [
-    { id:'size', label:'Size', type:'text', placeholder:'e.g. M, L, 42' },
-    { id:'brand', label:'Brand', type:'text', placeholder:'e.g. Nike' }
-  ],
-  furniture: [
-    { id:'dimensions', label:'Dimensions', type:'text', placeholder:'e.g. 200x150cm' },
-    { id:'material', label:'Material', type:'text', placeholder:'e.g. Wood' }
-  ]
-};
-
-let items = []; // loaded from localStorage
-let activeCategory = 'all';
-let activeRegion = '';
-let currentSort = 'new';
-let currentSearch = '';
-
-/* ========== Utilities ========== */
-const $ = id => document.getElementById(id);
-function saveItems(){ localStorage.setItem(LS_KEY, JSON.stringify(items)); updateUICount(); }
-function loadItems(){ try{ items = JSON.parse(localStorage.getItem(LS_KEY)) || []; }catch(e){ items=[] } updateUICount(); }
-function formatPrice(n){ if(!n && n!==0) return ''; return 'KSh ' + Number(n).toLocaleString(); }
-function uid(){ return Math.random().toString(36).slice(2,9); }
-
-/* ========== render categories & sidebar ========== */
-function renderCategories(){
-  const ul = $('categoryList');
-  ul.innerHTML = '';
-  categories.forEach(cat=>{
-    const li = document.createElement('li');
-    li.dataset.cat = cat.id;
-    li.className = cat.id === activeCategory ? 'active' : '';
-    li.innerHTML = `<span>${cat.label}</span><small class="muted">${countByCategory(cat.id)}</small>`;
-    li.addEventListener('click', ()=> { activeCategory = cat.id; renderCategories(); renderProducts(); });
-    ul.appendChild(li);
-  });
-}
-function countByCategory(catId){
-  if(catId === 'all') return items.length;
-  return items.filter(i => i.category === catId).length;
-}
-
-/* ========== render products ========== */
-function renderProducts(){
-  const grid = $('productsGrid');
-  grid.innerHTML = '';
-
-  // apply filters: category, region, search
-  let filtered = items.slice();
-
-  if(activeCategory !== 'all') filtered = filtered.filter(i => i.category === activeCategory);
-  if(activeRegion) filtered = filtered.filter(i => i.region === activeRegion);
-  if(currentSearch){
-    const q = currentSearch.toLowerCase();
-    filtered = filtered.filter(i => (i.name + ' ' + i.description).toLowerCase().includes(q));
-  }
-
-  // sort
-  if(currentSort === 'price-asc') filtered.sort((a,b)=>a.price - b.price);
-  else if(currentSort === 'price-desc') filtered.sort((a,b)=>b.price - a.price);
-  else filtered.sort((a,b)=> b.createdAt - a.createdAt); // newest first
-
-  // show/hide empty
-  $('emptyMsg').style.display = filtered.length ? 'none' : 'block';
-
-  filtered.forEach(item=>{
-    const card = document.createElement('div'); card.className='card';
-    card.innerHTML = `
-      <img src="${item.image || placeholderFor(item.category)}" alt="${escapeHtml(item.name)}" />
-      <div class="card-body">
-        <div class="title">${escapeHtml(item.name)}</div>
-        <div class="desc">${escapeHtml(item.description || '').slice(0,140)}</div>
-        <div class="meta">
-          <div>
-            <div class="price">${formatPrice(item.price)}</div>
-            <div class="phone">📞 ${escapeHtml(item.phone)}</div>
-          </div>
-          <div style="text-align:right">
-            <div class="badge">${labelFor(item.category)}</div>
-            <div class="muted" style="margin-top:6px">${item.region}</div>
-          </div>
-        </div>
-      </div>
-    `;
-    // open detail on click
-    card.querySelector('.card-body').addEventListener('click', ()=> openDetail(item.id));
-    grid.appendChild(card);
-  });
-
-  renderCategories();
-  updateUICount();
-}
-
-function placeholderFor(cat){
-  return 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500'><rect width='100%' height='100%' fill='#e9f5ec'/><text x='50%' y='50%' font-size='28' text-anchor='middle' fill='#7aa98a' dy='.3em'>${labelFor(cat)}</text></svg>`);
-}
-function labelFor(cat){ const c = categories.find(x=>x.id===cat); return c ? c.label : 'Item'; }
-function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-
-/* ========== modal form logic ========== */
-const postModal = $('postModal');
-const openPostBtn = $('openPostBtn');
-const closePost = $('closePost');
-const submitPost = $('submitPost');
-const resetForm = $('resetForm');
-const p_category = $('p_category');
-const extraAttrsWrap = $('extraAttrs');
-const p_image = $('p_image');
-const previewWrap = $('previewWrap');
-
-// populate category select
-function populateCategorySelect(){
-  p_category.innerHTML = categories.filter(c=>c.id!=='all').map(c => `<option value="${c.id}">${c.label}</option>`).join('');
-}
-populateCategorySelect();
-
-// open & close
-openPostBtn.addEventListener('click', ()=> { openPost(); });
-closePost.addEventListener('click', closePostModal);
-function openPost(){ postModal.style.display='flex'; }
-function closePostModal(){ postModal.style.display='none'; clearPreview(); }
-
-// dynamic extra fields based on category
-p_category.addEventListener('change', ()=> renderExtraFields(p_category.value));
-function renderExtraFields(cat){
-  extraAttrsWrap.innerHTML = '';
-  const t = extraTemplates[cat];
-  if(!t) return;
-  t.forEach(f=>{
-    const div = document.createElement('div');
-    div.className='form-row';
-    if(f.type==='select'){
-      div.innerHTML = `<div class="form-col"><label>${f.label}</label><select id="extra_${f.id}">${f.options.map(o=>`<option>${o}</option>`).join('')}</select></div>`;
-    } else {
-      div.innerHTML = `<div class="form-col"><label>${f.label}</label><input id="extra_${f.id}" type="${f.type}" placeholder="${f.placeholder||''}" /></div>`;
+    function renderProducts(filter = "all") {
+      productsContainer.innerHTML = "";
+      const filtered = filter === "all" ? products : products.filter(p => p.category === filter);
+      filtered.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p><strong>Price:</strong> ${p.price}</p>
+          <p><strong>Condition:</strong> ${p.condition}</p>
+          <p><strong>Location:</strong> ${p.location}</p>
+          <p><strong>Contact:</strong> ${p.phone}</p>
+          <p>${p.description}</p>
+        `;
+        productsContainer.appendChild(div);
+      });
     }
-    extraAttrsWrap.appendChild(div);
-  });
-}
-// initialize
-renderExtraFields(p_category.value);
 
-// image file -> dataURL preview
-p_image.addEventListener('change', async (e)=>{
-  const file = e.target.files[0];
-  if(!file) return clearPreview();
-  const data = await readFileAsDataURL(file);
-  previewWrap.innerHTML = `<img src="${data}" style="max-width:160px;border-radius:8px;"/>`;
-  previewWrap.dataset.image = data;
-});
-function clearPreview(){ previewWrap.innerHTML=''; previewWrap.dataset.image=''; p_image.value=''; }
+    form.onsubmit = e => {
+      e.preventDefault();
+      const product = {
+        name: form.name.value,
+        price: form.price.value,
+        description: form.description.value,
+        condition: form.condition.value,
+        category: form.category.value,
+        location: form.location.value,
+        phone: form.phone.value,
+        image: form.image.value
+      };
+      products.push(product);
+      localStorage.setItem("products", JSON.stringify(products));
+      renderProducts();
+      modal.style.display = "none";
+      form.reset();
+    };
 
-// read file helper
-function readFileAsDataURL(file){ return new Promise((res,rej)=>{
-  const r = new FileReader();
-  r.onload = ()=> res(r.result);
-  r.onerror = e=> rej(e);
-  r.readAsDataURL(file);
-});}
+    function filterCategory(cat) {
+      renderProducts(cat);
+    }
 
-/* ========== submit handling ========== */
-submitPost.addEventListener('click', onSubmitPost);
-resetForm.addEventListener('click', resetFormFields);
+    renderProducts();
+  </script>
 
-function onSubmitPost(){
-  const name = $('p_name').value.trim();
-  const price = Number($('p_price').value || 0);
-  const desc = $('p_desc').value.trim();
-  const condition = $('p_condition').value;
-  const category = $('p_category').value;
-  const region = $('p_region').value;
-  const phone = $('p_phone').value.trim();
-  const color = $('p_color').value.trim();
-  const image = previewWrap.dataset.image || '';
-
-  if(!name || !price || !desc || !category || !region || !phone){
-    alert('Please fill required fields: name, price, description, category, region and phone.');
-    return;
-  }
-
-  // gather extra attrs
-  const extras = {};
-  const t = extraTemplates[category] || [];
-  t.forEach(f=>{
-    const el = $('extra_' + f.id);
-    if(el && el.value) extras[f.id] = el.value;
-  });
-
-  const newItem = {
-    id: uid(),
-    name, price, description: desc,
-    condition, category, region, phone, color,
-    extras, image,
-    createdAt: Date.now()
-  };
-
-  items.unshift(newItem);
-  saveItems();
-  renderProducts();
-  closePostModal();
-  resetFormFields();
-}
-
-/* ========== detail modal ========== */
-const detailModal = $('detailModal');
-const closeDetail = $('closeDetail');
-closeDetail.addEventListener('click', ()=> detailModal.style.display='none');
-
-function openDetail(id){
-  const it = items.find(x=>x.id===id);
-  if(!it) return;
-  $('detailTitle').innerText = it.name;
-  $('detailImg').src = it.image || placeholderFor(it.category);
-  $('detailDesc').innerText = it.description;
-  $('detailPrice').innerText = formatPrice(it.price);
-  $('detailCond').innerText = it.condition;
-  $('detailCat').innerText = labelFor(it.category);
-  $('detailRegion').innerText = it.region;
-  $('detailPhone').innerText = it.phone;
-
-  const de = $('detailExtra'); de.innerHTML='';
-  if(it.color) de.innerHTML += `<p><strong>Color:</strong> ${escapeHtml(it.color)}</p>`;
-  if(it.extras){
-    Object.entries(it.extras).forEach(([k,v])=>{
-      de.innerHTML += `<p><strong>${escapeHtml(k)}:</strong> ${escapeHtml(v)}</p>`;
-    });
-  }
-
-  detailModal.style.display = 'flex';
-}
-
-/* ========== filtering, search, sort ========== */
-$('regionFilter').addEventListener('change', (e)=>{ activeRegion = e.target.value; renderProducts(); });
-$('clearFilterBtn').addEventListener('click', ()=>{ activeRegion=''; $('regionFilter').value=''; activeCategory='all'; renderCategories(); renderProducts(); });
-$('sortSelect').addEventListener('change', (e)=>{ currentSort = e.target.value; renderProducts(); });
-$('searchBtn').addEventListener('click', ()=>{ currentSearch = $('searchInput').value.trim(); renderProducts(); });
-$('searchInput').addEventListener('keyup', (e)=>{ if(e.key==='Enter'){ currentSearch = e.target.value.trim(); renderProducts(); } });
-
-/* ========== form helpers ========== */
-function resetFormFields(){
-  $('p_name').value=''; $('p_price').value=''; $('p_desc').value=''; $('p_phone').value='';
-  $('p_color').value=''; $('p_image').value=''; clearPreview();
-  // reset extras
-  renderExtraFields(p_category.value);
-}
-
-/* ========== init & demo data ========== */
-function seedDemo(){
-  if(items.length) return;
-  items = [
-    { id: uid(), name:'Toyota RAV4 2016', price:2100000, description:'Well serviced, 120,000km. Very clean.', condition:'Used', category:'vehicles', region:'Nairobi', phone:'0712000001', color:'White', extras:{year:'2016', engine_cc:'2400', transmission:'Automatic', mileage:'120000'}, image:'https://i.imgur.com/6iY3X8J.jpg', createdAt:Date.now()-1000*60*60*24 },
-    { id: uid(), name:'iPhone 12 128GB', price:42000, description:'Good condition, battery 86%', condition:'Used', category:'phones', region:'Nairobi', phone:'0712000002', color:'Black', extras:{ram:'4GB', storage:'128GB', brand:'Apple'}, image:'https://i.imgur.com/2Q2X1bZ.jpg', createdAt:Date.now()-1000*60*60*20 },
-    { id: uid(), name:'Samsung 55" Smart TV', price:95000, description:'Brand new, warranty included', condition:'New', category:'electronics', region:'Mombasa', phone:'0712000003', color:'Black', extras:{brand:'Samsung', warranty:'12 months'}, image:'https://i.imgur.com/1KQ0Q0r.jpg', createdAt:Date.now()-1000*60*60*10 },
-  ];
-  saveItems();
-}
-
-function updateUICount(){
-  $('totalCount').innerText = items.length + ' listings';
-}
-
-/* ========== boot ========== */
-loadItems();
-seedDemo(); // comment this out if you don't want sample data
-renderCategories();
-renderProducts();
-
-</script>
 </body>
 </html>
