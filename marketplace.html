@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HQ Marketplace</title>
   <script type="module">
-    // Firebase SDKs
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -22,17 +21,13 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Open Modal
     window.openModal = function() {
       document.getElementById("productModal").style.display = "flex";
     };
-
-    // Close Modal
     window.closeModal = function() {
       document.getElementById("productModal").style.display = "none";
     };
 
-    // Add Product
     window.postProduct = async function() {
       const name = document.getElementById("name").value;
       const price = document.getElementById("price").value;
@@ -42,8 +37,8 @@
       const location = document.getElementById("location").value;
       const image = document.getElementById("image").value;
 
-      if (!name || !price || !phone) {
-        alert("Please fill required fields");
+      if (!name || !price || !phone || !category) {
+        alert("Please fill all required fields (*)");
         return;
       }
 
@@ -59,7 +54,6 @@
       }
     };
 
-    // Load Products
     async function loadProducts() {
       const productList = document.getElementById("products");
       productList.innerHTML = "";
@@ -70,14 +64,14 @@
         item.className = "product-item";
         item.innerHTML = `
           <div class="product-image">
-            <img src="${data.image || 'https://via.placeholder.com/100'}" alt="product">
+            <img src="${data.image || 'https://via.placeholder.com/200'}" alt="product">
           </div>
           <div class="product-info">
-            <h3>${data.name}</h3>
+            <h2>${data.name}</h2>
             <p><b>Price:</b> ${data.price}</p>
             <p><b>Category:</b> ${data.category}</p>
             <p><b>Location:</b> ${data.location}</p>
-            <p><b>Phone:</b> ${data.phone}</p>
+            <p><b>Phone:</b> <a href="tel:${data.phone}" class="call-link">${data.phone}</a></p>
             <p>${data.description}</p>
           </div>
         `;
@@ -103,6 +97,17 @@
       text-align: center;
     }
 
+    .nav-btn {
+      margin: 15px;
+      padding: 8px 15px;
+      background: darkgreen;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
     .post-btn {
       display: block;
       margin: 20px auto;
@@ -113,10 +118,6 @@
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
-    }
-
-    .post-btn:hover {
-      background: #006400;
     }
 
     #productModal {
@@ -137,7 +138,9 @@
       max-width: 400px;
     }
 
-    .modal-content input, .modal-content textarea, .modal-content select {
+    .modal-content input,
+    .modal-content textarea,
+    .modal-content select {
       width: 100%;
       margin: 5px 0;
       padding: 10px;
@@ -162,24 +165,34 @@
 
     .product-item {
       display: flex;
-      gap: 10px;
+      gap: 15px;
       background: #fff;
       border: 1px solid #ddd;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      padding: 15px;
       align-items: flex-start;
     }
 
     .product-image img {
-      width: 100px;
-      height: 100px;
+      width: 150px;
+      height: 150px;
       object-fit: cover;
-      border-radius: 6px;
+      border-radius: 8px;
     }
 
     .product-info {
       flex: 1;
+    }
+
+    .call-link {
+      color: green;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .call-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -188,6 +201,7 @@
     <h1>HQ Marketplace</h1>
   </header>
 
+  <button class="nav-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
   <button class="post-btn" onclick="openModal()">+ Post Your Product</button>
 
   <!-- Modal -->
@@ -197,7 +211,15 @@
       <input type="text" id="name" placeholder="Product Name *" />
       <input type="text" id="price" placeholder="Price *" />
       <textarea id="description" placeholder="Description"></textarea>
-      <input type="text" id="category" placeholder="Category (e.g. Vehicles, Phones)" />
+      <select id="category">
+        <option value="">Select Category *</option>
+        <option value="Vehicles">Vehicles</option>
+        <option value="Phones">Phones</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Kitchen">Kitchen Items</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Other">Other</option>
+      </select>
       <input type="text" id="location" placeholder="Location / Region" />
       <input type="text" id="phone" placeholder="Phone Number *" />
       <input type="url" id="image" placeholder="Image URL" />
