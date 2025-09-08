@@ -3,250 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marketplace</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0fdf4;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #22c55e;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-    .back-home {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 6px 12px;
-      background: white;
-      color: #22c55e;
-      border-radius: 20px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .actions {
-      display: flex;
-      justify-content: center;
-      padding: 15px;
-    }
-    .btn {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 8px;
-      background: #22c55e;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    .btn:hover {
-      background: #16a34a;
-    }
-    .categories {
-      display: flex;
-      overflow-x: auto;
-      gap: 10px;
-      padding: 10px;
-      background: #d1fae5;
-    }
-    .category {
-      flex: 0 0 auto;
-      padding: 8px 14px;
-      background: white;
-      border: 1px solid #22c55e;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.9rem;
-    }
-    .category.active {
-      background: #22c55e;
-      color: white;
-    }
-    .products {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding: 15px;
-    }
-    .product {
-      display: flex;
-      gap: 10px;
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      padding: 10px;
-      align-items: flex-start;
-    }
-    .product img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
-    .product-details {
-      flex: 1;
-    }
-    .product-details h3 {
-      margin: 0 0 4px;
-      font-size: 1rem;
-    }
-    .product-details p {
-      margin: 2px 0;
-      font-size: 0.85rem;
-      color: #374151;
-    }
-    .product-details .price {
-      font-weight: bold;
-      color: #22c55e;
-    }
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-      padding: 15px;
-    }
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 400px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .modal h2 {
-      margin-top: 0;
-      font-size: 1.2rem;
-      color: #22c55e;
-    }
-    .modal label {
-      display: block;
-      margin: 8px 0 4px;
-      font-size: 0.9rem;
-      font-weight: bold;
-    }
-    .modal input, .modal select, .modal textarea {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #d1d5db;
-      border-radius: 6px;
-      font-size: 0.9rem;
-    }
-    .modal textarea {
-      resize: vertical;
-      min-height: 60px;
-    }
-    .modal .actions {
-      margin-top: 15px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .img-preview {
-      margin-top: 8px;
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border: 1px dashed #22c55e;
-      border-radius: 6px;
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Marketplace</h1>
-    <a href="index.html" class="back-home">← Back to Home</a>
-  </header>
-
-  <div class="actions">
-    <button class="btn" onclick="openModal()">+ Post Your Product</button>
-  </div>
-
-  <div class="categories" id="categories">
-    <div class="category active" onclick="filterCategory('all')">All</div>
-    <div class="category" onclick="filterCategory('vehicles')">Vehicles</div>
-    <div class="category" onclick="filterCategory('phones')">Phones</div>
-    <div class="category" onclick="filterCategory('kitchen')">Kitchen</div>
-    <div class="category" onclick="filterCategory('electronics')">Electronics</div>
-    <div class="category" onclick="filterCategory('others')">Others</div>
-  </div>
-
-  <div class="products" id="products"></div>
-
-  <!-- Modal -->
-  <div class="modal" id="productModal">
-    <div class="modal-content">
-      <h2>Post Your Product</h2>
-      <form id="productForm">
-        <label>Product Name</label>
-        <input type="text" id="productName" required>
-
-        <label>Price</label>
-        <input type="number" id="productPrice" required> 
-
-        <label>Description</label>
-        <textarea id="productDescription"></textarea>
-
-        <label>Condition</label>
-        <select id="productCondition">
-          <option value="New">New</option>
-          <option value="Used">Used</option>
-        </select>
-
-        <label>Category</label>
-        <select id="productCategory">
-          <option value="vehicles">Vehicles</option>
-          <option value="phones">Phones</option>
-          <option value="kitchen">Kitchen</option>
-          <option value="electronics">Electronics</option>
-          <option value="others">Others</option>
-        </select>
-
-        <label>Region / Location</label>
-        <input type="text" id="productLocation" placeholder="e.g. Eldoret, Nairobi">
-
-        <label>Phone Number</label>
-        <input type="text" id="productPhone" placeholder="e.g. 0700000000">
-
-        <label>Extra Details</label>
-        <input type="text" id="productExtra" placeholder="e.g. 4GB RAM, 2200cc, Blue">
-
-        <label>Upload Image</label>
-        <input type="file" id="productImage" accept="image/*">
-        <img id="imgPreview" class="img-preview" />
-
-        <div class="actions">
-          <button type="button" class="btn" onclick="closeModal()">Cancel</button>
-          <button type="submit" class="btn">Post</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Firebase + Firestore -->
+  <title>HQ Marketplace</title>
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, query, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    // Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
@@ -261,90 +22,190 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const modal = document.getElementById("productModal");
-    const form = document.getElementById("productForm");
-    const productsEl = document.getElementById("products");
-    const imgPreview = document.getElementById("imgPreview");
+    // Open Modal
+    window.openModal = function() {
+      document.getElementById("productModal").style.display = "flex";
+    };
 
-    function openModal() { modal.style.display = "flex"; }
-    function closeModal() { modal.style.display = "none"; form.reset(); imgPreview.style.display="none"; }
+    // Close Modal
+    window.closeModal = function() {
+      document.getElementById("productModal").style.display = "none";
+    };
 
-    document.getElementById("productImage").addEventListener("change", function() {
-      const file = this.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          imgPreview.src = e.target.result;
-          imgPreview.style.display = "block";
-        };
-        reader.readAsDataURL(file);
+    // Add Product
+    window.postProduct = async function() {
+      const name = document.getElementById("name").value;
+      const price = document.getElementById("price").value;
+      const description = document.getElementById("description").value;
+      const category = document.getElementById("category").value;
+      const phone = document.getElementById("phone").value;
+      const location = document.getElementById("location").value;
+      const image = document.getElementById("image").value;
+
+      if (!name || !price || !phone) {
+        alert("Please fill required fields");
+        return;
       }
-    });
 
-    async function loadProducts() {
-      const q = query(collection(db, "products"));
-      onSnapshot(q, snapshot => {
-        productsEl.innerHTML = "";
-        snapshot.forEach(doc => {
-          const p = doc.data();
-          const div = document.createElement("div");
-          div.className = "product";
-          div.dataset.category = p.category;
-          div.innerHTML = `
-            <img src="${p.image}" alt="${p.name}">
-            <div class="product-details">
-              <h3>${p.name}</h3>
-              <p class="price">Ksh ${p.price}</p>
-              <p>${p.description}</p>
-              <p><strong>Condition:</strong> ${p.condition}</p>
-              <p><strong>Details:</strong> ${p.extra}</p>
-              <p><strong>Location:</strong> ${p.location}</p>
-              <p><strong>Phone:</strong> ${p.phone}</p>
-            </div>
-          `;
-          productsEl.appendChild(div);
+      try {
+        await addDoc(collection(db, "products"), {
+          name, price, description, category, phone, location, image
         });
-      });
-    }
-
-    form.addEventListener("submit", async e => {
-      e.preventDefault();
-      const file = document.getElementById("productImage").files[0];
-      if (!file) return alert("Please upload an image");
-
-      const reader = new FileReader();
-      reader.onload = async function(ev) {
-        const product = {
-          name: document.getElementById("productName").value,
-          price: document.getElementById("productPrice").value,
-          description: document.getElementById("productDescription").value,
-          condition: document.getElementById("productCondition").value,
-          category: document.getElementById("productCategory").value,
-          location: document.getElementById("productLocation").value,
-          phone: document.getElementById("productPhone").value,
-          extra: document.getElementById("productExtra").value,
-          image: ev.target.result,
-          createdAt: new Date().toISOString()
-        };
-        await addDoc(collection(db, "products"), product);
+        alert("Product posted!");
         closeModal();
-      };
-      reader.readAsDataURL(file);
-    });
+        loadProducts();
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    };
 
-    function filterCategory(cat) {
-      document.querySelectorAll(".category").forEach(c => c.classList.remove("active"));
-      event.target.classList.add("active");
-      document.querySelectorAll(".product").forEach(p => {
-        if (cat === "all" || p.dataset.category === cat) {
-          p.style.display = "flex";
-        } else {
-          p.style.display = "none";
-        }
+    // Load Products
+    async function loadProducts() {
+      const productList = document.getElementById("products");
+      productList.innerHTML = "";
+      const querySnapshot = await getDocs(collection(db, "products"));
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const item = document.createElement("div");
+        item.className = "product-item";
+        item.innerHTML = `
+          <div class="product-image">
+            <img src="${data.image || 'https://via.placeholder.com/100'}" alt="product">
+          </div>
+          <div class="product-info">
+            <h3>${data.name}</h3>
+            <p><b>Price:</b> ${data.price}</p>
+            <p><b>Category:</b> ${data.category}</p>
+            <p><b>Location:</b> ${data.location}</p>
+            <p><b>Phone:</b> ${data.phone}</p>
+            <p>${data.description}</p>
+          </div>
+        `;
+        productList.appendChild(item);
       });
     }
 
-    window.onload = loadProducts;
+    loadProducts();
   </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5fff5;
+      color: #111;
+    }
+
+    header {
+      background: green;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .post-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background: darkgreen;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .post-btn:hover {
+      background: #006400;
+    }
+
+    #productModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .modal-content input, .modal-content textarea, .modal-content select {
+      width: 100%;
+      margin: 5px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .modal-content button {
+      background: green;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    #products {
+      padding: 10px;
+    }
+
+    .product-item {
+      display: flex;
+      gap: 10px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      padding: 10px;
+      align-items: flex-start;
+    }
+
+    .product-image img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .product-info {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>HQ Marketplace</h1>
+  </header>
+
+  <button class="post-btn" onclick="openModal()">+ Post Your Product</button>
+
+  <!-- Modal -->
+  <div id="productModal">
+    <div class="modal-content">
+      <h2>Post Your Product</h2>
+      <input type="text" id="name" placeholder="Product Name *" />
+      <input type="text" id="price" placeholder="Price *" />
+      <textarea id="description" placeholder="Description"></textarea>
+      <input type="text" id="category" placeholder="Category (e.g. Vehicles, Phones)" />
+      <input type="text" id="location" placeholder="Location / Region" />
+      <input type="text" id="phone" placeholder="Phone Number *" />
+      <input type="url" id="image" placeholder="Image URL" />
+      <button onclick="postProduct()">Post</button>
+      <button onclick="closeModal()" style="background:red;margin-top:5px;">Cancel</button>
+    </div>
+  </div>
+
+  <section id="products"></section>
 </body>
 </html>
