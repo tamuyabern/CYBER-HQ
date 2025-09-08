@@ -5,31 +5,171 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Marketplace</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #f0fdf4; margin: 0; padding: 0; }
-    header { background-color: #22c55e; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-    header h1 { margin: 0; font-size: 1.5rem; }
-    .back-home { display: inline-block; margin-top: 8px; padding: 6px 12px; background: white; color: #22c55e; border-radius: 20px; text-decoration: none; font-weight: bold; }
-    .actions { display: flex; justify-content: center; padding: 15px; }
-    .btn { padding: 10px 18px; border: none; border-radius: 8px; background: #22c55e; color: white; font-size: 1rem; cursor: pointer; }
-    .btn:hover { background: #16a34a; }
-    .categories { display: flex; overflow-x: auto; gap: 10px; padding: 10px; background: #d1fae5; }
-    .category { flex: 0 0 auto; padding: 8px 14px; background: white; border: 1px solid #22c55e; border-radius: 20px; cursor: pointer; font-size: 0.9rem; }
-    .category.active { background: #22c55e; color: white; }
-    .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 15px; }
-    .product { background: white; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    .product img { width: 100%; height: 140px; object-fit: cover; }
-    .product-details { padding: 10px; }
-    .product-details h3 { margin: 0 0 5px; font-size: 1rem; }
-    .product-details p { margin: 2px 0; font-size: 0.85rem; color: #374151; }
-    .product-details .price { font-weight: bold; color: #22c55e; }
-    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; padding: 15px; }
-    .modal-content { background: white; padding: 20px; border-radius: 12px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
-    .modal h2 { margin-top: 0; font-size: 1.2rem; color: #22c55e; }
-    .modal label { display: block; margin: 8px 0 4px; font-size: 0.9rem; font-weight: bold; }
-    .modal input, .modal select, .modal textarea { width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.9rem; }
-    .modal textarea { resize: vertical; min-height: 60px; }
-    .modal .actions { margin-top: 15px; display: flex; justify-content: space-between; }
-    .img-preview { margin-top: 8px; width: 100%; height: 150px; object-fit: cover; border: 1px dashed #22c55e; border-radius: 6px; display: none; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0fdf4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #22c55e;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .back-home {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 6px 12px;
+      background: white;
+      color: #22c55e;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      padding: 15px;
+    }
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #22c55e;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #16a34a;
+    }
+    .categories {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px;
+      background: #d1fae5;
+    }
+    .category {
+      flex: 0 0 auto;
+      padding: 8px 14px;
+      background: white;
+      border: 1px solid #22c55e;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .category.active {
+      background: #22c55e;
+      color: white;
+    }
+    .products {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 15px;
+    }
+    .product {
+      display: flex;
+      gap: 10px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      padding: 10px;
+      align-items: flex-start;
+    }
+    .product img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .product-details {
+      flex: 1;
+    }
+    .product-details h3 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+    }
+    .product-details p {
+      margin: 2px 0;
+      font-size: 0.85rem;
+      color: #374151;
+    }
+    .product-details .price {
+      font-weight: bold;
+      color: #22c55e;
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #22c55e;
+    }
+    .modal label {
+      display: block;
+      margin: 8px 0 4px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    .modal input, .modal select, .modal textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    .modal textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+    .modal .actions {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .img-preview {
+      margin-top: 8px;
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border: 1px dashed #22c55e;
+      border-radius: 6px;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -60,15 +200,19 @@
       <form id="productForm">
         <label>Product Name</label>
         <input type="text" id="productName" required>
+
         <label>Price</label>
-        <input type="number" id="productPrice" required>
+        <input type="number" id="productPrice" required> 
+
         <label>Description</label>
         <textarea id="productDescription"></textarea>
+
         <label>Condition</label>
         <select id="productCondition">
           <option value="New">New</option>
           <option value="Used">Used</option>
         </select>
+
         <label>Category</label>
         <select id="productCategory">
           <option value="vehicles">Vehicles</option>
@@ -77,15 +221,20 @@
           <option value="electronics">Electronics</option>
           <option value="others">Others</option>
         </select>
+
         <label>Region / Location</label>
         <input type="text" id="productLocation" placeholder="e.g. Eldoret, Nairobi">
+
         <label>Phone Number</label>
         <input type="text" id="productPhone" placeholder="e.g. 0700000000">
+
         <label>Extra Details</label>
         <input type="text" id="productExtra" placeholder="e.g. 4GB RAM, 2200cc, Blue">
+
         <label>Upload Image</label>
         <input type="file" id="productImage" accept="image/*">
         <img id="imgPreview" class="img-preview" />
+
         <div class="actions">
           <button type="button" class="btn" onclick="closeModal()">Cancel</button>
           <button type="submit" class="btn">Post</button>
@@ -94,13 +243,11 @@
     </div>
   </div>
 
-  <!-- Firebase + Firestore + Storage -->
+  <!-- Firebase + Firestore -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, query, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    // 🔥 Your Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
       authDomain: "hq-marketplace-ec236.firebaseapp.com",
@@ -113,7 +260,6 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const storage = getStorage(app);
 
     const modal = document.getElementById("productModal");
     const form = document.getElementById("productForm");
@@ -135,41 +281,9 @@
       }
     });
 
-    // Save product with image upload
-    form.addEventListener("submit", async e => {
-      e.preventDefault();
-      const file = document.getElementById("productImage").files[0];
-      if (!file) { alert("Please upload an image"); return; }
-
-      try {
-        // Upload image to Firebase Storage
-        const storageRef = ref(storage, "products/" + Date.now() + "-" + file.name);
-        await uploadBytes(storageRef, file);
-        const imageUrl = await getDownloadURL(storageRef);
-
-        // Save product in Firestore
-        const product = {
-          name: document.getElementById("productName").value,
-          price: document.getElementById("productPrice").value,
-          description: document.getElementById("productDescription").value,
-          condition: document.getElementById("productCondition").value,
-          category: document.getElementById("productCategory").value,
-          location: document.getElementById("productLocation").value,
-          phone: document.getElementById("productPhone").value,
-          extra: document.getElementById("productExtra").value,
-          image: imageUrl,
-          createdAt: Date.now()
-        };
-        await addDoc(collection(db, "products"), product);
-        closeModal();
-      } catch (err) {
-        console.error("Error posting product:", err);
-      }
-    });
-
-    // Load products in realtime
-    function loadProducts() {
-      onSnapshot(collection(db, "products"), snapshot => {
+    async function loadProducts() {
+      const q = query(collection(db, "products"));
+      onSnapshot(q, snapshot => {
         productsEl.innerHTML = "";
         snapshot.forEach(doc => {
           const p = doc.data();
@@ -193,19 +307,44 @@
       });
     }
 
-    loadProducts();
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      const file = document.getElementById("productImage").files[0];
+      if (!file) return alert("Please upload an image");
 
-    // Category filter
-    window.filterCategory = function(cat) {
+      const reader = new FileReader();
+      reader.onload = async function(ev) {
+        const product = {
+          name: document.getElementById("productName").value,
+          price: document.getElementById("productPrice").value,
+          description: document.getElementById("productDescription").value,
+          condition: document.getElementById("productCondition").value,
+          category: document.getElementById("productCategory").value,
+          location: document.getElementById("productLocation").value,
+          phone: document.getElementById("productPhone").value,
+          extra: document.getElementById("productExtra").value,
+          image: ev.target.result,
+          createdAt: new Date().toISOString()
+        };
+        await addDoc(collection(db, "products"), product);
+        closeModal();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function filterCategory(cat) {
       document.querySelectorAll(".category").forEach(c => c.classList.remove("active"));
       event.target.classList.add("active");
       document.querySelectorAll(".product").forEach(p => {
-        p.style.display = (cat === "all" || p.dataset.category === cat) ? "block" : "none";
+        if (cat === "all" || p.dataset.category === cat) {
+          p.style.display = "flex";
+        } else {
+          p.style.display = "none";
+        }
       });
-    };
+    }
 
-    window.openModal = openModal;
-    window.closeModal = closeModal;
+    window.onload = loadProducts;
   </script>
 </body>
 </html>
