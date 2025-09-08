@@ -9,12 +9,13 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-color: #111;
+      color: #fff;
     }
 
     header {
-      background-color: #ff4d4d;
-      color: white;
+      background-color: #000;
+      color: #fff;
       padding: 20px;
       text-align: center;
       font-size: 26px;
@@ -27,35 +28,38 @@
       padding: 0 15px;
     }
 
-    .add-item-form {
-      background: white;
+    .login-form, .add-item-form {
+      background: #222;
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       margin-bottom: 30px;
     }
 
-    .add-item-form input, 
-    .add-item-form textarea, 
-    .add-item-form button {
+    input, textarea, button {
       width: 100%;
       margin-bottom: 10px;
       padding: 12px;
       font-size: 16px;
       border-radius: 6px;
-      border: 1px solid #ccc;
+      border: 1px solid #555;
+      background: #111;
+      color: #fff;
     }
 
-    .add-item-form button {
-      background-color: #ff4d4d;
-      color: white;
+    input::placeholder, textarea::placeholder {
+      color: #aaa;
+    }
+
+    button {
+      background-color: #fff;
+      color: #000;
       border: none;
       cursor: pointer;
       font-weight: bold;
     }
 
-    .add-item-form button:hover {
-      background-color: #e04343;
+    button:hover {
+      background-color: #ccc;
     }
 
     .item-list {
@@ -65,10 +69,9 @@
     }
 
     .item-card {
-      background: white;
+      background: #222;
       padding: 15px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .item-card img {
@@ -80,19 +83,24 @@
     .item-card h3 {
       margin: 0 0 10px;
       font-size: 20px;
-      color: #333;
+      color: #fff;
     }
 
     .item-card p {
       margin: 5px 0;
       font-size: 16px;
-      color: #555;
+      color: #ccc;
     }
 
     .item-card .phone {
       font-weight: bold;
-      color: #ff4d4d;
+      color: #fff;
     }
+
+    .hidden {
+      display: none;
+    }
+
   </style>
 </head>
 <body>
@@ -101,15 +109,23 @@
 
   <div class="container">
 
+    <!-- Login / Signup Form -->
+    <div class="login-form" id="loginForm">
+      <h2>Login / Signup</h2>
+      <input type="text" id="username" placeholder="Enter your name" required>
+      <button onclick="login()">Login / Signup</button>
+    </div>
+
     <!-- Add Item Form -->
-    <div class="add-item-form">
+    <div class="add-item-form hidden" id="addItemForm">
       <h2>Post Your Item</h2>
       <input type="text" id="itemTitle" placeholder="Item Name" required>
       <textarea id="itemDescription" placeholder="Item Description" rows="3" required></textarea>
       <input type="text" id="itemPrice" placeholder="Price (KES)" required>
-      <input type="text" id="itemPhone" placeholder="Seller Phone Number" required>
+      <input type="text" id="itemPhone" placeholder="Phone Number" required>
       <input type="text" id="itemImage" placeholder="Image URL (optional)">
       <button onclick="addItem()">Post Item</button>
+      <p>Logged in as <span id="userDisplay"></span> <button onclick="logout()">Logout</button></p>
     </div>
 
     <!-- Item Listings -->
@@ -120,7 +136,32 @@
   </div>
 
   <script>
+    let currentUser = '';
+
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      if (!username) {
+        alert('Please enter your name');
+        return;
+      }
+      currentUser = username;
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('addItemForm').classList.remove('hidden');
+      document.getElementById('userDisplay').innerText = currentUser;
+    }
+
+    function logout() {
+      currentUser = '';
+      document.getElementById('loginForm').classList.remove('hidden');
+      document.getElementById('addItemForm').classList.add('hidden');
+    }
+
     function addItem() {
+      if (!currentUser) {
+        alert('Please login first');
+        return;
+      }
+
       const title = document.getElementById('itemTitle').value;
       const description = document.getElementById('itemDescription').value;
       const price = document.getElementById('itemPrice').value;
@@ -142,6 +183,7 @@
         <p>${description}</p>
         <p>Price: KES ${price}</p>
         <p class="phone">Contact: ${phone}</p>
+        <p>Seller: ${currentUser}</p>
       `;
 
       itemList.prepend(itemCard);
