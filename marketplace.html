@@ -196,7 +196,7 @@
         <input type="text" id="productName" required>
 
         <label>Price</label>
-        <input type="number" id="productPrice" required>
+        <input type="number" id="productPrice" required> 
 
         <label>Description</label>
         <textarea id="productDescription"></textarea>
@@ -213,13 +213,14 @@
           <option value="phones">Phones</option>
           <option value="kitchen">Kitchen</option>
           <option value="electronics">Electronics</option>
+          <div class="category" onclick="filterCategory('others')">Others</div>
         </select>
 
         <label>Region / Location</label>
-        <input type="text" id="productLocation">
+        <input type="text" id="productLocation" placeholder="e.g. ELdore, Nairobi">
 
         <label>Phone Number</label>
-        <input type="text" id="productPhone">
+        <input type="text" id="productPhone" placeholder="e.g. 0700000000">
 
         <label>Extra Details</label>
         <input type="text" id="productExtra" placeholder="e.g. 4GB RAM, 2200cc, Blue">
