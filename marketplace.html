@@ -1,89 +1,19 @@
-<<<<<<< HEAD
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HQ Cyber Marketplace</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketplace - HQ Cyber</title>
+  <link rel="stylesheet" href="style.css"> <!-- optional, if you have a global CSS -->
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-      background: #f4f4f4;
-    }
-
-    h1, h2 {
-      text-align: center;
-      color: #333;
-    }
-
-    form {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 40px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    button {
-      background: #d32f2f;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      background: #b71c1c;
-    }
-
-    .hidden { display: none; }
-
-    #listings {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .listing {
-      background: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .listing img {
-      width: 100%;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-
-    .listing h3 {
-      margin: 0;
-      color: #d32f2f;
-    }
-
-    .listing p, .listing strong, .listing em {
-      margin: 5px 0;
-      display: block;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+    header, footer { background: #333; color: white; text-align: center; padding: 1rem; }
+    main { padding: 2rem; }
+    .marketplace { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+    .item { background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .item img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; }
+    .item h3 { margin: 0.5rem 0; }
+    .item p { font-size: 0.9rem; color: #555; }
   </style>
 </head>
 <body>
@@ -92,188 +22,16 @@
     <h1>HQ Cyber Marketplace</h1>
   </header>
 
-  <!-- Post Item Form -->
-  <section>
-    <h2>Post an Item</h2>
-    <form name="marketplace" method="POST" data-netlify="true"
-          data-netlify-honeypot="bot-field"
-          enctype="multipart/form-data" action="/thanks.html">
-      <input type="hidden" name="form-name" value="marketplace">
+  <main>
+    <section class="marketplace" id="marketplace">
+      <!-- Marketplace items will load here dynamically -->
+    </section>
+  </main>
 
-      <!-- Honeypot for spam -->
-      <p class="hidden">
-        <label>Don’t fill this out if you're human: <input name="bot-field"></label>
-      </p>
+  <footer>
+    &copy; 2025 HQ Cyber | All rights reserved
+  </footer>
 
-      <label>Item Name</label>
-      <input type="text" name="item" required>
-
-      <label>Description</label>
-      <textarea name="description" required></textarea>
-
-      <label>Price</label>
-      <input type="text" name="price" required>
-
-      <label>Contact (phone/WhatsApp/email)</label>
-      <input type="text" name="contact" required>
-
-      <label>Upload Image</label>
-      <input type="file" name="image" accept="image/*">
-
-      <button type="submit">Post Item</button>
-    </form>
-  </section>
-
-  <!-- Listings Section -->
-  <section>
-    <h2>Latest Listings</h2>
-    <div id="listings">
-      <!-- Listings will appear here dynamically -->
-    </div>
-  </section>
-
-  <!-- Link to marketplace.js -->
   <script src="marketplace.js"></script>
-
 </body>
 </html>
-=======
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>HQ Cyber Marketplace</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-      background: #f4f4f4;
-    }
-
-    h1, h2 {
-      text-align: center;
-      color: #333;
-    }
-
-    form {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 40px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    button {
-      background: #d32f2f;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      background: #b71c1c;
-    }
-
-    .hidden { display: none; }
-
-    #listings {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .listing {
-      background: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .listing img {
-      width: 100%;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-
-    .listing h3 {
-      margin: 0;
-      color: #d32f2f;
-    }
-
-    .listing p, .listing strong, .listing em {
-      margin: 5px 0;
-      display: block;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <h1>HQ Cyber Marketplace</h1>
-  </header>
-
-  <!-- Post Item Form -->
-  <section>
-    <h2>Post an Item</h2>
-    <form name="marketplace" method="POST" data-netlify="true"
-          data-netlify-honeypot="bot-field"
-          enctype="multipart/form-data" action="/thanks.html">
-      <input type="hidden" name="form-name" value="marketplace">
-
-      <!-- Honeypot for spam -->
-      <p class="hidden">
-        <label>Don’t fill this out if you're human: <input name="bot-field"></label>
-      </p>
-
-      <label>Item Name</label>
-      <input type="text" name="item" required>
-
-      <label>Description</label>
-      <textarea name="description" required></textarea>
-
-      <label>Price</label>
-      <input type="text" name="price" required>
-
-      <label>Contact (phone/WhatsApp/email)</label>
-      <input type="text" name="contact" required>
-
-      <label>Upload Image</label>
-      <input type="file" name="image" accept="image/*">
-
-      <button type="submit">Post Item</button>
-    </form>
-  </section>
-
-  <!-- Listings Section -->
-  <section>
-    <h2>Latest Listings</h2>
-    <div id="listings">
-      <!-- Listings will appear here dynamically -->
-    </div>
-  </section>
-
-  <!-- Link to marketplace.js -->
-  <script src="marketplace.js"></script>
-
-</body>
-</html>
->>>>>>> f52bf5085d384bb0110a3c36d8657fbed505b151
