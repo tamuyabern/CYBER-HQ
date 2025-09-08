@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HQ TECH & CYBER</title>
+<meta name="description" content="HQ TECH & CYBER - Smartphones, accessories, repairs, cyber services and premium tech solutions in Kenya." />
+
+<style>
+:root{
+  --bg:#f9fafc; --fg:#1a1d29; --muted:#5b6370; --card:#ffffff;
+  --accent:#2563eb; --accent-hover:#1d4ed8; --whatsapp:#25D366;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;scroll-behavior:smooth}
+header{position:sticky;top:0;backdrop-filter:saturate(1.5) blur(10px);background:rgba(255,255,255,0.95);border-bottom:1px solid #e5e7eb;z-index:1000;transition:all .28s}
+header.shrink{padding:6px 0;background:rgba(255,255,255,0.98);box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+nav a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;font-size:14px;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.brand{display:flex;align-items:center}
+.brand .logo{width:50px;height:50px;border-radius:50%;overflow:hidden;display:inline-block;flex-shrink:0}
+.brand svg{width:100%;height:100%;display:block}
+header.shrink .brand .logo{width:38px;height:38px;}
+.hero{padding:46px 16px;text-align:center;background:linear-gradient(120deg,#2563eb,#1e3a8a);background-size:200% 200%;color:#fff;border-radius:18px;margin:18px 0 34px;transition:transform .25s}
+.hero h1{font-size:28px;margin-bottom:8px}
+.hero p.lead{max-width:720px;margin:0 auto 14px;color:#e0e7ff;font-size:15px}
+.btn{display:inline-block;margin-top:10px;padding:10px 16px;border-radius:10px;background:var(--whatsapp);color:#fff;text-decoration:none;font-weight:700;transition:transform .16s,filter .16s}
+.btn:hover{transform:translateY(-2px) scale(1.03);filter:brightness(1.04)}
+section{padding:30px 16px;border-top:1px solid #e5e7eb}
+h2{margin-bottom:16px;font-size:22px;text-align:center}
+.about-text{color:#000;font-style:italic;line-height:1.45;margin:0 auto 10px;max-width:850px;text-align:center}
+.testimonials,.faq{max-width:800px;margin:auto;text-align:left}
+.testimonial{margin-bottom:18px;font-style:italic;color:var(--muted);opacity:0;transform:translateY(16px);transition:.6s ease}
+.testimonial.visible{opacity:1;transform:translateY(0)}
+.testimonial strong{display:block;margin-top:6px;color:var(--fg)}
+.contact-info p{margin-bottom:8px;text-align:center}
+footer{padding:32px 16px;text-align:center;color:var(--muted);border-top:1px solid #e5e7eb;background:#f3f4f6}
+footer .links, footer .socials{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:10px}
+footer a{color:var(--muted);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--accent)}
+.footer-info{margin-top:8px;font-size:14px;color:var(--muted)}
+.top{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#fff;border-radius:999px;padding:10px 14px;text-decoration:none;transition:transform .2s}
+.top:hover{transform:scale(1.08)}
+
+/* Shop Section on Home */
+.home-shop-section {
+  background-color: #ef4444; /* red */
+  color: #fff; /* white text */
+  border-radius: 20px;
+  padding: 25px 20px;
+  max-width: 900px;
+  margin: 30px auto;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+.home-shop-section:hover {
+  transform: scale(1.02);
+}
+.home-shop-section h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.home-shop-section p {
+  font-size: 16px;
+  margin-bottom: 18px;
+}
+.home-shop-section a {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #fff;
+  color: #ef4444;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+.home-shop-section a:hover {
+  background-color: #fca5a5;
+}
+</style>
+</head>
+<body>
+<a id="top"></a>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Main Navigation">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HQ Cyber logo">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#ef4444"/>
+                <stop offset="1" stop-color="#2563eb"/>
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="48" fill="url(#g1)"/>
+            <text x="50%" y="54%" font-family="sans-serif" font-size="36" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-weight="700">HQ</text>
+          </svg>
+        </span>
+      </div>
+
+      <div>
+        <a href="index.html">Home</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#faq">FAQ</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <h1>Stay Connected with HQ TECH & CYBER</h1>
+    <p class="lead">Premium smartphones, accessories, repairs & cyber services — trusted in Eldoret and across Kenya.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
+      <a class="btn" href="https://wa.me/254726717361?text=Hello%20HQ%20CYBER" target="_blank">Chat on WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- SHOP SECTION ON HOME -->
+  <section class="home-shop-section">
+    <h2>Lets go shopping....</h2>
+    <p>Explore smartphones, accessories, digital services, and fashion items at amazing prices.</p>
+    <a href="shop.html">Go to Shop 🛒</a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p class="about-text">At HQ Tech & Cyber, we provide the latest smartphones, accessories, expert repairs, and full cyber services at competitive prices. We focus on quality, reliability, and friendly support to keep you connected to what matters most.</p>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonials">
+      <p class="testimonial">“HQ TECH & CYBER gave me the best deal on my new phone. Fast service and great quality!” <strong>— Rotich Elvis</strong></p>
+      <p class="testimonial">“I love the accessories I bought here, ziko durable na affordable!” <strong>— Wanjiru Grace</strong></p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq">
+      <p><strong>Do you deliver?</strong><br>&#x2726; Yes — we deliver across Kenya. Same-day in Eldoret CBD when possible.</p>
+      <p><strong>Payment methods?</strong><br>&#x2726; M-Pesa, cash on delivery, and bank transfers. Card available on request.</p>
+      <p><strong>Warranty?</strong><br>&#x2726; Most devices come with a warranty. Ask for details per model.</p>
+    </div>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section id="feedback">
+    <h2>Feedback Form</h2>
+    <form id="feedbackForm" style="max-width:520px;margin:auto;display:flex;flex-direction:column;gap:12px;">
+      <input type="text" name="name" placeholder="Name" required style="padding:10px;border-radius:8px;border:1px solid #d1d5db;">
+      <input type="email" name="email" placeholder="Email" required style="padding:10px;border-radius:8px;border:1px solid #d1d5db;">
+      <textarea name="message" placeholder="Your message" required rows="4" style="padding:10px;border-radius:8px;border:1px solid #d1d5db;"></textarea>
+      <button type="submit" class="btn" style="padding:12px 16px;border:none;border-radius:10px;font-weight:700;">Send Feedback</button>
+    </form>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact-info">
+      <p>📍 Eldoret, Kenya</p>
+      <p>📞 +254 726 717361</p>
+      <p>📧 info@hqcyber.co.ke</p>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="#about">About</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#faq">FAQ</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="socials">
+    <a href="https://wa.me/254726717361" target="_blank">💬 WhatsApp</a>
+    <a href="https://facebook.com/hqcyber" target="_blank">📘 Facebook</a>
+    <a href="https://instagram.com/hqcyber" target="_blank">📸 Instagram</a>
+  </div>
+  <div class="footer-info">© 2025 HQ TECH & CYBER. All rights reserved.</div>
+</footer>
+
+<a href="#top" class="top" title="Back to top">↑</a>
+
+<script>
+/* Reveal-on-scroll for testimonials */
+function revealOnScroll(){
+  document.querySelectorAll('.testimonial').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 60) el.classList.add('visible');
+  });
+}
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
+
+/* Header shrink on scroll */
+window.addEventListener('scroll', ()=> {
+  const header = document.querySelector('header');
+  if(window.scrollY > 50) header.classList.add('shrink');
+  else header.classList.remove('shrink');
+});
+
+/* Smooth anchor fallback */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e){
+    const href = this.getAttribute('href');
+    if(!href || href === '#') return;
+    const target = document.querySelector(href);
+    if(target){
+      e.preventDefault();
+      target.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
+});
+
+/* Feedback form handling */
+const feedbackForm = document.getElementById('feedbackForm');
+feedbackForm && feedbackForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  alert('Thank you for your feedback!');
+  feedbackForm.reset();
+});
+</script>
+</body>
+</html>

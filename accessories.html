@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessories - Salehgcyber</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Floating WhatsApp */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #25d366;
+      color: #fff;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 24px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+    .whatsapp-float:hover { background: #20b954; }
+
+    /* Floating Cart */
+    .cart-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #007bff;
+      color: #fff;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 22px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: red;
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
+
+    /* Card Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      transition: 0.3s;
+    }
+    .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+    .pad { padding: 15px; }
+    .price { color: #007bff; font-weight: bold; margin: 5px 0; }
+    .btn-blue {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .btn-blue:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;">Accessories</h1>
+
+  <section class="grid">
+    <!-- Product 1 -->
+    <article class="card">
+      <img src="https://via.placeholder.com/300x200" alt="Headphones">
+      <div class="pad">
+        <h3>Wireless Headphones</h3>
+        <p>High quality sound with noise cancellation.</p>
+        <div class="price">KSh 2,500</div>
+        <button class="btn-blue add-to-cart">Add to Cart</button>
+      </div>
+    </article>
+
+    <!-- Product 2 -->
+    <article class="card">
+      <img src="https://via.placeholder.com/300x200" alt="Powerbank">
+      <div class="pad">
+        <h3>Powerbank 10,000mAh</h3>
+        <p>Charge your devices on the go.</p>
+        <div class="price">KSh 1,800</div>
+        <button class="btn-blue add-to-cart">Add to Cart</button>
+      </div>
+    </article>
+
+    <!-- Product 3 -->
+    <article class="card">
+      <img src="https://via.placeholder.com/300x200" alt="USB Cable">
+      <div class="pad">
+        <h3>USB-C Cable</h3>
+        <p>Fast charging and durable cable.</p>
+        <div class="price">KSh 350</div>
+        <button class="btn-blue add-to-cart">Add to Cart</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/254700000000" class="whatsapp-float" target="_blank">💬</a>
+
+  <!-- Floating Cart -->
+  <div class="cart-float">
+    🛒
+    <span class="cart-count" id="cart-count">0</span>
+  </div>
+
+  <script>
+    let cartCount = 0;
+    const cartCountSpan = document.getElementById("cart-count");
+    const buttons = document.querySelectorAll(".add-to-cart");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        cartCount++;
+        cartCountSpan.textContent = cartCount;
+        alert("Item added to cart!");
+      });
+    });
+  </script>
+</body>
+</html>

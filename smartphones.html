@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HQ TECH & CYBER - Smartphones</title>
+<style>
+:root{
+  --bg:#f9fafc; --fg:#1a1d29; --muted:#5b6370; --card:#ffffff;
+  --accent:#2563eb; --accent-hover:#1d4ed8; --whatsapp:#25D366;
+  --shadow-pink: rgba(255,20,147,0.45);
+  --shadow-purple: rgba(147,51,234,0.55);
+}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--fg);margin:0;padding:0;line-height:1.5;}
+a{text-decoration:none;color:inherit;}
+.wrap{max-width:1100px;margin:auto;padding:16px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;}
+.card{background:var(--card);border-radius:14px;overflow:hidden;text-align:center;position:relative;transition:0.3s;cursor:pointer;}
+.card img{width:100%;height:140px;object-fit:cover;}
+.pad{padding:12px;}
+.price{color:#059669;font-weight:700;margin-top:6px;}
+.btn-blue{background:var(--accent);color:#fff;padding:6px 10px;border-radius:8px;font-weight:700;display:inline-block;margin-top:6px;transition:0.2s;}
+.btn-blue:hover{background:var(--accent-hover);}
+@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr);}}
+.cart-btn{position:fixed;bottom:80px;right:18px;background:#2563eb;color:#fff;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;z-index:1000;}
+.cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700;}
+#cartOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200;}
+.cart-modal{background:#fff;border-radius:12px;max-width:640px;width:94%;max-height:84vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25);}
+.cart-head{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid #eee;}
+.cart-body{padding:14px;}
+.cart-items{display:flex;flex-direction:column;gap:12px;}
+.cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:6px 0;}
+.qty{display:flex;align-items:center;gap:6px;}
+.qty button{width:28px;height:28px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer;}
+.remove{border:none;background:#ef4444;color:#fff;border-radius:6px;padding:6px 8px;cursor:pointer;}
+.totals{display:flex;justify-content:space-between;margin-top:10px;font-weight:700;}
+.pay-actions{display:grid;gap:6px;margin-top:12px;}
+.pay-actions button{padding:10px;border:none;border-radius:8px;font-weight:700;color:#fff;cursor:pointer;}
+.pay-mpesa{background:#10b981;}
+.pay-card{background:#2563eb;}
+.pay-bank{background:#f59e0b;}
+.close-cart{border:none;background:#111827;color:#fff;border-radius:6px;padding:6px 10px;cursor:pointer;}
+.whatsapp-float{position:fixed;bottom:20px;right:18px;background:var(--whatsapp);color:#fff;border-radius:50%;padding:14px;font-size:22px;text-align:center;font-weight:bold;z-index:1000;}
+.fly-img{position:fixed;z-index:2000;pointer-events:none;width:70px;height:70px;border-radius:8px;object-fit:cover;transition:opacity .2s;animation:flyToCart .7s forwards;}
+@keyframes flyToCart{to{transform:translate(var(--tx),var(--ty)) scale(0.08);opacity:0;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Smartphones</h1>
+<div class="grid">
+
+<!-- 10 smartphone cards -->
+<article class="card">
+<img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=500&q=60" alt="Smartphone 1">
+<div class="pad">
+<h3>Smartphone Model 1</h3>
+<p>Fast & reliable.</p>
+<div class="price">KSh 7,000</div>
+<button class="btn-blue add-cart" data-name="Smartphone Model 1" data-price="7000">Add to Cart</button>
+</div>
+</article>
+
+<article class="card">
+<img src="https://images.unsplash.com/photo-1594007651562-1c39e5c9e2f8?w=500&q=60" alt="Smartphone 2">
+<div class="pad">
+<h3>Smartphone Model 2</h3>
+<p>Latest 2025.</p>
+<div class="price">KSh 8,500</div>
+<button class="btn-blue add-cart" data-name="Smartphone Model 2" data-price="8500">Add to Cart</button>
+</div>
+</article>
+
+<article class="card">
+<img src="https://images.unsplash.com/photo-1629914583173-4ef8a6a3c233?w=500&q=60" alt="Smartphone 3">
+<div class="pad">
+<h3>Smartphone Model 3</h3>
+<p>Great camera & battery.</p>
+<div class="price">KSh 9,200</div>
+<button class="btn-blue add-cart" data-name="Smartphone Model 3" data-price="9200">Add to Cart</button>
+</div>
+</article>
+
+<article class="card">
+<img src="https://images.unsplash.com/photo-1611605699595-fb9233e11a6a?w=500&q=60" alt="Smartphone 4">
+<div class="pad">
+<h3>Smartphone Model 4</h3>
+<p>Premium build.</p>
+<div class="price">KSh 10,000</div>
+<button class="btn-blue add-cart" data-name="Smartphone Model 4" data-price="10000">Add to Cart</button>
+</div>
+</article>
+
+<article class="card">
+<img src="https://images.unsplash.com/photo-1600180758895-9d7a28f86e92?w=500&q=60" alt="Smartphone 5">
+<div class="pad">
+<h3>Smartphone Model 5</h3>
+<p>High performance.</p>
+<div class="price">KSh 6,800</div>
+<button class="btn-blue add-cart" data-name="Smartphone Model 5" data-price="6800">Add to Cart</button>
+</div>
+</article>
+
+<article class="card">
+<img src="https://images.unsplash.com/photo-1603791452906-9b7e2fbbdf07?w=500&q=60" alt="Smartphone 6">
+<div class="pad">
+<h3>Smartphone Model 6</h3>
+<p>Best value.</p>
+<div class="price">KSh 7,500</div>
+<button class="btn-blue add-cart" data-name="Smartphone Model 6" data-price="7500">Add to Cart</button>
+</div>
+</article>
+
+<article class="card">
+<img src="https://images.unsplash.com/photo-1603791452906-1a7e2fbbdf07?w=500&q=60" alt="Smartphone 7">
+<div class="pad">
+<h3>Smartphone Model 7</h3>
+<p>Long battery life.</p>
+<div class="price">KSh 8,200</div>
+<button class="btn-blue add-cart" data-name="Smartphone Model 7" data-price="8200">Add to Cart</button>
+</div>
+</article>
+
+<article class="card">
+<img src="https://images.unsplash.com/photo-1611605699595-1b9233e11a6a?w=500&q=60" alt="Smartphone 8">
+<div class="pad">
+<h3>Smartphone Model 8</h3>
+<p>Excellent display.</p>
+<div class="price">KSh 9,000</div>
+<button class="btn-blue add-cart" data-name="Smartphone Model 8" data-price="9000">Add to Cart</button>
+</div>
+</article>
+
+<article class="card">
+<img src="https://images.unsplash.com/photo-1611605699595-2b9233e11a6a?w=500&q=60" alt="Smartphone 9">
+<div class="pad">
+<h3>Smartphone Model 9</h3>
+<p>Top camera.</p>
+<div class="price">KSh 11,000</div>
+<button class="btn-blue add-cart" data-name="Smartphone Model 9" data-price="11000">Add to Cart</button>
+</div>
+</article>
+
+<article class="card">
+<img src="https://images.unsplash.com/photo-1611605699595-3b9233e11a6a?w=500&q=60" alt="Smartphone 10">
+<div class="pad">
+<h3>Smartphone Model 10</h3>
+<p>Fast & sleek.</p>
+<div class="price">KSh 12,500</div>
+<button class="btn-blue add-cart" data-name="Smartphone Model 10" data-price="12500">Add to Cart</button>
+</div>
+</article>
+
+</div>
+</div>
+
+<!-- Cart Modal -->
+<div id="cartOverlay">
+<div class="cart-modal">
+<div class="cart-head">
+<h2>Your Cart</h2>
+<button class="close-cart">X</button>
+</div>
+<div class="cart-body">
+<div class="cart-items"></div>
+<div class="totals">Total: <span class="cart-total">KSh 0</span></div>
+<div class="pay-actions">
+<button class="pay-mpesa">Pay with M-PESA</button>
+<button class="pay-card">Pay with Card</button>
+<button class="pay-bank">Pay via Bank</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Floating buttons -->
+<div class="cart-btn">🛒 <span class="cart-badge">0</span></div>
+<a class="whatsapp-float" href="https://wa.me/254700000000" target="_blank">WA</a>
+
+<script>
+// Cart functions
+const cartBtn = document.querySelector('.cart-btn');
+const cartOverlay = document.getElementById('cartOverlay');
+const cartItemsEl = document.querySelector('.cart-items');
+const cartTotalEl = document.querySelector('.cart-total');
+const cartBadge = document.querySelector('.cart-badge');
+const closeCartBtn = document.querySelector('.close-cart');
+
+function getCart(){ return JSON.parse(localStorage.getItem('cart')||'[]'); }
+function saveCart(cart){ localStorage.setItem('cart', JSON.stringify(cart)); }
+
+function updateCart(){
+  let cart = getCart();
+  cartItemsEl.innerHTML='';
+  let total = 0;
+  cart.forEach((item, idx)=>{
+    const row = document.createElement('div');
+    row.className='cart-row';
+    row.innerHTML = `
+      <span style="font-weight:600">${item.name}</span>
+      <div class="qty">
+        <button class="dec">-</button>
+        <span>${item.qty}</span>
+        <button class="inc">+</button>
+      </div>
+      <span>KSh ${item.price*item.qty}</span>
+      <button class="remove">x</button>
+    `;
+    cartItemsEl.appendChild(row);
+    total+=item.price*item.qty;
+
+    row.querySelector('.inc').addEventListener('click',()=>{ item.qty++; saveCart(cart); updateCart(); });
+    row.querySelector('.dec').addEventListener('click',()=>{ if(item.qty>1){ item.qty--; saveCart(cart); updateCart(); } });
+    row.querySelector('.remove').addEventListener('click',()=>{ cart.splice(idx,1); saveCart(cart); updateCart(); });
+  });
+  cartTotalEl.textContent=`KSh ${total}`;
+  cartBadge.textContent=cart.reduce((a,b)=>a+b.qty,0);
+}
+
+// Add to cart
+document.querySelectorAll('.add-cart').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    let cart = getCart();
+    const name=btn.dataset.name;
+    const price=parseInt(btn.dataset.price);
+    const existing = cart.find(i=>i.name===name);
+    if(existing) existing.qty++;
+    else cart.push({name, price, qty:1});
+    saveCart(cart);
+    updateCart();
+    // Fly animation
+    const img=btn.closest('.card').querySelector('img');
+    const flyImg=img.cloneNode();
+    const rect=img.getBoundingClientRect();
+    flyImg.style.position='fixed';
+    flyImg.style.top=rect.top+'px';
+    flyImg.style.left=rect.left+'px';
+    flyImg.style.width=rect.width+'px';
+    flyImg.style.height=rect.height+'px';
+    flyImg.style.zIndex=2000;
+    flyImg.style.borderRadius='8px';
+    document.body.appendChild(flyImg);
+    const cartRect=cartBtn.getBoundingClientRect();
+    const tx=cartRect.left-rect.left;
+    const ty=cartRect.top-rect.top;
+    flyImg.style.setProperty('--tx', tx+'px');
+    flyImg.style.setProperty('--ty', ty+'px');
+    flyImg.style.animation='flyToCart .7s forwards';
+    flyImg.addEventListener('animationend',()=>flyImg.remove());
+  });
+});
+
+// Cart modal open/close
+cartBtn.addEventListener('click',()=>cartOverlay.style.display='flex');
+closeCartBtn.addEventListener('click',()=>cartOverlay.style.display='none');
+
+// Sync across pages
+window.addEventListener('storage', e=>{
+  if(e.key==='cart') updateCart();
+});
+
+// Init
+updateCart();
+</script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HQ TECH & CYBER - Shop</title>
+<style>
+:root{
+  --bg:#f9fafc; --fg:#1a1d29; --muted:#5b6370; --card:#fff;
+  --accent:#2563eb; --accent-hover:#1d4ed8; --whatsapp:#25D366;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;scroll-behavior:smooth}
+header{position:sticky;top:0;background:rgba(255,255,255,0.95);border-bottom:1px solid #e5e7eb;z-index:1000}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+nav a{color:var(--muted);margin-left:12px;text-decoration:none;font-weight:600;font-size:14px;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.brand{display:flex;align-items:center}
+.brand .logo{width:50px;height:50px;border-radius:50%;overflow:hidden;display:inline-block;flex-shrink:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:30px}
+.card{background:var(--card);border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;text-align:center;transition:transform .28s;position:relative}
+.card img{width:100%;height:140px;object-fit:cover;transition:transform .3s}
+.card:hover img{transform:scale(1.05);}
+.card .pad{padding:10px}
+.card h3{font-size:16px;margin:8px 0;color:var(--accent);font-weight:700}
+.card .price{font-weight:700;color:#059669;margin-bottom:8px}
+.card button{padding:6px 10px;border:none;border-radius:6px;background:var(--whatsapp);color:#fff;font-weight:600;cursor:pointer;transition:transform .2s}
+.card button:hover{transform:scale(1.05)}
+.sale-badge{position:absolute;top:8px;left:8px;background:#ef4444;color:#fff;padding:3px 6px;border-radius:6px;font-size:11px;font-weight:700;z-index:2}
+.cart-btn{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#fff;border:none;border-radius:50%;padding:14px 16px;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform .2s;z-index:999}
+.cart-btn:hover{transform:scale(1.12)}
+.cart-badge{position:absolute;top:-6px;right:-6px;background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px;font-weight:700}
+#cartOverlay, #optionOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:1200}
+.cart-modal, #optionModal{background:#fff;border-radius:12px;max-width:640px;width:94%;max-height:84vh;overflow:auto;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+.cart-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #eee}
+.cart-body, #optionModal .option-body{padding:14px 18px}
+.cart-items{display:flex;flex-direction:column;gap:12px}
+.cart-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px dashed #e5e7eb;padding:10px 0}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:28px;height:28px;border:1px solid #e5e7eb;background:#fff;border-radius:6px;cursor:pointer}
+.remove{border:none;background:#ef4444;color:#fff;border-radius:6px;padding:6px 8px;cursor:pointer}
+.totals{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
+.pay-actions{display:grid;gap:8px;margin-top:12px}
+.pay-actions button{padding:10px;border:none;border-radius:10px;font-weight:700;color:#fff;cursor:pointer}
+.pay-mpesa{background:#10b981}
+.pay-card{background:#2563eb}
+.pay-bank{background:#f59e0b}
+.close-cart, #closeOption{border:none;background:#111827;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}
+.option-body label{display:block;margin:8px 0 4px;font-weight:600}
+.option-body select, .option-body input{width:100%;padding:6px;margin-bottom:10px;border:1px solid #e5e7eb;border-radius:6px}
+@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr)}}
+
+/* Modal container adjustments */
+#optionModal {
+  padding: 20px 18px;
+  box-sizing: border-box;
+}
+
+/* Responsive modal image */
+#optionImage {
+  width: 80%;          
+  max-width: 400px;    
+  height: auto;        
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 20px;  /* more space below image */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Variant select and quantity container */
+.option-body select, .option-body input {
+  margin-bottom: 15px;  /* more space between elements */
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* Quantity adjuster */
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.qty button {
+  width: 38px;       
+  height: 38px;
+  font-size: 18px;   
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+.qty button:hover {
+  transform: scale(1.1);
+}
+
+#qtyDisplay {
+  font-size: 18px;
+  min-width: 36px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Add to Cart button */
+#confirmOption {
+  width: 100%;             /* full width button */
+  padding: 12px 0;
+  font-size: 18px;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+#confirmOption:hover {
+  transform: scale(1.03);
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  #optionImage {
+    width: 95%;
+  }
+  .qty button {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+  #qtyDisplay {
+    font-size: 20px;
+    min-width: 38px;
+  }
+  .option-body select, .option-body input {
+    font-size: 18px;
+  }
+  #confirmOption {
+    font-size: 20px;
+  }
+}
+
+
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap">
+<nav>
+  <div class="brand">
+    <a href="https://salehqcyber.netlify.app" style="font-weight:700;color:var(--accent);text-decoration:none;font-size:16px;">Home</a>
+  </div>
+  <div>
+    <a href="#mobile-phones">Mobile Phones</a>
+    <a href="#accessories">Accessories</a>
+    <a href="#mens">Men's Wear</a>
+    <a href="#ladys">Lady's Wear</a>
+  </div>
+</nav>
+</div>
+</header>
+
+<main class="wrap">
+  <section id="mobile-phones">
+    <h2>Mobile Phones</h2>
+    <div class="grid" id="phonesGrid"></div>
+  </section>
+
+  <section id="accessories">
+    <h2>Accessories</h2>
+    <div class="grid" id="accessoriesGrid"></div>
+  </section>
+
+  <section id="mens">
+    <h2>Men's Wear</h2>
+    <div class="grid" id="mensGrid"></div>
+  </section>
+
+  <section id="ladys">
+    <h2>Lady's Wear</h2>
+    <div class="grid" id="ladysGrid"></div>
+  </section>
+</main>
+
+<button class="cart-btn" id="openCart">🛒<span class="cart-badge" id="cartCount">0</span></button>
+
+<!-- Option Modal -->
+<div id="optionOverlay">
+<div id="optionModal">
+  <div class="cart-head">
+    <h3>Select Options</h3>
+    <button id="closeOption">X</button>
+  </div>
+  <div class="option-body">
+    <!-- Bigger product image -->
+    <img id="optionImage" src="" alt="">
+
+    <label for="variantSelect">Variant / Size</label>
+    <select id="variantSelect"></select>
+
+    <label for="quantitySelect">Quantity</label>
+    <div class="qty">
+      <button id="qtyMinus">-</button>
+      <span id="qtyDisplay">1</span>
+      <button id="qtyPlus">+</button>
+    </div>
+
+    <button id="confirmOption" style="background:var(--whatsapp);color:#fff;width:100%;padding:10px;border:none;border-radius:8px;margin-top:10px;">Add to Cart</button>
+  </div>
+</div>
+</div>
+
+<!-- Cart Modal -->
+<div id="cartOverlay">
+<div class="cart-modal">
+  <div class="cart-head">
+    <h3>Your Cart</h3>
+    <button class="close-cart" id="closeCart">X</button>
+  </div>
+  <div class="cart-body">
+    <div class="cart-items" id="cartItems"></div>
+    <div class="totals">
+      <span>Total:</span><span id="cartTotal">KSh 0</span>
+    </div>
+    <div class="pay-actions">
+      <button class="pay-mpesa">Pay with Mpesa</button>
+      <button class="pay-card">Pay with Card</button>
+      <button class="pay-bank">Pay with Bank</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+// DATA (same as your original)
+const mobilePhones = Array.from({length:6}, (_, i) => ({
+  name: `Phone ${i+1}`,
+  img: 'https://thumbs.dreamstime.com/b/vector-illustration-cool-modern-coming-soon-banner-icon-flat-web-label-element-vector-illustration-modern-coming-soon-banner-icon-169501158.jpg',
+  variants: {
+    '64GB': 15000 + i*2000,
+    '128GB': 18000 + i*2000,
+    '256GB': 20000 + i*2000
+  }
+}));
+
+const accessories = [
+  {name:'Charger',price:500,img:'https://cdn.mafrservices.com/sys-master-root/hc9/h40/28762187202590/169104_main.jpg'},
+  {name:'Headphones',price:1200,img:'https://images-cdn.ubuy.qa/65ef95ab90212d1553760f04-wireless-bluetooth-headphones-over-ear.jpg'},
+  {name:'Power Bank',variants:{'5000mAh':900,'10000mAh':1400,'20000mAh':2500},img:'https://i0.wp.com/givtmobile.com/wp-content/uploads/2021/03/51ojzIimRXL._SL1200_.jpg'},
+  {name:'USB Cable',variants:{'Type A':300,'Type C':400},img:'https://www.mychoice.qa/cdn/shop/files/71JFIYI7fXL._SX425.webp'},
+  {name:'Case',price:400,img:'https://coconutcases.com/cdn/shop/files/01_fd1c86d1-2785-4cdf-8f2c-29fae71b3fd2.jpg'},
+  {name:'Screen Protector',price:350,img:'https://images-cdn.ubuy.co.in/63c6eaf5c41ea11c75185a93-jetech-screen-protector-for-iphone-11.jpg'},
+  {name:'Bluetooth Speaker',price:1800,img:'https://www.boat-lifestyle.com/cdn/shop/files/Stone_SpinXPro_1_b3503890-50f6-4cd1-9138-0bd90874391e_1300x.png'},
+  {name:'Memory Card',variants:{'32GB':700,'64GB':1200,'128GB':1800},img:'https://m.media-amazon.com/images/I/61JSbfLd3dL._UF1000,1000_QL80_.jpg'}
+];
+
+const mensWear = [
+  {name:'Air Force',variants:{6:2500,7:2500,8:2500,9:2500,10:2500,11:2500,12:2500},img:'https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=300&h=200&fit=crop'},
+  {name:'Shirt 1',variants:{S:1200,M:1200,L:1200,XL:1200},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/04/9453071/1.jpg?3709'},
+  {name:'Jeans 1',variants:{S:2000,M:2000,L:2000,XL:2000},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/08/9864392/1.jpg?3053'},
+  {name:'Jacket 1',variants:{S:3500,M:3500,L:3500,XL:3500},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/06/547816/1.jpg?1806'},
+  {name:'Sneakers',variants:{6:4000,7:4000,8:4000,9:4000,10:4000,11:4000,12:4000},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/99/127884/1.jpg?0432'},
+  {name:'Hoodie',variants:{S:1800,M:1800,L:1800,XL:1800},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/32/3567972/1.jpg?5981'}
+];
+
+const ladysWear = [
+  {name:'Dress 1',variants:{S:2000,M:1200,L:1200,XL:1000},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/91/189688/2.jpg?1594'},
+  {name:'Dress 2',variants:{S:8500,M:8500,L:850,XL:850},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/05/8263523/2.jpg?9289'},
+  {name:'Heels',variants:{36:1800,37:1800,38:1800,39:180000,40:1800},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/05/2568191/1.jpg?5674'},
+  {name:'Bag',price:1800,img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/95/8599671/1.jpg?5229'},
+  {name:'Scarf Set',price:1500,img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/01/9591523/1.jpg?6086'},
+  {name:'Hipster Panties',variants:{S:1000,M:1000,L:1000,XL:1000},img:'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/64/687823/1.jpg?5727'}
+];
+
+// RENDER FUNCTION
+function renderCards(data, containerId){
+  const container = document.getElementById(containerId);
+  container.innerHTML = data.map(item=>{
+    let variantsData = item.variants ? Object.entries(item.variants).map(([k,v])=>`${k}:${v}`).join(',') : '';
+    let priceText = item.price ? 'KSh '+item.price : 'Varies';
+    return `
+      <div class="card">
+        <img src="${item.img}" alt="">
+        <div class="pad">
+          <h3>${item.name}</h3>
+          <div class="price">${priceText}</div>
+          <button class="add-cart" ${variantsData ? `data-variants="${variantsData}"` : `data-price="${item.price}"`} data-name="${item.name}" data-img="${item.img}">Add to Cart</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Generate all sections
+renderCards(mobilePhones, 'phonesGrid');
+renderCards(accessories, 'accessoriesGrid');
+renderCards(mensWear, 'mensGrid');
+renderCards(ladysWear, 'ladysGrid');
+
+// CART LOGIC
+let cart = [];
+let currentItem = {};
+let quantity = 1;
+
+const cartCount = document.getElementById('cartCount');
+const optionOverlay = document.getElementById('optionOverlay');
+const variantSelect = document.getElementById('variantSelect');
+const quantitySelect = document.getElementById('quantitySelect');
+const qtyDisplay = document.getElementById('qtyDisplay');
+const cartOverlay = document.getElementById('cartOverlay');
+const cartItems = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+const optionImage = document.getElementById('optionImage');
+const qtyMinus = document.getElementById('qtyMinus');
+const qtyPlus = document.getElementById('qtyPlus');
+
+function updateCartUI() {
+  cartItems.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    const row = document.createElement('div');
+    row.className = 'cart-row';
+    const subtotal = item.price * item.quantity;
+    total += subtotal;
+    row.innerHTML = `
+      <span>${item.name} (${item.variant})</span>
+      <span>KSh ${item.price}</span>
+      <span>${item.quantity}</span>
+      <button class="remove" data-index="${index}">X</button>
+    `;
+    cartItems.appendChild(row);
+  });
+  cartTotal.textContent = `KSh ${total}`;
+  cartCount.textContent = cart.length;
+}
+
+// Open option modal
+document.addEventListener('click', e=>{
+  if(e.target.classList.contains('add-cart')){
+    const btn = e.target;
+    const variantsData = btn.dataset.variants;
+    currentItem = {name: btn.dataset.name, variants: [], price: 0};
+    optionImage.src = btn.dataset.img;
+    variantSelect.innerHTML = '';
+    quantity = 1;
+    qtyDisplay.textContent = quantity;
+
+    if(variantsData){
+      variantsData.split(',').forEach(v=>{
+        let [name, price] = v.split(':');
+        currentItem.variants.push({name, price: parseInt(price)});
+        let opt = document.createElement('option'); opt.value=name; opt.textContent=`${name} (KSh ${price})`;
+        variantSelect.appendChild(opt);
+      });
+      currentItem.price = currentItem.variants[0].price;
+      variantSelect.style.display = 'block';
+    } else {
+      currentItem.price = parseInt(btn.dataset.price) || 0;
+      let opt = document.createElement('option'); opt.value='Default'; opt.textContent='Default'; variantSelect.appendChild(opt);
+      variantSelect.style.display = 'none';
+    }
+    optionOverlay.style.display = 'flex';
+  }
+});
+
+document.getElementById('closeOption').onclick = ()=>optionOverlay.style.display='none';
+
+qtyMinus.onclick = ()=>{
+  if(quantity>1){quantity--; qtyDisplay.textContent=quantity;}
+};
+qtyPlus.onclick = ()=>{
+  quantity++; qtyDisplay.textContent=quantity;
+};
+
+document.getElementById('confirmOption').onclick = ()=>{
+  const variantName = variantSelect.value;
+  const price = currentItem.variants.length ? currentItem.variants.find(v=>v.name===variantName).price : currentItem.price;
+  cart.push({name: currentItem.name, variant: variantName, quantity, price});
+  updateCartUI();
+  optionOverlay.style.display='none';
+};
+
+document.getElementById('openCart').onclick = ()=>cartOverlay.style.display='flex';
+document.getElementById('closeCart').onclick = ()=>cartOverlay.style.display='none';
+
+// Remove item
+cartItems.addEventListener('click', e=>{
+  if(e.target.classList.contains('remove')){
+    const index = parseInt(e.target.dataset.index);
+    cart.splice(index,1);
+    updateCartUI();
+  }
+});
+</script>
+
+</body>
+</html>
