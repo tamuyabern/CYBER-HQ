@@ -119,25 +119,27 @@ footer a:hover{color:var(--accent)}
   <!-- your logo, navigation, etc. -->
 </header>
 
-<!-- Marketplace Button Section -->
-<div style="text-align:center; margin: 30px 0;">
+<!-- Marketplace Card Button -->
+<div style="display:flex; justify-content:center; margin:30px 0;">
   <a href="marketplace.html" 
      style="
-       display: inline-block;
-       padding: 18px 40px;
-       background-color: #ff4d4d;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       padding: 25px 50px;
+       background: linear-gradient(135deg, #ff4d4d, #ff7a5c);
        color: #fff;
+       font-size: 22px;
        font-weight: bold;
-       font-size: 20px;
        text-decoration: none;
-       border-radius: 30px;
-       box-shadow: 0 6px 10px rgba(0,0,0,0.2);
-       transition: transform 0.2s, background-color 0.2s;
+       border-radius: 35px;
+       box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+       transition: transform 0.3s, box-shadow 0.3s;
      "
-     onmouseover="this.style.transform='scale(1.05)'; this.style.backgroundColor='#e04343';"
-     onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='#ff4d4d';"
+     onmouseover="this.style.transform='translateY(-4px) scale(1.05)'; this.style.boxShadow='0 12px 25px rgba(0,0,0,0.35)';"
+     onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.25)';"
   >
-    Go to Marketplace
+    🛒 Visit Marketplace
   </a>
 </div>
 
