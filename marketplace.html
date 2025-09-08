@@ -1,67 +1,159 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Marketplace - HQ Tech & Cyber</title>
-<style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
-  header { background:#222; color:#fff; padding:15px; text-align:center; }
-  nav a { color:#fff; margin:0 15px; text-decoration:none; }
-  .container { width:90%; max-width:1200px; margin:20px auto; }
-  .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; }
-  .product { background:#fff; padding:15px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center; }
-  .product img { max-width:100%; height:auto; border-radius:5px; }
-  .product h3 { margin:10px 0 5px; font-size:18px; }
-  .product p { margin:5px 0; color:#555; }
-  .auth { background:#fff; padding:20px; border-radius:8px; margin-bottom:30px; text-align:center; }
-  .auth input { padding:10px; margin:5px 0; width:200px; }
-  .auth button { padding:10px 20px; margin-top:10px; cursor:pointer; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketplace - HQ Tech & Cyber</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #ff4d4d;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .add-item-form {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .add-item-form input, 
+    .add-item-form textarea, 
+    .add-item-form button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .add-item-form button {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .add-item-form button:hover {
+      background-color: #e04343;
+    }
+
+    .item-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .item-card {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .item-card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .item-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .item-card p {
+      margin: 5px 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .item-card .phone {
+      font-weight: bold;
+      color: #ff4d4d;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <h1>HQ Tech & Cyber Marketplace</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="shop.html">Shop</a>
-    <a href="marketplace.html">Marketplace</a>
-  </nav>
-</header>
+  <header>Marketplace</header>
 
-<div class="container">
+  <div class="container">
 
-  <!-- Seller Authentication -->
-  <div class="auth">
-    <h2>Sell Your Products</h2>
-    <input type="text" placeholder="Username"><br>
-    <input type="email" placeholder="Email"><br>
-    <input type="password" placeholder="Password"><br>
-    <button>Sign Up / Login</button>
+    <!-- Add Item Form -->
+    <div class="add-item-form">
+      <h2>Post Your Item</h2>
+      <input type="text" id="itemTitle" placeholder="Item Name" required>
+      <textarea id="itemDescription" placeholder="Item Description" rows="3" required></textarea>
+      <input type="text" id="itemPrice" placeholder="Price (KES)" required>
+      <input type="text" id="itemPhone" placeholder="Seller Phone Number" required>
+      <input type="text" id="itemImage" placeholder="Image URL (optional)">
+      <button onclick="addItem()">Post Item</button>
+    </div>
+
+    <!-- Item Listings -->
+    <div class="item-list" id="itemList">
+      <!-- Items will appear here -->
+    </div>
+
   </div>
 
-  <!-- Products Grid -->
-  <div class="product-grid">
-    <div class="product">
-      <img src="images/product1.jpg" alt="Product 1">
-      <h3>Product 1</h3>
-      <p>KES 1,500</p>
-    </div>
-    <div class="product">
-      <img src="images/product2.jpg" alt="Product 2">
-      <h3>Product 2</h3>
-      <p>KES 2,000</p>
-    </div>
-    <div class="product">
-      <img src="images/product3.jpg" alt="Product 3">
-      <h3>Product 3</h3>
-      <p>KES 1,200</p>
-    </div>
-    <!-- Add more products here -->
-  </div>
+  <script>
+    function addItem() {
+      const title = document.getElementById('itemTitle').value;
+      const description = document.getElementById('itemDescription').value;
+      const price = document.getElementById('itemPrice').value;
+      const phone = document.getElementById('itemPhone').value;
+      const image = document.getElementById('itemImage').value;
 
-</div>
+      if (!title || !description || !price || !phone) {
+        alert('Please fill all required fields');
+        return;
+      }
+
+      const itemList = document.getElementById('itemList');
+
+      const itemCard = document.createElement('div');
+      itemCard.className = 'item-card';
+      itemCard.innerHTML = `
+        ${image ? `<img src="${image}" alt="${title}">` : ''}
+        <h3>${title}</h3>
+        <p>${description}</p>
+        <p>Price: KES ${price}</p>
+        <p class="phone">Contact: ${phone}</p>
+      `;
+
+      itemList.prepend(itemCard);
+
+      // Clear form
+      document.getElementById('itemTitle').value = '';
+      document.getElementById('itemDescription').value = '';
+      document.getElementById('itemPrice').value = '';
+      document.getElementById('itemPhone').value = '';
+      document.getElementById('itemImage').value = '';
+    }
+  </script>
 
 </body>
 </html>
