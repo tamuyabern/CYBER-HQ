@@ -4,9 +4,179 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HQ Marketplace</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+    header {
+      background: #0a8f3d;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 {
+      margin: 0;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 10px;
+    }
+    button {
+      background: #0a8f3d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #06692d;
+    }
+    .container {
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .price {
+      font-weight: bold;
+      color: green;
+      font-size: 1.2rem;
+    }
+    .phone {
+      background: orange;
+      color: black;
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .phone:hover {
+      background: darkorange;
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      width: 95%;
+      max-width: 500px;
+    }
+    .modal-content h2 {
+      margin-top: 0;
+      color: #0a8f3d;
+    }
+    .modal-content input, .modal-content select, .modal-content textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .close {
+      float: right;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: red;
+    }
+    @media (max-width: 600px) {
+      .card {
+        flex-direction: row;
+        height: 120px;
+      }
+      .card img {
+        width: 40%;
+        height: 100%;
+      }
+      .card-body {
+        width: 60%;
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>HQ Marketplace</h1>
+    <div class="actions">
+      <button onclick="openModal()">+ Post Your Product</button>
+      <button onclick="window.location.href='index.html'">⬅ Back to Home</button>
+    </div>
+  </header>
+
+  <div class="container" id="products"></div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">×</span>
+      <h2>Post Your Product</h2>
+      <form id="productForm">
+        <input type="text" id="name" placeholder="Product Name" required />
+        <input type="number" id="price" placeholder="Price" required />
+        <textarea id="description" placeholder="Product Description" required></textarea>
+        <select id="condition" required>
+          <option value="">Select Condition</option>
+          <option value="New">New</option>
+          <option value="Used">Used</option>
+        </select>
+        <select id="category" required>
+          <option value="">Select Category</option>
+          <option value="Phones">Phones</option>
+          <option value="Cars">Cars</option>
+          <option value="Kitchen">Kitchen Items</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Furniture">Furniture</option>
+        </select>
+        <input type="text" id="specs" placeholder="Specifications (e.g. 4GB RAM, 2200cc, Blue)" required />
+        <input type="text" id="region" placeholder="Region / Location" required />
+        <input type="tel" id="phone" placeholder="Phone Number" required />
+        <input type="url" id="image" placeholder="Image URL" required />
+        <button type="submit">Post</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
@@ -14,221 +184,56 @@
       projectId: "hq-marketplace-ec236",
       storageBucket: "hq-marketplace-ec236.appspot.com",
       messagingSenderId: "861547577050",
-      appId: "1:861547577050:web:507b1411e3e199eae3afe3",
-      measurementId: "G-3ZDQGZ9TFJ"
+      appId: "1:861547577050:web:507b1411e3e199eae3afe3"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    window.openModal = function() {
-      document.getElementById("productModal").style.display = "flex";
-    };
-    window.closeModal = function() {
-      document.getElementById("productModal").style.display = "none";
-    };
+    const modal = document.getElementById("modal");
+    const openModal = () => modal.style.display = "flex";
+    const closeModal = () => modal.style.display = "none";
 
-    window.postProduct = async function() {
-      const name = document.getElementById("name").value;
-      const price = document.getElementById("price").value;
-      const description = document.getElementById("description").value;
-      const category = document.getElementById("category").value;
-      const phone = document.getElementById("phone").value;
-      const location = document.getElementById("location").value;
-      const image = document.getElementById("image").value;
+    document.getElementById("productForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const product = {
+        name: document.getElementById("name").value,
+        price: document.getElementById("price").value,
+        description: document.getElementById("description").value,
+        condition: document.getElementById("condition").value,
+        category: document.getElementById("category").value,
+        specs: document.getElementById("specs").value,
+        region: document.getElementById("region").value,
+        phone: document.getElementById("phone").value,
+        image: document.getElementById("image").value,
+      };
+      await addDoc(collection(db, "products"), product);
+      closeModal();
+      e.target.reset();
+    });
 
-      if (!name || !price || !phone || !category) {
-        alert("Please fill all required fields (*)");
-        return;
-      }
-
-      try {
-        await addDoc(collection(db, "products"), {
-          name, price, description, category, phone, location, image
-        });
-        alert("Product posted!");
-        closeModal();
-        loadProducts();
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-    };
-
-    async function loadProducts() {
-      const productList = document.getElementById("products");
-      productList.innerHTML = "";
-      const querySnapshot = await getDocs(collection(db, "products"));
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const item = document.createElement("div");
-        item.className = "product-item";
-        item.innerHTML = `
-          <div class="product-image">
-            <img src="${data.image || 'https://via.placeholder.com/200'}" alt="product">
-          </div>
-          <div class="product-info">
-            <h2>${data.name}</h2>
-            <p><b>Price:</b> ${data.price}</p>
-            <p><b>Category:</b> ${data.category}</p>
-            <p><b>Location:</b> ${data.location}</p>
-            <p><b>Phone:</b> <a href="tel:${data.phone}" class="call-link">${data.phone}</a></p>
-            <p>${data.description}</p>
+    const productsDiv = document.getElementById("products");
+    onSnapshot(collection(db, "products"), (snapshot) => {
+      productsDiv.innerHTML = "";
+      snapshot.forEach((doc) => {
+        const p = doc.data();
+        productsDiv.innerHTML += `
+          <div class="card">
+            <img src="${p.image}" alt="${p.name}">
+            <div class="card-body">
+              <h3>${p.name}</h3>
+              <p class="price">$${p.price}</p>
+              <p>${p.description}</p>
+              <p><b>Condition:</b> ${p.condition}</p>
+              <p><b>Category:</b> ${p.category}</p>
+              <p><b>Specs:</b> ${p.specs}</p>
+              <p><b>Location:</b> ${p.region}</p>
+              <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
+            </div>
           </div>
         `;
-        productList.appendChild(item);
       });
-    }
-
-    loadProducts();
+    });
   </script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f5fff5;
-      color: #111;
-    }
-
-    header {
-      background: green;
-      color: white;
-      padding: 15px;
-      text-align: center;
-    }
-
-    .nav-btn {
-      margin: 15px;
-      padding: 8px 15px;
-      background: darkgreen;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .post-btn {
-      display: block;
-      margin: 20px auto;
-      padding: 10px 20px;
-      background: darkgreen;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    #productModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
-    }
-
-    .modal-content input,
-    .modal-content textarea,
-    .modal-content select {
-      width: 100%;
-      margin: 5px 0;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    .modal-content button {
-      background: green;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 6px;
-      margin-top: 10px;
-      width: 100%;
-      cursor: pointer;
-    }
-
-    #products {
-      padding: 10px;
-    }
-
-    .product-item {
-      display: flex;
-      gap: 15px;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      padding: 15px;
-      align-items: flex-start;
-    }
-
-    .product-image img {
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .product-info {
-      flex: 1;
-    }
-
-    .call-link {
-      color: green;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .call-link:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>HQ Marketplace</h1>
-  </header>
-
-  <button class="nav-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
-  <button class="post-btn" onclick="openModal()">+ Post Your Product</button>
-
-  <!-- Modal -->
-  <div id="productModal">
-    <div class="modal-content">
-      <h2>Post Your Product</h2>
-      <input type="text" id="name" placeholder="Product Name *" />
-      <input type="text" id="price" placeholder="Price *" />
-      <textarea id="description" placeholder="Description"></textarea>
-      <select id="category">
-        <option value="">Select Category *</option>
-        <option value="Vehicles">Vehicles</option>
-        <option value="Phones">Phones</option>
-        <option value="Electronics">Electronics</option>
-        <option value="Kitchen">Kitchen Items</option>
-        <option value="Fashion">Fashion</option>
-        <option value="Other">Other</option>
-      </select>
-      <input type="text" id="location" placeholder="Location / Region" />
-      <input type="text" id="ondition" placeholder="New / Used" />
-      <input type="text" id="phone" placeholder="Phone Number *" />
-      <input type="url" id="image" placeholder="Image URL" />
-      <button onclick="postProduct()">Post</button>
-      <button onclick="closeModal()" style="background:red;margin-top:5px;">Cancel</button>
-    </div>
-  </div>
-
-  <section id="products"></section>
 </body>
 </html>
