@@ -15,18 +15,21 @@
   .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
   .category.active { background:#0a8f3d; color:white; }
   .container { padding:1rem; display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem; }
-  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
-  .card img { width:100%; height:160px; object-fit:cover; }
+  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition: transform 0.2s; }
+  .card:hover { transform: scale(1.03); }
+  .card img { width:100%; height:160px; object-fit:cover; cursor:pointer; }
   .card-body { padding:0.5rem; }
   .card-body h3 { margin:4px 0; font-size:1rem; }
   .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
-  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto; }
+  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1000; }
+  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:600px; max-height:90vh; overflow-y:auto; position:relative; }
   .modal-content h2 { margin-top:0; color:#0a8f3d; }
-  .close { float:right; cursor:pointer; font-size:1.2rem; color:red; }
+  .close { position:absolute; top:8px; right:12px; cursor:pointer; font-size:1.5rem; color:red; font-weight:bold; }
   input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
   .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
-  #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-bottom:8px; display:none; border-radius:6px; }
+  .required { color:red; }
+  .modal-img { width:100%; max-height:400px; object-fit:contain; cursor:zoom-in; transition: transform 0.3s ease; }
+  .zoomed { transform: scale(2); cursor:zoom-out; }
 </style>
 </head>
 <body>
@@ -61,10 +64,11 @@
   <div class="modal-content">
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
-    <input type="text" id="name" placeholder="Product Name" required />
-    <input type="text" id="price" placeholder="Price" required />
-    <input type="text" id="phone" placeholder="Phone Number" required />
+    <input type="text" id="name" placeholder="Product Name *" required />
+    <input type="text" id="price" placeholder="Price *" required />
+    <input type="text" id="phone" placeholder="Phone Number *" required />
     <select id="category">
+      <option value="">--Select Category *--</option>
       <option value="Phones">Phones</option>
       <option value="Cars">Cars</option>
       <option value="Kitchen">Kitchen</option>
@@ -76,7 +80,6 @@
     <input type="text" id="specs" placeholder="Specifications" />
     <input type="text" id="region" placeholder="Location/Region" />
     <input type="file" id="imageFile" accept="image/*" required />
-    <img id="imagePreview" />
     <button class="submit-btn" onclick="saveProduct()">Save Product</button>
   </div>
 </div>
@@ -85,7 +88,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
   authDomain: "hq-marketplace-ec236.firebaseapp.com",
@@ -94,6 +96,7 @@ const firebaseConfig = {
   messagingSenderId: "861547577050",
   appId: "1:861547577050:web:507b1411e3e199eae3afe3"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -101,13 +104,13 @@ const productsDiv = document.getElementById("products");
 const detailModal = document.getElementById("detailModal");
 const detailContent = document.getElementById("detailContent");
 
-// Show product detail
-function showDetail(el){
+// Show product details with zoom
+function showDetail(el) {
   const p = JSON.parse(el.dataset.product);
   detailContent.innerHTML = `
     <span class="close" onclick="closeDetail()">×</span>
     <h2>${p.name}</h2>
-    <img src="${p.image}" alt="${p.name}" style="width:100%; max-height:250px; object-fit:cover; border-radius:8px;">
+    <img src="${p.image}" alt="${p.name}" class="modal-img" onclick="toggleZoom(this)">
     <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
     <p><b>Description:</b> ${p.description}</p>
     <p><b>Condition:</b> ${p.condition}</p>
@@ -118,53 +121,61 @@ function showDetail(el){
   `;
   detailModal.style.display = "flex";
 }
+
+function toggleZoom(img) {
+  img.classList.toggle("zoomed");
+}
+
 window.closeDetail = () => detailModal.style.display = "none";
 
 // Category filter
-function filterCategory(cat, el){
-  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
+function filterCategory(cat, el) {
+  document.querySelectorAll(".category").forEach(c => c.classList.remove("active"));
   el.classList.add("active");
-  document.querySelectorAll(".card").forEach(card=>{
-    card.style.display = (cat==='all'||card.dataset.category===cat)?'block':'none';
+  document.querySelectorAll(".card").forEach(card => {
+    card.style.display = (cat === "all" || card.dataset.category === cat) ? "block" : "none";
   });
 }
 window.filterCategory = filterCategory;
 
-// Form functions
-function openForm(){ document.getElementById("formModal").style.display="flex"; }
-function closeForm(){ document.getElementById("formModal").style.display="none"; }
-window.openForm=openForm; window.closeForm=closeForm;
-
-// Image preview
-document.getElementById("imageFile").addEventListener("change", e=>{
-  const file = e.target.files[0];
-  const preview = document.getElementById("imagePreview");
-  if(file){ preview.src = URL.createObjectURL(file); preview.style.display = "block"; }
-});
+// Form modal
+function openForm() { document.getElementById("formModal").style.display = "flex"; }
+function closeForm() { document.getElementById("formModal").style.display = "none"; }
+window.openForm = openForm;
+window.closeForm = closeForm;
 
 // Save product with Cloudinary upload
-async function saveProduct(){
+async function saveProduct() {
+  const name = document.getElementById("name").value.trim();
+  const price = document.getElementById("price").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const category = document.getElementById("category").value;
   const fileInput = document.getElementById("imageFile");
-  if(fileInput.files.length===0){ alert("Select an image."); return; }
+
+  if (!name || !price || !phone || !category || fileInput.files.length === 0) {
+    alert("Please fill all required fields and select an image.");
+    return;
+  }
+
+  const submitBtn = document.querySelector(".submit-btn");
+  submitBtn.textContent = "Uploading...";
+  submitBtn.disabled = true;
 
   const file = fileInput.files[0];
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", "hq cyber"); // your unsigned preset
+  formData.append("upload_preset", "hq cyber");
 
-  try{
+  try {
     const res = await fetch("https://api.cloudinary.com/v1_1/dqxppopjr/image/upload", {
-      method:"POST",
+      method: "POST",
       body: formData
     });
     const data = await res.json();
     const imageUrl = data.secure_url;
 
     const product = {
-      name: document.getElementById("name").value,
-      price: document.getElementById("price").value,
-      phone: document.getElementById("phone").value,
-      category: document.getElementById("category").value,
+      name, price, phone, category,
       description: document.getElementById("description").value,
       condition: document.getElementById("condition").value,
       specs: document.getElementById("specs").value,
@@ -172,24 +183,38 @@ async function saveProduct(){
       image: imageUrl
     };
 
-    await addDoc(collection(db,"products"), product);
-    alert("Product posted!");
-    closeForm();
-    fileInput.value=""; document.getElementById("imagePreview").style.display="none";
+    await addDoc(collection(db, "products"), product);
+    alert("Product posted successfully!");
 
-  }catch(err){ console.error(err); alert("Upload failed."); }
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("condition").value = "";
+    document.getElementById("specs").value = "";
+    document.getElementById("region").value = "";
+    fileInput.value = "";
+    closeForm();
+
+  } catch(err) {
+    console.error(err);
+    alert("Upload failed. Try again.");
+  } finally {
+    submitBtn.textContent = "Save Product";
+    submitBtn.disabled = false;
+  }
 }
 window.saveProduct = saveProduct;
 
 // Real-time fetch
-onSnapshot(collection(db,"products"), snapshot=>{
-  productsDiv.innerHTML="";
-  snapshot.forEach(doc=>{
+onSnapshot(collection(db,"products"), snapshot => {
+  productsDiv.innerHTML = "";
+  snapshot.forEach(doc => {
     const p = doc.data();
     const div = document.createElement("div");
-    div.className="card";
-    div.dataset.category=p.category;
-    div.dataset.product=JSON.stringify(p);
+    div.className = "card";
+    div.dataset.category = p.category;
+    div.dataset.product = JSON.stringify(p);
     div.innerHTML = `
       <img src="${p.image}" alt="${p.name}">
       <div class="card-body">
@@ -197,7 +222,7 @@ onSnapshot(collection(db,"products"), snapshot=>{
         <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
       </div>
     `;
-    div.onclick = ()=>showDetail(div);
+    div.onclick = () => showDetail(div);
     productsDiv.appendChild(div);
   });
 });
