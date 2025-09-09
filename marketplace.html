@@ -271,23 +271,41 @@
     }
 
     // Image upload to Cloudinary
-    imageUpload.onchange = async ()=>{
-      const file = imageUpload.files[0];
-      if(!file) return;
-      saveBtn.disabled=true;
-      preview.style.display="none";
-      const formData = new FormData();
-      formData.append("file",file);
-      formData.append("upload_preset","hq_cyber"); // your preset
-      try{
-        const res = await fetch("https://api.cloudinary.com/v1_1/dqxppopjr/image/upload",{method:"POST",body:formData});
-        const data = await res.json();
-        uploadedImageURL = data.secure_url;
-        preview.src = uploadedImageURL;
-        preview.style.display="block";
-        saveBtn.disabled=false;
-      }catch(err){ console.error(err); alert("Image upload failed!"); }
+    imageUpload.onchange = async () => {
+  const file = imageUpload.files[0];
+  if (!file) return;
+
+  saveBtn.disabled = true;
+  preview.style.display = "none";
+  preview.src = ""; // reset previous image
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "hq_cyber"); // your Cloudinary preset
+
+  try {
+    const res = await fetch("https://api.cloudinary.com/v1_1/dqxppopjr/image/upload", {
+      method: "POST",
+      body: formData
+    });
+    const data = await res.json();
+    uploadedImageURL = data.secure_url;
+
+    preview.onload = () => preview.style.display = "block"; // show only when loaded
+    preview.onerror = () => {
+      preview.style.display = "none";
+      alert("Failed to load image preview.");
     };
+    preview.src = uploadedImageURL;
+
+    saveBtn.disabled = false;
+  } catch (err) {
+    console.error(err);
+    alert("Image upload failed!");
+    saveBtn.disabled = false;
+  }
+};
+
 
     // Save product
     window.saveProduct = async ()=>{
