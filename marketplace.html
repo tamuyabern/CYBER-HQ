@@ -5,133 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HQ Marketplace</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-    }
-    header {
-      background: #0a8f3d;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    header h1 { margin: 0; }
-    .actions {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 10px 0;
-      flex-wrap: wrap;
-    }
-    .action-btn {
-      background: orange;
-      color: black;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .action-btn:hover { background: darkorange; }
-    .categories {
-      display: flex;
-      overflow-x: auto;
-      gap: 8px;
-      padding: 10px;
-      background: #eaf7ed;
-    }
-    .category {
-      flex: 0 0 auto;
-      background: white;
-      border: 1px solid #0a8f3d;
-      border-radius: 20px;
-      padding: 6px 14px;
-      cursor: pointer;
-    }
-    .category.active {
-      background: #0a8f3d;
-      color: white;
-    }
-    .container {
-      padding: 1rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    .card {
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      cursor: pointer;
-      text-align: center;
-    }
-    .card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
-    .card-body { padding: 0.5rem; }
-    .card-body h3 { margin: 4px 0; font-size: 1rem; }
-    .phone {
-      background: orange;
-      color: black;
-      padding: 5px 8px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      display: inline-block;
-    }
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    .modal-content {
-      background: white;
-      padding: 1rem;
-      border-radius: 10px;
-      width: 95%;
-      max-width: 500px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .modal-content h2 {
-      margin-top: 0;
-      color: #0a8f3d;
-    }
-    .close {
-      float: right;
-      cursor: pointer;
-      font-size: 1.2rem;
-      color: red;
-    }
-    input, select, textarea {
-      width: 100%;
-      margin-bottom: 8px;
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .submit-btn {
-      background: #0a8f3d;
-      color: white;
-      padding: 8px 14px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
+    header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
+    header h1 { margin:0; }
+    .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; }
+    .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
+    .action-btn:hover { background:darkorange; }
+    .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
+    .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
+    .category.active { background:#0a8f3d; color:white; }
+    .container { padding:1rem; display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem; }
+    .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
+    .card img { width:100%; height:160px; object-fit:cover; }
+    .card-body { padding:0.5rem; }
+    .card-body h3 { margin:4px 0; font-size:1rem; }
+    .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
+    .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
+    .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto; }
+    .modal-content h2 { margin-top:0; color:#0a8f3d; }
+    .close { float:right; cursor:pointer; font-size:1.2rem; color:red; }
+    input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
+    .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
   </style>
 </head>
 <body>
@@ -180,7 +74,8 @@
       <input type="text" id="condition" placeholder="Condition (New/Used)" />
       <input type="text" id="specs" placeholder="Specifications" />
       <input type="text" id="region" placeholder="Location/Region" />
-      <input type="text" id="image" placeholder="Image URL" required />
+      <!-- New File Input -->
+      <input type="file" id="imageFile" accept="image/*" required />
       <button class="submit-btn" onclick="saveProduct()">Save Product</button>
     </div>
   </div>
@@ -189,6 +84,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
@@ -201,12 +97,12 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const storage = getStorage(app);
 
     const productsDiv = document.getElementById("products");
     const detailModal = document.getElementById("detailModal");
     const detailContent = document.getElementById("detailContent");
 
-    // Show product details
     function showDetail(el) {
       const p = JSON.parse(el.dataset.product);
       detailContent.innerHTML = `
@@ -225,27 +121,29 @@
     }
     window.closeDetail = () => detailModal.style.display = "none";
 
-    // Category filter
     function filterCategory(cat, el) {
       document.querySelectorAll(".category").forEach(c => c.classList.remove("active"));
       el.classList.add("active");
       document.querySelectorAll(".card").forEach(card => {
-        if (cat === "all" || card.dataset.category === cat) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
+        card.style.display = (cat === "all" || card.dataset.category === cat) ? "block" : "none";
       });
     }
     window.filterCategory = filterCategory;
 
-    // Post form functions
     function openForm() { document.getElementById("formModal").style.display = "flex"; }
     function closeForm() { document.getElementById("formModal").style.display = "none"; }
     window.openForm = openForm;
     window.closeForm = closeForm;
 
     async function saveProduct() {
+      const fileInput = document.getElementById("imageFile");
+      if (fileInput.files.length === 0) { alert("Please select an image."); return; }
+      const file = fileInput.files[0];
+      const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
+
+      await uploadBytes(storageRef, file);
+      const imageUrl = await getDownloadURL(storageRef);
+
       const product = {
         name: document.getElementById("name").value,
         price: document.getElementById("price").value,
@@ -255,14 +153,13 @@
         condition: document.getElementById("condition").value,
         specs: document.getElementById("specs").value,
         region: document.getElementById("region").value,
-        image: document.getElementById("image").value
+        image: imageUrl
       };
       await addDoc(collection(db, "products"), product);
       closeForm();
     }
     window.saveProduct = saveProduct;
 
-    // Real-time fetch
     onSnapshot(collection(db, "products"), (snapshot) => {
       productsDiv.innerHTML = "";
       snapshot.forEach((doc) => {
