@@ -53,7 +53,7 @@
   <div class="actions">
     <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
     <button class="action-btn" onclick="openForm()">+ Post Your Product</button>
-    <button class="action-btn sign-btn" id="signBtn" onclick="signInEmail()">Sign In</button>
+    <button class="action-btn sign-btn" id="signBtn" onclick="googleSign()">Sign In</button>
     <span id="userEmail" class="user-info" style="display:none;"></span>
   </div>
 </header>
@@ -104,9 +104,8 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
   authDomain: "hq-marketplace-ec236.firebaseapp.com",
@@ -118,6 +117,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 let currentUser = null;
 let uploadedImageUrl = "";
@@ -129,7 +129,7 @@ onAuthStateChanged(auth, user => {
   const userEmail = document.getElementById("userEmail");
   if(user){
     signBtn.textContent="Sign Out";
-    userEmail.innerHTML = `${user.email} <span class="verified">✔</span>`;
+    userEmail.innerHTML = `${user.displayName || user.email} <span class="verified">✔</span>`;
     userEmail.style.display="inline";
   }else{
     signBtn.textContent="Sign In";
@@ -137,20 +137,15 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-// Sign in/out function
-window.signInEmail = async () => {
+// Google Sign In/Out
+window.googleSign = async () => {
   if(currentUser){
     await signOut(auth);
     return;
   }
-  const email = prompt("Enter Email:");
-  const pass = prompt("Enter Password:");
-  if(email && pass){
-    try{
-      await signInWithEmailAndPassword(auth,email,pass);
-      alert("Signed in!");
-    }catch(err){ alert("Sign-in failed: "+err.message); }
-  }
+  try{
+    await signInWithPopup(auth, provider);
+  }catch(err){ alert("Google sign-in failed: "+err.message); }
 };
 
 // Require login before posting
@@ -201,7 +196,7 @@ document.getElementById("imageFile").addEventListener("change", async (e)=>{
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "hq cyber"); // your preset
+    formData.append("upload_preset", "hq cyber");
     const cloudName = "dqxppopjr";
 
     try{
