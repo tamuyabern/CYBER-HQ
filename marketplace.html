@@ -5,43 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HQ Marketplace</title>
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
-  header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
-  header h1 { margin:0; display:inline; }
-  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; }
-  .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
-  .action-btn:hover { background:darkorange; }
-  .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
-  .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
-  .category.active { background:#0a8f3d; color:white; }
-  .container { padding:1rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1rem; }
-  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
-  .card img { width:100%; height:150px; object-fit:cover; transition:transform 0.3s ease; }
-  .card:hover img { transform:scale(1.05); }
-  .card-body { padding:0.5rem; }
-  .card-body h3 { margin:4px 0; font-size:1rem; }
-  .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
-  .verified-badge { display:inline-block; background:#1da1f2; color:white; font-size:0.7rem; font-weight:bold; border-radius:50%; width:16px; height:16px; text-align:center; line-height:16px; margin-left:4px; vertical-align:middle; }
-  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto; text-align:center; }
-  .modal-content img { width:100%; max-height:300px; object-fit:contain; transition:transform 0.3s ease; cursor:zoom-in; }
-  .close { float:right; cursor:pointer; font-size:1.2rem; color:red; }
-  input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
-  .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
-  #userInfo { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; }
-  #userInfo img { width:32px; height:32px; border-radius:50%; }
-  @media(max-width:360px) { .container { grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); } .card img{height:120px;} }
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9;}
+header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10;}
+header h1{ margin:0;}
+.actions{ display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap;}
+.action-btn{ background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold;}
+.action-btn:hover{ background:darkorange;}
+.categories{ display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed;}
+.category{ flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer;}
+.category.active{ background:#0a8f3d; color:white;}
+.container{ padding:1rem; display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem;}
+.card{ background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center;}
+.card img{ width:100%; height:160px; object-fit:cover;}
+.card-body{ padding:0.5rem;}
+.card-body h3{ margin:4px 0; font-size:1rem;}
+.phone{ background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block;}
+.verified-badge{ color:#1DA1F2; font-size:1rem; margin-left:4px; vertical-align:middle;}
+/* Modal */
+.modal{ display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000;}
+.modal-content{ background:white; padding:1rem; border-radius:10px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto;}
+.modal-content h2{ margin-top:0; color:#0a8f3d;}
+.close{ float:right; cursor:pointer; font-size:1.2rem; color:red;}
+input, select, textarea{ width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px;}
+.submit-btn{ background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold;}
+#modalImage{ width:100%; max-height:300px; object-fit:cover; border-radius:8px; cursor:zoom-in;}
+#userInfo{ margin-left:10px;}
 </style>
 </head>
 <body>
 <header>
-  <h1>HQ Marketplace</h1>
-  <div class="actions">
-    <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
-    <button class="action-btn" id="postBtn" onclick="openForm()" disabled>+ Post Your Product</button>
-    <button class="action-btn" id="loginBtn">Sign in with Google</button>
-  </div>
-  <div id="userInfo"></div>
+<h1>HQ Marketplace</h1>
+<div class="actions">
+  <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+  <button class="action-btn" id="postBtn" onclick="openForm()" disabled>+ Post Your Product</button>
+  <button class="action-btn" id="loginBtn">Sign in with Google</button>
+  <span id="userInfo"></span>
+</div>
 </header>
 
 <div class="categories" id="categories">
@@ -59,6 +58,7 @@
 <div class="modal" id="detailModal">
   <div class="modal-content" id="detailContent">
     <span class="close" onclick="closeDetail()">×</span>
+    <img id="modalImage">
   </div>
 </div>
 
@@ -77,22 +77,20 @@
       <option value="Electronics">Electronics</option>
       <option value="Furniture">Furniture</option>
     </select>
-    <textarea id="description" placeholder="Description" required></textarea>
-    <input type="text" id="condition" placeholder="Condition (New/Used)" required />
+    <textarea id="description" placeholder="Description"></textarea>
+    <input type="text" id="condition" placeholder="Condition (New/Used)" />
     <input type="text" id="specs" placeholder="Specifications" />
     <input type="text" id="region" placeholder="Location/Region" />
-    <button type="button" id="uploadWidgetBtn">Upload Image</button>
-    <input type="hidden" id="image" required />
+    <input type="file" id="imageUpload" accept="image/*" />
+    <img id="preview" style="width:100%; margin-bottom:8px; display:none; border-radius:8px;">
     <button class="submit-btn" onclick="saveProduct()">Save Product</button>
   </div>
 </div>
 
-<script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
@@ -106,57 +104,73 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+let currentUser = null;
 
 const productsDiv = document.getElementById("products");
 const detailModal = document.getElementById("detailModal");
 const detailContent = document.getElementById("detailContent");
-const postBtn = document.getElementById("postBtn");
 const loginBtn = document.getElementById("loginBtn");
+const postBtn = document.getElementById("postBtn");
 const userInfo = document.getElementById("userInfo");
+const imageUpload = document.getElementById("imageUpload");
+const preview = document.getElementById("preview");
+let uploadedImageURL = "";
 
-let currentUser = null;
+// --- Auth Persistence ---
+setPersistence(auth, browserLocalPersistence);
 
-// Google sign-in
+// --- Google Sign-In ---
 loginBtn.onclick = async () => {
   if(currentUser){
     await signOut(auth);
-    currentUser = null;
-    loginBtn.textContent = "Sign in with Google";
-    postBtn.disabled = true;
-    userInfo.innerHTML = "";
-    return;
-  }
-  try{
-    const result = await signInWithPopup(auth, provider);
-    currentUser = result.user;
-    loginBtn.textContent = "Sign out";
-    postBtn.disabled = false;
-    userInfo.innerHTML = `<img src="${currentUser.photoURL}" title="${currentUser.displayName}"><span>${currentUser.displayName}</span>`;
-  }catch(err){
-    console.error(err);
-    alert("Sign-in failed.");
+  } else {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
   }
 };
 
-// Cloudinary widget
-var myWidget = cloudinary.createUploadWidget({
-  cloudName: 'dqxppopjr',
-  uploadPreset: 'hq_cyber'
-}, (error, result) => {
-  if (!error && result && result.event === "success") {
-    document.getElementById('image').value = result.info.secure_url;
+// --- Auth State Listener ---
+auth.onAuthStateChanged(user => {
+  if(user){
+    currentUser = user;
+    loginBtn.textContent = "Sign out";
+    postBtn.disabled = false;
+    userInfo.innerHTML = `<img src="${currentUser.photoURL}" style="width:24px; border-radius:50%; vertical-align:middle;"> <span>${currentUser.displayName}</span>`;
+  } else {
+    currentUser = null;
+    loginBtn.textContent = "Sign in with Google";
+    postBtn.disabled = true;
+    userInfo.innerHTML = `<span style="color:red;">Sign in to post products</span>`;
   }
 });
-document.getElementById("uploadWidgetBtn").addEventListener("click", () => myWidget.open(), false);
 
-// Show product details
-function showDetail(el) {
+// --- Image Upload to Cloudinary ---
+imageUpload.onchange = async () => {
+  const file = imageUpload.files[0];
+  if(!file) return;
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset","hq_cyber");
+  const res = await fetch("https://api.cloudinary.com/v1_1/dqxppopjr/image/upload", { method:"POST", body:formData });
+  const data = await res.json();
+  uploadedImageURL = data.secure_url;
+  preview.src = uploadedImageURL;
+  preview.style.display = "block";
+};
+
+// --- Open/Close Modals ---
+window.openForm = ()=>document.getElementById("formModal").style.display="flex";
+window.closeForm = ()=>document.getElementById("formModal").style.display="none";
+window.closeDetail = ()=>detailModal.style.display="none";
+
+// --- Show Product Detail ---
+function showDetail(el){
   const p = JSON.parse(el.dataset.product);
+  document.getElementById('modalImage').src = p.image;
   detailContent.innerHTML = `
     <span class="close" onclick="closeDetail()">×</span>
-    <h2>${p.name} ${p.verified ? '<span class="verified-badge">✔</span>' : ''}</h2>
-    <img id="modalImage" src="${p.image}" alt="${p.name}">
+    <h2>${p.name} ${p.verified?'<span class="verified-badge">✔</span>':''}</h2>
+    <img id="modalImage" src="${p.image}">
     <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
     <p><b>Description:</b> ${p.description}</p>
     <p><b>Condition:</b> ${p.condition}</p>
@@ -174,28 +188,10 @@ function showDetail(el) {
   };
   detailModal.style.display = "flex";
 }
-window.closeDetail = ()=>detailModal.style.display="none";
 
-// Category filter
-function filterCategory(cat, el){
-  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
-  el.classList.add("active");
-  document.querySelectorAll(".card").forEach(card=>{
-    card.style.display=(cat==="all"||card.dataset.category===cat)?"block":"none";
-  });
-}
-window.filterCategory = filterCategory;
-
-// Post form
-function openForm(){ document.getElementById("formModal").style.display="flex"; }
-function closeForm(){ document.getElementById("formModal").style.display="none"; }
-window.openForm=openForm;
-window.closeForm=closeForm;
-
-// Save product
+// --- Save Product ---
 async function saveProduct(){
-  if(!currentUser){ alert("Please sign in to post products."); return; }
-
+  if(!currentUser){ alert("You must sign in first to post products."); return; }
   const name=document.getElementById("name").value.trim();
   const price=document.getElementById("price").value.trim();
   const phone=document.getElementById("phone").value.trim();
@@ -204,20 +200,36 @@ async function saveProduct(){
   const condition=document.getElementById("condition").value.trim();
   const specs=document.getElementById("specs").value.trim();
   const region=document.getElementById("region").value.trim();
-  const image=document.getElementById("image").value.trim();
 
-  if(!name||!price||!phone||!description||!condition||!image){
+  if(!name||!price||!phone||!description||!condition||!uploadedImageURL){
     alert("Please fill all mandatory fields and upload an image.");
     return;
   }
 
-  const product={ name, price, phone, category, description, condition, specs, region, image, verified:true, userId:currentUser.uid };
+  const product = {
+    name, price, phone, category, description, condition, specs, region,
+    image: uploadedImageURL,
+    verified:true,
+    userId:currentUser.uid
+  };
   await addDoc(collection(db,"products"),product);
   closeForm();
 }
 
-// Fetch products
-onSnapshot(collection(db,"products"),(snapshot)=>{
+window.saveProduct = saveProduct;
+
+// --- Category Filter ---
+function filterCategory(cat, el){
+  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display = (cat==="all"||card.dataset.category===cat)?"block":"none";
+  });
+}
+window.filterCategory = filterCategory;
+
+// --- Fetch Products ---
+onSnapshot(collection(db,"products"), snapshot=>{
   productsDiv.innerHTML="";
   snapshot.forEach(doc=>{
     const p = doc.data();
