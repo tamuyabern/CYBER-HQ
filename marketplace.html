@@ -1,231 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HQ Marketplace</title>
-<style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
-  header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
-  header h1 { margin:0; }
-  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; }
-  .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
-  .action-btn:hover { background:darkorange; }
-  .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
-  .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
-  .category.active { background:#0a8f3d; color:white; }
-  .container { padding:1rem; display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem; }
-  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition: transform 0.2s; }
-  .card:hover { transform: scale(1.03); }
-  .card img { width:100%; height:160px; object-fit:cover; cursor:pointer; }
-  .card-body { padding:0.5rem; }
-  .card-body h3 { margin:4px 0; font-size:1rem; }
-  .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
-  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:600px; max-height:90vh; overflow-y:auto; position:relative; }
-  .modal-content h2 { margin-top:0; color:#0a8f3d; }
-  .close { position:absolute; top:8px; right:12px; cursor:pointer; font-size:1.5rem; color:red; font-weight:bold; }
-  input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
-  .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
-  .required { color:red; }
-  .modal-img { width:100%; max-height:400px; object-fit:contain; cursor:zoom-in; transition: transform 0.3s ease; }
-  .zoomed { transform: scale(2); cursor:zoom-out; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HQ Marketplace</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9;}
+    header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10;}
+    header h1 { margin:0; }
+    .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; }
+    .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
+    .action-btn:hover { background:darkorange; }
+    .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
+    .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
+    .category.active { background:#0a8f3d; color:white; }
+    .container { padding:1rem; display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem; }
+    .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
+    .card img { width:100%; height:160px; object-fit:cover; transition: transform 0.3s ease; }
+    .card img:hover { transform: scale(1.1); }
+    .card-body { padding:0.5rem; }
+    .card-body h3 { margin:4px 0; font-size:1rem; }
+    .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
+    .verified-badge { color:blue; font-weight:bold; margin-left:5px; }
+    /* Modals */
+    .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
+    .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto; position:relative; }
+    .modal-content h2 { margin-top:0; color:#0a8f3d; }
+    .close { float:right; cursor:pointer; font-size:1.2rem; color:red; }
+    input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
+    .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
+    #recaptcha-container { margin-bottom:10px; }
+  </style>
 </head>
 <body>
-<header>
-  <h1>HQ Marketplace</h1>
-  <div class="actions">
-    <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
-    <button class="action-btn" onclick="openForm()">+ Post Your Product</button>
+  <header>
+    <h1>HQ Marketplace</h1>
+    <div class="actions">
+      <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+      <button class="action-btn" onclick="openForm()">+ Post Your Product</button>
+    </div>
+  </header>
+
+  <div class="categories" id="categories">
+    <div class="category active" onclick="filterCategory('all', this)">All</div>
+    <div class="category" onclick="filterCategory('Phones', this)">Phones</div>
+    <div class="category" onclick="filterCategory('Cars', this)">Cars</div>
+    <div class="category" onclick="filterCategory('Kitchen', this)">Kitchen</div>
+    <div class="category" onclick="filterCategory('Electronics', this)">Electronics</div>
+    <div class="category" onclick="filterCategory('Furniture', this)">Furniture</div>
   </div>
-</header>
 
-<div class="categories" id="categories">
-  <div class="category active" onclick="filterCategory('all', this)">All</div>
-  <div class="category" onclick="filterCategory('Phones', this)">Phones</div>
-  <div class="category" onclick="filterCategory('Cars', this)">Cars</div>
-  <div class="category" onclick="filterCategory('Kitchen', this)">Kitchen</div>
-  <div class="category" onclick="filterCategory('Electronics', this)">Electronics</div>
-  <div class="category" onclick="filterCategory('Furniture', this)">Furniture</div>
-</div>
+  <div class="container" id="products"></div>
 
-<div class="container" id="products"></div>
-
-<!-- Product Detail Modal -->
-<div class="modal" id="detailModal">
-  <div class="modal-content" id="detailContent">
-    <span class="close" onclick="closeDetail()">×</span>
+  <!-- Product Detail Modal -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content" id="detailContent">
+      <span class="close" onclick="closeDetail()">×</span>
+    </div>
   </div>
-</div>
 
-<!-- Post Product Modal -->
-<div class="modal" id="formModal">
-  <div class="modal-content">
-    <span class="close" onclick="closeForm()">×</span>
-    <h2>Post Your Product</h2>
-    <input type="text" id="name" placeholder="Product Name *" required />
-    <input type="text" id="price" placeholder="Price *" required />
-    <input type="text" id="phone" placeholder="Phone Number *" required />
-    <select id="category">
-      <option value="">--Select Category *--</option>
-      <option value="Phones">Phones</option>
-      <option value="Cars">Cars</option>
-      <option value="Kitchen">Kitchen</option>
-      <option value="Electronics">Electronics</option>
-      <option value="Furniture">Furniture</option>
-    </select>
-    <textarea id="description" placeholder="Description"></textarea>
-    <input type="text" id="condition" placeholder="Condition (New/Used)" />
-    <input type="text" id="specs" placeholder="Specifications" />
-    <input type="text" id="region" placeholder="Location/Region" />
-    <input type="file" id="imageFile" accept="image/*" required />
-    <button class="submit-btn" onclick="saveProduct()">Save Product</button>
+  <!-- Post Product Modal -->
+  <div class="modal" id="formModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeForm()">×</span>
+      <h2>Post Your Product</h2>
+      <input type="text" id="name" placeholder="Product Name" required />
+      <input type="text" id="price" placeholder="Price" required />
+      <input type="text" id="phone" placeholder="Phone Number" required readonly />
+      <input type="file" id="imageFile" required />
+      <select id="category">
+        <option value="Phones">Phones</option>
+        <option value="Cars">Cars</option>
+        <option value="Kitchen">Kitchen</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Furniture">Furniture</option>
+      </select>
+      <textarea id="description" placeholder="Description"></textarea>
+      <input type="text" id="condition" placeholder="Condition (New/Used)" />
+      <input type="text" id="specs" placeholder="Specifications" />
+      <input type="text" id="region" placeholder="Location/Region" />
+      <button class="submit-btn" onclick="saveProduct()">Save Product</button>
+    </div>
   </div>
-</div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  <!-- Phone Login Modal -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeLogin()">×</span>
+      <h2>Login with Phone</h2>
+      <div id="recaptcha-container"></div>
+      <input type="text" id="loginPhone" placeholder="Enter Phone +254..." />
+      <button class="submit-btn" onclick="phoneLogin()">Send OTP</button>
+      <input type="text" id="otp" placeholder="Enter OTP" style="display:none;" />
+      <button class="submit-btn" id="verifyBtn" onclick="verifyOTP()" style="display:none;">Verify OTP</button>
+    </div>
+  </div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
-  authDomain: "hq-marketplace-ec236.firebaseapp.com",
-  projectId: "hq-marketplace-ec236",
-  storageBucket: "hq-marketplace-ec236.appspot.com",
-  messagingSenderId: "861547577050",
-  appId: "1:861547577050:web:507b1411e3e199eae3afe3"
-};
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const productsDiv = document.getElementById("products");
-const detailModal = document.getElementById("detailModal");
-const detailContent = document.getElementById("detailContent");
-
-// Show product details with zoom
-function showDetail(el) {
-  const p = JSON.parse(el.dataset.product);
-  detailContent.innerHTML = `
-    <span class="close" onclick="closeDetail()">×</span>
-    <h2>${p.name}</h2>
-    <img src="${p.image}" alt="${p.name}" class="modal-img" onclick="toggleZoom(this)">
-    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
-    <p><b>Description:</b> ${p.description}</p>
-    <p><b>Condition:</b> ${p.condition}</p>
-    <p><b>Category:</b> ${p.category}</p>
-    <p><b>Specifications:</b> ${p.specs}</p>
-    <p><b>Location:</b> ${p.region}</p>
-    <p><a href="tel:${p.phone}" class="phone">📞 ${p.phone}</a></p>
-  `;
-  detailModal.style.display = "flex";
-}
-
-function toggleZoom(img) {
-  img.classList.toggle("zoomed");
-}
-
-window.closeDetail = () => detailModal.style.display = "none";
-
-// Category filter
-function filterCategory(cat, el) {
-  document.querySelectorAll(".category").forEach(c => c.classList.remove("active"));
-  el.classList.add("active");
-  document.querySelectorAll(".card").forEach(card => {
-    card.style.display = (cat === "all" || card.dataset.category === cat) ? "block" : "none";
-  });
-}
-window.filterCategory = filterCategory;
-
-// Form modal
-function openForm() { document.getElementById("formModal").style.display = "flex"; }
-function closeForm() { document.getElementById("formModal").style.display = "none"; }
-window.openForm = openForm;
-window.closeForm = closeForm;
-
-// Save product with Cloudinary upload
-async function saveProduct() {
-  const name = document.getElementById("name").value.trim();
-  const price = document.getElementById("price").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const category = document.getElementById("category").value;
-  const fileInput = document.getElementById("imageFile");
-
-  if (!name || !price || !phone || !category || fileInput.files.length === 0) {
-    alert("Please fill all required fields and select an image.");
-    return;
-  }
-
-  const submitBtn = document.querySelector(".submit-btn");
-  submitBtn.textContent = "Uploading...";
-  submitBtn.disabled = true;
-
-  const file = fileInput.files[0];
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "hq cyber");
-
-  try {
-    const res = await fetch("https://api.cloudinary.com/v1_1/dqxppopjr/image/upload", {
-      method: "POST",
-      body: formData
-    });
-    const data = await res.json();
-    const imageUrl = data.secure_url;
-
-    const product = {
-      name, price, phone, category,
-      description: document.getElementById("description").value,
-      condition: document.getElementById("condition").value,
-      specs: document.getElementById("specs").value,
-      region: document.getElementById("region").value,
-      image: imageUrl
+    const firebaseConfig = {
+      apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
+      authDomain: "hq-marketplace-ec236.firebaseapp.com",
+      projectId: "hq-marketplace-ec236",
+      storageBucket: "hq-marketplace-ec236.appspot.com",
+      messagingSenderId: "861547577050",
+      appId: "1:861547577050:web:507b1411e3e199eae3afe3"
     };
 
-    await addDoc(collection(db, "products"), product);
-    alert("Product posted successfully!");
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth();
 
-    document.getElementById("name").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("phone").value = "";
-    document.getElementById("description").value = "";
-    document.getElementById("condition").value = "";
-    document.getElementById("specs").value = "";
-    document.getElementById("region").value = "";
-    fileInput.value = "";
-    closeForm();
+    let currentUser = null; // store signed-in user
 
-  } catch(err) {
-    console.error(err);
-    alert("Upload failed. Try again.");
-  } finally {
-    submitBtn.textContent = "Save Product";
-    submitBtn.disabled = false;
-  }
-}
-window.saveProduct = saveProduct;
+    // Initialize reCAPTCHA
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { size:'invisible' }, auth);
 
-// Real-time fetch
-onSnapshot(collection(db,"products"), snapshot => {
-  productsDiv.innerHTML = "";
-  snapshot.forEach(doc => {
-    const p = doc.data();
-    const div = document.createElement("div");
-    div.className = "card";
-    div.dataset.category = p.category;
-    div.dataset.product = JSON.stringify(p);
-    div.innerHTML = `
-      <img src="${p.image}" alt="${p.name}">
-      <div class="card-body">
-        <h3>${p.name}</h3>
-        <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
-      </div>
-    `;
-    div.onclick = () => showDetail(div);
-    productsDiv.appendChild(div);
-  });
-});
-</script>
+    async function phoneLogin() {
+      const phoneNumber = document.getElementById("loginPhone").value.trim();
+      if(!phoneNumber){ alert("Enter phone number"); return; }
+
+      signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          alert("OTP sent to "+phoneNumber);
+          document.getElementById("otp").style.display = "block";
+          document.getElementById("verifyBtn").style.display = "block";
+        }).catch(err => console.error(err));
+    }
+
+    async function verifyOTP() {
+      const otp = document.getElementById("otp").value.trim();
+      if(!otp){ alert("Enter OTP"); return; }
+
+      window.confirmationResult.confirm(otp)
+        .then(async (result) => {
+          currentUser = result.user;
+          alert("Phone verified: "+currentUser.phoneNumber);
+          document.getElementById("phone").value = currentUser.phoneNumber;
+          closeLogin();
+
+          // save verified user
+          await setDoc(doc(db,"users",currentUser.uid), {
+            phone: currentUser.phoneNumber,
+            verified: true,
+            createdAt: new Date()
+          });
+        }).catch(err => alert("Invalid OTP"));
+    }
+
+    window.openForm = () => {
+      if(!currentUser) openLogin();
+      else document.getElementById("formModal").style.display="flex";
+    }
+    function closeForm(){ document.getElementById("formModal").style.display="none"; }
+    function openLogin(){ document.getElementById("loginModal").style.display="flex"; }
+    function closeLogin(){ document.getElementById("loginModal").style.display="none"; }
+
+    const productsDiv = document.getElementById("products");
+    const detailModal = document.getElementById("detailModal");
+    const detailContent = document.getElementById("detailContent");
+
+    // Product detail modal
+    function showDetail(el) {
+      const p = JSON.parse(el.dataset.product);
+      detailContent.innerHTML = `
+        <span class="close" onclick="closeDetail()">×</span>
+        <h2>${p.name} ${p.verified?'<span class="verified-badge">✔ Verified</span>':''}</h2>
+        <img src="${p.image}" alt="${p.name}" style="width:100%; max-height:400px; object-fit:contain; transition: transform 0.3s;" onclick="this.style.transform=(this.style.transform==='scale(1.5)')?'scale(1)':'scale(1.5)';">
+        <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
+        <p><b>Description:</b> ${p.description}</p>
+        <p><b>Condition:</b> ${p.condition}</p>
+        <p><b>Category:</b> ${p.category}</p>
+        <p><b>Specifications:</b> ${p.specs}</p>
+        <p><b>Location:</b> ${p.region}</p>
+        <p><a href="tel:${p.phone}" class="phone">📞 ${p.phone}</a></p>
+      `;
+      detailModal.style.display = "flex";
+    }
+    window.closeDetail = () => detailModal.style.display="none";
+
+    // Category filter
+    window.filterCategory = (cat, el) => {
+      document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
+      el.classList.add("active");
+      document.querySelectorAll(".card").forEach(card=>{
+        card.style.display = (cat==='all' || card.dataset.category===cat)?'block':'none';
+      });
+    }
+
+    // Save product with Cloudinary upload
+    async function saveProduct() {
+      if(!currentUser){ alert("Login first"); return; }
+
+      const name = document.getElementById("name").value.trim();
+      const price = document.getElementById("price").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const category = document.getElementById("category").value;
+      const fileInput = document.getElementById("imageFile");
+
+      if(!name || !price || !phone || !category || fileInput.files.length===0){
+        alert("Please fill all required fields and select an image.");
+        return;
+      }
+
+      const submitBtn = document.querySelector(".submit-btn");
+      submitBtn.textContent = "Uploading...";
+      submitBtn.disabled = true;
+
+      const file = fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "hq cyber"); // Cloudinary preset
+
+      try{
+        const res = await fetch("https://api.cloudinary.com/v1_1/dqxppopjr/image/upload", { method:'POST', body:formData });
+        const data = await res.json();
+        const imageUrl = data.secure_url;
+
+        const userDoc = await getDoc(doc(db,"users",currentUser.uid));
+        const verified = userDoc.exists() && userDoc.data().verified;
+
+        const product = {
+          name, price, phone, category,
+          description: document.getElementById("description").value,
+          condition: document.getElementById("condition").value,
+          specs: document.getElementById("specs").value,
+          region: document.getElementById("region").value,
+          image: imageUrl,
+          userUid: currentUser.uid,
+          verified: verified
+        };
+
+        await addDoc(collection(db,"products"), product);
+        alert("Product posted successfully!");
+        document.getElementById("formModal").reset; // optional: clear form
+        closeForm();
+
+      } catch(err){ console.error(err); alert("Upload failed"); }
+      finally{ submitBtn.textContent="Save Product"; submitBtn.disabled=false; }
+    }
+    window.saveProduct = saveProduct;
+
+    // Real-time fetch products
+    onSnapshot(collection(db,"products"), snapshot=>{
+      productsDiv.innerHTML="";
+      snapshot.forEach(doc=>{
+        const p = doc.data();
+        const div = document.createElement("div");
+        div.className="card";
+        div.dataset.category = p.category;
+        div.dataset.product = JSON.stringify(p);
+        div.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <div class="card-body">
+            <h3>${p.name} ${p.verified?'<span class="verified-badge">✔</span>':''}</h3>
+            <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
+          </div>
+        `;
+        div.onclick = ()=>showDetail(div);
+        productsDiv.appendChild(div);
+      });
+    });
+  </script>
 </body>
 </html>
