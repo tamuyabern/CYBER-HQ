@@ -219,7 +219,15 @@
     window.closeLogin = closeLogin;
 
     // Phone auth
-    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+  'size': 'normal',
+  'callback': (response) => { console.log("reCAPTCHA verified"); }
+}, auth);
+
+window.recaptchaVerifier.render().then(widgetId => {
+  window.recaptchaWidgetId = widgetId;
+});
+
 
     let confirmationResult;
     window.sendOTP = ()=>{
