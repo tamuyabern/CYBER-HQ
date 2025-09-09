@@ -28,16 +28,16 @@
       margin: 10px 0;
       flex-wrap: wrap;
     }
-    button {
-      background: #0a8f3d;
-      color: white;
+    .action-btn {
+      background: orange;
+      color: black;
       border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
+      padding: 6px 14px;
+      border-radius: 20px;
       cursor: pointer;
       font-weight: bold;
     }
-    button:hover { background: #06692d; }
+    .action-btn:hover { background: darkorange; }
     .categories {
       display: flex;
       overflow-x: auto;
@@ -76,13 +76,8 @@
       height: 160px;
       object-fit: cover;
     }
-    .card-body {
-      padding: 0.5rem;
-    }
-    .card-body h3 {
-      margin: 4px 0;
-      font-size: 1rem;
-    }
+    .card-body { padding: 0.5rem; }
+    .card-body h3 { margin: 4px 0; font-size: 1rem; }
     .phone {
       background: orange;
       color: black;
@@ -121,14 +116,30 @@
       font-size: 1.2rem;
       color: red;
     }
+    input, select, textarea {
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .submit-btn {
+      background: #0a8f3d;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>HQ Marketplace</h1>
     <div class="actions">
-      <button onclick="openForm()">+ Post Your Product</button>
-      <button onclick="window.location.href='index.html'">⬅ Back to Home</button>
+      <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+      <button class="action-btn" onclick="openForm()">+ Post Your Product</button>
     </div>
   </header>
 
@@ -147,6 +158,30 @@
   <div class="modal" id="detailModal">
     <div class="modal-content" id="detailContent">
       <span class="close" onclick="closeDetail()">×</span>
+    </div>
+  </div>
+
+  <!-- Post Product Modal -->
+  <div class="modal" id="formModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeForm()">×</span>
+      <h2>Post Your Product</h2>
+      <input type="text" id="name" placeholder="Product Name" required />
+      <input type="text" id="price" placeholder="Price" required />
+      <input type="text" id="phone" placeholder="Phone Number" required />
+      <select id="category">
+        <option value="Phones">Phones</option>
+        <option value="Cars">Cars</option>
+        <option value="Kitchen">Kitchen</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Furniture">Furniture</option>
+      </select>
+      <textarea id="description" placeholder="Description"></textarea>
+      <input type="text" id="condition" placeholder="Condition (New/Used)" />
+      <input type="text" id="specs" placeholder="Specifications" />
+      <input type="text" id="region" placeholder="Location/Region" />
+      <input type="text" id="image" placeholder="Image URL" required />
+      <button class="submit-btn" onclick="saveProduct()">Save Product</button>
     </div>
   </div>
 
@@ -171,7 +206,9 @@
     const detailModal = document.getElementById("detailModal");
     const detailContent = document.getElementById("detailContent");
 
-    function showDetail(p) {
+    // Show product details
+    function showDetail(el) {
+      const p = JSON.parse(el.dataset.product);
       detailContent.innerHTML = `
         <span class="close" onclick="closeDetail()">×</span>
         <h2>${p.name}</h2>
@@ -188,6 +225,7 @@
     }
     window.closeDetail = () => detailModal.style.display = "none";
 
+    // Category filter
     function filterCategory(cat, el) {
       document.querySelectorAll(".category").forEach(c => c.classList.remove("active"));
       el.classList.add("active");
@@ -201,19 +239,47 @@
     }
     window.filterCategory = filterCategory;
 
+    // Post form functions
+    function openForm() { document.getElementById("formModal").style.display = "flex"; }
+    function closeForm() { document.getElementById("formModal").style.display = "none"; }
+    window.openForm = openForm;
+    window.closeForm = closeForm;
+
+    async function saveProduct() {
+      const product = {
+        name: document.getElementById("name").value,
+        price: document.getElementById("price").value,
+        phone: document.getElementById("phone").value,
+        category: document.getElementById("category").value,
+        description: document.getElementById("description").value,
+        condition: document.getElementById("condition").value,
+        specs: document.getElementById("specs").value,
+        region: document.getElementById("region").value,
+        image: document.getElementById("image").value
+      };
+      await addDoc(collection(db, "products"), product);
+      closeForm();
+    }
+    window.saveProduct = saveProduct;
+
+    // Real-time fetch
     onSnapshot(collection(db, "products"), (snapshot) => {
       productsDiv.innerHTML = "";
       snapshot.forEach((doc) => {
         const p = doc.data();
-        productsDiv.innerHTML += `
-          <div class="card" data-category="${p.category}" onclick='showDetail(${JSON.stringify(p)})'>
-            <img src="${p.image}" alt="${p.name}">
-            <div class="card-body">
-              <h3>${p.name}</h3>
-              <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
-            </div>
+        const div = document.createElement("div");
+        div.className = "card";
+        div.dataset.category = p.category;
+        div.dataset.product = JSON.stringify(p);
+        div.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <div class="card-body">
+            <h3>${p.name}</h3>
+            <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
           </div>
         `;
+        div.onclick = () => showDetail(div);
+        productsDiv.appendChild(div);
       });
     });
   </script>
