@@ -8,28 +8,27 @@
   body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
   header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
   header h1 { margin:0; }
-  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; }
+  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
   .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
   .action-btn:hover { background:darkorange; }
   .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
   .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
   .category.active { background:#0a8f3d; color:white; }
   .container { padding:1rem; display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem; }
-  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition: transform 0.2s; }
-  .card:hover { transform: scale(1.03); }
-  .card img { width:100%; height:160px; object-fit:cover; cursor:pointer; }
+  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
+  .card img { width:100%; height:160px; object-fit:cover; }
   .card-body { padding:0.5rem; }
-  .card-body h3 { margin:4px 0; font-size:1rem; }
+  .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px;}
   .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
-  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:600px; max-height:90vh; overflow-y:auto; position:relative; }
+  .verified-badge { display:inline-block; width:16px; height:16px; background:#1DA1F2; border-radius:50%; position:relative; }
+  .verified-badge::after { content:"✔"; color:white; font-size:12px; position:absolute; top:0; left:3px; }
+  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
+  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto; }
   .modal-content h2 { margin-top:0; color:#0a8f3d; }
-  .close { position:absolute; top:8px; right:12px; cursor:pointer; font-size:1.5rem; color:red; font-weight:bold; }
+  .close { float:right; cursor:pointer; font-size:1.2rem; color:red; }
   input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
   .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
-  .required { color:red; }
-  .modal-img { width:100%; max-height:400px; object-fit:contain; cursor:zoom-in; transition: transform 0.3s ease; }
-  .zoomed { transform: scale(2); cursor:zoom-out; }
+  #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-bottom:8px; display:none; border-radius:6px; }
 </style>
 </head>
 <body>
@@ -37,7 +36,10 @@
   <h1>HQ Marketplace</h1>
   <div class="actions">
     <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+    <span id="userInfo"></span>
     <button class="action-btn" onclick="openForm()">+ Post Your Product</button>
+    <button class="action-btn" id="signInBtn" onclick="openSignIn()">Sign In</button>
+    <button class="action-btn" id="signOutBtn" onclick="signOut()" style="display:none;">Sign Out</button>
   </div>
 </header>
 
@@ -64,11 +66,10 @@
   <div class="modal-content">
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
-    <input type="text" id="name" placeholder="Product Name *" required />
-    <input type="text" id="price" placeholder="Price *" required />
-    <input type="text" id="phone" placeholder="Phone Number *" required />
+    <input type="text" id="name" placeholder="Product Name" required />
+    <input type="text" id="price" placeholder="Price" required />
+    <input type="text" id="phone" placeholder="Phone Number" required />
     <select id="category">
-      <option value="">--Select Category *--</option>
       <option value="Phones">Phones</option>
       <option value="Cars">Cars</option>
       <option value="Kitchen">Kitchen</option>
@@ -80,14 +81,28 @@
     <input type="text" id="specs" placeholder="Specifications" />
     <input type="text" id="region" placeholder="Location/Region" />
     <input type="file" id="imageFile" accept="image/*" required />
+    <img id="imagePreview" />
     <button class="submit-btn" onclick="saveProduct()">Save Product</button>
+  </div>
+</div>
+
+<!-- Sign-In Modal -->
+<div class="modal" id="signInModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeSignIn()">×</span>
+    <h2>Sign In</h2>
+    <input type="email" id="email" placeholder="Email" required/>
+    <input type="password" id="password" placeholder="Password" required/>
+    <button class="submit-btn" onclick="signIn()">Sign In</button>
   </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
   authDomain: "hq-marketplace-ec236.firebaseapp.com",
@@ -96,21 +111,58 @@ const firebaseConfig = {
   messagingSenderId: "861547577050",
   appId: "1:861547577050:web:507b1411e3e199eae3afe3"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 const productsDiv = document.getElementById("products");
 const detailModal = document.getElementById("detailModal");
 const detailContent = document.getElementById("detailContent");
+const userInfo = document.getElementById("userInfo");
 
-// Show product details with zoom
-function showDetail(el) {
+// ----------------- AUTH -----------------
+let currentUser = null;
+const signInBtn = document.getElementById("signInBtn");
+const signOutBtn = document.getElementById("signOutBtn");
+
+onAuthStateChanged(auth, user => {
+  currentUser = user;
+  if(user){
+    userInfo.innerHTML = `${user.email} <span class="verified-badge"></span>`;
+    signInBtn.style.display = "none";
+    signOutBtn.style.display = "inline-block";
+  } else {
+    userInfo.innerHTML = "";
+    signInBtn.style.display = "inline-block";
+    signOutBtn.style.display = "none";
+  }
+});
+
+function openSignIn(){ document.getElementById("signInModal").style.display="flex"; }
+function closeSignIn(){ document.getElementById("signInModal").style.display="none"; }
+
+async function signIn(){
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
+  try{
+    await signInWithEmailAndPassword(auth,email,pass);
+    alert("Signed in!");
+    closeSignIn();
+  } catch(e){ alert("Error: "+e.message); console.error(e); }
+}
+
+async function signOut(){
+  try{ await firebaseSignOut(auth); alert("Signed out!"); } 
+  catch(e){ alert("Error signing out: "+e.message); }
+}
+
+// ----------------- PRODUCT -----------------
+function showDetail(el){
   const p = JSON.parse(el.dataset.product);
   detailContent.innerHTML = `
     <span class="close" onclick="closeDetail()">×</span>
     <h2>${p.name}</h2>
-    <img src="${p.image}" alt="${p.name}" class="modal-img" onclick="toggleZoom(this)">
+    <img src="${p.image}" alt="${p.name}" style="width:100%; max-height:250px; object-fit:cover; border-radius:8px;">
     <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
     <p><b>Description:</b> ${p.description}</p>
     <p><b>Condition:</b> ${p.condition}</p>
@@ -121,108 +173,93 @@ function showDetail(el) {
   `;
   detailModal.style.display = "flex";
 }
+window.closeDetail = ()=>detailModal.style.display="none";
 
-function toggleZoom(img) {
-  img.classList.toggle("zoomed");
-}
-
-window.closeDetail = () => detailModal.style.display = "none";
-
-// Category filter
-function filterCategory(cat, el) {
-  document.querySelectorAll(".category").forEach(c => c.classList.remove("active"));
+function filterCategory(cat, el){
+  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
   el.classList.add("active");
-  document.querySelectorAll(".card").forEach(card => {
-    card.style.display = (cat === "all" || card.dataset.category === cat) ? "block" : "none";
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display = (cat==='all'||card.dataset.category===cat)?'block':'none';
   });
 }
 window.filterCategory = filterCategory;
 
-// Form modal
-function openForm() { document.getElementById("formModal").style.display = "flex"; }
-function closeForm() { document.getElementById("formModal").style.display = "none"; }
-window.openForm = openForm;
-window.closeForm = closeForm;
+function openForm(){ 
+  if(!currentUser){ alert("Sign in first to post products."); return; }
+  document.getElementById("formModal").style.display="flex"; 
+}
+function closeForm(){ document.getElementById("formModal").style.display="none"; }
+window.openForm=openForm; window.closeForm=closeForm;
 
-// Save product with Cloudinary upload
-async function saveProduct() {
+document.getElementById("imageFile").addEventListener("change", e=>{
+  const file = e.target.files[0];
+  const preview = document.getElementById("imagePreview");
+  if(file){ preview.src = URL.createObjectURL(file); preview.style.display="block"; }
+});
+
+// Save product with Cloudinary
+async function saveProduct(){
+  if(!currentUser){ alert("Sign in first to post products."); return; }
+
+  const fileInput = document.getElementById("imageFile");
+  if(fileInput.files.length===0){ alert("Select an image."); return; }
+
+  // Mandatory fields
   const name = document.getElementById("name").value.trim();
   const price = document.getElementById("price").value.trim();
   const phone = document.getElementById("phone").value.trim();
-  const category = document.getElementById("category").value;
-  const fileInput = document.getElementById("imageFile");
-
-  if (!name || !price || !phone || !category || fileInput.files.length === 0) {
-    alert("Please fill all required fields and select an image.");
-    return;
-  }
-
-  const submitBtn = document.querySelector(".submit-btn");
-  submitBtn.textContent = "Uploading...";
-  submitBtn.disabled = true;
+  if(!name||!price||!phone){ alert("Fill in all mandatory fields."); return; }
 
   const file = fileInput.files[0];
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", "hq cyber");
 
-  try {
+  try{
     const res = await fetch("https://api.cloudinary.com/v1_1/dqxppopjr/image/upload", {
-      method: "POST",
+      method:"POST",
       body: formData
     });
     const data = await res.json();
     const imageUrl = data.secure_url;
 
     const product = {
-      name, price, phone, category,
+      name, price, phone,
+      category: document.getElementById("category").value,
       description: document.getElementById("description").value,
       condition: document.getElementById("condition").value,
       specs: document.getElementById("specs").value,
       region: document.getElementById("region").value,
-      image: imageUrl
+      image: imageUrl,
+      user: currentUser.email
     };
 
-    await addDoc(collection(db, "products"), product);
-    alert("Product posted successfully!");
-
-    document.getElementById("name").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("phone").value = "";
-    document.getElementById("description").value = "";
-    document.getElementById("condition").value = "";
-    document.getElementById("specs").value = "";
-    document.getElementById("region").value = "";
-    fileInput.value = "";
+    await addDoc(collection(db,"products"), product);
+    alert("Product posted!");
     closeForm();
+    fileInput.value=""; document.getElementById("imagePreview").style.display="none";
 
-  } catch(err) {
-    console.error(err);
-    alert("Upload failed. Try again.");
-  } finally {
-    submitBtn.textContent = "Save Product";
-    submitBtn.disabled = false;
-  }
+  }catch(err){ console.error(err); alert("Upload failed."); }
 }
 window.saveProduct = saveProduct;
 
 // Real-time fetch
-onSnapshot(collection(db,"products"), snapshot => {
-  productsDiv.innerHTML = "";
-  snapshot.forEach(doc => {
+onSnapshot(collection(db,"products"), snapshot=>{
+  productsDiv.innerHTML="";
+  snapshot.forEach(doc=>{
     const p = doc.data();
     const div = document.createElement("div");
-    div.className = "card";
-    div.dataset.category = p.category;
-    div.dataset.product = JSON.stringify(p);
+    div.className="card";
+    div.dataset.category=p.category;
+    div.dataset.product=JSON.stringify(p);
     div.innerHTML = `
       <img src="${p.image}" alt="${p.name}">
       <div class="card-body">
-        <h3>${p.name}</h3>
+        <h3>${p.name} <span class="verified-badge"></span></h3>
         <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
       </div>
     `;
-    div.onclick = () => showDetail(div);
+    div.onclick = ()=>showDetail(div);
     productsDiv.appendChild(div);
   });
 });
