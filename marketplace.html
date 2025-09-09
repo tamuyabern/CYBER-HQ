@@ -7,30 +7,25 @@
 <style>
   body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
   header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
-  header h1 { margin:0; }
-  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; }
+  header h1 { margin:0; display:inline-block; }
+  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
   .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
   .action-btn:hover { background:darkorange; }
+  .sign-btn { background:#1da1f2; color:white; }
   .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
   .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
   .category.active { background:#0a8f3d; color:white; }
 
-  /* 🔥 Fixed Grid Layout */
+  /* Grid Layout */
   .container {
     padding:1rem;
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap:1rem;
   }
-  @media (max-width:480px) {
-    .container { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (min-width:481px) and (max-width:768px) {
-    .container { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (min-width:769px) {
-    .container { grid-template-columns: repeat(4, 1fr); }
-  }
+  @media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
 
   .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
   .card img { width:100%; height:160px; object-fit:cover; }
@@ -43,13 +38,13 @@
   .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto; }
   .modal-content h2 { margin-top:0; color:#0a8f3d; }
   .close { float:right; cursor:pointer; font-size:1.2rem; color:red; }
-
   input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
   .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
   #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-bottom:8px; display:none; border-radius:6px; }
 
-  /* 🔵 Verified Badge */
+  /* Verified Badge */
   .verified { color:#1da1f2; font-size:16px; }
+  .user-info { display:flex; align-items:center; gap:6px; }
 </style>
 </head>
 <body>
@@ -58,6 +53,8 @@
   <div class="actions">
     <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
     <button class="action-btn" onclick="openForm()">+ Post Your Product</button>
+    <button class="action-btn sign-btn" id="signBtn" onclick="signInEmail()">Sign In</button>
+    <span id="userEmail" class="user-info" style="display:none;"></span>
   </div>
 </header>
 
@@ -107,7 +104,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 // Firebase config
 const firebaseConfig = {
@@ -126,10 +123,35 @@ let currentUser = null;
 let uploadedImageUrl = "";
 
 // Auth state listener
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, user => {
   currentUser = user;
-  console.log("User:", user);
+  const signBtn = document.getElementById("signBtn");
+  const userEmail = document.getElementById("userEmail");
+  if(user){
+    signBtn.textContent="Sign Out";
+    userEmail.innerHTML = `${user.email} <span class="verified">✔</span>`;
+    userEmail.style.display="inline";
+  }else{
+    signBtn.textContent="Sign In";
+    userEmail.style.display="none";
+  }
 });
+
+// Sign in/out function
+window.signInEmail = async () => {
+  if(currentUser){
+    await signOut(auth);
+    return;
+  }
+  const email = prompt("Enter Email:");
+  const pass = prompt("Enter Password:");
+  if(email && pass){
+    try{
+      await signInWithEmailAndPassword(auth,email,pass);
+      alert("Signed in!");
+    }catch(err){ alert("Sign-in failed: "+err.message); }
+  }
+};
 
 // Require login before posting
 window.openForm = () => {
@@ -207,7 +229,7 @@ window.saveProduct = async () => {
     specs: document.getElementById("specs").value,
     region: document.getElementById("region").value,
     image: uploadedImageUrl,
-    verified: true // mark all signed-in users as verified
+    verified: true
   };
 
   try{
