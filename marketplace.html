@@ -45,9 +45,6 @@
   #imagePreviewContainer { display:flex; overflow-x:auto; gap:8px; margin-bottom:8px; }
   #imagePreviewContainer img { height:120px; border-radius:8px; object-fit:cover; cursor:pointer; flex-shrink:0; }
 
-  .modal-left, .modal-right { flex:1 1 250px; display:flex; flex-direction:column; gap:8px; }
-  .modal-left img { width:100%; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
-
   .verified { color:#1da1f2; font-size:16px; }
   .user-info { display:flex; align-items:center; gap:6px; }
 
@@ -84,14 +81,12 @@
 
 <button id="floatingBtn" onclick="openForm()">+</button>
 
-<!-- Product Detail Modal -->
 <div class="modal" id="detailModal">
   <div class="modal-content" id="detailContent">
     <span class="close" onclick="closeDetail()">×</span>
   </div>
 </div>
 
-<!-- Post Product Modal -->
 <div class="modal" id="formModal">
   <div class="modal-content">
     <span class="close" onclick="closeForm()">×</span>
@@ -179,9 +174,10 @@ window.closeForm = () => document.getElementById("formModal").style.display="non
 // Image upload multiple
 document.getElementById("imageFile").addEventListener("change", async e => {
   uploadedImageUrls = [];
-  const files = e.target.files;
+  const files = Array.from(e.target.files);
   const previewContainer = document.getElementById("imagePreviewContainer");
   previewContainer.innerHTML = "";
+
   for(let file of files){
     const img = document.createElement("img");
     img.src = URL.createObjectURL(file);
@@ -269,14 +265,12 @@ function showDetail(el){
 }
 window.closeDetail = ()=>document.getElementById("detailModal").style.display="none";
 
-// Filter by category
+// Filter & search
 window.filterCategory = (cat, el) => {
   document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
   el.classList.add("active");
   displayProducts(productsData.filter(p=>cat==='all'||p.category===cat));
 };
-
-// Search
 window.searchProducts = () => {
   const query = document.getElementById("searchBar").value.toLowerCase();
   displayProducts(productsData.filter(p=>p.name.toLowerCase().includes(query)||p.specs.toLowerCase().includes(query)));
@@ -285,7 +279,11 @@ window.searchProducts = () => {
 // Real-time fetch
 onSnapshot(collection(db,"products"), snapshot=>{
   productsData = [];
-  snapshot.forEach(doc=>productsData.push(doc.data()));
+  snapshot.forEach(doc=>{
+    const data = doc.data();
+    data.id = doc.id;
+    productsData.push(data);
+  });
   displayProducts(productsData);
 });
 </script>
