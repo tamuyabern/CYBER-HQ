@@ -27,20 +27,30 @@
   @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
   @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
 
-  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
+  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:transform .2s; }
+  .card:hover { transform:scale(1.03); }
   .card img { width:100%; height:160px; object-fit:cover; }
   .card-body { padding:0.5rem; }
   .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
   .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
 
   /* Modal */
-  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto; }
-  .modal-content h2 { margin-top:0; color:#0a8f3d; }
-  .close { float:right; cursor:pointer; font-size:1.2rem; color:red; }
-  input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
-  .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
-  #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-bottom:8px; display:none; border-radius:6px; }
+  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; padding:10px; }
+  .modal-content { background:white; padding:1.5rem; border-radius:12px; width:95%; max-width:520px; max-height:90vh; overflow-y:auto; box-shadow:0 4px 20px rgba(0,0,0,0.25); }
+  .modal-content h2 { margin-top:0; color:#0a8f3d; text-align:center; }
+  .close { float:right; cursor:pointer; font-size:1.4rem; color:red; font-weight:bold; }
+  
+  /* Input Styles */
+  .form-group { margin-bottom:12px; }
+  label { font-weight:bold; font-size:0.9rem; display:block; margin-bottom:4px; color:#333; }
+  input, select, textarea { width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:0.95rem; transition:border .2s; }
+  input:focus, select:focus, textarea:focus { outline:none; border-color:#0a8f3d; }
+  textarea { resize:vertical; min-height:70px; }
+  
+  .submit-btn { background:#0a8f3d; color:white; padding:10px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; width:100%; font-size:1rem; transition:background .2s; }
+  .submit-btn:hover { background:#06682c; }
+
+  #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-top:8px; display:none; border-radius:6px; }
 
   /* Verified Badge */
   .verified { color:#1da1f2; font-size:16px; }
@@ -81,29 +91,58 @@
   <div class="modal-content">
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
-    <input type="text" id="name" placeholder="Product Name" required />
-    <input type="text" id="price" placeholder="Price" required />
-    <input type="text" id="phone" placeholder="Phone Number" required />
-    <select id="category">
-      <option value="Phones">Phones</option>
-      <option value="Cars">Cars</option>
-      <option value="Kitchen">Kitchen</option>
-      <option value="Electronics">Electronics</option>
-      <option value="Furniture">Furniture</option>
-    </select>
-    <textarea id="description" placeholder="Description"></textarea>
-    <input type="text" id="condition" placeholder="Condition (New/Used)" />
-    <input type="text" id="specs" placeholder="Specifications" />
-    <input type="text" id="region" placeholder="Location/Region" />
-    <input type="file" id="imageFile" accept="image/*" required />
-    <img id="imagePreview" />
+    
+    <div class="form-group">
+      <label>Product Name *</label>
+      <input type="text" id="name" required />
+    </div>
+    <div class="form-group">
+      <label>Price (Ksh) *</label>
+      <input type="number" id="price" required />
+    </div>
+    <div class="form-group">
+      <label>Phone Number *</label>
+      <input type="tel" id="phone" required />
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <select id="category">
+        <option value="Phones">Phones</option>
+        <option value="Cars">Cars</option>
+        <option value="Kitchen">Kitchen</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Furniture">Furniture</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="description" placeholder="Brief product details..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Condition</label>
+      <input type="text" id="condition" placeholder="New / Used" />
+    </div>
+    <div class="form-group">
+      <label>Specifications</label>
+      <input type="text" id="specs" placeholder="Extra product specs" />
+    </div>
+    <div class="form-group">
+      <label>Location/Region</label>
+      <input type="text" id="region" placeholder="e.g. Nairobi, Eldoret" />
+    </div>
+    <div class="form-group">
+      <label>Upload Image *</label>
+      <input type="file" id="imageFile" accept="image/*" required />
+      <img id="imagePreview" />
+    </div>
+
     <button class="submit-btn" onclick="saveProduct()">Save Product</button>
   </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 const firebaseConfig = {
@@ -165,12 +204,12 @@ function showDetail(el){
     <span class="close" onclick="closeDetail()">×</span>
     <h2>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
     <img src="${p.image}" alt="${p.name}" style="width:100%; max-height:250px; object-fit:cover; border-radius:8px;">
-    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
-    <p><b>Description:</b> ${p.description}</p>
-    <p><b>Condition:</b> ${p.condition}</p>
+    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${Number(p.price).toLocaleString()}</span></p>
+    <p><b>Description:</b> ${p.description || "N/A"}</p>
+    <p><b>Condition:</b> ${p.condition || "N/A"}</p>
     <p><b>Category:</b> ${p.category}</p>
-    <p><b>Specifications:</b> ${p.specs}</p>
-    <p><b>Location:</b> ${p.region}</p>
+    <p><b>Specifications:</b> ${p.specs || "N/A"}</p>
+    <p><b>Location:</b> ${p.region || "N/A"}</p>
     <p><a href="tel:${p.phone}" class="phone">📞 ${p.phone}</a></p>
   `;
   document.getElementById("detailModal").style.display = "flex";
@@ -214,31 +253,43 @@ window.saveProduct = async () => {
   if (!currentUser) { alert("Sign in first"); return; }
   if (!uploadedImageUrl) { alert("Please upload an image"); return; }
 
+  const name = document.getElementById("name").value.trim();
+  const price = document.getElementById("price").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+
+  if (!name || !price || !phone) {
+    alert("Please fill all required fields.");
+    return;
+  }
+
   const product = {
-    name: document.getElementById("name").value,
-    price: document.getElementById("price").value,
-    phone: document.getElementById("phone").value,
+    name,
+    price,
+    phone,
     category: document.getElementById("category").value,
     description: document.getElementById("description").value,
     condition: document.getElementById("condition").value,
     specs: document.getElementById("specs").value,
     region: document.getElementById("region").value,
     image: uploadedImageUrl,
-    verified: true
+    verified: false, // set default, can be approved later
+    timestamp: Date.now()
   };
 
   try{
     await addDoc(collection(db,"products"), product);
     alert("Product posted!");
     closeForm();
-    document.getElementById("imageFile").value="";
+
+    // Reset form
+    document.querySelectorAll("#formModal input, #formModal textarea, #formModal select").forEach(el => el.value = "");
     document.getElementById("imagePreview").style.display="none";
     uploadedImageUrl = "";
   }catch(err){ console.error(err); alert("Save failed."); }
 };
 
-// Real-time fetch
-onSnapshot(collection(db,"products"), snapshot=>{
+// Real-time fetch (sorted by latest)
+onSnapshot(query(collection(db,"products"), orderBy("timestamp","desc")), snapshot=>{
   const productsDiv = document.getElementById("products");
   productsDiv.innerHTML="";
   snapshot.forEach(doc=>{
