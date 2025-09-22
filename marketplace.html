@@ -12,6 +12,8 @@
   .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
   .action-btn:hover { background:darkorange; }
   .sign-btn { background:#1da1f2; color:white; }
+  #searchBar { width:90%; max-width:500px; margin:10px auto; display:block; padding:8px 12px; border-radius:20px; border:1px solid #ccc; }
+
   .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
   .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
   .category.active { background:#0a8f3d; color:white; }
@@ -27,10 +29,10 @@
   @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
   @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
 
-  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:transform 0.2s; }
-  .card:hover { transform:translateY(-4px); }
+  .card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 3px 8px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:transform 0.2s, box-shadow 0.2s; }
+  .card:hover { transform:translateY(-5px); box-shadow:0 6px 15px rgba(0,0,0,0.25); }
   .card img { width:100%; height:160px; object-fit:cover; }
-  .card-body { padding:0.5rem; }
+  .card-body { padding:0.6rem; }
   .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
   .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
 
@@ -46,20 +48,30 @@
 
   /* Modal */
   .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:600px; max-height:90vh; overflow-y:auto; display:flex; flex-wrap:wrap; gap:1rem; }
-  .modal-content h2 { width:100%; margin-top:0; color:#0a8f3d; text-align:center; }
+  .modal-content { background:white; padding:1.2rem; border-radius:12px; width:95%; max-width:650px; max-height:90vh; overflow-y:auto; display:flex; flex-wrap:wrap; gap:1rem; position:relative; }
+  .modal-content h2 { width:100%; margin-top:0; color:#0a8f3d; text-align:center; font-size:1.4rem; }
   .close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:1.5rem; color:red; }
-  input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
-  .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; }
-  #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-bottom:8px; display:none; border-radius:6px; }
+
+  input, select, textarea { width:100%; margin-bottom:8px; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:0.95rem; }
+  textarea { resize:none; }
+
+  .submit-btn { background:#0a8f3d; color:white; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; font-size:1rem; }
+  #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-bottom:8px; display:none; border-radius:8px; }
 
   /* Modal 2-column layout */
   .modal-left, .modal-right { flex:1 1 250px; display:flex; flex-direction:column; gap:8px; }
-  .modal-left img { width:100%; border-radius:8px; }
+  .modal-left img { width:100%; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
 
   /* Verified Badge */
   .verified { color:#1da1f2; font-size:16px; }
   .user-info { display:flex; align-items:center; gap:6px; }
+
+  /* Product Detail Modal Professional */
+  #detailContent { flex-direction:column; padding:1rem; }
+  #detailContent img { width:100%; max-height:300px; object-fit:cover; border-radius:8px; margin-bottom:12px; }
+  #detailContent h2 { font-size:1.5rem; color:#0a8f3d; margin-bottom:10px; text-align:center; }
+  #detailContent p { margin:6px 0; font-size:0.95rem; }
+  #detailContent a.phone { margin-top:6px; text-align:center; display:block; }
 </style>
 </head>
 <body>
@@ -71,6 +83,9 @@
     <span id="userEmail" class="user-info" style="display:none;"></span>
   </div>
 </header>
+
+<!-- Search Bar -->
+<input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()" />
 
 <div class="categories" id="categories">
   <div class="category active" onclick="filterCategory('all', this)">All</div>
@@ -99,13 +114,18 @@
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
     <div class="modal-left">
+      <label>Upload Image</label>
       <input type="file" id="imageFile" accept="image/*" required />
       <img id="imagePreview" />
     </div>
     <div class="modal-right">
+      <label>Product Name</label>
       <input type="text" id="name" placeholder="Product Name" required />
+      <label>Price</label>
       <input type="text" id="price" placeholder="Price" required />
+      <label>Phone Number</label>
       <input type="text" id="phone" placeholder="Phone Number" required />
+      <label>Category</label>
       <select id="category">
         <option value="Phones">Phones</option>
         <option value="Cars">Cars</option>
@@ -113,9 +133,13 @@
         <option value="Electronics">Electronics</option>
         <option value="Furniture">Furniture</option>
       </select>
+      <label>Description</label>
       <textarea id="description" placeholder="Description"></textarea>
+      <label>Condition</label>
       <input type="text" id="condition" placeholder="Condition (New/Used)" />
+      <label>Specifications</label>
       <input type="text" id="specs" placeholder="Specifications" />
+      <label>Location/Region</label>
       <input type="text" id="region" placeholder="Location/Region" />
       <button class="submit-btn" onclick="saveProduct()">Save Product</button>
     </div>
@@ -124,7 +148,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 const firebaseConfig = {
@@ -142,6 +166,7 @@ const provider = new GoogleAuthProvider();
 
 let currentUser = null;
 let uploadedImageUrl = "";
+let productsData = [];
 
 // Auth state listener
 onAuthStateChanged(auth, user => {
@@ -160,54 +185,53 @@ onAuthStateChanged(auth, user => {
 
 // Google Sign In/Out
 window.googleSign = async () => {
-  if(currentUser){
-    await signOut(auth);
-    return;
-  }
-  try{
-    await signInWithPopup(auth, provider);
-  }catch(err){ alert("Google sign-in failed: "+err.message); }
+  if(currentUser){ await signOut(auth); return; }
+  try{ await signInWithPopup(auth, provider); }catch(err){ alert("Google sign-in failed: "+err.message); }
 };
 
-// Require login before posting
+// Open/Close Form
 window.openForm = () => {
-  if (!currentUser) {
-    alert("You must sign in first to post items.");
-    return;
-  }
+  if (!currentUser) { alert("Sign in first."); return; }
   document.getElementById("formModal").style.display="flex";
 };
 window.closeForm = () => document.getElementById("formModal").style.display="none";
 
-// Product Detail Modal
+// Product Detail
 function showDetail(el){
   const p = JSON.parse(el.dataset.product);
   document.getElementById("detailContent").innerHTML = `
     <span class="close" onclick="closeDetail()">×</span>
     <h2>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
-    <img src="${p.image}" alt="${p.name}" style="width:100%; max-height:250px; object-fit:cover; border-radius:8px;">
-    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
+    <img src="${p.image}" alt="${p.name}">
+    <p><b>Price:</b> <span style="color:green;font-weight:bold;">Ksh ${p.price}</span></p>
     <p><b>Description:</b> ${p.description}</p>
     <p><b>Condition:</b> ${p.condition}</p>
     <p><b>Category:</b> ${p.category}</p>
     <p><b>Specifications:</b> ${p.specs}</p>
     <p><b>Location:</b> ${p.region}</p>
-    <p><a href="tel:${p.phone}" class="phone">📞 ${p.phone}</a></p>
+    <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
   `;
-  document.getElementById("detailModal").style.display = "flex";
+  document.getElementById("detailModal").style.display="flex";
 }
-window.closeDetail = () => document.getElementById("detailModal").style.display = "none";
+window.closeDetail = () => document.getElementById("detailModal").style.display="none";
 
-// Category filter
+// Filter by category
 window.filterCategory = (cat, el) => {
   document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
   el.classList.add("active");
-  document.querySelectorAll(".card").forEach(card=>{
-    card.style.display = (cat==='all'||card.dataset.category===cat)?'block':'none';
-  });
+  displayProducts(productsData.filter(p=>cat==='all'||p.category===cat));
 };
 
-// Image preview + upload
+// Search
+window.searchProducts = () => {
+  const query = document.getElementById("searchBar").value.toLowerCase();
+  const filtered = productsData.filter(p=>{
+    return p.name.toLowerCase().includes(query) || p.specs.toLowerCase().includes(query);
+  });
+  displayProducts(filtered);
+};
+
+// Image upload
 document.getElementById("imageFile").addEventListener("change", async (e)=>{
   const file = e.target.files[0];
   if(file){
@@ -219,7 +243,6 @@ document.getElementById("imageFile").addEventListener("change", async (e)=>{
     formData.append("file", file);
     formData.append("upload_preset", "hq cyber");
     const cloudName = "dqxppopjr";
-
     try{
       const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method:"POST", body:formData
@@ -230,7 +253,7 @@ document.getElementById("imageFile").addEventListener("change", async (e)=>{
   }
 });
 
-// Save product
+// Save Product
 window.saveProduct = async () => {
   if (!currentUser) { alert("Sign in first"); return; }
   if (!uploadedImageUrl) { alert("Please upload an image"); return; }
@@ -258,12 +281,11 @@ window.saveProduct = async () => {
   }catch(err){ console.error(err); alert("Save failed."); }
 };
 
-// Real-time fetch
-onSnapshot(collection(db,"products"), snapshot=>{
+// Display Products
+function displayProducts(products){
   const productsDiv = document.getElementById("products");
   productsDiv.innerHTML="";
-  snapshot.forEach(doc=>{
-    const p = doc.data();
+  products.forEach(p=>{
     const div = document.createElement("div");
     div.className="card";
     div.dataset.category=p.category;
@@ -279,6 +301,13 @@ onSnapshot(collection(db,"products"), snapshot=>{
     div.onclick = ()=>showDetail(div);
     productsDiv.appendChild(div);
   });
+}
+
+// Real-time Fetch
+onSnapshot(collection(db,"products"), snapshot=>{
+  productsData = [];
+  snapshot.forEach(doc=>productsData.push(doc.data()));
+  displayProducts(productsData);
 });
 </script>
 </body>
