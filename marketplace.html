@@ -18,13 +18,7 @@
   .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
   .category.active { background:#0a8f3d; color:white; }
 
-  /* Grid Layout */
-  .container {
-    padding:1rem;
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap:1rem;
-  }
+  .container { padding:1rem; display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:1rem; }
   @media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
   @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
@@ -36,19 +30,11 @@
   .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
   .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
 
-  /* Floating Add Button */
-  #floatingBtn {
-    position:fixed; bottom:20px; right:20px;
-    background:#0a8f3d; color:white; border:none; border-radius:50%;
-    width:60px; height:60px; font-size:30px; cursor:pointer;
-    display:flex; justify-content:center; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:100;
-    transition: transform 0.2s;
-  }
+  #floatingBtn { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:60px; height:60px; font-size:30px; cursor:pointer; display:flex; justify-content:center; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:100; transition: transform 0.2s; }
   #floatingBtn:hover { transform:scale(1.1); }
 
-  /* Modal */
   .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1.2rem; border-radius:12px; width:95%; max-width:650px; max-height:90vh; overflow-y:auto; display:flex; flex-wrap:wrap; gap:1rem; position:relative; }
+  .modal-content { background:white; padding:1.2rem; border-radius:12px; width:95%; max-width:700px; max-height:90vh; overflow-y:auto; display:flex; flex-wrap:wrap; gap:1rem; position:relative; }
   .modal-content h2 { width:100%; margin-top:0; color:#0a8f3d; text-align:center; font-size:1.4rem; }
   .close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:1.5rem; color:red; }
 
@@ -56,19 +42,18 @@
   textarea { resize:none; }
 
   .submit-btn { background:#0a8f3d; color:white; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; font-size:1rem; }
-  #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-bottom:8px; display:none; border-radius:8px; }
+  #imagePreviewContainer { display:flex; overflow-x:auto; gap:8px; margin-bottom:8px; }
+  #imagePreviewContainer img { height:120px; border-radius:8px; object-fit:cover; cursor:pointer; flex-shrink:0; }
 
-  /* Modal 2-column layout */
   .modal-left, .modal-right { flex:1 1 250px; display:flex; flex-direction:column; gap:8px; }
   .modal-left img { width:100%; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
 
-  /* Verified Badge */
   .verified { color:#1da1f2; font-size:16px; }
   .user-info { display:flex; align-items:center; gap:6px; }
 
-  /* Product Detail Modal Professional */
   #detailContent { flex-direction:column; padding:1rem; }
-  #detailContent img { width:100%; max-height:300px; object-fit:cover; border-radius:8px; margin-bottom:12px; }
+  #detailCarousel { display:flex; overflow-x:auto; gap:8px; margin-bottom:12px; }
+  #detailCarousel img { height:250px; border-radius:8px; object-fit:cover; flex-shrink:0; cursor:pointer; }
   #detailContent h2 { font-size:1.5rem; color:#0a8f3d; margin-bottom:10px; text-align:center; }
   #detailContent p { margin:6px 0; font-size:0.95rem; }
   #detailContent a.phone { margin-top:6px; text-align:center; display:block; }
@@ -84,7 +69,6 @@
   </div>
 </header>
 
-<!-- Search Bar -->
 <input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()" />
 
 <div class="categories" id="categories">
@@ -98,7 +82,6 @@
 
 <div class="container" id="products"></div>
 
-<!-- Floating Add Product Button -->
 <button id="floatingBtn" onclick="openForm()">+</button>
 
 <!-- Product Detail Modal -->
@@ -114,9 +97,9 @@
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
     <div class="modal-left">
-      <label>Upload Image</label>
-      <input type="file" id="imageFile" accept="image/*" required />
-      <img id="imagePreview" />
+      <label>Upload Images</label>
+      <input type="file" id="imageFile" accept="image/*" multiple />
+      <div id="imagePreviewContainer"></div>
     </div>
     <div class="modal-right">
       <label>Product Name</label>
@@ -148,7 +131,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 const firebaseConfig = {
@@ -165,10 +148,10 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 let currentUser = null;
-let uploadedImageUrl = "";
+let uploadedImageUrls = [];
 let productsData = [];
 
-// Auth state listener
+// Auth state
 onAuthStateChanged(auth, user => {
   currentUser = user;
   const signBtn = document.getElementById("signBtn");
@@ -177,13 +160,10 @@ onAuthStateChanged(auth, user => {
     signBtn.textContent="Sign Out";
     userEmail.innerHTML = `${user.displayName || user.email} <span class="verified">✔</span>`;
     userEmail.style.display="inline";
-  }else{
-    signBtn.textContent="Sign In";
-    userEmail.style.display="none";
-  }
+  } else { signBtn.textContent="Sign In"; userEmail.style.display="none"; }
 });
 
-// Google Sign In/Out
+// Sign in/out
 window.googleSign = async () => {
   if(currentUser){ await signOut(auth); return; }
   try{ await signInWithPopup(auth, provider); }catch(err){ alert("Google sign-in failed: "+err.message); }
@@ -196,13 +176,87 @@ window.openForm = () => {
 };
 window.closeForm = () => document.getElementById("formModal").style.display="none";
 
-// Product Detail
+// Image upload multiple
+document.getElementById("imageFile").addEventListener("change", async e => {
+  uploadedImageUrls = [];
+  const files = e.target.files;
+  const previewContainer = document.getElementById("imagePreviewContainer");
+  previewContainer.innerHTML = "";
+  for(let file of files){
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    previewContainer.appendChild(img);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset","hq cyber");
+    const cloudName = "dqxppopjr";
+    try{
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,{method:"POST",body:formData});
+      const data = await res.json();
+      uploadedImageUrls.push(data.secure_url);
+    }catch(err){ console.error(err); alert("Upload failed."); }
+  }
+});
+
+// Save product
+window.saveProduct = async () => {
+  if (!currentUser) { alert("Sign in first"); return; }
+  if (uploadedImageUrls.length===0) { alert("Please upload images"); return; }
+
+  const product = {
+    name: document.getElementById("name").value,
+    price: document.getElementById("price").value,
+    phone: document.getElementById("phone").value,
+    category: document.getElementById("category").value,
+    description: document.getElementById("description").value,
+    condition: document.getElementById("condition").value,
+    specs: document.getElementById("specs").value,
+    region: document.getElementById("region").value,
+    images: uploadedImageUrls,
+    verified: true
+  };
+
+  try{
+    await addDoc(collection(db,"products"), product);
+    alert("Product posted!");
+    closeForm();
+    document.getElementById("imageFile").value="";
+    document.getElementById("imagePreviewContainer").innerHTML="";
+    uploadedImageUrls = [];
+  }catch(err){ console.error(err); alert("Save failed."); }
+};
+
+// Display products
+function displayProducts(products){
+  const productsDiv = document.getElementById("products");
+  productsDiv.innerHTML="";
+  products.forEach(p=>{
+    const div = document.createElement("div");
+    div.className="card";
+    div.dataset.category=p.category;
+    div.dataset.product=JSON.stringify(p);
+    div.innerHTML = `
+      <img src="${p.images[0]}" alt="${p.name}">
+      <div class="card-body">
+        <h3>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h3>
+        <p style="font-weight:bold;color:green;">Ksh ${p.price}</p>
+        <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
+      </div>
+    `;
+    div.onclick = ()=>showDetail(div);
+    productsDiv.appendChild(div);
+  });
+}
+
+// Product detail modal with swipeable carousel
 function showDetail(el){
   const p = JSON.parse(el.dataset.product);
+  let imagesHtml = p.images.map(url=>`<img src="${url}" alt="${p.name}">`).join("");
   document.getElementById("detailContent").innerHTML = `
     <span class="close" onclick="closeDetail()">×</span>
-    <h2>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
-    <img src="${p.image}" alt="${p.name}">
+    <h2>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h2>
+    <div id="detailCarousel">${imagesHtml}</div>
     <p><b>Price:</b> <span style="color:green;font-weight:bold;">Ksh ${p.price}</span></p>
     <p><b>Description:</b> ${p.description}</p>
     <p><b>Condition:</b> ${p.condition}</p>
@@ -213,7 +267,7 @@ function showDetail(el){
   `;
   document.getElementById("detailModal").style.display="flex";
 }
-window.closeDetail = () => document.getElementById("detailModal").style.display="none";
+window.closeDetail = ()=>document.getElementById("detailModal").style.display="none";
 
 // Filter by category
 window.filterCategory = (cat, el) => {
@@ -225,85 +279,10 @@ window.filterCategory = (cat, el) => {
 // Search
 window.searchProducts = () => {
   const query = document.getElementById("searchBar").value.toLowerCase();
-  const filtered = productsData.filter(p=>{
-    return p.name.toLowerCase().includes(query) || p.specs.toLowerCase().includes(query);
-  });
-  displayProducts(filtered);
+  displayProducts(productsData.filter(p=>p.name.toLowerCase().includes(query)||p.specs.toLowerCase().includes(query)));
 };
 
-// Image upload
-document.getElementById("imageFile").addEventListener("change", async (e)=>{
-  const file = e.target.files[0];
-  if(file){
-    const preview = document.getElementById("imagePreview");
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = "block";
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "hq cyber");
-    const cloudName = "dqxppopjr";
-    try{
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-        method:"POST", body:formData
-      });
-      const data = await res.json();
-      uploadedImageUrl = data.secure_url;
-    }catch(err){ console.error(err); alert("Upload failed."); }
-  }
-});
-
-// Save Product
-window.saveProduct = async () => {
-  if (!currentUser) { alert("Sign in first"); return; }
-  if (!uploadedImageUrl) { alert("Please upload an image"); return; }
-
-  const product = {
-    name: document.getElementById("name").value,
-    price: document.getElementById("price").value,
-    phone: document.getElementById("phone").value,
-    category: document.getElementById("category").value,
-    description: document.getElementById("description").value,
-    condition: document.getElementById("condition").value,
-    specs: document.getElementById("specs").value,
-    region: document.getElementById("region").value,
-    image: uploadedImageUrl,
-    verified: true
-  };
-
-  try{
-    await addDoc(collection(db,"products"), product);
-    alert("Product posted!");
-    closeForm();
-    document.getElementById("imageFile").value="";
-    document.getElementById("imagePreview").style.display="none";
-    uploadedImageUrl = "";
-  }catch(err){ console.error(err); alert("Save failed."); }
-};
-
-// Display Products
-function displayProducts(products){
-  const productsDiv = document.getElementById("products");
-  productsDiv.innerHTML="";
-  products.forEach(p=>{
-    const div = document.createElement("div");
-    div.className="card";
-    div.dataset.category=p.category;
-    div.dataset.product=JSON.stringify(p);
-    div.innerHTML = `
-      <img src="${p.image}" alt="${p.name}">
-      <div class="card-body">
-        <h3>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h3>
-        <p style="font-weight:bold;color:green;">Ksh ${p.price}</p>
-        <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
-      </div>
-    `;
-    div.onclick = ()=>showDetail(div);
-    productsDiv.appendChild(div);
-  });
-}
-
-// Real-time Fetch
+// Real-time fetch
 onSnapshot(collection(db,"products"), snapshot=>{
   productsData = [];
   snapshot.forEach(doc=>productsData.push(doc.data()));
