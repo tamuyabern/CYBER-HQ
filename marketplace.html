@@ -36,10 +36,11 @@
   /* Modal */
   .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
   .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto; }
-  .modal-content h2 { margin-top:0; color:#0a8f3d; }
+  .modal-content h2 { margin-top:0; color:#0a8f3d; text-align:center; }
   .close { float:right; cursor:pointer; font-size:1.2rem; color:red; }
-  input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
-  .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
+  input, select, textarea { width:100%; margin-bottom:10px; padding:8px; border:1px solid #ccc; border-radius:6px; }
+  .submit-btn { background:#0a8f3d; color:white; padding:10px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; }
+  .submit-btn:hover { background:#066d2f; }
   #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-bottom:8px; display:none; border-radius:6px; }
 
   /* Verified Badge */
@@ -82,7 +83,7 @@
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
     <input type="text" id="name" placeholder="Product Name" required />
-    <input type="text" id="price" placeholder="Price" required />
+    <input type="number" id="price" placeholder="Price" required />
     <input type="text" id="phone" placeholder="Phone Number" required />
     <select id="category">
       <option value="Phones">Phones</option>
@@ -103,7 +104,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 const firebaseConfig = {
@@ -165,7 +166,7 @@ function showDetail(el){
     <span class="close" onclick="closeDetail()">×</span>
     <h2>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
     <img src="${p.image}" alt="${p.name}" style="width:100%; max-height:250px; object-fit:cover; border-radius:8px;">
-    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
+    <p><b>Price:</b> <span style="color:green; font-weight:bold;">QAR ${Number(p.price).toLocaleString()}</span></p>
     <p><b>Description:</b> ${p.description}</p>
     <p><b>Condition:</b> ${p.condition}</p>
     <p><b>Category:</b> ${p.category}</p>
@@ -224,21 +225,25 @@ window.saveProduct = async () => {
     specs: document.getElementById("specs").value,
     region: document.getElementById("region").value,
     image: uploadedImageUrl,
-    verified: true
+    verified: true,
+    timestamp: Date.now()
   };
 
   try{
     await addDoc(collection(db,"products"), product);
     alert("Product posted!");
     closeForm();
-    document.getElementById("imageFile").value="";
+    document.querySelectorAll("#formModal input, #formModal textarea, #formModal select").forEach(el => el.value = "");
     document.getElementById("imagePreview").style.display="none";
     uploadedImageUrl = "";
   }catch(err){ console.error(err); alert("Save failed."); }
 };
 
-// Real-time fetch
-onSnapshot(collection(db,"products"), snapshot=>{
+// Real-time fetch (ordered by latest first)
+const productsRef = collection(db,"products");
+const q = query(productsRef, orderBy("timestamp","desc"));
+
+onSnapshot(q, snapshot=>{
   const productsDiv = document.getElementById("products");
   productsDiv.innerHTML="";
   snapshot.forEach(doc=>{
