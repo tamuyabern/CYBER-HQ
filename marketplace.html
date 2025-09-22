@@ -9,7 +9,9 @@
   header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
   header h1 { margin:0; display:inline-block; }
   .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
-  .sign-btn { background:#1da1f2; color:white; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
+  .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
+  .action-btn:hover { background:darkorange; }
+  .sign-btn { background:#1da1f2; color:white; }
   .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
   .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
   .category.active { background:#0a8f3d; color:white; }
@@ -25,42 +27,35 @@
   @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
   @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
 
-  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
+  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:transform 0.2s; }
+  .card:hover { transform:translateY(-4px); }
   .card img { width:100%; height:160px; object-fit:cover; }
   .card-body { padding:0.5rem; }
   .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
   .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
 
   /* Floating Add Button */
-  .floating-btn {
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    background:#0a8f3d;
-    color:white;
-    font-size:32px;
-    border:none;
-    cursor:pointer;
-    box-shadow:0 4px 8px rgba(0,0,0,0.3);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:100;
+  #floatingBtn {
+    position:fixed; bottom:20px; right:20px;
+    background:#0a8f3d; color:white; border:none; border-radius:50%;
+    width:60px; height:60px; font-size:30px; cursor:pointer;
+    display:flex; justify-content:center; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:100;
+    transition: transform 0.2s;
   }
+  #floatingBtn:hover { transform:scale(1.1); }
 
   /* Modal */
   .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1rem; border-radius:12px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto; box-shadow:0 8px 16px rgba(0,0,0,0.3); }
-  .modal-content h2 { margin-top:0; color:#0a8f3d; text-align:center; }
-  .close { float:right; cursor:pointer; font-size:1.2rem; color:red; }
-
-  input, select, textarea { width:100%; margin-bottom:8px; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:14px; }
-  textarea { resize:vertical; }
-  .submit-btn { background:#0a8f3d; color:white; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; font-size:16px; }
+  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:600px; max-height:90vh; overflow-y:auto; display:flex; flex-wrap:wrap; gap:1rem; }
+  .modal-content h2 { width:100%; margin-top:0; color:#0a8f3d; text-align:center; }
+  .close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:1.5rem; color:red; }
+  input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
+  .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; }
   #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-bottom:8px; display:none; border-radius:6px; }
+
+  /* Modal 2-column layout */
+  .modal-left, .modal-right { flex:1 1 250px; display:flex; flex-direction:column; gap:8px; }
+  .modal-left img { width:100%; border-radius:8px; }
 
   /* Verified Badge */
   .verified { color:#1da1f2; font-size:16px; }
@@ -71,7 +66,8 @@
 <header>
   <h1>HQ Marketplace</h1>
   <div class="actions">
-    <button class="sign-btn" id="signBtn" onclick="googleSign()">Sign In with Google</button>
+    <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+    <button class="action-btn sign-btn" id="signBtn" onclick="googleSign()">Sign In</button>
     <span id="userEmail" class="user-info" style="display:none;"></span>
   </div>
 </header>
@@ -87,8 +83,8 @@
 
 <div class="container" id="products"></div>
 
-<!-- Floating Add Button -->
-<button class="floating-btn" onclick="openForm()">➕</button>
+<!-- Floating Add Product Button -->
+<button id="floatingBtn" onclick="openForm()">+</button>
 
 <!-- Product Detail Modal -->
 <div class="modal" id="detailModal">
@@ -102,7 +98,11 @@
   <div class="modal-content">
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
-    <form id="productForm">
+    <div class="modal-left">
+      <input type="file" id="imageFile" accept="image/*" required />
+      <img id="imagePreview" />
+    </div>
+    <div class="modal-right">
       <input type="text" id="name" placeholder="Product Name" required />
       <input type="text" id="price" placeholder="Price" required />
       <input type="text" id="phone" placeholder="Phone Number" required />
@@ -117,10 +117,8 @@
       <input type="text" id="condition" placeholder="Condition (New/Used)" />
       <input type="text" id="specs" placeholder="Specifications" />
       <input type="text" id="region" placeholder="Location/Region" />
-      <input type="file" id="imageFile" accept="image/*" required />
-      <img id="imagePreview" />
-      <button type="button" class="submit-btn" onclick="saveProduct()">Save Product</button>
-    </form>
+      <button class="submit-btn" onclick="saveProduct()">Save Product</button>
+    </div>
   </div>
 </div>
 
@@ -137,7 +135,6 @@ const firebaseConfig = {
   messagingSenderId: "861547577050",
   appId: "1:861547577050:web:507b1411e3e199eae3afe3"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
@@ -156,7 +153,7 @@ onAuthStateChanged(auth, user => {
     userEmail.innerHTML = `${user.displayName || user.email} <span class="verified">✔</span>`;
     userEmail.style.display="inline";
   }else{
-    signBtn.textContent="Sign In with Google";
+    signBtn.textContent="Sign In";
     userEmail.style.display="none";
   }
 });
@@ -174,7 +171,10 @@ window.googleSign = async () => {
 
 // Require login before posting
 window.openForm = () => {
-  if (!currentUser) { alert("You must sign in first to post items."); return; }
+  if (!currentUser) {
+    alert("You must sign in first to post items.");
+    return;
+  }
   document.getElementById("formModal").style.display="flex";
 };
 window.closeForm = () => document.getElementById("formModal").style.display="none";
@@ -184,9 +184,9 @@ function showDetail(el){
   const p = JSON.parse(el.dataset.product);
   document.getElementById("detailContent").innerHTML = `
     <span class="close" onclick="closeDetail()">×</span>
-    <h2>${p.name}</h2>
+    <h2>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
     <img src="${p.image}" alt="${p.name}" style="width:100%; max-height:250px; object-fit:cover; border-radius:8px;">
-    <p><b>Price:</b> <span style="color:green; font-weight:bold;">${p.price}</span></p>
+    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
     <p><b>Description:</b> ${p.description}</p>
     <p><b>Condition:</b> ${p.condition}</p>
     <p><b>Category:</b> ${p.category}</p>
@@ -196,7 +196,7 @@ function showDetail(el){
   `;
   document.getElementById("detailModal").style.display = "flex";
 }
-window.closeDetail = () => document.getElementById("detailModal").style.display="none";
+window.closeDetail = () => document.getElementById("detailModal").style.display = "none";
 
 // Category filter
 window.filterCategory = (cat, el) => {
@@ -217,8 +217,8 @@ document.getElementById("imageFile").addEventListener("change", async (e)=>{
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "hq cyber"); // replace with your Cloudinary preset
-    const cloudName = "dqxppopjr"; // replace with your Cloudinary cloud name
+    formData.append("upload_preset", "hq cyber");
+    const cloudName = "dqxppopjr";
 
     try{
       const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
@@ -252,8 +252,7 @@ window.saveProduct = async () => {
     await addDoc(collection(db,"products"), product);
     alert("Product posted!");
     closeForm();
-
-    document.getElementById("productForm").reset();
+    document.getElementById("imageFile").value="";
     document.getElementById("imagePreview").style.display="none";
     uploadedImageUrl = "";
   }catch(err){ console.error(err); alert("Save failed."); }
@@ -273,6 +272,7 @@ onSnapshot(collection(db,"products"), snapshot=>{
       <img src="${p.image}" alt="${p.name}">
       <div class="card-body">
         <h3>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h3>
+        <p style="font-weight:bold;color:green;">Ksh ${p.price}</p>
         <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
       </div>
     `;
