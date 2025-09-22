@@ -1,314 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HQ Marketplace</title>
-<style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
-  header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
-  header h1 { margin:0; display:inline-block; }
-  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
-  .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
-  .action-btn:hover { background:darkorange; }
-  .sign-btn { background:#1da1f2; color:white; }
-  .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
-  .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
-  .category.active { background:#0a8f3d; color:white; }
+  <meta charset="UTF-8">
+  <title>HQ Marketplace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f6f9;
+      color: #333;
+    }
 
-  /* Grid Layout */
-  .container {
-    padding:1rem;
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap:1rem;
-  }
-  @media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
-  @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
+    header {
+      background: #ff4757;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
 
-  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:transform .2s; }
-  .card:hover { transform:scale(1.03); }
-  .card img { width:100%; height:160px; object-fit:cover; }
-  .card-body { padding:0.5rem; }
-  .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
-  .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
+    .categories {
+      display: flex;
+      overflow-x: auto;
+      padding: 0.5rem;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
 
-  /* Modal */
-  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; padding:10px; }
-  .modal-content { background:white; padding:1.5rem; border-radius:12px; width:95%; max-width:520px; max-height:90vh; overflow-y:auto; box-shadow:0 4px 20px rgba(0,0,0,0.25); }
-  .modal-content h2 { margin-top:0; color:#0a8f3d; text-align:center; }
-  .close { float:right; cursor:pointer; font-size:1.4rem; color:red; font-weight:bold; }
-  
-  /* Input Styles */
-  .form-group { margin-bottom:12px; }
-  label { font-weight:bold; font-size:0.9rem; display:block; margin-bottom:4px; color:#333; }
-  input, select, textarea { width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:0.95rem; transition:border .2s; }
-  input:focus, select:focus, textarea:focus { outline:none; border-color:#0a8f3d; }
-  textarea { resize:vertical; min-height:70px; }
-  
-  .submit-btn { background:#0a8f3d; color:white; padding:10px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; width:100%; font-size:1rem; transition:background .2s; }
-  .submit-btn:hover { background:#06682c; }
+    .category {
+      padding: 0.5rem 1rem;
+      margin: 0 0.3rem;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: 0.3s;
+    }
 
-  #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-top:8px; display:none; border-radius:6px; }
+    .category.active {
+      background: #ff4757;
+      color: #fff;
+      border-color: #ff4757;
+    }
 
-  /* Verified Badge */
-  .verified { color:#1da1f2; font-size:16px; }
-  .user-info { display:flex; align-items:center; gap:6px; }
-</style>
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .product-card h3 {
+      margin: 0.5rem;
+      font-size: 1.1rem;
+      color: #222;
+    }
+
+    .product-card p {
+      margin: 0.5rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 2rem;
+      color: #888;
+    }
+
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ff4757;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
+
+    .fab:hover {
+      background: #e84118;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      padding: 1.5rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
+    }
+
+    .modal-content h2 {
+      margin: 0 0 1rem;
+      font-size: 1.3rem;
+      color: #ff4757;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 0.7rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background: #ff4757;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #ccc;
+      color: #333;
+    }
+
+    .image-preview {
+      margin-top: 0.5rem;
+      max-height: 120px;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1>HQ Marketplace</h1>
-  <div class="actions">
-    <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
-    <button class="action-btn" onclick="openForm()">+ Post Your Product</button>
-    <button class="action-btn sign-btn" id="signBtn" onclick="googleSign()">Sign In</button>
-    <span id="userEmail" class="user-info" style="display:none;"></span>
+
+  <header>HQ Marketplace</header>
+
+  <div class="categories">
+    <div class="category active" data-category="All">All</div>
+    <div class="category" data-category="Electronics">Electronics</div>
+    <div class="category" data-category="Fashion">Fashion</div>
+    <div class="category" data-category="Home">Home</div>
+    <div class="category" data-category="Vehicles">Vehicles</div>
   </div>
-</header>
 
-<div class="categories" id="categories">
-  <div class="category active" onclick="filterCategory('all', this)">All</div>
-  <div class="category" onclick="filterCategory('Phones', this)">Phones</div>
-  <div class="category" onclick="filterCategory('Cars', this)">Cars</div>
-  <div class="category" onclick="filterCategory('Kitchen', this)">Kitchen</div>
-  <div class="category" onclick="filterCategory('Electronics', this)">Electronics</div>
-  <div class="category" onclick="filterCategory('Furniture', this)">Furniture</div>
-</div>
+  <div class="products" id="productsContainer"></div>
 
-<div class="container" id="products"></div>
+  <button class="fab" onclick="openForm()">+</button>
 
-<!-- Product Detail Modal -->
-<div class="modal" id="detailModal">
-  <div class="modal-content" id="detailContent">
-    <span class="close" onclick="closeDetail()">×</span>
-  </div>
-</div>
-
-<!-- Post Product Modal -->
-<div class="modal" id="formModal">
-  <div class="modal-content">
-    <span class="close" onclick="closeForm()">×</span>
-    <h2>Post Your Product</h2>
-    
-    <div class="form-group">
-      <label>Product Name *</label>
-      <input type="text" id="name" required />
-    </div>
-    <div class="form-group">
-      <label>Price (Ksh) *</label>
-      <input type="number" id="price" required />
-    </div>
-    <div class="form-group">
-      <label>Phone Number *</label>
-      <input type="tel" id="phone" required />
-    </div>
-    <div class="form-group">
-      <label>Category</label>
-      <select id="category">
-        <option value="Phones">Phones</option>
-        <option value="Cars">Cars</option>
-        <option value="Kitchen">Kitchen</option>
-        <option value="Electronics">Electronics</option>
-        <option value="Furniture">Furniture</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Description</label>
-      <textarea id="description" placeholder="Brief product details..."></textarea>
-    </div>
-    <div class="form-group">
-      <label>Condition</label>
-      <input type="text" id="condition" placeholder="New / Used" />
-    </div>
-    <div class="form-group">
-      <label>Specifications</label>
-      <input type="text" id="specs" placeholder="Extra product specs" />
-    </div>
-    <div class="form-group">
-      <label>Location/Region</label>
-      <input type="text" id="region" placeholder="e.g. Nairobi, Eldoret" />
-    </div>
-    <div class="form-group">
-      <label>Upload Image *</label>
-      <input type="file" id="imageFile" accept="image/*" required />
-      <img id="imagePreview" />
-    </div>
-
-    <button class="submit-btn" onclick="saveProduct()">Save Product</button>
-  </div>
-</div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
-  authDomain: "hq-marketplace-ec236.firebaseapp.com",
-  projectId: "hq-marketplace-ec236",
-  storageBucket: "hq-marketplace-ec236.appspot.com",
-  messagingSenderId: "861547577050",
-  appId: "1:861547577050:web:507b1411e3e199eae3afe3"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-
-let currentUser = null;
-let uploadedImageUrl = "";
-
-// Auth state listener
-onAuthStateChanged(auth, user => {
-  currentUser = user;
-  const signBtn = document.getElementById("signBtn");
-  const userEmail = document.getElementById("userEmail");
-  if(user){
-    signBtn.textContent="Sign Out";
-    userEmail.innerHTML = `${user.displayName || user.email} <span class="verified">✔</span>`;
-    userEmail.style.display="inline";
-  }else{
-    signBtn.textContent="Sign In";
-    userEmail.style.display="none";
-  }
-});
-
-// Google Sign In/Out
-window.googleSign = async () => {
-  if(currentUser){
-    await signOut(auth);
-    return;
-  }
-  try{
-    await signInWithPopup(auth, provider);
-  }catch(err){ alert("Google sign-in failed: "+err.message); }
-};
-
-// Require login before posting
-window.openForm = () => {
-  if (!currentUser) {
-    alert("You must sign in first to post items.");
-    return;
-  }
-  document.getElementById("formModal").style.display="flex";
-};
-window.closeForm = () => document.getElementById("formModal").style.display="none";
-
-// Product Detail Modal
-function showDetail(el){
-  const p = JSON.parse(el.dataset.product);
-  document.getElementById("detailContent").innerHTML = `
-    <span class="close" onclick="closeDetail()">×</span>
-    <h2>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
-    <img src="${p.image}" alt="${p.name}" style="width:100%; max-height:250px; object-fit:cover; border-radius:8px;">
-    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${Number(p.price).toLocaleString()}</span></p>
-    <p><b>Description:</b> ${p.description || "N/A"}</p>
-    <p><b>Condition:</b> ${p.condition || "N/A"}</p>
-    <p><b>Category:</b> ${p.category}</p>
-    <p><b>Specifications:</b> ${p.specs || "N/A"}</p>
-    <p><b>Location:</b> ${p.region || "N/A"}</p>
-    <p><a href="tel:${p.phone}" class="phone">📞 ${p.phone}</a></p>
-  `;
-  document.getElementById("detailModal").style.display = "flex";
-}
-window.closeDetail = () => document.getElementById("detailModal").style.display = "none";
-
-// Category filter
-window.filterCategory = (cat, el) => {
-  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
-  el.classList.add("active");
-  document.querySelectorAll(".card").forEach(card=>{
-    card.style.display = (cat==='all'||card.dataset.category===cat)?'block':'none';
-  });
-};
-
-// Image preview + upload
-document.getElementById("imageFile").addEventListener("change", async (e)=>{
-  const file = e.target.files[0];
-  if(file){
-    const preview = document.getElementById("imagePreview");
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = "block";
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "hq cyber");
-    const cloudName = "dqxppopjr";
-
-    try{
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-        method:"POST", body:formData
-      });
-      const data = await res.json();
-      uploadedImageUrl = data.secure_url;
-    }catch(err){ console.error(err); alert("Upload failed."); }
-  }
-});
-
-// Save product
-window.saveProduct = async () => {
-  if (!currentUser) { alert("Sign in first"); return; }
-  if (!uploadedImageUrl) { alert("Please upload an image"); return; }
-
-  const name = document.getElementById("name").value.trim();
-  const price = document.getElementById("price").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-
-  if (!name || !price || !phone) {
-    alert("Please fill all required fields.");
-    return;
-  }
-
-  const product = {
-    name,
-    price,
-    phone,
-    category: document.getElementById("category").value,
-    description: document.getElementById("description").value,
-    condition: document.getElementById("condition").value,
-    specs: document.getElementById("specs").value,
-    region: document.getElementById("region").value,
-    image: uploadedImageUrl,
-    verified: false, // set default, can be approved later
-    timestamp: Date.now()
-  };
-
-  try{
-    await addDoc(collection(db,"products"), product);
-    alert("Product posted!");
-    closeForm();
-
-    // Reset form
-    document.querySelectorAll("#formModal input, #formModal textarea, #formModal select").forEach(el => el.value = "");
-    document.getElementById("imagePreview").style.display="none";
-    uploadedImageUrl = "";
-  }catch(err){ console.error(err); alert("Save failed."); }
-};
-
-// Real-time fetch (sorted by latest)
-onSnapshot(query(collection(db,"products"), orderBy("timestamp","desc")), snapshot=>{
-  const productsDiv = document.getElementById("products");
-  productsDiv.innerHTML="";
-  snapshot.forEach(doc=>{
-    const p = doc.data();
-    const div = document.createElement("div");
-    div.className="card";
-    div.dataset.category=p.category;
-    div.dataset.product=JSON.stringify(p);
-    div.innerHTML = `
-      <img src="${p.image}" alt="${p.name}">
-      <div class="card-body">
-        <h3>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h3>
-        <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
+  <!-- Add Product Modal -->
+  <div class="modal" id="formModal">
+    <div class="modal-content">
+      <h2>Add New Product</h2>
+      <div class="form-group">
+        <label for="productName">Product Name *</label>
+        <input type="text" id="productName" placeholder="Enter product name">
       </div>
-    `;
-    div.onclick = ()=>showDetail(div);
-    productsDiv.appendChild(div);
-  });
-});
-</script>
+      <div class="form-group">
+        <label for="price">Price (QAR) *</label>
+        <input type="number" id="price" placeholder="Enter price">
+      </div>
+      <div class="form-group">
+        <label for="phone">Contact Phone *</label>
+        <input type="tel" id="phone" placeholder="e.g. 55512345">
+      </div>
+      <div class="form-group">
+        <label for="category">Category *</label>
+        <select id="category">
+          <option value="Electronics">Electronics</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Home">Home</option>
+          <option value="Vehicles">Vehicles</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" placeholder="Write details..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="imageUpload">Product Image *</label>
+        <input type="file" id="imageUpload" accept="image/*">
+        <img id="imagePreview" class="image-preview" style="display:none;">
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" onclick="closeForm()">Cancel</button>
+        <button class="btn btn-primary" onclick="handleSave()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase + App Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getFirestore, collection, setDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const productsRef = collection(db, "products");
+    const q = query(productsRef, orderBy("timestamp", "desc"));
+
+    onSnapshot(q, (snapshot) => {
+      const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      renderProducts(products);
+    });
+
+    function renderProducts(products, category = "All") {
+      const container = document.getElementById("productsContainer");
+      container.innerHTML = "";
+      const filtered = products.filter(p => category === "All" || p.category === category);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<p class="empty">No products found.</p>`;
+        return;
+      }
+
+      filtered.forEach(product => {
+        container.innerHTML += `
+          <div class="product-card">
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p><strong>Price:</strong> ${Number(product.price).toLocaleString()} QAR</p>
+            <p><strong>Phone:</strong> ${product.phone}</p>
+          </div>
+        `;
+      });
+    }
+
+    document.querySelectorAll(".category").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".category").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const category = btn.dataset.category;
+        onSnapshot(q, (snapshot) => {
+          const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          renderProducts(products, category);
+        });
+      });
+    });
+
+    // Modal Logic
+    window.openForm = function() {
+      document.getElementById("formModal").style.display = "flex";
+    };
+    window.closeForm = function() {
+      document.getElementById("formModal").style.display = "none";
+    };
+
+    // Image Preview
+    const imageUpload = document.getElementById("imageUpload");
+    const imagePreview = document.getElementById("imagePreview");
+    let uploadedImageUrl = "";
+
+    imageUpload.addEventListener("change", () => {
+      const file = imageUpload.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+        // TODO: Replace with Cloudinary upload + set uploadedImageUrl
+        uploadedImageUrl = "https://via.placeholder.com/300"; // temp
+      }
+    });
+
+    // Save Product
+    window.handleSave = async function() {
+      const product = {
+        name: document.getElementById("productName").value.trim(),
+        price: document.getElementById("price").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        category: document.getElementById("category").value,
+        description: document.getElementById("description").value.trim(),
+        image: uploadedImageUrl,
+        timestamp: Date.now()
+      };
+
+      if (!product.name || !product.price || !product.phone || !product.image) {
+        alert("Please fill all required fields.");
+        return;
+      }
+
+      try {
+        await setDoc(doc(collection(db, "products")), product);
+        alert("Product saved successfully!");
+        closeForm();
+        document.querySelectorAll("#formModal input, #formModal textarea, #formModal select")
+          .forEach(el => el.value = "");
+        imagePreview.style.display = "none";
+      } catch (err) {
+        console.error("Error saving product:", err);
+      }
+    };
+  </script>
 </body>
 </html>
