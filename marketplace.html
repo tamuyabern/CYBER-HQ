@@ -5,55 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HQ Marketplace</title>
 <style>
-body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
-header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
-header h1 { margin:0; display:inline-block; }
-.actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
-.action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
-.action-btn:hover { background:darkorange; }
-.sign-btn { background:#1da1f2; color:white; }
-#searchBar { width:90%; max-width:500px; margin:10px auto; display:block; padding:8px 12px; border-radius:20px; border:1px solid #ccc; }
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
+  header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
+  header h1 { margin:0; display:inline-block; }
+  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
+  .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
+  .action-btn:hover { background:darkorange; }
+  .sign-btn { background:#1da1f2; color:white; }
+  .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
+  .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
+  .category.active { background:#0a8f3d; color:white; }
 
-.categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
-.category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
-.category.active { background:#0a8f3d; color:white; }
+  /* Grid Layout */
+  .container {
+    padding:1rem;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap:1rem;
+  }
+  @media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
 
-.container { padding:1rem; display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:1rem; }
-@media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
+  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
+  .card img { width:100%; height:160px; object-fit:cover; }
+  .card-body { padding:0.5rem; }
+  .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
+  .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
 
-.card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 3px 8px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:transform 0.2s, box-shadow 0.2s; }
-.card:hover { transform:translateY(-5px); box-shadow:0 6px 15px rgba(0,0,0,0.25); }
-.card img { width:100%; height:160px; object-fit:cover; }
-.card-body { padding:0.6rem; }
-.card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
-.phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
+  /* Modal */
+  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
+  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:500px; max-height:90vh; overflow-y:auto; }
+  .modal-content h2 { margin-top:0; color:#0a8f3d; }
+  .close { float:right; cursor:pointer; font-size:1.2rem; color:red; }
+  input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
+  .submit-btn { background:#0a8f3d; color:white; padding:8px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; }
+  #imagePreview { width:100%; max-height:200px; object-fit:cover; margin-bottom:8px; display:none; border-radius:6px; }
 
-#floatingBtn { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:60px; height:60px; font-size:30px; cursor:pointer; display:flex; justify-content:center; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:100; transition: transform 0.2s; }
-#floatingBtn:hover { transform:scale(1.1); }
-
-.modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-.modal-content { background:white; padding:1.2rem; border-radius:12px; width:95%; max-width:700px; max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; gap:1rem; position:relative; }
-.modal-content h2 { margin-top:0; color:#0a8f3d; text-align:center; font-size:1.4rem; }
-.close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:1.5rem; color:red; }
-
-input, select, textarea { width:100%; margin-bottom:8px; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:0.95rem; }
-textarea { resize:none; }
-
-.submit-btn { background:#0a8f3d; color:white; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; font-size:1rem; }
-#imagePreviewContainer { display:flex; overflow-x:auto; gap:8px; margin-bottom:8px; }
-#imagePreviewContainer img { height:120px; border-radius:8px; object-fit:cover; cursor:pointer; flex-shrink:0; }
-
-.verified { color:#1da1f2; font-size:16px; }
-.user-info { display:flex; align-items:center; gap:6px; }
-
-#detailContent { flex-direction:column; padding:1rem; }
-#detailCarousel { display:flex; overflow-x:auto; gap:8px; margin-bottom:12px; }
-#detailCarousel img { height:250px; border-radius:8px; object-fit:cover; flex-shrink:0; cursor:pointer; }
-#detailContent h2 { font-size:1.5rem; color:#0a8f3d; margin-bottom:10px; text-align:center; }
-#detailContent p { margin:6px 0; font-size:0.95rem; }
-#detailContent a.phone { margin-top:6px; text-align:center; display:block; }
+  /* Verified Badge */
+  .verified { color:#1da1f2; font-size:16px; }
+  .user-info { display:flex; align-items:center; gap:6px; }
 </style>
 </head>
 <body>
@@ -61,12 +52,11 @@ textarea { resize:none; }
   <h1>HQ Marketplace</h1>
   <div class="actions">
     <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+    <button class="action-btn" onclick="openForm()">+ Post Your Product</button>
     <button class="action-btn sign-btn" id="signBtn" onclick="googleSign()">Sign In</button>
     <span id="userEmail" class="user-info" style="display:none;"></span>
   </div>
 </header>
-
-<input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()" />
 
 <div class="categories" id="categories">
   <div class="category active" onclick="filterCategory('all', this)">All</div>
@@ -77,33 +67,23 @@ textarea { resize:none; }
   <div class="category" onclick="filterCategory('Furniture', this)">Furniture</div>
 </div>
 
-<div class="container" id="products">Loading products...</div>
-
-<button id="floatingBtn" onclick="openForm()">+</button>
+<div class="container" id="products"></div>
 
 <!-- Product Detail Modal -->
 <div class="modal" id="detailModal">
-  <div class="modal-content">
-    <span class="close" id="detailCloseBtn">×</span>
-    <div id="detailContent"></div>
+  <div class="modal-content" id="detailContent">
+    <span class="close" onclick="closeDetail()">×</span>
   </div>
 </div>
 
-<!-- Post Form Modal -->
+<!-- Post Product Modal -->
 <div class="modal" id="formModal">
   <div class="modal-content">
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
-    <label>Upload Images</label>
-    <input type="file" id="imageFile" accept="image/*" multiple />
-    <div id="imagePreviewContainer"></div>
-    <label>Product Name</label>
     <input type="text" id="name" placeholder="Product Name" required />
-    <label>Price</label>
     <input type="text" id="price" placeholder="Price" required />
-    <label>Phone Number</label>
     <input type="text" id="phone" placeholder="Phone Number" required />
-    <label>Category</label>
     <select id="category">
       <option value="Phones">Phones</option>
       <option value="Cars">Cars</option>
@@ -111,14 +91,12 @@ textarea { resize:none; }
       <option value="Electronics">Electronics</option>
       <option value="Furniture">Furniture</option>
     </select>
-    <label>Description</label>
     <textarea id="description" placeholder="Description"></textarea>
-    <label>Condition</label>
     <input type="text" id="condition" placeholder="Condition (New/Used)" />
-    <label>Specifications</label>
     <input type="text" id="specs" placeholder="Specifications" />
-    <label>Location/Region</label>
     <input type="text" id="region" placeholder="Location/Region" />
+    <input type="file" id="imageFile" accept="image/*" required />
+    <img id="imagePreview" />
     <button class="submit-btn" onclick="saveProduct()">Save Product</button>
   </div>
 </div>
@@ -142,59 +120,99 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 let currentUser = null;
-let uploadedImageUrls = [];
-let productsData = [];
+let uploadedImageUrl = "";
 
-// Auth state
+// Auth state listener
 onAuthStateChanged(auth, user => {
   currentUser = user;
   const signBtn = document.getElementById("signBtn");
   const userEmail = document.getElementById("userEmail");
   if(user){
     signBtn.textContent="Sign Out";
-    userEmail.innerHTML = `${user.displayName||user.email} <span class="verified">✔</span>`;
+    userEmail.innerHTML = `${user.displayName || user.email} <span class="verified">✔</span>`;
     userEmail.style.display="inline";
-  } else { signBtn.textContent="Sign In"; userEmail.style.display="none"; }
+  }else{
+    signBtn.textContent="Sign In";
+    userEmail.style.display="none";
+  }
 });
 
+// Google Sign In/Out
 window.googleSign = async () => {
-  if(currentUser){ await signOut(auth); return; }
-  try{ await signInWithPopup(auth, provider); }catch(err){ alert(err.message); }
+  if(currentUser){
+    await signOut(auth);
+    return;
+  }
+  try{
+    await signInWithPopup(auth, provider);
+  }catch(err){ alert("Google sign-in failed: "+err.message); }
 };
 
-// Form modal
+// Require login before posting
 window.openForm = () => {
-  if(!currentUser){ alert("Sign in first."); return; }
+  if (!currentUser) {
+    alert("You must sign in first to post items.");
+    return;
+  }
   document.getElementById("formModal").style.display="flex";
 };
 window.closeForm = () => document.getElementById("formModal").style.display="none";
 
-// Image upload preview + Cloudinary upload
-document.getElementById("imageFile").addEventListener("change", async e => {
-  uploadedImageUrls = [];
-  const files = Array.from(e.target.files);
-  const container = document.getElementById("imagePreviewContainer");
-  container.innerHTML="";
-  for(let file of files){
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(file);
-    container.appendChild(img);
+// Product Detail Modal
+function showDetail(el){
+  const p = JSON.parse(el.dataset.product);
+  document.getElementById("detailContent").innerHTML = `
+    <span class="close" onclick="closeDetail()">×</span>
+    <h2>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
+    <img src="${p.image}" alt="${p.name}" style="width:100%; max-height:250px; object-fit:cover; border-radius:8px;">
+    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
+    <p><b>Description:</b> ${p.description}</p>
+    <p><b>Condition:</b> ${p.condition}</p>
+    <p><b>Category:</b> ${p.category}</p>
+    <p><b>Specifications:</b> ${p.specs}</p>
+    <p><b>Location:</b> ${p.region}</p>
+    <p><a href="tel:${p.phone}" class="phone">📞 ${p.phone}</a></p>
+  `;
+  document.getElementById("detailModal").style.display = "flex";
+}
+window.closeDetail = () => document.getElementById("detailModal").style.display = "none";
+
+// Category filter
+window.filterCategory = (cat, el) => {
+  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display = (cat==='all'||card.dataset.category===cat)?'block':'none';
+  });
+};
+
+// Image preview + upload
+document.getElementById("imageFile").addEventListener("change", async (e)=>{
+  const file = e.target.files[0];
+  if(file){
+    const preview = document.getElementById("imagePreview");
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset","hq cyber");
+    formData.append("upload_preset", "hq cyber");
+    const cloudName = "dqxppopjr";
+
     try{
-      const res = await fetch("https://api.cloudinary.com/v1_1/dqxppopjr/image/upload", {method:"POST", body:formData});
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method:"POST", body:formData
+      });
       const data = await res.json();
-      uploadedImageUrls.push(data.secure_url);
+      uploadedImageUrl = data.secure_url;
     }catch(err){ console.error(err); alert("Upload failed."); }
   }
 });
 
 // Save product
 window.saveProduct = async () => {
-  if(!currentUser){ alert("Sign in first."); return; }
-  if(uploadedImageUrls.length===0){ alert("Upload images first."); return; }
+  if (!currentUser) { alert("Sign in first"); return; }
+  if (!uploadedImageUrl) { alert("Please upload an image"); return; }
 
   const product = {
     name: document.getElementById("name").value,
@@ -205,8 +223,8 @@ window.saveProduct = async () => {
     condition: document.getElementById("condition").value,
     specs: document.getElementById("specs").value,
     region: document.getElementById("region").value,
-    images: uploadedImageUrls,
-    verified:true
+    image: uploadedImageUrl,
+    verified: true
   };
 
   try{
@@ -214,69 +232,31 @@ window.saveProduct = async () => {
     alert("Product posted!");
     closeForm();
     document.getElementById("imageFile").value="";
-    document.getElementById("imagePreviewContainer").innerHTML="";
-    uploadedImageUrls=[];
-  }catch(err){ alert("Save failed."); console.error(err); }
+    document.getElementById("imagePreview").style.display="none";
+    uploadedImageUrl = "";
+  }catch(err){ console.error(err); alert("Save failed."); }
 };
 
-// Display products
-function displayProducts(products){
-  const container = document.getElementById("products");
-  container.innerHTML = products.length===0 ? "No products yet." : "";
-  products.forEach(p=>{
+// Real-time fetch
+onSnapshot(collection(db,"products"), snapshot=>{
+  const productsDiv = document.getElementById("products");
+  productsDiv.innerHTML="";
+  snapshot.forEach(doc=>{
+    const p = doc.data();
     const div = document.createElement("div");
     div.className="card";
     div.dataset.category=p.category;
     div.dataset.product=JSON.stringify(p);
     div.innerHTML = `
-      <img src="${p.images[0]}" alt="${p.name}">
+      <img src="${p.image}" alt="${p.name}">
       <div class="card-body">
-        <h3>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h3>
-        <p style="color:green;font-weight:bold;">Ksh ${p.price}</p>
+        <h3>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h3>
         <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
       </div>
     `;
     div.onclick = ()=>showDetail(div);
-    container.appendChild(div);
+    productsDiv.appendChild(div);
   });
-}
-
-// Show product detail
-function showDetail(el){
-  const p = JSON.parse(el.dataset.product);
-  const imagesHtml = p.images.map(url=>`<img src="${url}" alt="${p.name}">`).join("");
-  document.getElementById("detailContent").innerHTML = `
-    <h2>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h2>
-    <div id="detailCarousel">${imagesHtml}</div>
-    <p><b>Price:</b> <span style="color:green;font-weight:bold;">Ksh ${p.price}</span></p>
-    <p><b>Description:</b> ${p.description}</p>
-    <p><b>Condition:</b> ${p.condition}</p>
-    <p><b>Category:</b> ${p.category}</p>
-    <p><b>Specifications:</b> ${p.specs}</p>
-    <p><b>Location:</b> ${p.region}</p>
-    <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
-  `;
-  document.getElementById("detailModal").style.display="flex";
-}
-document.getElementById("detailCloseBtn").onclick = ()=>closeDetail();
-window.closeDetail = ()=>document.getElementById("detailModal").style.display="none";
-
-// Filtering + search
-window.filterCategory = (cat, el) => {
-  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
-  el.classList.add("active");
-  displayProducts(productsData.filter(p=>cat==='all'||p.category===cat));
-};
-window.searchProducts = () => {
-  const q = document.getElementById("searchBar").value.toLowerCase();
-  displayProducts(productsData.filter(p=>p.name.toLowerCase().includes(q)||p.specs.toLowerCase().includes(q)));
-};
-
-// Firestore live updates
-onSnapshot(collection(db,"products"), snapshot=>{
-  productsData=[];
-  snapshot.forEach(doc=>productsData.push(doc.data()));
-  displayProducts(productsData);
 });
 </script>
 </body>
