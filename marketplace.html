@@ -1,72 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>HQ Marketplace</title>
 <style>
-body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
-header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
-header h1 { margin:0; display:inline-block; }
-.actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
-.action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
-.action-btn:hover { background:darkorange; }
-.sign-btn { background:#1da1f2; color:white; }
-#searchBar { width:90%; max-width:500px; margin:10px auto; display:block; padding:8px 12px; border-radius:20px; border:1px solid #ccc; }
+  :root{
+    --green:#0a8f3d;
+    --accent:#f39c12; /* orange */
+    --blue:#1da1f2;
+    --bg:#f9f9f9;
+    --card:#fff;
+  }
+  *{box-sizing:border-box}
+  body {font-family: Arial, Helvetica, sans-serif; margin:0; background:var(--bg); color:#222;}
+  header {background:var(--green); color:white; padding:1rem; position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:center; gap:1rem;}
+  header h1{margin:0; font-size:1.25rem;}
+  .actions{display:flex; gap:0.5rem; align-items:center;}
+  .action-btn{background:var(--accent); border:none; padding:6px 12px; border-radius:20px; cursor:pointer; color:#000; font-weight:700;}
+  .sign-btn{background:var(--blue); border:none; color:#fff; padding:6px 12px; border-radius:20px; cursor:pointer; font-weight:700;}
+  .user-info{display:flex; gap:8px; align-items:center;}
+  .verified{color:var(--blue); font-size:14px;}
 
-.categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
-.category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
-.category.active { background:#0a8f3d; color:white; }
+  #searchBar{display:block; margin:12px auto; width:92%; max-width:680px; padding:8px 12px; border-radius:20px; border:1px solid #ccc;}
 
-.container { padding:1rem; display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:1rem; }
-@media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
+  .categories{display:flex; gap:8px; padding:10px; background:#eaf7ed; overflow-x:auto;}
+  .category{background:#fff;border:1px solid var(--green); padding:6px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;}
+  .category.active{background:var(--green); color:#fff;}
 
-.card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 3px 8px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:transform 0.2s, box-shadow 0.2s; }
-.card:hover { transform:translateY(-5px); box-shadow:0 6px 15px rgba(0,0,0,0.25); }
-.card img { width:100%; height:160px; object-fit:cover; }
-.card-body { padding:0.6rem; }
-.card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
-.phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
+  /* grid */
+  .container{padding:12px; display:grid; gap:12px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); max-width:1200px; margin:0 auto;}
+  @media(max-width:480px){ .container{grid-template-columns: repeat(2, 1fr);} }
 
-#floatingBtn { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:60px; height:60px; font-size:30px; cursor:pointer; display:flex; justify-content:center; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:100; transition: transform 0.2s; }
-#floatingBtn:hover { transform:scale(1.1); }
+  .card{background:var(--card); border-radius:12px; overflow:hidden; box-shadow:0 6px 16px rgba(0,0,0,0.08); cursor:pointer; transition:transform .15s, box-shadow .15s;}
+  .card:hover{transform:translateY(-6px); box-shadow:0 10px 25px rgba(0,0,0,0.14);}
+  .card img{width:100%; height:150px; object-fit:cover; display:block;}
+  .card-body{padding:10px;}
+  .card-body h3{margin:0 0 6px; font-size:1rem; display:flex; align-items:center; gap:6px;}
+  .price{color:green; font-weight:700; margin-bottom:6px;}
+  .phone{background:var(--accent); color:#000; padding:6px 8px; border-radius:6px; text-decoration:none; font-weight:700; display:inline-block;}
 
-.modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-.modal-content { background:white; padding:1.2rem; border-radius:12px; width:95%; max-width:700px; max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; gap:1rem; position:relative; }
-.modal-content h2 { margin-top:0; color:#0a8f3d; text-align:center; font-size:1.4rem; }
-.close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:1.5rem; color:red; }
+  /* floating + button */
+  .floating{position:fixed; right:20px; bottom:20px; width:60px; height:60px; border-radius:50%; background:var(--green); color:#fff; border:none; font-size:32px; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(0,0,0,0.2); cursor:pointer; z-index:60;}
+  .floating:hover{transform:scale(1.06)}
 
-input, select, textarea { width:100%; margin-bottom:8px; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:0.95rem; }
-textarea { resize:none; }
+  /* modal common */
+  .modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); display:flex; align-items:center; justify-content:center; z-index:80;}
+  .modal.open{display:flex}
+  .modal-card{background:#fff; border-radius:12px; width:95%; max-width:900px; max-height:90vh; overflow:auto; padding:18px; position:relative; box-shadow:0 20px 50px rgba(0,0,0,0.35);}
+  .close-x{position:absolute; right:14px; top:10px; font-size:20px; cursor:pointer; color:#c33;}
 
-.submit-btn { background:#0a8f3d; color:white; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; font-size:1rem; }
-#imagePreviewContainer { display:flex; overflow-x:auto; gap:8px; margin-bottom:8px; }
-#imagePreviewContainer img { height:120px; border-radius:8px; object-fit:cover; cursor:pointer; flex-shrink:0; }
+  /* Add form split layout */
+  .form-grid{display:flex; gap:12px; flex-wrap:wrap;}
+  .left-col, .right-col{flex:1 1 320px; min-width:260px;}
+  .image-previews{display:flex; gap:8px; overflow-x:auto; padding:6px 0;}
+  .thumb{height:110px; width:140px; border-radius:8px; object-fit:cover; position:relative; flex-shrink:0;}
+  .thumb-wrap{position:relative; display:inline-block;}
+  .thumb-remove{position:absolute; right:6px; top:6px; background:rgba(0,0,0,0.6); color:#fff; border-radius:50%; width:26px; height:26px; display:flex; align-items:center; justify-content:center; cursor:pointer;}
 
-.verified { color:#1da1f2; font-size:16px; }
-.user-info { display:flex; align-items:center; gap:6px; }
+  label{font-weight:700; font-size:0.9rem; margin-top:6px; display:block;}
+  input[type="text"], input[type="file"], textarea, select{width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; font-size:0.95rem;}
+  textarea{min-height:90px; resize:vertical;}
 
-#detailContent { flex-direction:column; padding:1rem; }
-#detailCarousel { display:flex; overflow-x:auto; gap:8px; margin-bottom:12px; }
-#detailCarousel img { height:250px; border-radius:8px; object-fit:cover; flex-shrink:0; cursor:pointer; }
-#detailContent h2 { font-size:1.5rem; color:#0a8f3d; margin-bottom:10px; text-align:center; }
-#detailContent p { margin:6px 0; font-size:0.95rem; }
-#detailContent a.phone { margin-top:6px; text-align:center; display:block; }
+  .submit-btn{background:var(--green); color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:700; width:100%;}
+  .submit-btn:disabled{opacity:0.6; cursor:not-allowed;}
+
+  /* Detail carousel */
+  .carousel{display:flex; overflow-x:auto; gap:8px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding-bottom:8px;}
+  .carousel img{flex:0 0 100%; width:100%; height:320px; object-fit:cover; border-radius:8px; scroll-snap-align:center;}
+  .carousel-wrapper{position:relative;}
+  .dots{display:flex; justify-content:center; gap:6px; margin-top:8px;}
+  .dot{width:9px; height:9px; border-radius:50%; background:#ddd; cursor:pointer;}
+  .dot.active{background:var(--green);}
+
+  /* arrow controls */
+  .arrow{position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.35); color:#fff; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;}
+  .arrow.left{left:8px} .arrow.right{right:8px}
+  @media (max-width:640px){ .carousel img{height:240px} .arrow{display:none} }
 </style>
 </head>
 <body>
+
 <header>
   <h1>HQ Marketplace</h1>
-  <div class="actions">
-    <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
-    <button class="action-btn sign-btn" id="signBtn" onclick="googleSign()">Sign In</button>
-    <span id="userEmail" class="user-info" style="display:none;"></span>
+  <div class="actions" style="margin-left:12px">
+    <button class="action-btn" onclick="location.href='index.html'">⬅ Back to Home</button>
+    <button class="sign-btn" id="signBtn" onclick="googleSign()">Sign In</button>
+    <div id="userEmail" class="user-info" style="display:none"></div>
   </div>
 </header>
 
-<input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()" />
+<input id="searchBar" placeholder="Search products or specs..." oninput="onSearch()" />
 
 <div class="categories" id="categories">
   <div class="category active" onclick="filterCategory('all', this)">All</div>
@@ -77,54 +101,82 @@ textarea { resize:none; }
   <div class="category" onclick="filterCategory('Furniture', this)">Furniture</div>
 </div>
 
-<div class="container" id="products">Loading products...</div>
+<main class="container" id="products">
+  <p style="grid-column:1/-1; text-align:center; color:#666;">Loading products…</p>
+</main>
 
-<button id="floatingBtn" onclick="openForm()">+</button>
+<button class="floating" id="openFormBtn" title="Post a product" onclick="openForm()">+</button>
 
-<div class="modal" id="detailModal">
-  <div class="modal-content" id="detailContent">
-    <span class="close" onclick="closeDetail()">×</span>
+<!-- Detail modal -->
+<div id="detailModal" class="modal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <span class="close-x" onclick="closeDetail()">×</span>
+    <div id="detailBody">
+      <!-- filled by JS -->
+    </div>
   </div>
 </div>
 
-<div class="modal" id="formModal">
-  <div class="modal-content">
-    <span class="close" onclick="closeForm()">×</span>
-    <h2>Post Your Product</h2>
-    <label>Upload Images</label>
-    <input type="file" id="imageFile" accept="image/*" multiple />
-    <div id="imagePreviewContainer"></div>
-    <label>Product Name</label>
-    <input type="text" id="name" placeholder="Product Name" required />
-    <label>Price</label>
-    <input type="text" id="price" placeholder="Price" required />
-    <label>Phone Number</label>
-    <input type="text" id="phone" placeholder="Phone Number" required />
-    <label>Category</label>
-    <select id="category">
-      <option value="Phones">Phones</option>
-      <option value="Cars">Cars</option>
-      <option value="Kitchen">Kitchen</option>
-      <option value="Electronics">Electronics</option>
-      <option value="Furniture">Furniture</option>
-    </select>
-    <label>Description</label>
-    <textarea id="description" placeholder="Description"></textarea>
-    <label>Condition</label>
-    <input type="text" id="condition" placeholder="Condition (New/Used)" />
-    <label>Specifications</label>
-    <input type="text" id="specs" placeholder="Specifications" />
-    <label>Location/Region</label>
-    <input type="text" id="region" placeholder="Location/Region" />
-    <button class="submit-btn" onclick="saveProduct()">Save Product</button>
+<!-- Add Product modal -->
+<div id="formModal" class="modal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <span class="close-x" onclick="closeForm()">×</span>
+    <h2 style="text-align:center; color:var(--green)">Post Your Product</h2>
+    <div class="form-grid">
+      <div class="left-col">
+        <label for="imageFile">Upload Images (multiple)</label>
+        <input id="imageFile" type="file" accept="image/*" multiple />
+        <div class="image-previews" id="imagePreviewContainer" aria-live="polite"></div>
+        <small style="color:#666">Tip: upload clear images — you can remove any before posting.</small>
+      </div>
+
+      <div class="right-col">
+        <label>Product Name</label>
+        <input id="name" type="text" placeholder="Product name" />
+        <label>Price</label>
+        <input id="price" type="text" placeholder="e.g. 1200" />
+        <label>Phone Number</label>
+        <input id="phone" type="text" placeholder="Contact number" />
+        <label>Category</label>
+        <select id="categorySelect">
+          <option>Phones</option>
+          <option>Cars</option>
+          <option>Kitchen</option>
+          <option>Electronics</option>
+          <option>Furniture</option>
+        </select>
+        <label>Description</label>
+        <textarea id="description" placeholder="Short description"></textarea>
+        <label>Condition</label>
+        <input id="condition" type="text" placeholder="New / Used" />
+        <label>Specifications</label>
+        <input id="specs" type="text" placeholder="e.g. 64GB, 4GB RAM" />
+        <label>Location / Region</label>
+        <input id="region" type="text" placeholder="e.g. Nairobi" />
+        <div style="margin-top:10px">
+          <button id="saveBtn" class="submit-btn" onclick="saveProduct()">Save Product</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <script type="module">
+/* -----------------------
+  FULL WORKING HQ Marketplace
+  - Firebase (Realtime)
+  - Google SignIn
+  - Multiple image upload to Cloudinary (sequential)
+  - Product cards & detail modal with carousel and dots
+  - Search & category filter
+  ----------------------- */
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
+/* ---------- CONFIG ---------- */
+/* Firebase config (from your project) */
 const firebaseConfig = {
   apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
   authDomain: "hq-marketplace-ec236.firebaseapp.com",
@@ -138,138 +190,381 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-let currentUser = null;
-let uploadedImageUrls = [];
-let productsData = [];
+/* Cloudinary (REPLACE with your own) */
+const CLOUD_NAME = "dqxppopjr";         // <- replace if different
+const UPLOAD_PRESET = "hq_cyber";      // <- replace with your upload preset (no spaces)
 
+/* ---------- STATE ---------- */
+let currentUser = null;
+let productsData = [];         // live products
+// preview scope (selected images ready-to-save)
+const selectedFilesPreview = []; // array of objects {file, previewURL, uploadedUrl, id}
+
+/* ---------- DOM ---------- */
+const productsEl = document.getElementById("products");
+const signBtn = document.getElementById("signBtn");
+const userEmailEl = document.getElementById("userEmail");
+const formModal = document.getElementById("formModal");
+const detailModal = document.getElementById("detailModal");
+const imageInput = document.getElementById("imageFile");
+const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+const saveBtn = document.getElementById("saveBtn");
+
+/* ---------- AUTH (Sign In / Sign Out) ---------- */
 onAuthStateChanged(auth, user => {
   currentUser = user;
-  const signBtn = document.getElementById("signBtn");
-  const userEmail = document.getElementById("userEmail");
   if(user){
-    signBtn.textContent="Sign Out";
-    userEmail.innerHTML = `${user.displayName||user.email} <span class="verified">✔</span>`;
-    userEmail.style.display="inline";
-  } else { signBtn.textContent="Sign In"; userEmail.style.display="none"; }
-});
-
-window.googleSign = async () => {
-  if(currentUser){ await signOut(auth); return; }
-  try{ await signInWithPopup(auth, provider); }catch(err){ alert(err.message); }
-};
-
-window.openForm = () => {
-  if(!currentUser){ alert("Sign in first."); return; }
-  document.getElementById("formModal").style.display="flex";
-};
-window.closeForm = () => document.getElementById("formModal").style.display="none";
-
-document.getElementById("imageFile").addEventListener("change", async e => {
-  uploadedImageUrls = [];
-  const files = Array.from(e.target.files);
-  const container = document.getElementById("imagePreviewContainer");
-  container.innerHTML="";
-  for(let file of files){
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(file);
-    container.appendChild(img);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset","hq cyber");
-    try{
-      const res = await fetch("https://api.cloudinary.com/v1_1/dqxppopjr/image/upload", {method:"POST", body:formData});
-      const data = await res.json();
-      uploadedImageUrls.push(data.secure_url);
-    }catch(err){ console.error(err); alert("Upload failed."); }
+    signBtn.textContent = "Sign Out";
+    userEmailEl.innerHTML = `${user.displayName || user.email} <span class="verified">✔</span>`;
+    userEmailEl.style.display = "inline-flex";
+  } else {
+    signBtn.textContent = "Sign In";
+    userEmailEl.style.display = "none";
   }
 });
 
-window.saveProduct = async () => {
-  if(!currentUser){ alert("Sign in first."); return; }
-  if(uploadedImageUrls.length===0){ alert("Upload images first."); return; }
+window.googleSign = async () => {
+  if(currentUser){
+    await signOut(auth);
+    return;
+  }
+  try{
+    await signInWithPopup(auth, provider);
+  }catch(err){
+    console.error("Sign-in error:", err);
+    alert("Google sign-in failed: " + (err.message || err));
+  }
+};
 
+/* ---------- Open / Close Modals ---------- */
+window.openForm = () => {
+  if(!currentUser){ alert("Please sign in with Google before posting."); return; }
+  formModal.classList.add("open");
+};
+window.closeForm = () => {
+  formModal.classList.remove("open");
+};
+window.closeDetail = () => detailModal.classList.remove("open");
+
+/* ---------- Image selection, preview, upload ---------- */
+imageInput.addEventListener("change", async (e) => {
+  const files = Array.from(e.target.files || []);
+  if(!files.length) return;
+
+  // For each file: create preview element immediately, then upload sequentially
+  for(const file of files){
+    const previewURL = URL.createObjectURL(file);
+    // create an id so we can identify the preview element
+    const id = Math.random().toString(36).slice(2,9);
+    selectedFilesPreview.push({ id, file, previewURL, uploadedUrl: null });
+    renderImagePreviews(); // show preview with uploading state
+    // start upload (sequentially awaited)
+    try{
+      const uploaded = await uploadToCloudinary(file);
+      // find the entry and set uploadedUrl
+      const entry = selectedFilesPreview.find(x=>x.id===id);
+      if(entry) entry.uploadedUrl = uploaded;
+      renderImagePreviews();
+    }catch(err){
+      console.error("Upload failed for file", file, err);
+      alert("One of the uploads failed. Check console.");
+      // leave the preview, allow user to remove and retry
+      const entry = selectedFilesPreview.find(x=>x.id===id);
+      if(entry) entry.uploadedUrl = null;
+      renderImagePreviews();
+    }
+  }
+  // reset file input so same files can be selected again if desired
+  imageInput.value = "";
+});
+
+function renderImagePreviews(){
+  imagePreviewContainer.innerHTML = "";
+  for(const item of selectedFilesPreview){
+    const wrap = document.createElement("div");
+    wrap.className = "thumb-wrap";
+    wrap.style.marginRight = "8px";
+    const img = document.createElement("img");
+    img.className = "thumb";
+    img.src = item.previewURL;
+    img.alt = "preview";
+    // mark uploaded state visually (green border) if uploadedUrl exists
+    if(item.uploadedUrl){
+      img.style.outline = "3px solid rgba(10,143,61,0.18)";
+    } else {
+      img.style.outline = "none";
+      // add a small overlay "uploading" if still null AND file exists (we use a simple opacity overlay)
+      // We'll append a small spinner/label
+      const overlay = document.createElement("div");
+      overlay.style.position = "absolute";
+      overlay.style.left = "0";
+      overlay.style.top = "0";
+    }
+    // remove button
+    const removeBtn = document.createElement("div");
+    removeBtn.className = "thumb-remove";
+    removeBtn.innerHTML = "×";
+    removeBtn.title = "Remove";
+    removeBtn.onclick = () => {
+      // remove object and revoke objectURL
+      const idx = selectedFilesPreview.findIndex(x=>x.id===item.id);
+      if(idx>-1){
+        URL.revokeObjectURL(selectedFilesPreview[idx].previewURL);
+        selectedFilesPreview.splice(idx,1);
+        renderImagePreviews();
+      }
+    };
+
+    wrap.appendChild(img);
+    wrap.appendChild(removeBtn);
+
+    // small caption for upload status
+    const status = document.createElement("div");
+    status.style.fontSize = "11px";
+    status.style.color = "#333";
+    status.style.textAlign = "center";
+    status.style.marginTop = "4px";
+    status.textContent = item.uploadedUrl ? "Uploaded" : "Uploading...";
+    // If uploadedUrl is null and the file hasn't been uploaded yet, show uploading.
+    if(!item.uploadedUrl){
+      status.style.opacity = "0.7";
+    } else {
+      status.style.color = "green";
+    }
+    const container = document.createElement("div");
+    container.style.display = "inline-block";
+    container.style.marginRight = "6px";
+    container.appendChild(wrap);
+    container.appendChild(status);
+
+    imagePreviewContainer.appendChild(container);
+  }
+}
+
+/* Upload helper (returns secure_url) */
+async function uploadToCloudinary(file){
+  // This function POSTs to Cloudinary unsigned upload endpoint and returns secure_url
+  const form = new FormData();
+  form.append("file", file);
+  form.append("upload_preset", UPLOAD_PRESET); // ensure this exists and has unsigned upload enabled
+  const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
+  const res = await fetch(url, { method:"POST", body: form });
+  const data = await res.json();
+  if(!data || !data.secure_url){
+    console.error("Cloudinary response", data);
+    throw new Error("Cloudinary upload failed");
+  }
+  return data.secure_url;
+}
+
+/* ---------- Save product (collect uploaded urls in order) ---------- */
+window.saveProduct = async () => {
+  if(!currentUser){ alert("Sign in required to post."); return; }
+  // gather uploaded urls (in current preview order)
+  const imageUrls = selectedFilesPreview.map(x => x.uploadedUrl).filter(Boolean);
+  if(imageUrls.length === 0){ alert("Please upload at least one image (wait for uploads to complete)."); return; }
+
+  // simple form values
   const product = {
-    name: document.getElementById("name").value,
-    price: document.getElementById("price").value,
-    phone: document.getElementById("phone").value,
-    category: document.getElementById("category").value,
-    description: document.getElementById("description").value,
-    condition: document.getElementById("condition").value,
-    specs: document.getElementById("specs").value,
-    region: document.getElementById("region").value,
-    images: uploadedImageUrls,
-    verified:true
+    name: document.getElementById("name").value.trim() || "Untitled",
+    price: document.getElementById("price").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    category: document.getElementById("categorySelect").value,
+    description: document.getElementById("description").value.trim(),
+    condition: document.getElementById("condition").value.trim(),
+    specs: document.getElementById("specs").value.trim(),
+    region: document.getElementById("region").value.trim(),
+    images: imageUrls,
+    verified: true,
+    timestamp: Date.now()
   };
 
   try{
-    await addDoc(collection(db,"products"), product);
+    // disable save to prevent double clicks
+    saveBtn.disabled = true;
+    await addDoc(collection(db, "products"), product);
     alert("Product posted!");
+    // reset form & previews
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("condition").value = "";
+    document.getElementById("specs").value = "";
+    document.getElementById("region").value = "";
+    selectedFilesPreview.splice(0, selectedFilesPreview.length);
+    renderImagePreviews();
     closeForm();
-    document.getElementById("imageFile").value="";
-    document.getElementById("imagePreviewContainer").innerHTML="";
-    uploadedImageUrls=[];
-  }catch(err){ alert("Save failed."); console.error(err); }
+  }catch(err){
+    console.error("Save product error", err);
+    alert("Failed to save product. See console for details.");
+  } finally {
+    saveBtn.disabled = false;
+  }
 };
 
-function displayProducts(products){
-  const container = document.getElementById("products");
-  container.innerHTML = products.length===0 ? "No products yet." : "";
-  products.forEach(p=>{
+/* ---------- Display products & interactions ---------- */
+function renderProducts(list){
+  productsEl.innerHTML = "";
+  if(!list || list.length === 0){
+    const n = document.createElement("p");
+    n.style.gridColumn = "1/-1";
+    n.style.textAlign = "center";
+    n.style.color = "#666";
+    n.textContent = "No products yet.";
+    productsEl.appendChild(n);
+    return;
+  }
+
+  list.forEach(p => {
     const div = document.createElement("div");
-    div.className="card";
-    div.dataset.category=p.category;
-    div.dataset.product=JSON.stringify(p);
+    div.className = "card";
+    div.dataset.product = JSON.stringify(p);
+    const thumbnail = (p.images && p.images.length) ? p.images[0] : "";
     div.innerHTML = `
-      <img src="${p.images[0]}" alt="${p.name}">
+      <img src="${thumbnail || placeholderDataUrl()}" alt="${escapeHtml(p.name || 'Product')}">
       <div class="card-body">
-        <h3>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h3>
-        <p style="color:green;font-weight:bold;">Ksh ${p.price}</p>
-        <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
+        <h3>${escapeHtml(p.name || '')} ${p.verified ? '<span class="verified">✔</span>' : ''}</h3>
+        <div class="price">Ksh ${escapeHtml(p.price||'')}</div>
+        <a class="phone" href="tel:${escapeHtml(p.phone||'')}">📞 ${escapeHtml(p.phone||'')}</a>
       </div>
     `;
-    div.onclick = ()=>showDetail(div);
-    container.appendChild(div);
+    div.addEventListener("click", ()=> openDetailFromCard(p));
+    productsEl.appendChild(div);
   });
 }
 
-function showDetail(el){
-  const p = JSON.parse(el.dataset.product);
-  const imagesHtml = p.images.map(url=>`<img src="${url}" alt="${p.name}">`).join("");
-  document.getElementById("detailContent").innerHTML = `
-    <span class="close" onclick="closeDetail()">×</span>
-    <h2>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h2>
-    <div id="detailCarousel">${imagesHtml}</div>
-    <p><b>Price:</b> <span style="color:green;font-weight:bold;">Ksh ${p.price}</span></p>
-    <p><b>Description:</b> ${p.description}</p>
-    <p><b>Condition:</b> ${p.condition}</p>
-    <p><b>Category:</b> ${p.category}</p>
-    <p><b>Specifications:</b> ${p.specs}</p>
-    <p><b>Location:</b> ${p.region}</p>
-    <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
+function openDetailFromCard(product){
+  // build detail content: carousel + info + dots
+  const container = document.getElementById("detailBody");
+  container.innerHTML = "";
+
+  const title = document.createElement("h2");
+  title.style.textAlign = "center";
+  title.style.color = "var(--green)";
+  title.innerHTML = `${escapeHtml(product.name)} ${product.verified ? '<span class="verified">✔</span>' : ''}`;
+
+  const carouselWrapper = document.createElement("div");
+  carouselWrapper.className = "carousel-wrapper";
+  const carousel = document.createElement("div");
+  carousel.className = "carousel";
+  if(product.images && product.images.length){
+    product.images.forEach(url => {
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = escapeHtml(product.name || 'Image');
+      carousel.appendChild(img);
+    });
+  } else {
+    const img = document.createElement("img");
+    img.src = placeholderDataUrl();
+    carousel.appendChild(img);
+  }
+
+  // arrows
+  const left = document.createElement("div");
+  left.className = "arrow left";
+  left.innerHTML = "‹";
+  left.onclick = () => scrollCarouselBy(carousel, -carousel.clientWidth);
+
+  const right = document.createElement("div");
+  right.className = "arrow right";
+  right.innerHTML = "›";
+  right.onclick = () => scrollCarouselBy(carousel, carousel.clientWidth);
+
+  // dots
+  const dots = document.createElement("div");
+  dots.className = "dots";
+  const imgs = Array.from(carousel.querySelectorAll("img"));
+  imgs.forEach((_, i) => {
+    const d = document.createElement("div");
+    d.className = "dot" + (i === 0 ? " active" : "");
+    d.onclick = () => {
+      carousel.scrollTo({left: i * carousel.clientWidth, behavior: 'smooth'});
+    };
+    dots.appendChild(d);
+  });
+
+  // update active dot on scroll
+  let scrollTimeout = null;
+  carousel.addEventListener("scroll", ()=>{
+    if(scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(()=>{
+      const idx = Math.round(carousel.scrollLeft / carousel.clientWidth);
+      Array.from(dots.children).forEach((dot, i) => dot.classList.toggle("active", i === idx));
+    }, 80);
+  });
+
+  carouselWrapper.appendChild(left);
+  carouselWrapper.appendChild(carousel);
+  carouselWrapper.appendChild(right);
+
+  // info block
+  const info = document.createElement("div");
+  info.innerHTML = `
+    <p style="font-weight:700; margin-top:10px;">Price: <span style="color:green;">Ksh ${escapeHtml(product.price||'')}</span></p>
+    <p>${escapeHtml(product.description||'')}</p>
+    <p><b>Condition:</b> ${escapeHtml(product.condition||'')}</p>
+    <p><b>Category:</b> ${escapeHtml(product.category||'')}</p>
+    <p><b>Specifications:</b> ${escapeHtml(product.specs||'')}</p>
+    <p><b>Location:</b> ${escapeHtml(product.region||'')}</p>
+    <p style="text-align:center; margin-top:8px;"><a class="phone" href="tel:${escapeHtml(product.phone||'')}">📞 ${escapeHtml(product.phone||'')}</a></p>
   `;
-  document.getElementById("detailModal").style.display="flex";
+
+  container.appendChild(title);
+  container.appendChild(carouselWrapper);
+  container.appendChild(dots);
+  container.appendChild(info);
+
+  detailModal.classList.add("open");
+  // ensure initial scroll/dots correct
+  setTimeout(()=>{ carousel.scrollTo({left:0}); }, 80);
 }
-window.closeDetail = ()=>document.getElementById("detailModal").style.display="none";
 
-window.filterCategory = (cat, el) => {
-  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
-  el.classList.add("active");
-  displayProducts(productsData.filter(p=>cat==='all'||p.category===cat));
-};
-window.searchProducts = () => {
-  const q = document.getElementById("searchBar").value.toLowerCase();
-  displayProducts(productsData.filter(p=>p.name.toLowerCase().includes(q)||p.specs.toLowerCase().includes(q)));
-};
+/* helper to scroll carousel by x */
+function scrollCarouselBy(carousel, offset){
+  carousel.scrollBy({left: offset, behavior: 'smooth'});
+}
 
-onSnapshot(collection(db,"products"), snapshot=>{
-  productsData=[];
+/* ---------- Firestore real-time ---------- */
+const q = query(collection(db,"products"), orderBy("timestamp", "desc"));
+onSnapshot(q, snapshot=>{
+  productsData = [];
   snapshot.forEach(doc=>{
     const data = doc.data();
-    productsData.push(data);
+    productsData.push({ id: doc.id, ...data });
   });
-  displayProducts(productsData);
+  // initial render
+  renderProducts(productsData);
 });
+
+/* ---------- Filters & Search ---------- */
+function filterCategory(cat, el){
+  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+  if(cat === 'all') renderProducts(productsData);
+  else renderProducts(productsData.filter(p => p.category === cat));
+}
+
+function onSearch(){
+  const q = document.getElementById("searchBar").value.trim().toLowerCase();
+  if(!q) { renderProducts(productsData); return; }
+  renderProducts(productsData.filter(p => {
+    return (p.name || "").toLowerCase().includes(q) || (p.specs || "").toLowerCase().includes(q) || (p.description||"").toLowerCase().includes(q);
+  }));
+}
+
+/* ---------- Utilities ---------- */
+function placeholderDataUrl(){
+  // small light gray placeholder
+  return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='100%25' height='100%25' fill='%23e8e8e8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='18'%3ENo Image%3C/text%3E%3C/svg%3E";
+}
+function escapeHtml(str){
+  if(!str && str !== 0) return "";
+  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
+
+/* ---------- end of module ---------- */
 </script>
 </body>
 </html>
