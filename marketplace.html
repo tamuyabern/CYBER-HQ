@@ -5,55 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HQ Marketplace</title>
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
-  header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
-  header h1 { margin:0; display:inline-block; }
-  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
-  .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
-  .action-btn:hover { background:darkorange; }
-  .sign-btn { background:#1da1f2; color:white; }
-  #searchBar { width:90%; max-width:500px; margin:10px auto; display:block; padding:8px 12px; border-radius:20px; border:1px solid #ccc; }
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
+header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
+header h1 { margin:0; display:inline-block; }
+.actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
+.action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
+.action-btn:hover { background:darkorange; }
+.sign-btn { background:#1da1f2; color:white; }
+#searchBar { width:90%; max-width:500px; margin:10px auto; display:block; padding:8px 12px; border-radius:20px; border:1px solid #ccc; }
 
-  .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
-  .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
-  .category.active { background:#0a8f3d; color:white; }
+.categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
+.category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
+.category.active { background:#0a8f3d; color:white; }
 
-  .container { padding:1rem; display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:1rem; }
-  @media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
-  @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
+.container { padding:1rem; display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:1rem; }
+@media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
 
-  .card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 3px 8px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:transform 0.2s, box-shadow 0.2s; }
-  .card:hover { transform:translateY(-5px); box-shadow:0 6px 15px rgba(0,0,0,0.25); }
-  .card img { width:100%; height:160px; object-fit:cover; }
-  .card-body { padding:0.6rem; }
-  .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
-  .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
+.card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 3px 8px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:transform 0.2s, box-shadow 0.2s; }
+.card:hover { transform:translateY(-5px); box-shadow:0 6px 15px rgba(0,0,0,0.25); }
+.card img { width:100%; height:160px; object-fit:cover; }
+.card-body { padding:0.6rem; }
+.card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
+.phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
 
-  #floatingBtn { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:60px; height:60px; font-size:30px; cursor:pointer; display:flex; justify-content:center; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:100; transition: transform 0.2s; }
-  #floatingBtn:hover { transform:scale(1.1); }
+#floatingBtn { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:60px; height:60px; font-size:30px; cursor:pointer; display:flex; justify-content:center; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:100; transition: transform 0.2s; }
+#floatingBtn:hover { transform:scale(1.1); }
 
-  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1.2rem; border-radius:12px; width:95%; max-width:700px; max-height:90vh; overflow-y:auto; display:flex; flex-wrap:wrap; gap:1rem; position:relative; }
-  .modal-content h2 { width:100%; margin-top:0; color:#0a8f3d; text-align:center; font-size:1.4rem; }
-  .close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:1.5rem; color:red; }
+.modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
+.modal-content { background:white; padding:1.2rem; border-radius:12px; width:95%; max-width:700px; max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; gap:1rem; position:relative; }
+.modal-content h2 { margin-top:0; color:#0a8f3d; text-align:center; font-size:1.4rem; }
+.close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:1.5rem; color:red; }
 
-  input, select, textarea { width:100%; margin-bottom:8px; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:0.95rem; }
-  textarea { resize:none; }
+input, select, textarea { width:100%; margin-bottom:8px; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:0.95rem; }
+textarea { resize:none; }
 
-  .submit-btn { background:#0a8f3d; color:white; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; font-size:1rem; }
-  #imagePreviewContainer { display:flex; overflow-x:auto; gap:8px; margin-bottom:8px; }
-  #imagePreviewContainer img { height:120px; border-radius:8px; object-fit:cover; cursor:pointer; flex-shrink:0; }
+.submit-btn { background:#0a8f3d; color:white; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; font-size:1rem; }
+#imagePreviewContainer { display:flex; overflow-x:auto; gap:8px; margin-bottom:8px; }
+#imagePreviewContainer img { height:120px; border-radius:8px; object-fit:cover; cursor:pointer; flex-shrink:0; }
 
-  .verified { color:#1da1f2; font-size:16px; }
-  .user-info { display:flex; align-items:center; gap:6px; }
+.verified { color:#1da1f2; font-size:16px; }
+.user-info { display:flex; align-items:center; gap:6px; }
 
-  #detailContent { flex-direction:column; padding:1rem; }
-  #detailCarousel { display:flex; overflow-x:auto; gap:8px; margin-bottom:12px; }
-  #detailCarousel img { height:250px; border-radius:8px; object-fit:cover; flex-shrink:0; cursor:pointer; }
-  #detailContent h2 { font-size:1.5rem; color:#0a8f3d; margin-bottom:10px; text-align:center; }
-  #detailContent p { margin:6px 0; font-size:0.95rem; }
-  #detailContent a.phone { margin-top:6px; text-align:center; display:block; }
+#detailContent { flex-direction:column; padding:1rem; }
+#detailCarousel { display:flex; overflow-x:auto; gap:8px; margin-bottom:12px; }
+#detailCarousel img { height:250px; border-radius:8px; object-fit:cover; flex-shrink:0; cursor:pointer; }
+#detailContent h2 { font-size:1.5rem; color:#0a8f3d; margin-bottom:10px; text-align:center; }
+#detailContent p { margin:6px 0; font-size:0.95rem; }
+#detailContent a.phone { margin-top:6px; text-align:center; display:block; }
 </style>
 </head>
 <body>
@@ -77,7 +77,7 @@
   <div class="category" onclick="filterCategory('Furniture', this)">Furniture</div>
 </div>
 
-<div class="container" id="products"></div>
+<div class="container" id="products">Loading products...</div>
 
 <button id="floatingBtn" onclick="openForm()">+</button>
 
@@ -91,36 +91,32 @@
   <div class="modal-content">
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
-    <div class="modal-left">
-      <label>Upload Images</label>
-      <input type="file" id="imageFile" accept="image/*" multiple />
-      <div id="imagePreviewContainer"></div>
-    </div>
-    <div class="modal-right">
-      <label>Product Name</label>
-      <input type="text" id="name" placeholder="Product Name" required />
-      <label>Price</label>
-      <input type="text" id="price" placeholder="Price" required />
-      <label>Phone Number</label>
-      <input type="text" id="phone" placeholder="Phone Number" required />
-      <label>Category</label>
-      <select id="category">
-        <option value="Phones">Phones</option>
-        <option value="Cars">Cars</option>
-        <option value="Kitchen">Kitchen</option>
-        <option value="Electronics">Electronics</option>
-        <option value="Furniture">Furniture</option>
-      </select>
-      <label>Description</label>
-      <textarea id="description" placeholder="Description"></textarea>
-      <label>Condition</label>
-      <input type="text" id="condition" placeholder="Condition (New/Used)" />
-      <label>Specifications</label>
-      <input type="text" id="specs" placeholder="Specifications" />
-      <label>Location/Region</label>
-      <input type="text" id="region" placeholder="Location/Region" />
-      <button class="submit-btn" onclick="saveProduct()">Save Product</button>
-    </div>
+    <label>Upload Images</label>
+    <input type="file" id="imageFile" accept="image/*" multiple />
+    <div id="imagePreviewContainer"></div>
+    <label>Product Name</label>
+    <input type="text" id="name" placeholder="Product Name" required />
+    <label>Price</label>
+    <input type="text" id="price" placeholder="Price" required />
+    <label>Phone Number</label>
+    <input type="text" id="phone" placeholder="Phone Number" required />
+    <label>Category</label>
+    <select id="category">
+      <option value="Phones">Phones</option>
+      <option value="Cars">Cars</option>
+      <option value="Kitchen">Kitchen</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Furniture">Furniture</option>
+    </select>
+    <label>Description</label>
+    <textarea id="description" placeholder="Description"></textarea>
+    <label>Condition</label>
+    <input type="text" id="condition" placeholder="Condition (New/Used)" />
+    <label>Specifications</label>
+    <input type="text" id="specs" placeholder="Specifications" />
+    <label>Location/Region</label>
+    <input type="text" id="region" placeholder="Location/Region" />
+    <button class="submit-btn" onclick="saveProduct()">Save Product</button>
   </div>
 </div>
 
@@ -146,59 +142,52 @@ let currentUser = null;
 let uploadedImageUrls = [];
 let productsData = [];
 
-// Auth state
 onAuthStateChanged(auth, user => {
   currentUser = user;
   const signBtn = document.getElementById("signBtn");
   const userEmail = document.getElementById("userEmail");
   if(user){
     signBtn.textContent="Sign Out";
-    userEmail.innerHTML = `${user.displayName || user.email} <span class="verified">✔</span>`;
+    userEmail.innerHTML = `${user.displayName||user.email} <span class="verified">✔</span>`;
     userEmail.style.display="inline";
   } else { signBtn.textContent="Sign In"; userEmail.style.display="none"; }
 });
 
-// Sign in/out
 window.googleSign = async () => {
   if(currentUser){ await signOut(auth); return; }
-  try{ await signInWithPopup(auth, provider); }catch(err){ alert("Google sign-in failed: "+err.message); }
+  try{ await signInWithPopup(auth, provider); }catch(err){ alert(err.message); }
 };
 
-// Open/Close Form
 window.openForm = () => {
-  if (!currentUser) { alert("Sign in first."); return; }
+  if(!currentUser){ alert("Sign in first."); return; }
   document.getElementById("formModal").style.display="flex";
 };
 window.closeForm = () => document.getElementById("formModal").style.display="none";
 
-// Image upload multiple
 document.getElementById("imageFile").addEventListener("change", async e => {
   uploadedImageUrls = [];
   const files = Array.from(e.target.files);
-  const previewContainer = document.getElementById("imagePreviewContainer");
-  previewContainer.innerHTML = "";
-
+  const container = document.getElementById("imagePreviewContainer");
+  container.innerHTML="";
   for(let file of files){
     const img = document.createElement("img");
     img.src = URL.createObjectURL(file);
-    previewContainer.appendChild(img);
+    container.appendChild(img);
 
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset","hq cyber");
-    const cloudName = "dqxppopjr";
     try{
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,{method:"POST",body:formData});
+      const res = await fetch("https://api.cloudinary.com/v1_1/dqxppopjr/image/upload", {method:"POST", body:formData});
       const data = await res.json();
       uploadedImageUrls.push(data.secure_url);
     }catch(err){ console.error(err); alert("Upload failed."); }
   }
 });
 
-// Save product
 window.saveProduct = async () => {
-  if (!currentUser) { alert("Sign in first"); return; }
-  if (uploadedImageUrls.length===0) { alert("Please upload images"); return; }
+  if(!currentUser){ alert("Sign in first."); return; }
+  if(uploadedImageUrls.length===0){ alert("Upload images first."); return; }
 
   const product = {
     name: document.getElementById("name").value,
@@ -210,7 +199,7 @@ window.saveProduct = async () => {
     specs: document.getElementById("specs").value,
     region: document.getElementById("region").value,
     images: uploadedImageUrls,
-    verified: true
+    verified:true
   };
 
   try{
@@ -219,14 +208,13 @@ window.saveProduct = async () => {
     closeForm();
     document.getElementById("imageFile").value="";
     document.getElementById("imagePreviewContainer").innerHTML="";
-    uploadedImageUrls = [];
-  }catch(err){ console.error(err); alert("Save failed."); }
+    uploadedImageUrls=[];
+  }catch(err){ alert("Save failed."); console.error(err); }
 };
 
-// Display products
 function displayProducts(products){
-  const productsDiv = document.getElementById("products");
-  productsDiv.innerHTML="";
+  const container = document.getElementById("products");
+  container.innerHTML = products.length===0 ? "No products yet." : "";
   products.forEach(p=>{
     const div = document.createElement("div");
     div.className="card";
@@ -236,19 +224,18 @@ function displayProducts(products){
       <img src="${p.images[0]}" alt="${p.name}">
       <div class="card-body">
         <h3>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h3>
-        <p style="font-weight:bold;color:green;">Ksh ${p.price}</p>
+        <p style="color:green;font-weight:bold;">Ksh ${p.price}</p>
         <a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>
       </div>
     `;
     div.onclick = ()=>showDetail(div);
-    productsDiv.appendChild(div);
+    container.appendChild(div);
   });
 }
 
-// Product detail modal with swipeable carousel
 function showDetail(el){
   const p = JSON.parse(el.dataset.product);
-  let imagesHtml = p.images.map(url=>`<img src="${url}" alt="${p.name}">`).join("");
+  const imagesHtml = p.images.map(url=>`<img src="${url}" alt="${p.name}">`).join("");
   document.getElementById("detailContent").innerHTML = `
     <span class="close" onclick="closeDetail()">×</span>
     <h2>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h2>
@@ -265,23 +252,20 @@ function showDetail(el){
 }
 window.closeDetail = ()=>document.getElementById("detailModal").style.display="none";
 
-// Filter & search
 window.filterCategory = (cat, el) => {
   document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
   el.classList.add("active");
   displayProducts(productsData.filter(p=>cat==='all'||p.category===cat));
 };
 window.searchProducts = () => {
-  const query = document.getElementById("searchBar").value.toLowerCase();
-  displayProducts(productsData.filter(p=>p.name.toLowerCase().includes(query)||p.specs.toLowerCase().includes(query)));
+  const q = document.getElementById("searchBar").value.toLowerCase();
+  displayProducts(productsData.filter(p=>p.name.toLowerCase().includes(q)||p.specs.toLowerCase().includes(q)));
 };
 
-// Real-time fetch
 onSnapshot(collection(db,"products"), snapshot=>{
-  productsData = [];
+  productsData=[];
   snapshot.forEach(doc=>{
     const data = doc.data();
-    data.id = doc.id;
     productsData.push(data);
   });
   displayProducts(productsData);
