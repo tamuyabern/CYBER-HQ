@@ -18,6 +18,23 @@
   .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
   .category.active { background:#0a8f3d; color:white; }
 
+  /* Search Box */
+  .search-container {
+    padding: 10px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+  }
+  .search-container input {
+    width: 90%;
+    max-width: 500px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 15px;
+  }
+
   /* Grid Layout */
   .container {
     padding:1rem;
@@ -78,6 +95,11 @@
     <span id="userEmail" class="user-info" style="display:none;"></span>
   </div>
 </header>
+
+<!-- Search Section -->
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+</div>
 
 <div class="categories" id="categories">
   <div class="category active" onclick="filterCategory('all', this)">All</div>
@@ -200,12 +222,22 @@ window.showDetail = (el) => {
 };
 window.closeDetail = () => document.getElementById("detailModal").style.display = "none";
 
-// Category filter
+// Category filter (independent of search)
 window.filterCategory = (cat, el) => {
   document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
   el.classList.add("active");
   document.querySelectorAll(".card").forEach(card=>{
     card.style.display = (cat==='all'||card.dataset.category===cat)?'block':'none';
+  });
+};
+
+// Search products (independent of category)
+window.searchProducts = () => {
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  document.querySelectorAll(".card").forEach(card => {
+    const p = JSON.parse(card.dataset.product);
+    const text = `${p.name} ${p.description} ${p.category} ${p.region}`.toLowerCase();
+    card.style.display = text.includes(query) ? "block" : "none";
   });
 };
 
