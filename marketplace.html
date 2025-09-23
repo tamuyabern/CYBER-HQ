@@ -7,41 +7,16 @@
 <style>
   body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
   header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
-  header h1 { margin:0; display:inline-block; }
-  .actions { display:flex; justify-content:center; gap:0.6rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
-  .action-btn { background:orange; color:black; border:none; padding:6px 12px; border-radius:20px; cursor:pointer; font-weight:bold; }
+  header h1 { margin:0; }
+
+  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
+  .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
   .action-btn:hover { background:darkorange; }
   .sign-btn { background:#1da1f2; color:white; }
-  .small-btn { padding:6px 8px; border-radius:12px; font-size:13px; }
 
   .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
   .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
   .category.active { background:#0a8f3d; color:white; }
-
-  /* Search Box */
-  .search-container {
-    padding: 10px;
-    background: #fff;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: center;
-  }
-  .search-container input {
-    width: 90%;
-    max-width: 500px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    font-size: 15px;
-  }
-
-  /* Price & Sort bar */
-  .controls {
-    display:flex; gap:8px; align-items:center; justify-content:center;
-    padding:10px; background:#fff; border-bottom:1px solid #eee; flex-wrap:wrap;
-  }
-  .controls input[type="number"] { width:120px; padding:6px; border-radius:8px; }
-  .controls select { padding:6px; border-radius:8px; }
 
   /* Grid Layout */
   .container {
@@ -54,15 +29,11 @@
   @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
   @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
 
-  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; position:relative; }
-  .card img { width:100%; height:160px; object-fit:cover; }
+  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
+  .card img { width:100%; height:160px; object-fit:contain; background:#fff; } /* Full image in grid */
   .card-body { padding:0.5rem; }
-  .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:6px; }
+  .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
   .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
-
-  /* Favorite star */
-  .fav { position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.95); border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.12); font-size:18px; }
-  .fav.active { color:gold; }
 
   /* Floating Add Button */
   .fab {
@@ -87,7 +58,7 @@
 
   /* Image previews */
   #imagePreviewContainer { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
-  #imagePreviewContainer img { width:80px; height:80px; object-fit:cover; border-radius:6px; border:1px solid #ccc; }
+  #imagePreviewContainer img { width:80px; height:80px; object-fit:contain; background:#fff; border-radius:6px; border:1px solid #ccc; }
 
   /* Verified Badge */
   .verified { color:#1da1f2; font-size:16px; }
@@ -95,28 +66,41 @@
 
   /* Carousel in detail modal */
   .carousel { display:flex; overflow-x:auto; gap:8px; }
-  .carousel img { width:100%; max-height:250px; object-fit:cover; border-radius:8px; flex:0 0 100%; }
+  .carousel img {
+    width:100%;
+    max-height:300px;
+    object-fit:contain;   /* Show full image */
+    background:#fff;      /* White background */
+    border-radius:8px;
+    flex:0 0 100%;
+  }
+
+  /* Price filter and sorting */
+  .filters { display:flex; justify-content:center; gap:8px; margin:10px 0; flex-wrap:wrap; }
+  .filters input, .filters select { width:auto; }
 </style>
 </head>
 <body>
 <header>
-  <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
-    <h1>HQ Marketplace</h1>
-    <div class="actions" style="margin:0;">
-      <button class="action-btn small-btn" onclick="window.location.href='index.html'">⬅ Home</button>
-      <button class="action-btn small-btn" id="savedBtn" onclick="showSaved()">Saved</button>
-      <button class="action-btn sign-btn small-btn" id="signBtn" onclick="googleSign()">Sign In</button>
-      <span id="userEmail" class="user-info" style="display:none;"></span>
-    </div>
+  <h1>HQ Marketplace</h1>
+  <div class="actions">
+    <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+    <button class="action-btn sign-btn" id="signBtn" onclick="googleSign()">Sign In</button>
+    <span id="userEmail" class="user-info" style="display:none;"></span>
   </div>
 </header>
 
-<!-- Search Section -->
-<div class="search-container">
-  <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+<div class="filters">
+  <input type="number" id="minPrice" placeholder="Min Price" />
+  <input type="number" id="maxPrice" placeholder="Max Price" />
+  <select id="sortOrder">
+    <option value="newest">Newest</option>
+    <option value="priceAsc">Price Low → High</option>
+    <option value="priceDesc">Price High → Low</option>
+  </select>
+  <button onclick="applyFilters()">Apply</button>
 </div>
 
-<!-- Controls: category above, then price+sort -->
 <div class="categories" id="categories">
   <div class="category active" onclick="filterCategory('all', this)">All</div>
   <div class="category" onclick="filterCategory('Phones', this)">Phones</div>
@@ -124,22 +108,6 @@
   <div class="category" onclick="filterCategory('Kitchen', this)">Kitchen</div>
   <div class="category" onclick="filterCategory('Electronics', this)">Electronics</div>
   <div class="category" onclick="filterCategory('Furniture', this)">Furniture</div>
-</div>
-
-<div class="controls">
-  <label>Min Ksh: <input type="number" id="minPrice" placeholder="0"></label>
-  <label>Max Ksh: <input type="number" id="maxPrice" placeholder="Any"></label>
-  <button class="action-btn small-btn" onclick="applyPriceFilter()">Apply Price</button>
-  <button class="action-btn small-btn" onclick="resetPriceFilter()">Reset Price</button>
-
-  <label>
-    Sort:
-    <select id="sortSelect" onchange="sortProducts()">
-      <option value="newest">Newest First</option>
-      <option value="low">Price: Low → High</option>
-      <option value="high">Price: High → Low</option>
-    </select>
-  </label>
 </div>
 
 <div class="container" id="products"></div>
@@ -161,7 +129,7 @@
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
     <input type="text" id="name" placeholder="Product Name" required />
-    <input type="number" id="price" placeholder="Price (KES)" required />
+    <input type="text" id="price" placeholder="Price" required />
     <input type="text" id="phone" placeholder="Phone Number" required />
     <select id="category">
       <option value="Phones">Phones</option>
@@ -182,10 +150,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import {
-  getFirestore, collection, addDoc, onSnapshot,
-  doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 const firebaseConfig = {
@@ -203,12 +168,9 @@ const provider = new GoogleAuthProvider();
 
 let currentUser = null;
 let uploadedImages = [];
-let productsArr = []; // local copy of products (id + data)
-let userFavorites = []; // array of productIds favorited by current user
-let showingSavedOnly = false;
 
 // Auth state listener
-onAuthStateChanged(auth, async user => {
+onAuthStateChanged(auth, user => {
   currentUser = user;
   const signBtn = document.getElementById("signBtn");
   const userEmail = document.getElementById("userEmail");
@@ -216,15 +178,10 @@ onAuthStateChanged(auth, async user => {
     signBtn.textContent="Sign Out";
     userEmail.innerHTML = `${user.displayName || user.email} <span class="verified">✔</span>`;
     userEmail.style.display="inline";
-    await loadUserFavorites();
-    // If user just signed in and "saved view" was active, re-apply
   }else{
     signBtn.textContent="Sign In";
     userEmail.style.display="none";
-    userFavorites = [];
   }
-  // update star state if products already rendered
-  updateFavoriteIcons();
 });
 
 // Google Sign In/Out
@@ -246,15 +203,12 @@ window.showDetail = (el) => {
   const p = JSON.parse(el.dataset.product);
   let imagesHtml = "";
   if (p.images && p.images.length){
-    imagesHtml = `<div class="carousel">${p.images.map(url=>`<img src="${url}">`).join("")}</div>`;
+    imagesHtml = `<div class="carousel">${p.images.map(url=>`<img src="${url}" class="carousel-img">`).join("")}</div>`;
   } else {
-    imagesHtml = `<img src="${p.image}" style="width:100%; max-height:250px; object-fit:cover; border-radius:8px;">`;
+    imagesHtml = `<img src="${p.image}" style="width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px;">`;
   }
 
-  // phone display: if not signed in show CTA, else show number
-  const phoneHtml = currentUser
-    ? `<a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>`
-    : `<button class="phone" onclick="requestPhoneAccess('${p.phone}')">Show phone number</button>`;
+  const phoneHtml = currentUser ? `<a href="tel:${p.phone}" class="phone">📞 ${p.phone}</a>` : `<a href="javascript:void(0);" class="phone" onclick="alert('Sign in to view phone number')">Show Phone Number</a>`;
 
   document.getElementById("detailBody").innerHTML = `
     <h2>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
@@ -271,153 +225,16 @@ window.showDetail = (el) => {
 };
 window.closeDetail = () => document.getElementById("detailModal").style.display = "none";
 
-// Phone access CTA
-window.requestPhoneAccess = async (phone) => {
-  if (!currentUser) {
-    const ok = confirm("Please sign in to view phone numbers. Sign in now?");
-    if(ok) await signInWithPopup(auth, provider);
-    return;
-  }
-  alert("Phone number: " + phone);
-};
-
-// Category filter (independent of search/price)
+// Category filter
 window.filterCategory = (cat, el) => {
   document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
   el.classList.add("active");
   document.querySelectorAll(".card").forEach(card=>{
-    card.style.display = (cat==='all' || card.dataset.category===cat) ? 'block' : 'none';
+    card.style.display = (cat==='all'||card.dataset.category===cat)?'block':'none';
   });
 };
 
-// Search products (independent)
-window.searchProducts = () => {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-  document.querySelectorAll(".card").forEach(card => {
-    const p = JSON.parse(card.dataset.product);
-    const text = `${p.name} ${p.description} ${p.category} ${p.region}`.toLowerCase();
-    card.style.display = text.includes(query) ? "block" : "none";
-  });
-};
-
-// Price filter (independent)
-window.applyPriceFilter = () => {
-  const min = Number(document.getElementById("minPrice").value || 0);
-  const maxRaw = document.getElementById("maxPrice").value;
-  const max = maxRaw === "" ? Infinity : Number(maxRaw);
-  document.querySelectorAll(".card").forEach(card => {
-    const p = JSON.parse(card.dataset.product);
-    const price = Number(p.price) || 0;
-    card.style.display = (price >= min && price <= max) ? "block" : "none";
-  });
-};
-window.resetPriceFilter = () => {
-  document.getElementById("minPrice").value = "";
-  document.getElementById("maxPrice").value = "";
-  document.querySelectorAll(".card").forEach(card => card.style.display = "block");
-};
-
-// Sort (reorders DOM, independent)
-window.sortProducts = () => {
-  const mode = document.getElementById("sortSelect").value;
-  // read current DOM cards into array with their product data
-  const container = document.getElementById("products");
-  const cards = Array.from(container.querySelectorAll(".card"));
-  cards.sort((a,b)=>{
-    const pa = JSON.parse(a.dataset.product);
-    const pb = JSON.parse(b.dataset.product);
-    if(mode === "newest"){
-      // compare createdAt (ISO strings)
-      const da = pa.createdAt || "";
-      const db = pb.createdAt || "";
-      return (db.localeCompare(da)); // newest first
-    } else if(mode === "low"){
-      return (Number(pa.price) || 0) - (Number(pb.price) || 0);
-    } else {
-      return (Number(pb.price) || 0) - (Number(pa.price) || 0);
-    }
-  });
-  // re-append in new order
-  cards.forEach(c => container.appendChild(c));
-};
-
-// Saved / favorites view
-window.showSaved = async () => {
-  if (!currentUser) {
-    alert("Sign in to view saved items.");
-    return;
-  }
-  // toggle behavior: if already showing saved, reset
-  showingSavedOnly = !showingSavedOnly;
-  document.getElementById("savedBtn").textContent = showingSavedOnly ? "All Products" : "Saved";
-  if (showingSavedOnly) {
-    document.querySelectorAll(".card").forEach(card=>{
-      card.style.display = userFavorites.includes(card.dataset.id) ? 'block' : 'none';
-    });
-  } else {
-    document.querySelectorAll(".card").forEach(card=>card.style.display='block');
-  }
-};
-
-// Favorite toggle
-window.toggleFavorite = async (productId) => {
-  if (!currentUser) {
-    const ok = confirm("Sign in to save favorites. Sign in now?");
-    if(ok) await signInWithPopup(auth, provider);
-    return;
-  }
-  const favDoc = doc(db, "favorites", currentUser.uid);
-  const has = userFavorites.includes(productId);
-  try{
-    if(has){
-      await updateDoc(favDoc, { productIds: arrayRemove(productId) });
-    } else {
-      // ensure doc exists then update
-      const d = await getDoc(favDoc);
-      if(!d.exists()){
-        await setDoc(favDoc, { productIds: [productId] });
-      } else {
-        await updateDoc(favDoc, { productIds: arrayUnion(productId) });
-      }
-    }
-    await loadUserFavorites(); // refresh local favorites & icons
-  }catch(err){
-    console.error(err); alert("Could not update favorites: "+err.message);
-  }
-};
-
-// Load user favorites into userFavorites array and update UI
-async function loadUserFavorites(){
-  if(!currentUser) { userFavorites = []; updateFavoriteIcons(); return; }
-  try{
-    const favDocRef = doc(db, "favorites", currentUser.uid);
-    const favSnap = await getDoc(favDocRef);
-    userFavorites = favSnap.exists() && Array.isArray(favSnap.data().productIds) ? favSnap.data().productIds : [];
-    updateFavoriteIcons();
-  }catch(err){
-    console.error(err);
-  }
-}
-
-// Update star icon states based on userFavorites
-function updateFavoriteIcons(){
-  document.querySelectorAll(".card").forEach(card=>{
-    const star = card.querySelector(".fav");
-    if(!star) return;
-    const id = card.dataset.id;
-    if(userFavorites.includes(id)){
-      star.classList.add("active");
-      star.innerHTML = "★";
-    } else {
-      star.classList.remove("active");
-      star.innerHTML = "☆";
-    }
-  });
-}
-
-/* ----------------------------
-   Image preview + upload multiple
-   ---------------------------- */
+// Image preview + upload multiple
 document.getElementById("imageFile").addEventListener("change", async (e)=>{
   const files = e.target.files;
   uploadedImages = [];
@@ -443,18 +260,14 @@ document.getElementById("imageFile").addEventListener("change", async (e)=>{
   }
 });
 
-/* ----------------------------
-   Save product
-   ---------------------------- */
+// Save product
 window.saveProduct = async () => {
   if (!currentUser) { alert("Sign in first"); return; }
   if (uploadedImages.length === 0) { alert("Please upload images"); return; }
 
-  const priceVal = Number(document.getElementById("price").value || 0);
-
   const product = {
     name: document.getElementById("name").value,
-    price: priceVal,
+    price: document.getElementById("price").value,
     phone: document.getElementById("phone").value,
     category: document.getElementById("category").value,
     description: document.getElementById("description").value,
@@ -463,9 +276,7 @@ window.saveProduct = async () => {
     region: document.getElementById("region").value,
     images: uploadedImages,
     verified: true,
-    createdAt: (new Date()).toISOString(),
-    ownerUid: currentUser.uid,
-    ownerName: currentUser.displayName || currentUser.email
+    timestamp: Date.now()
   };
 
   try{
@@ -478,60 +289,51 @@ window.saveProduct = async () => {
   }catch(err){ console.error(err); alert("Save failed."); }
 };
 
-/* ----------------------------
-   Real-time fetch & render
-   ---------------------------- */
+// Real-time fetch
 onSnapshot(collection(db,"products"), snapshot=>{
-  productsArr = [];
-  snapshot.forEach(docSnap=>{
-    const p = docSnap.data();
-    productsArr.push({ id: docSnap.id, data: p });
-  });
-  renderProducts();
-});
-
-// Render all products into DOM (initial render / refresh)
-function renderProducts(){
   const productsDiv = document.getElementById("products");
-  productsDiv.innerHTML = "";
-  productsArr.forEach(item => {
-    const p = item.data;
-    const id = item.id;
+  productsDiv.innerHTML="";
+  snapshot.forEach(doc=>{
+    const p = doc.data();
     const div = document.createElement("div");
     div.className="card";
-    div.dataset.category = p.category || "";
-    div.dataset.product = JSON.stringify(p);
-    div.dataset.id = id;
-    const imgSrc = p.images && p.images.length ? p.images[0] : (p.image || "");
-    // Favorite star (clickable)
-    const starBtn = document.createElement("div");
-    starBtn.className = "fav";
-    starBtn.title = "Save to favorites";
-    starBtn.onclick = (ev) => { ev.stopPropagation(); toggleFavorite(id); };
-    starBtn.innerHTML = userFavorites.includes(id) ? "★" : "☆";
-    if(userFavorites.includes(id)) starBtn.classList.add("active");
-    div.appendChild(starBtn);
+    div.dataset.category=p.category;
+    div.dataset.product=JSON.stringify(p);
 
-    div.innerHTML += `
+    const imgSrc = p.images && p.images.length ? p.images[0] : p.image;
+    div.innerHTML = `
       <img src="${imgSrc}" alt="${p.name}">
       <div class="card-body">
         <h3>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h3>
-        <p style="margin:6px 0;"><b>Ksh ${p.price}</b></p>
-        ${ currentUser ? `<a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>`
-                        : `<button class="phone" onclick="requestPhoneAccess('${p.phone}')">Show phone number</button>`
-        }
+        ${currentUser ? `<a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>` : `<a class="phone" href="javascript:void(0);" onclick="alert('Sign in to view phone number')">Show Phone Number</a>`}
       </div>
     `;
     div.onclick = ()=>showDetail(div);
     productsDiv.appendChild(div);
   });
+});
 
-  // After adding cards, ensure favorite icons match any updated userFavorites
-  updateFavoriteIcons();
+// Price filter + sorting
+window.applyFilters = () => {
+  const min = parseFloat(document.getElementById("minPrice").value) || 0;
+  const max = parseFloat(document.getElementById("maxPrice").value) || Infinity;
+  const sort = document.getElementById("sortOrder").value;
 
-  // If sort option is not default, reapply ordering
-  sortProducts();
-}
+  const cards = Array.from(document.querySelectorAll(".card"));
+
+  let filtered = cards.filter(c=>{
+    const p = JSON.parse(c.dataset.product);
+    return p.price >= min && p.price <= max;
+  });
+
+  if(sort==="priceAsc") filtered.sort((a,b)=>JSON.parse(a.dataset.product).price - JSON.parse(b.dataset.product).price);
+  else if(sort==="priceDesc") filtered.sort((a,b)=>JSON.parse(b.dataset.product).price - JSON.parse(a.dataset.product).price);
+  else filtered.sort((a,b)=>JSON.parse(b.dataset.product).timestamp - JSON.parse(a.dataset.product).timestamp);
+
+  const container = document.getElementById("products");
+  container.innerHTML="";
+  filtered.forEach(c=>container.appendChild(c));
+};
 </script>
 </body>
 </html>
