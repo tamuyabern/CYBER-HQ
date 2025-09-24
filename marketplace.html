@@ -35,18 +35,12 @@
     gap:1.5rem; 
     justify-content: center; 
   }
-  @media (min-width:1024px) { 
-    .container { grid-template-columns: repeat(5, 1fr); }
-  }
-  @media (min-width:1280px) { 
-    .container { grid-template-columns: repeat(6, 1fr); }
-  }
   @media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
 
   .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:0.3s ease; }
   .card:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.2); }
-  .card img { width:100%; height:160px; object-fit:contain; background:#fff; }
+  .card img { width:100%; height:160px; object-fit:cover; background:#fff; }
   .card-body { padding:0.5rem; }
   .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
   .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
@@ -60,6 +54,59 @@
   .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:520px; max-height:90vh; overflow-y:auto; position:relative; }
   .modal-content h2 { margin-top:0; color:#0a8f3d; }
   .close { position:absolute; top:8px; right:12px; cursor:pointer; font-size:1.4rem; color:red; }
+
+  /* Professional Add Product Modal */
+  #formModal .modal-content {
+    background: #ffffff;
+    border-radius: 12px;
+    width: 95%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 15px rgba(10,143,61,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  #formModal .modal-content:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 20px rgba(10,143,61,0.35);
+  }
+  #formModal h2 {
+    text-align: center;
+    color: #0a8f3d;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 8px rgba(10,143,61,0.7);
+  }
+  #formModal input, #formModal select, #formModal textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: 0.3s ease;
+  }
+  #formModal input:focus, #formModal select:focus, #formModal textarea:focus {
+    border-color: #0a8f3d;
+    box-shadow: 0 0 8px rgba(10,143,61,0.5);
+    outline: none;
+  }
+  #formModal .submit-btn {
+    background: #0a8f3d;
+    color: white;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    font-size: 16px;
+    transition: 0.3s ease;
+  }
+  #formModal .submit-btn:hover {
+    background: #0c6f2f;
+    box-shadow: 0 0 12px rgba(10,143,61,0.7);
+  }
 
   /* Image previews */
   #imagePreviewContainer { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
