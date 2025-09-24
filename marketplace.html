@@ -22,7 +22,7 @@
   .search-bar { display:flex; justify-content:center; padding:10px; }
   .search-bar input { padding:8px 10px; width:300px; border-radius:6px; border:1px solid #ccc; }
 
-  .filters { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; padding:10px; }
+  .filters { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; padding:10px; }
   .filters input, .filters select, .filters button { padding:4px 6px; border-radius:6px; border:1px solid #ccc; font-size:14px; }
 
   /* Grid Layout */
@@ -41,14 +41,64 @@
   .fab { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:55px; height:55px; font-size:28px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; z-index:1100; }
   .fab:hover { transform:scale(1.1); background:#0c6f2f; }
 
-  /* Modal */
+  /* Modals */
   .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
   .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:520px; max-height:90vh; overflow-y:auto; position:relative; }
   .modal-content h2 { margin-top:0; color:#0a8f3d; }
   .close { position:absolute; top:8px; right:12px; cursor:pointer; font-size:1.4rem; color:red; }
 
-  input, select, textarea { width:100%; margin-bottom:8px; padding:6px; border:1px solid #ccc; border-radius:6px; }
-  .submit-btn { background:#0a8f3d; color:white; padding:10px 14px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; width:100%; }
+  /* Professional Add Product Modal */
+  #formModal .modal-content {
+    background: #ffffff;
+    border-radius: 12px;
+    width: 95%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 15px rgba(10,143,61,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  #formModal .modal-content:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 20px rgba(10,143,61,0.35);
+  }
+  #formModal h2 {
+    text-align: center;
+    color: #0a8f3d;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 8px rgba(10,143,61,0.7);
+  }
+  #formModal input, #formModal select, #formModal textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: 0.3s ease;
+  }
+  #formModal input:focus, #formModal select:focus, #formModal textarea:focus {
+    border-color: #0a8f3d;
+    box-shadow: 0 0 8px rgba(10,143,61,0.5);
+    outline: none;
+  }
+  #formModal .submit-btn {
+    background: #0a8f3d;
+    color: white;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    font-size: 16px;
+    transition: 0.3s ease;
+  }
+  #formModal .submit-btn:hover {
+    background: #0c6f2f;
+    box-shadow: 0 0 12px rgba(10,143,61,0.7);
+  }
 
   /* Image previews */
   #imagePreviewContainer { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
@@ -66,10 +116,6 @@
   #lightbox { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:2000; }
   #lightbox img { max-width:90%; max-height:90%; object-fit:contain; border-radius:6px; }
 
-  @media (max-width:480px) {
-    .filters { flex-direction: column; align-items: stretch; gap:4px; }
-    .filters input, .filters select, .filters button { width:100%; }
-  }
 </style>
 </head>
 <body>
@@ -109,7 +155,6 @@
 </div>
 
 <div class="container" id="products"></div>
-
 <button class="fab" onclick="openForm()">+</button>
 
 <div class="modal" id="detailModal">
@@ -180,7 +225,6 @@ window.filterCategory=(cat,el)=>{
   renderProducts(allProducts.filter(p=>cat==='all'||p.category===cat));
 };
 
-// Image preview & upload
 document.getElementById("imageFile").addEventListener("change", async (e)=>{
   const files=e.target.files;
   uploadedImages=[];
@@ -199,7 +243,6 @@ document.getElementById("imageFile").addEventListener("change", async (e)=>{
   }
 });
 
-// Save product
 window.saveProduct=async()=>{
   if(!currentUser){ alert("Sign in first"); return; }
   if(uploadedImages.length===0){ alert("Please upload images"); return; }
@@ -207,14 +250,12 @@ window.saveProduct=async()=>{
   try{ await addDoc(collection(db,"products"),product); alert("Product posted!"); closeForm(); document.getElementById("imageFile").value=""; document.getElementById("imagePreviewContainer").innerHTML=""; uploadedImages=[]; } catch(err){ console.error(err); alert("Save failed."); }
 };
 
-// Real-time fetch
 onSnapshot(collection(db,"products"), snapshot=>{
   allProducts=[];
   snapshot.forEach(doc=>allProducts.push({...doc.data(), id:doc.id}));
   renderProducts(allProducts);
 });
 
-// Render products
 function renderProducts(products){
   const productsDiv=document.getElementById("products");
   productsDiv.innerHTML="";
@@ -230,7 +271,6 @@ function renderProducts(products){
   });
 }
 
-// Show detail modal
 window.showDetail=(el)=>{
   const p=JSON.parse(el.dataset.product);
   let imagesHtml="";
@@ -250,7 +290,6 @@ window.showDetail=(el)=>{
   document.getElementById("detailModal").style.display="flex";
 };
 
-// Lightbox for carousel
 document.addEventListener("click", e=>{
   if(e.target.classList.contains("carousel-img")){
     const lb=document.getElementById("lightbox");
@@ -259,14 +298,12 @@ document.addEventListener("click", e=>{
   }
 });
 
-// Search independent
 window.applySearch=()=>{
   const query=document.getElementById("searchName").value.toLowerCase();
   const filtered=allProducts.filter(p=>p.name.toLowerCase().includes(query));
   renderProducts(filtered);
 };
 
-// Price + sort filter
 window.applyFilters=()=>{
   const min=Number(document.getElementById("minPrice").value)||0;
   const max=Number(document.getElementById("maxPrice").value)||Infinity;
