@@ -18,6 +18,10 @@
   .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
   .category.active { background:#0a8f3d; color:white; }
 
+  /* Search & filter */
+  .filters { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; padding:10px; }
+  .filters input, .filters select, .filters button { padding:6px 10px; border-radius:6px; border:1px solid #ccc; }
+
   /* Grid Layout */
   .container {
     padding:1rem;
@@ -30,7 +34,7 @@
   @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
 
   .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
-  .card img { width:100%; height:160px; object-fit:contain; background:#fff; } /* Full image in grid */
+  .card img { width:100%; height:160px; object-fit:contain; background:#fff; }
   .card-body { padding:0.5rem; }
   .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
   .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
@@ -69,12 +73,16 @@
   .carousel img {
     width:100%;
     max-height:300px;
-    object-fit:contain;   /* Show full image */
-    background:#fff;      /* White background */
+    object-fit:contain;
+    background:#fff;
     border-radius:8px;
     flex:0 0 100%;
     cursor:pointer;
   }
+
+  /* Lightbox fullscreen */
+  #lightbox { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:2000; }
+  #lightbox img { max-width:90%; max-height:90%; object-fit:contain; border-radius:6px; }
 </style>
 </head>
 <body>
@@ -86,6 +94,19 @@
     <span id="userEmail" class="user-info" style="display:none;"></span>
   </div>
 </header>
+
+<!-- Filters & Search -->
+<div class="filters">
+  <input type="text" id="searchName" placeholder="Search product..." />
+  <input type="number" id="minPrice" placeholder="Min Price" />
+  <input type="number" id="maxPrice" placeholder="Max Price" />
+  <select id="sortOrder">
+    <option value="newest">Newest</option>
+    <option value="priceAsc">Price Low → High</option>
+    <option value="priceDesc">Price High → Low</option>
+  </select>
+  <button onclick="applyFilters()">Apply</button>
+</div>
 
 <div class="categories" id="categories">
   <div class="category active" onclick="filterCategory('all', this)">All</div>
@@ -107,6 +128,11 @@
     <span class="close" onclick="closeDetail()">×</span>
     <div id="detailBody"></div>
   </div>
+</div>
+
+<!-- Lightbox for fullscreen images -->
+<div id="lightbox" onclick="this.style.display='none'">
+  <img id="lightboxImg" src="" />
 </div>
 
 <!-- Post Product Modal -->
@@ -135,67 +161,109 @@
 </div>
 
 <script type="module">
+// Firebase & auth imports (same as before)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4",
-  authDomain: "hq-marketplace-ec236.firebaseapp.com",
-  projectId: "hq-marketplace-ec236",
-  storageBucket: "hq-marketplace-ec236.appspot.com",
-  messagingSenderId: "861547577050",
-  appId: "1:861547577050:web:507b1411e3e199eae3afe3"
-};
+const firebaseConfig = { apiKey:"AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4", authDomain:"hq-marketplace-ec236.firebaseapp.com", projectId:"hq-marketplace-ec236", storageBucket:"hq-marketplace-ec236.appspot.com", messagingSenderId:"861547577050", appId:"1:861547577050:web:507b1411e3e199eae3afe3" };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-
 let currentUser = null;
 let uploadedImages = [];
 
-// Auth state listener
-onAuthStateChanged(auth, user => {
-  currentUser = user;
-  const signBtn = document.getElementById("signBtn");
-  const userEmail = document.getElementById("userEmail");
-  if(user){
-    signBtn.textContent="Sign Out";
-    userEmail.innerHTML = `${user.displayName || user.email} <span class="verified">✔</span>`;
-    userEmail.style.display="inline";
-  }else{
-    signBtn.textContent="Sign In";
-    userEmail.style.display="none";
+onAuthStateChanged(auth,user=>{
+  currentUser=user;
+  const signBtn=document.getElementById("signBtn");
+  const userEmail=document.getElementById("userEmail");
+  if(user){ signBtn.textContent="Sign Out"; userEmail.innerHTML=`${user.displayName||user.email} <span class="verified">✔</span>`; userEmail.style.display="inline"; }
+  else{ signBtn.textContent="Sign In"; userEmail.style.display="none"; }
+});
+
+window.googleSign=async()=>{ if(currentUser){ await signOut(auth); return; } try{ await signInWithPopup(auth,provider); } catch(err){ alert("Google sign-in failed: "+err.message); } };
+window.openForm=()=>{ if(!currentUser){ alert("Sign in first"); return; } document.getElementById("formModal").style.display="flex"; };
+window.closeForm=()=>document.getElementById("formModal").style.display="none";
+window.closeDetail=()=>document.getElementById("detailModal").style.display="none";
+
+window.filterCategory=(cat,el)=>{
+  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+  document.querySelectorAll(".card").forEach(card=>{ card.style.display=(cat==='all'||card.dataset.category===cat)?'block':'none'; });
+};
+
+// Image preview + upload multiple
+document.getElementById("imageFile").addEventListener("change", async (e)=>{
+  const files=e.target.files;
+  uploadedImages=[];
+  const previewContainer=document.getElementById("imagePreviewContainer");
+  previewContainer.innerHTML="";
+  for(const file of files){
+    const imgEl=document.createElement("img");
+    imgEl.src=URL.createObjectURL(file);
+    previewContainer.appendChild(imgEl);
+    const formData=new FormData();
+    formData.append("file",file);
+    formData.append("upload_preset","hq cyber");
+    const cloudName="dqxppopjr";
+    try{ const res=await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,{ method:"POST", body:formData }); const data=await res.json(); if(data.secure_url) uploadedImages.push(data.secure_url); }
+    catch(err){ console.error(err); alert("Upload failed."); }
   }
 });
 
-// Google Sign In/Out
-window.googleSign = async () => {
-  if(currentUser){ await signOut(auth); return; }
-  try{ await signInWithPopup(auth, provider); }
-  catch(err){ alert("Google sign-in failed: "+err.message); }
+// Save product
+window.saveProduct=async()=>{
+  if(!currentUser){ alert("Sign in first"); return; }
+  if(uploadedImages.length===0){ alert("Please upload images"); return; }
+  const product={
+    name:document.getElementById("name").value,
+    price:document.getElementById("price").value,
+    phone:document.getElementById("phone").value,
+    category:document.getElementById("category").value,
+    description:document.getElementById("description").value,
+    condition:document.getElementById("condition").value,
+    specs:document.getElementById("specs").value,
+    region:document.getElementById("region").value,
+    images:uploadedImages,
+    verified:true
+  };
+  try{ await addDoc(collection(db,"products"),product); alert("Product posted!"); closeForm(); document.getElementById("imageFile").value=""; document.getElementById("imagePreviewContainer").innerHTML=""; uploadedImages=[]; }
+  catch(err){ console.error(err); alert("Save failed."); }
 };
 
-// Require login before posting
-window.openForm = () => {
-  if (!currentUser) { alert("You must sign in first to post items."); return; }
-  document.getElementById("formModal").style.display="flex";
-};
-window.closeForm = () => document.getElementById("formModal").style.display="none";
+// Real-time fetch & render
+let allProducts=[];
+onSnapshot(collection(db,"products"), snapshot=>{
+  allProducts=[];
+  snapshot.forEach(doc=>{ allProducts.push({id:doc.id,...doc.data()}); });
+  renderProducts(allProducts);
+});
 
-// Product Detail Modal
-window.showDetail = (el) => {
-  const p = JSON.parse(el.dataset.product);
-  let imagesHtml = "";
-  if (p.images && p.images.length){
-    imagesHtml = `<div class="carousel">${p.images.map(url=>`<img class="carousel-img" src="${url}">`).join("")}</div>`;
-  } else {
-    imagesHtml = `<img src="${p.image}" style="width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px;">`;
-  }
+// Render products
+function renderProducts(products){
+  const productsDiv=document.getElementById("products");
+  productsDiv.innerHTML="";
+  products.forEach(p=>{
+    const div=document.createElement("div");
+    div.className="card";
+    div.dataset.category=p.category;
+    div.dataset.product=JSON.stringify(p);
+    const imgSrc=p.images&&p.images.length?p.images[0]:p.image;
+    div.innerHTML=`<img src="${imgSrc}" alt="${p.name}"><div class="card-body"><h3>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h3><a class="phone" href="tel:${currentUser?p.phone:'#'}" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser?p.phone:'Show Phone Number'}</a></div>`;
+    div.onclick=()=>showDetail(div);
+    productsDiv.appendChild(div);
+  });
+}
 
-  document.getElementById("detailBody").innerHTML = `
-    <h2>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
+// Detail modal
+window.showDetail=(el)=>{
+  const p=JSON.parse(el.dataset.product);
+  let imagesHtml="";
+  if(p.images && p.images.length){ imagesHtml=`<div class="carousel">${p.images.map(url=>`<img src="${url}" class="carousel-img">`).join("")}</div>`; }
+  else{ imagesHtml=`<img src="${p.image}" style="width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px;">`; }
+  document.getElementById("detailBody").innerHTML=`
+    <h2>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h2>
     ${imagesHtml}
     <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
     <p><b>Description:</b> ${p.description}</p>
@@ -203,119 +271,31 @@ window.showDetail = (el) => {
     <p><b>Category:</b> ${p.category}</p>
     <p><b>Specifications:</b> ${p.specs}</p>
     <p><b>Location:</b> ${p.region}</p>
-    <p><a href="tel:${currentUser ? p.phone : '#'}" class="phone" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser ? p.phone : 'Show Phone Number'}</a></p>
+    <p><a href="tel:${currentUser?p.phone:'#'}" class="phone" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser?p.phone:'Show Phone Number'}</a></p>
   `;
-  document.getElementById("detailModal").style.display = "flex";
-};
-window.closeDetail = () => document.getElementById("detailModal").style.display = "none";
-
-// Category filter
-window.filterCategory = (cat, el) => {
-  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
-  el.classList.add("active");
-  document.querySelectorAll(".card").forEach(card=>{
-    card.style.display = (cat==='all'||card.dataset.category===cat)?'block':'none';
-  });
+  document.getElementById("detailModal").style.display="flex";
 };
 
-// Image preview + upload multiple
-document.getElementById("imageFile").addEventListener("change", async (e)=>{
-  const files = e.target.files;
-  uploadedImages = [];
-  const previewContainer = document.getElementById("imagePreviewContainer");
-  previewContainer.innerHTML = "";
-
-  for (const file of files){
-    const imgEl = document.createElement("img");
-    imgEl.src = URL.createObjectURL(file);
-    previewContainer.appendChild(imgEl);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "hq cyber");
-    const cloudName = "dqxppopjr";
-    try{
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-        method:"POST", body:formData
-      });
-      const data = await res.json();
-      if(data.secure_url) uploadedImages.push(data.secure_url);
-    }catch(err){ console.error(err); alert("Upload failed."); }
+// Lightbox
+document.addEventListener("click", e=>{
+  if(e.target.classList.contains("carousel-img")){
+    const lb=document.getElementById("lightbox");
+    const lbImg=document.getElementById("lightboxImg");
+    lbImg.src=e.target.src; lb.style.display="flex";
   }
 });
 
-// Save product
-window.saveProduct = async () => {
-  if (!currentUser) { alert("Sign in first"); return; }
-  if (uploadedImages.length === 0) { alert("Please upload images"); return; }
-
-  const product = {
-    name: document.getElementById("name").value,
-    price: document.getElementById("price").value,
-    phone: document.getElementById("phone").value,
-    category: document.getElementById("category").value,
-    description: document.getElementById("description").value,
-    condition: document.getElementById("condition").value,
-    specs: document.getElementById("specs").value,
-    region: document.getElementById("region").value,
-    images: uploadedImages,
-    verified: true
-  };
-
-  try{
-    await addDoc(collection(db,"products"), product);
-    alert("Product posted!");
-    closeForm();
-    document.getElementById("imageFile").value="";
-    document.getElementById("imagePreviewContainer").innerHTML="";
-    uploadedImages = [];
-  }catch(err){ console.error(err); alert("Save failed."); }
+// Search & filter function
+window.applyFilters=()=>{
+  const name=document.getElementById("searchName").value.toLowerCase();
+  const min=parseFloat(document.getElementById("minPrice").value)||0;
+  const max=parseFloat(document.getElementById("maxPrice").value)||Infinity;
+  const sort=document.getElementById("sortOrder").value;
+  let filtered=allProducts.filter(p=>p.name.toLowerCase().includes(name)&&p.price>=min&&p.price<=max);
+  if(sort==='priceAsc') filtered.sort((a,b)=>a.price-b.price);
+  if(sort==='priceDesc') filtered.sort((a,b)=>b.price-a.price);
+  renderProducts(filtered);
 };
-
-// Real-time fetch
-onSnapshot(collection(db,"products"), snapshot=>{
-  const productsDiv = document.getElementById("products");
-  productsDiv.innerHTML="";
-  snapshot.forEach(doc=>{
-    const p = doc.data();
-    const div = document.createElement("div");
-    div.className="card";
-    div.dataset.category=p.category;
-    div.dataset.product=JSON.stringify(p);
-    const imgSrc = p.images && p.images.length ? p.images[0] : p.image;
-    div.innerHTML = `
-      <img src="${imgSrc}" alt="${p.name}">
-      <div class="card-body">
-        <h3>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h3>
-        <a class="phone" href="tel:${currentUser ? p.phone : '#'}" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser ? p.phone : 'Show Phone Number'}</a>
-      </div>
-    `;
-    div.onclick = ()=>showDetail(div);
-    productsDiv.appendChild(div);
-  });
-});
-
-// Click to fullscreen image
-document.addEventListener("click", e => {
-  if (e.target.classList.contains("carousel-img")) {
-    const src = e.target.src;
-    const popup = window.open("", "_blank");
-    popup.document.write(`
-      <html>
-      <head>
-        <title>Image Preview</title>
-        <style>
-          body { margin:0; background:#fff; display:flex; justify-content:center; align-items:center; height:100vh; }
-          img { max-width:100%; max-height:100%; object-fit:contain; }
-        </style>
-      </head>
-      <body>
-        <img src="${src}" />
-      </body>
-      </html>
-    `);
-  }
-});
 </script>
 </body>
 </html>
