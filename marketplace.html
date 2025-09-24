@@ -15,15 +15,18 @@
   .sign-btn { background:#1da1f2; color:white; }
 
   .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
-  .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
+  .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; transition:0.3s ease; }
   .category.active { background:#0a8f3d; color:white; }
+  .category:hover { box-shadow: 0 0 10px rgba(10,143,61,0.5); }
 
   /* Search & filter */
   .search-bar { display:flex; justify-content:center; padding:10px; }
-  .search-bar input { padding:8px 10px; width:300px; border-radius:6px; border:1px solid #ccc; }
+  .search-bar input { padding:8px 10px; width:300px; border-radius:6px; border:1px solid #ccc; transition:0.3s ease; }
+  .search-bar input:focus { border-color:#0a8f3d; box-shadow:0 0 10px rgba(10,143,61,0.5); outline:none; }
 
   .filters { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; padding:10px; }
-  .filters input, .filters select, .filters button { padding:4px 6px; border-radius:6px; border:1px solid #ccc; font-size:14px; }
+  .filters input, .filters select, .filters button { padding:4px 6px; border-radius:6px; border:1px solid #ccc; font-size:14px; transition:0.3s ease; }
+  .filters input:focus, .filters select:focus { border-color:#0a8f3d; box-shadow:0 0 8px rgba(10,143,61,0.5); outline:none; }
 
   /* Grid Layout */
   .container { padding:1rem; display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:1rem; }
@@ -31,78 +34,36 @@
   @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
   @media (min-width:769px) { .container { grid-template-columns: repeat(4, 1fr); } }
 
-  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; }
+  .card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.15); cursor:pointer; text-align:center; transition:0.3s ease; }
   .card img { width:100%; height:160px; object-fit:contain; background:#fff; }
   .card-body { padding:0.5rem; }
   .card-body h3 { margin:4px 0; font-size:1rem; display:flex; align-items:center; justify-content:center; gap:4px; }
   .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
 
+  .card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.25), 0 0 10px rgba(10,143,61,0.2); }
+
   /* Floating Add Button */
-  .fab { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:55px; height:55px; font-size:28px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; z-index:1100; }
-  .fab:hover { transform:scale(1.1); background:#0c6f2f; }
+  .fab { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:55px; height:55px; font-size:28px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; z-index:1100; transition:0.3s ease; }
+  .fab:hover { transform:scale(1.1); background:#0c6f2f; box-shadow:0 0 12px rgba(10,143,61,0.5); }
 
   /* Modals */
   .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:520px; max-height:90vh; overflow-y:auto; position:relative; }
-  .modal-content h2 { margin-top:0; color:#0a8f3d; }
+  .modal-content { background:white; padding:1.5rem; border-radius:12px; width:95%; max-width:520px; max-height:90vh; overflow-y:auto; position:relative; box-shadow:0 8px 20px rgba(0,0,0,0.3),0 0 15px rgba(10,143,61,0.2); transition:transform 0.3s ease, box-shadow 0.3s ease; }
+  .modal-content:hover { transform: translateY(-3px); box-shadow:0 12px 25px rgba(0,0,0,0.4),0 0 20px rgba(10,143,61,0.35); }
+  .modal-content h2 { margin-top:0; text-align:center; color:#0a8f3d; margin-bottom:1rem; text-shadow:0 0 8px rgba(10,143,61,0.7); }
   .close { position:absolute; top:8px; right:12px; cursor:pointer; font-size:1.4rem; color:red; }
 
-  /* Professional Add Product Modal */
-  #formModal .modal-content {
-    background: #ffffff;
-    border-radius: 12px;
-    width: 95%;
-    max-width: 520px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    padding: 1.5rem;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 15px rgba(10,143,61,0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  #formModal .modal-content:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 20px rgba(10,143,61,0.35);
-  }
-  #formModal h2 {
-    text-align: center;
-    color: #0a8f3d;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 8px rgba(10,143,61,0.7);
-  }
-  #formModal input, #formModal select, #formModal textarea {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: 0.3s ease;
-  }
-  #formModal input:focus, #formModal select:focus, #formModal textarea:focus {
-    border-color: #0a8f3d;
-    box-shadow: 0 0 8px rgba(10,143,61,0.5);
-    outline: none;
-  }
-  #formModal .submit-btn {
-    background: #0a8f3d;
-    color: white;
-    padding: 12px 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-    font-size: 16px;
-    transition: 0.3s ease;
-  }
-  #formModal .submit-btn:hover {
-    background: #0c6f2f;
-    box-shadow: 0 0 12px rgba(10,143,61,0.7);
-  }
+  /* Add Product Inputs */
+  #formModal input, #formModal select, #formModal textarea { width:100%; margin-bottom:10px; padding:8px 10px; border:1px solid #ccc; border-radius:8px; transition:0.3s ease; }
+  #formModal input:focus, #formModal select:focus, #formModal textarea:focus { border-color:#0a8f3d; box-shadow:0 0 10px rgba(10,143,61,0.5); outline:none; }
+
+  #formModal .submit-btn { background:#0a8f3d; color:white; padding:12px 18px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; width:100%; font-size:16px; transition:0.3s ease; }
+  #formModal .submit-btn:hover { background:#0c6f2f; box-shadow:0 0 12px rgba(10,143,61,0.7); }
 
   /* Image previews */
   #imagePreviewContainer { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
-  #imagePreviewContainer img { width:80px; height:80px; object-fit:contain; background:#fff; border-radius:6px; border:1px solid #ccc; }
+  #imagePreviewContainer img { width:80px; height:80px; object-fit:contain; background:#fff; border-radius:6px; border:1px solid #ccc; transition:0.3s ease; }
+  #imagePreviewContainer img:hover { box-shadow:0 0 10px rgba(10,143,61,0.5); transform:scale(1.05); }
 
   /* Verified Badge */
   .verified { color:#1da1f2; font-size:16px; }
@@ -110,12 +71,12 @@
 
   /* Carousel in detail modal */
   .carousel { display:flex; overflow-x:auto; gap:8px; }
-  .carousel img { width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px; flex:0 0 100%; cursor:pointer; }
+  .carousel img { width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px; flex:0 0 100%; cursor:pointer; transition:0.3s ease; }
+  .carousel img:hover { box-shadow:0 0 10px rgba(10,143,61,0.5); transform:scale(1.02); }
 
   /* Lightbox fullscreen */
   #lightbox { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:2000; }
   #lightbox img { max-width:90%; max-height:90%; object-fit:contain; border-radius:6px; }
-
 </style>
 </head>
 <body>
@@ -157,6 +118,7 @@
 <div class="container" id="products"></div>
 <button class="fab" onclick="openForm()">+</button>
 
+<!-- Product Detail Modal -->
 <div class="modal" id="detailModal">
   <div class="modal-content">
     <span class="close" onclick="closeDetail()">×</span>
@@ -164,10 +126,12 @@
   </div>
 </div>
 
+<!-- Lightbox -->
 <div id="lightbox" onclick="this.style.display='none'">
   <img id="lightboxImg" src="" />
 </div>
 
+<!-- Add Product Modal -->
 <div class="modal" id="formModal">
   <div class="modal-content">
     <span class="close" onclick="closeForm()">×</span>
@@ -275,33 +239,11 @@ window.showDetail=(el)=>{
   const p=JSON.parse(el.dataset.product);
   let imagesHtml="";
   if(p.images && p.images.length){ imagesHtml=`<div class="carousel">${p.images.map(url=>`<img src="${url}" class="carousel-img">`).join("")}</div>`; }
-  else{ imagesHtml=`<img src="${p.image}" style="width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px;">`; }
-  document.getElementById("detailBody").innerHTML=`
-    <h2>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h2>
-    ${imagesHtml}
-    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
-    <p><b>Description:</b> ${p.description}</p>
-    <p><b>Condition:</b> ${p.condition}</p>
-    <p><b>Category:</b> ${p.category}</p>
-    <p><b>Specifications:</b> ${p.specs}</p>
-    <p><b>Location:</b> ${p.region}</p>
-    <p><a href="tel:${currentUser?p.phone:'#'}" class="phone" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser?p.phone:'Show Phone Number'}</a></p>
-  `;
+  else{ imagesHtml=`<img src="${p.image}" style="width:100%;max-height:300px;">`; }
+  const html=`${imagesHtml}<h3>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h3><p><strong>Price:</strong> $${p.price}</p><p><strong>Condition:</strong> ${p.condition}</p><p><strong>Specs:</strong> ${p.specs}</p><p><strong>Description:</strong> ${p.description}</p><p><strong>Location:</strong> ${p.region}</p><p><a class="phone" href="tel:${currentUser?p.phone:'#'}">📞 ${currentUser?p.phone:'Show Phone Number'}</a></p>`;
+  document.getElementById("detailBody").innerHTML=html;
+  document.querySelectorAll(".carousel-img").forEach(img=>img.onclick=()=>{ document.getElementById("lightboxImg").src=img.src; document.getElementById("lightbox").style.display="flex"; });
   document.getElementById("detailModal").style.display="flex";
-};
-
-document.addEventListener("click", e=>{
-  if(e.target.classList.contains("carousel-img")){
-    const lb=document.getElementById("lightbox");
-    const lbImg=document.getElementById("lightboxImg");
-    lbImg.src=e.target.src; lb.style.display="flex";
-  }
-});
-
-window.applySearch=()=>{
-  const query=document.getElementById("searchName").value.toLowerCase();
-  const filtered=allProducts.filter(p=>p.name.toLowerCase().includes(query));
-  renderProducts(filtered);
 };
 
 window.applyFilters=()=>{
@@ -309,10 +251,15 @@ window.applyFilters=()=>{
   const max=Number(document.getElementById("maxPrice").value)||Infinity;
   const sort=document.getElementById("sortOrder").value;
   let filtered=allProducts.filter(p=>p.price>=min && p.price<=max);
-  if(sort==='priceAsc') filtered.sort((a,b)=>a.price-b.price);
-  if(sort==='priceDesc') filtered.sort((a,b)=>b.price-a.price);
-  if(sort==='newest') filtered.sort((a,b)=>b.id<b.id?-1:1);
+  if(sort==="priceAsc") filtered.sort((a,b)=>a.price-b.price);
+  if(sort==="priceDesc") filtered.sort((a,b)=>b.price-a.price);
+  if(sort==="newest") filtered.reverse();
   renderProducts(filtered);
+};
+
+window.applySearch=()=>{
+  const q=document.getElementById("searchName").value.toLowerCase();
+  renderProducts(allProducts.filter(p=>p.name.toLowerCase().includes(q)));
 };
 </script>
 </body>
