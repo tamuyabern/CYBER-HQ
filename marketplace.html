@@ -73,11 +73,8 @@
     background:#fff;      /* White background */
     border-radius:8px;
     flex:0 0 100%;
+    cursor:pointer;
   }
-
-  /* Price filter and sorting */
-  .filters { display:flex; justify-content:center; gap:8px; margin:10px 0; flex-wrap:wrap; }
-  .filters input, .filters select { width:auto; }
 </style>
 </head>
 <body>
@@ -89,17 +86,6 @@
     <span id="userEmail" class="user-info" style="display:none;"></span>
   </div>
 </header>
-
-<div class="filters">
-  <input type="number" id="minPrice" placeholder="Min Price" />
-  <input type="number" id="maxPrice" placeholder="Max Price" />
-  <select id="sortOrder">
-    <option value="newest">Newest</option>
-    <option value="priceAsc">Price Low → High</option>
-    <option value="priceDesc">Price High → Low</option>
-  </select>
-  <button onclick="applyFilters()">Apply</button>
-</div>
 
 <div class="categories" id="categories">
   <div class="category active" onclick="filterCategory('all', this)">All</div>
@@ -203,12 +189,10 @@ window.showDetail = (el) => {
   const p = JSON.parse(el.dataset.product);
   let imagesHtml = "";
   if (p.images && p.images.length){
-    imagesHtml = `<div class="carousel">${p.images.map(url=>`<img src="${url}" class="carousel-img">`).join("")}</div>`;
+    imagesHtml = `<div class="carousel">${p.images.map(url=>`<img class="carousel-img" src="${url}">`).join("")}</div>`;
   } else {
     imagesHtml = `<img src="${p.image}" style="width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px;">`;
   }
-
-  const phoneHtml = currentUser ? `<a href="tel:${p.phone}" class="phone">📞 ${p.phone}</a>` : `<a href="javascript:void(0);" class="phone" onclick="alert('Sign in to view phone number')">Show Phone Number</a>`;
 
   document.getElementById("detailBody").innerHTML = `
     <h2>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
@@ -219,7 +203,7 @@ window.showDetail = (el) => {
     <p><b>Category:</b> ${p.category}</p>
     <p><b>Specifications:</b> ${p.specs}</p>
     <p><b>Location:</b> ${p.region}</p>
-    <p>${phoneHtml}</p>
+    <p><a href="tel:${currentUser ? p.phone : '#'}" class="phone" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser ? p.phone : 'Show Phone Number'}</a></p>
   `;
   document.getElementById("detailModal").style.display = "flex";
 };
@@ -275,8 +259,7 @@ window.saveProduct = async () => {
     specs: document.getElementById("specs").value,
     region: document.getElementById("region").value,
     images: uploadedImages,
-    verified: true,
-    timestamp: Date.now()
+    verified: true
   };
 
   try{
@@ -299,13 +282,12 @@ onSnapshot(collection(db,"products"), snapshot=>{
     div.className="card";
     div.dataset.category=p.category;
     div.dataset.product=JSON.stringify(p);
-
     const imgSrc = p.images && p.images.length ? p.images[0] : p.image;
     div.innerHTML = `
       <img src="${imgSrc}" alt="${p.name}">
       <div class="card-body">
         <h3>${p.name} ${p.verified ? '<span class="verified">✔</span>' : ''}</h3>
-        ${currentUser ? `<a class="phone" href="tel:${p.phone}">📞 ${p.phone}</a>` : `<a class="phone" href="javascript:void(0);" onclick="alert('Sign in to view phone number')">Show Phone Number</a>`}
+        <a class="phone" href="tel:${currentUser ? p.phone : '#'}" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser ? p.phone : 'Show Phone Number'}</a>
       </div>
     `;
     div.onclick = ()=>showDetail(div);
@@ -313,27 +295,27 @@ onSnapshot(collection(db,"products"), snapshot=>{
   });
 });
 
-// Price filter + sorting
-window.applyFilters = () => {
-  const min = parseFloat(document.getElementById("minPrice").value) || 0;
-  const max = parseFloat(document.getElementById("maxPrice").value) || Infinity;
-  const sort = document.getElementById("sortOrder").value;
-
-  const cards = Array.from(document.querySelectorAll(".card"));
-
-  let filtered = cards.filter(c=>{
-    const p = JSON.parse(c.dataset.product);
-    return p.price >= min && p.price <= max;
-  });
-
-  if(sort==="priceAsc") filtered.sort((a,b)=>JSON.parse(a.dataset.product).price - JSON.parse(b.dataset.product).price);
-  else if(sort==="priceDesc") filtered.sort((a,b)=>JSON.parse(b.dataset.product).price - JSON.parse(a.dataset.product).price);
-  else filtered.sort((a,b)=>JSON.parse(b.dataset.product).timestamp - JSON.parse(a.dataset.product).timestamp);
-
-  const container = document.getElementById("products");
-  container.innerHTML="";
-  filtered.forEach(c=>container.appendChild(c));
-};
+// Click to fullscreen image
+document.addEventListener("click", e => {
+  if (e.target.classList.contains("carousel-img")) {
+    const src = e.target.src;
+    const popup = window.open("", "_blank");
+    popup.document.write(`
+      <html>
+      <head>
+        <title>Image Preview</title>
+        <style>
+          body { margin:0; background:#fff; display:flex; justify-content:center; align-items:center; height:100vh; }
+          img { max-width:100%; max-height:100%; object-fit:contain; }
+        </style>
+      </head>
+      <body>
+        <img src="${src}" />
+      </body>
+      </html>
+    `);
+  }
+});
 </script>
 </body>
 </html>
