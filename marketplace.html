@@ -1,133 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>HQ Marketplace</title>
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
-  header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
-  header h1 { margin:0; }
+  :root{
+    --green:#0a8f3d;
+    --accent:orange;
+  }
 
-  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
-  .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; -webkit-font-smoothing:antialiased; }
+  header { background:var(--green); color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
+  header h1 { margin:0; font-size:1.1rem; }
+
+  .actions { display:flex; justify-content:center; gap:0.5rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
+  .action-btn { background:var(--accent); color:black; border:none; padding:6px 12px; border-radius:18px; cursor:pointer; font-weight:bold; }
   .action-btn:hover { background:darkorange; }
   .sign-btn { background:#1da1f2; color:white; }
 
   .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
-  .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
-  .category.active { background:#0a8f3d; color:white; }
+  .category { flex:0 0 auto; background:white; border:1px solid var(--green); border-radius:20px; padding:6px 12px; cursor:pointer; white-space:nowrap;}
+  .category.active { background:var(--green); color:white; }
 
-  /* Search & filter */
-  .search-bar { display:flex; justify-content:center; padding:10px; }
-  .search-bar input { padding:8px 10px; width:300px; border-radius:6px; border:1px solid #ccc; transition:0.3s ease; }
-  .search-bar input:focus { outline:none; border-color:#0a8f3d; box-shadow:0 0 8px rgba(10,143,61,0.5); }
+  /* Search & filter - responsive */
+  .search-bar { display:flex; justify-content:center; padding:8px 10px; }
+  .search-bar input { padding:8px 10px; width:100%; max-width:420px; border-radius:6px; border:1px solid #ccc; transition:0.18s ease; box-sizing:border-box; }
+  .search-bar input:focus { outline:none; border-color:var(--green); box-shadow:0 0 8px rgba(10,143,61,0.14); }
 
-  .filters { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; padding:10px; }
-  .filters input, .filters select, .filters button { padding:4px 6px; border-radius:6px; border:1px solid #ccc; font-size:14px; transition:0.3s ease; }
-  .filters input:focus, .filters select:focus { outline:none; border-color:#0a8f3d; box-shadow:0 0 8px rgba(10,143,61,0.5); }
+  .filters { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; padding:8px 10px; }
+  .filters input, .filters select, .filters button { padding:6px 8px; border-radius:6px; border:1px solid #ccc; font-size:14px; transition:0.18s ease; }
+  .filters input:focus, .filters select:focus { outline:none; border-color:var(--green); box-shadow:0 0 8px rgba(10,143,61,0.12); }
 
-  /* Grid Layout */
-  .container { 
-    padding:2rem 1rem; 
-    display:grid; 
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-    gap:1.5rem; 
-    justify-content: center; 
+  /* Grid Layout - responsive and centered */
+  .container {
+    padding:1.25rem;
+    display:grid;
+    /* each column will be between 160px and 220px; grid auto-fits cols */
+    grid-template-columns: repeat(auto-fit, minmax(160px, 220px));
+    gap:1rem;
+    justify-content:center;        /* center the whole grid */
+    justify-items:center;         /* center items in each cell */
+    box-sizing:border-box;
   }
-  @media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
 
-  /* Fix card size */
-.card {
-  width: 200px;            /* fixed width */
-  height: 280px;           /* fixed height */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+  /* Card - responsive width (100% of grid cell), max width keeps consistent look */
+  .card {
+    width: 100%;
+    max-width: 220px;
+    height: 280px;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 2px 6px rgba(0,0,0,0.12);
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow:0 6px 18px rgba(0,0,0,0.18); }
 
-/* Fix image size */
-.card img {
-  width: 100%;
-  height: 160px;           /* consistent height */
-  object-fit: cover;       /* crop/scale to fit */
-}
+  /* Image keeps the same aspect on all screens */
+  .card img {
+    width:100%;
+    aspect-ratio: 4 / 3;    /* keeps consistent ratio and responsive height */
+    object-fit: cover;
+    background:#fff;
+    display:block;
+  }
 
-/* Fix body size */
-.card-body {
-  flex: 1;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100px;       /* keeps card body equal */
-}
+  .card-body {
+    padding:0.6rem;
+    flex: 1 1 auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    box-sizing:border-box;
+  }
+  .card-body h3 { margin:0; font-size:1rem; text-align:center; display:flex; align-items:center; justify-content:center; gap:6px; line-height:1.1; }
 
-  .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
+  /* Phone number box (full width inside card) */
+  .phone {
+    display:block;
+    width:100%;
+    box-sizing:border-box;
+    background:var(--accent);
+    color:black;
+    padding:8px 10px;
+    border-radius:8px;
+    border:2px solid #e69500;
+    font-weight:bold;
+    text-align:center;
+    text-decoration:none;
+    margin-top:8px;
+    transition: background .15s ease, color .15s ease;
+  }
+  .phone:hover { background: darkorange; color:white; }
+
+  /* Disabled/locked look when not signed in */
+  .phone-disabled {
+    display:block;
+    width:100%;
+    box-sizing:border-box;
+    background:#eee;
+    color:#777;
+    padding:8px 10px;
+    border-radius:8px;
+    border:2px solid #ddd;
+    font-weight:bold;
+    text-align:center;
+    margin-top:8px;
+    pointer-events:none;
+  }
 
   /* Floating Add Button */
-  .fab { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:55px; height:55px; font-size:28px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; z-index:1100; }
-  .fab:hover { transform:scale(1.1); background:#0c6f2f; }
+  .fab { position:fixed; bottom:18px; right:18px; background:var(--green); color:white; border:none; border-radius:50%; width:54px; height:54px; font-size:26px; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,0.25); display:flex; align-items:center; justify-content:center; z-index:1100; }
+  .fab:hover { transform:scale(1.06); background:#0c6f2f; }
 
   /* Modals */
-  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:520px; max-height:90vh; overflow-y:auto; position:relative; }
-  .modal-content h2 { margin-top:0; color:#0a8f3d; }
-  .close { position:absolute; top:8px; right:12px; cursor:pointer; font-size:1.4rem; color:red; }
-
-  /* Professional Add Product Modal */
-  #formModal .modal-content {
-    background: #ffffff;
-    border-radius: 12px;
-    width: 95%;
-    max-width: 520px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    padding: 1.5rem;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 15px rgba(10,143,61,0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  #formModal .modal-content:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.4), 0 0 20px rgba(10,143,61,0.35);
-  }
-  #formModal h2 {
-    text-align: center;
-    color: #0a8f3d;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 8px rgba(10,143,61,0.7);
-  }
-  #formModal input, #formModal select, #formModal textarea {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: 0.3s ease;
-  }
-  #formModal input:focus, #formModal select:focus, #formModal textarea:focus {
-    border-color: #0a8f3d;
-    box-shadow: 0 0 8px rgba(10,143,61,0.5);
-    outline: none;
-  }
-  #formModal .submit-btn {
-    background: #0a8f3d;
-    color: white;
-    padding: 12px 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-    font-size: 16px;
-    transition: 0.3s ease;
-  }
-  #formModal .submit-btn:hover {
-    background: #0c6f2f;
-    box-shadow: 0 0 12px rgba(10,143,61,0.7);
-  }
+  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.55); justify-content:center; align-items:center; z-index:1000; padding:12px; }
+  .modal-content { background:white; padding:1rem; border-radius:10px; width:100%; max-width:520px; max-height:92vh; overflow-y:auto; position:relative; box-sizing:border-box; }
+  .modal-content h2 { margin-top:0; color:var(--green); }
+  .close { position:absolute; top:8px; right:12px; cursor:pointer; font-size:1.3rem; color:#b33; }
 
   /* Image previews */
   #imagePreviewContainer { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
@@ -135,7 +129,6 @@
 
   /* Verified Badge */
   .verified { color:#1da1f2; font-size:16px; }
-  .user-info { display:flex; align-items:center; gap:6px; }
 
   /* Carousel in detail modal */
   .carousel { display:flex; overflow-x:auto; gap:8px; }
@@ -144,6 +137,16 @@
   /* Lightbox fullscreen */
   #lightbox { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:2000; }
   #lightbox img { max-width:90%; max-height:90%; object-fit:contain; border-radius:6px; }
+
+  /* Mobile tweaks */
+  @media (max-width:480px){
+    .container { padding: 12px 10px; gap:10px; grid-template-columns: repeat(2, 1fr); }
+    .card { height: auto; } /* allow card to grow on small screens so text doesn't overlap */
+    .fab { width:48px; height:48px; font-size:22px; right:12px; bottom:12px; }
+    .search-bar { padding:6px; }
+    .filters { padding:6px; gap:8px; }
+    .categories { padding:8px; gap:6px; }
+  }
 </style>
 </head>
 <body>
@@ -173,7 +176,7 @@
   <button onclick="applyFilters()">Apply</button>
 </div>
 
-<div class="categories" id="categories">
+<div class="categories" id="categories" aria-hidden="false">
   <div class="category active" onclick="filterCategory('all', this)">All</div>
   <div class="category" onclick="filterCategory('Phones', this)">Phones</div>
   <div class="category" onclick="filterCategory('Cars', this)">Cars</div>
@@ -183,10 +186,11 @@
   <div class="category" onclick="filterCategory('Others', this)">Others</div>
 </div>
 
-<div class="container" id="products"></div>
+<div class="container" id="products" aria-live="polite"></div>
+
 <button class="fab" onclick="openForm()">+</button>
 
-<div class="modal" id="detailModal">
+<div class="modal" id="detailModal" role="dialog" aria-modal="true">
   <div class="modal-content">
     <span class="close" onclick="closeDetail()">×</span>
     <div id="detailBody"></div>
@@ -197,7 +201,7 @@
   <img id="lightboxImg" src="" />
 </div>
 
-<div class="modal" id="formModal">
+<div class="modal" id="formModal" aria-hidden="true">
   <div class="modal-content">
     <span class="close" onclick="closeForm()">×</span>
     <h2>Post Your Product</h2>
@@ -232,116 +236,221 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+
 let currentUser = null;
 let uploadedImages = [];
 let allProducts = [];
 
-onAuthStateChanged(auth,user=>{
-  currentUser=user;
-  const signBtn=document.getElementById("signBtn");
-  const userEmail=document.getElementById("userEmail");
-  if(user){ signBtn.textContent="Sign Out"; userEmail.innerHTML=`${user.displayName||user.email} <span class="verified">✔</span>`; userEmail.style.display="inline"; }
-  else{ signBtn.textContent="Sign In"; userEmail.style.display="none"; }
-});
-
-window.googleSign=async()=>{ if(currentUser){ await signOut(auth); return; } try{ await signInWithPopup(auth,provider); } catch(err){ alert("Google sign-in failed: "+err.message); } };
-window.openForm=()=>{ if(!currentUser){ alert("Sign in first"); return; } document.getElementById("formModal").style.display="flex"; };
-window.closeForm=()=>document.getElementById("formModal").style.display="none";
-window.closeDetail=()=>document.getElementById("detailModal").style.display="none";
-
-window.filterCategory=(cat,el)=>{
-  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
-  el.classList.add("active");
-  renderProducts(allProducts.filter(p=>cat==='all'||p.category===cat));
-};
-
-document.getElementById("imageFile").addEventListener("change", async (e)=>{
-  const files=e.target.files;
-  uploadedImages=[];
-  const previewContainer=document.getElementById("imagePreviewContainer");
-  previewContainer.innerHTML="";
-  for(const file of files){
-    const imgEl=document.createElement("img");
-    imgEl.src=URL.createObjectURL(file);
-    previewContainer.appendChild(imgEl);
-    const formData=new FormData();
-    formData.append("file",file);
-    formData.append("upload_preset","hq cyber");
-    const cloudName="dqxppopjr";
-    try{ const res=await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,{ method:"POST", body:formData }); const data=await res.json(); if(data.secure_url) uploadedImages.push(data.secure_url); }
-    catch(err){ console.error(err); alert("Upload failed."); }
+/* Auth UI */
+onAuthStateChanged(auth, user => {
+  currentUser = user;
+  const signBtn = document.getElementById("signBtn");
+  const userEmail = document.getElementById("userEmail");
+  if (user) {
+    signBtn.textContent = "Sign Out";
+    userEmail.innerHTML = `${user.displayName || user.email} <span class="verified">✔</span>`;
+    userEmail.style.display = "inline";
+  } else {
+    signBtn.textContent = "Sign In";
+    userEmail.style.display = "none";
   }
 });
 
-window.saveProduct=async()=>{
-  if(!currentUser){ alert("Sign in first"); return; }
-  if(uploadedImages.length===0){ alert("Please upload images"); return; }
-  const product={ name:document.getElementById("name").value, price:Number(document.getElementById("price").value), phone:document.getElementById("phone").value, category:document.getElementById("category").value, description:document.getElementById("description").value, condition:document.getElementById("condition").value, specs:document.getElementById("specs").value, region:document.getElementById("region").value, images:uploadedImages, verified:true };
-  try{ await addDoc(collection(db,"products"),product); alert("Product posted!"); closeForm(); document.getElementById("imageFile").value=""; document.getElementById("imagePreviewContainer").innerHTML=""; uploadedImages=[]; } catch(err){ console.error(err); alert("Save failed."); }
+window.googleSign = async () => {
+  if (currentUser) { await signOut(auth); return; }
+  try { await signInWithPopup(auth, provider); } catch (err) { alert("Google sign-in failed: " + err.message); }
 };
 
-onSnapshot(collection(db,"products"), snapshot=>{
-  allProducts=[];
-  snapshot.forEach(doc=>allProducts.push({...doc.data(), id:doc.id}));
+window.openForm = () => { if (!currentUser) { alert("Sign in first"); return; } document.getElementById("formModal").style.display = "flex"; document.getElementById("formModal").setAttribute('aria-hidden','false'); };
+window.closeForm = () => { document.getElementById("formModal").style.display = "none"; document.getElementById("formModal").setAttribute('aria-hidden','true'); };
+window.closeDetail = () => document.getElementById("detailModal").style.display = "none";
+
+/* Category filter */
+window.filterCategory = (cat, el) => {
+  document.querySelectorAll(".category").forEach(c => c.classList.remove("active"));
+  el.classList.add("active");
+  renderProducts(allProducts.filter(p => cat === 'all' || p.category === cat));
+};
+
+/* Image upload -> cloudinary */
+document.getElementById("imageFile").addEventListener("change", async (e) => {
+  const files = e.target.files;
+  uploadedImages = [];
+  const previewContainer = document.getElementById("imagePreviewContainer");
+  previewContainer.innerHTML = "";
+  for (const file of files) {
+    const imgEl = document.createElement("img");
+    imgEl.src = URL.createObjectURL(file);
+    previewContainer.appendChild(imgEl);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "hq cyber");
+    const cloudName = "dqxppopjr";
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, { method: "POST", body: formData });
+      const data = await res.json();
+      if (data.secure_url) uploadedImages.push(data.secure_url);
+    } catch (err) {
+      console.error(err);
+      alert("Upload failed.");
+    }
+  }
+});
+
+/* Save product */
+window.saveProduct = async () => {
+  if (!currentUser) { alert("Sign in first"); return; }
+  if (uploadedImages.length === 0) { alert("Please upload images"); return; }
+  const product = {
+    name: document.getElementById("name").value,
+    price: Number(document.getElementById("price").value),
+    phone: document.getElementById("phone").value,
+    category: document.getElementById("category").value,
+    description: document.getElementById("description").value,
+    condition: document.getElementById("condition").value,
+    specs: document.getElementById("specs").value,
+    region: document.getElementById("region").value,
+    images: uploadedImages,
+    verified: true,
+    createdAt: Date.now()
+  };
+  try {
+    await addDoc(collection(db, "products"), product);
+    alert("Product posted!");
+    closeForm();
+    document.getElementById("imageFile").value = "";
+    document.getElementById("imagePreviewContainer").innerHTML = "";
+    uploadedImages = [];
+  } catch (err) {
+    console.error(err);
+    alert("Save failed.");
+  }
+};
+
+/* Real-time products */
+onSnapshot(collection(db, "products"), snapshot => {
+  allProducts = [];
+  snapshot.forEach(doc => allProducts.push({ ...doc.data(), id: doc.id }));
   renderProducts(allProducts);
 });
 
-function renderProducts(products){
-  const productsDiv=document.getElementById("products");
-  productsDiv.innerHTML="";
-  products.forEach(p=>{
-    const div=document.createElement("div");
-    div.className="card";
-    div.dataset.category=p.category;
-    div.dataset.product=JSON.stringify(p);
-    const imgSrc=p.images && p.images.length?p.images[0]:p.image;
-    div.innerHTML=`<img src="${imgSrc}" alt="${p.name}"><div class="card-body"><h3>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h3><a class="phone" href="tel:${currentUser?p.phone:'#'}" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser?p.phone:'Show Phone Number'}</a></div>`;
-    div.onclick=()=>showDetail(div);
-    productsDiv.appendChild(div);
+/* Render - uses DOM API (not risky inline handlers) so we can access module-scoped currentUser safely */
+function renderProducts(products) {
+  const productsDiv = document.getElementById("products");
+  productsDiv.innerHTML = "";
+  products.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.dataset.product = JSON.stringify(p);
+
+    const img = document.createElement("img");
+    const imgSrc = p.images && p.images.length ? p.images[0] : (p.image || "");
+    img.src = imgSrc;
+    img.alt = p.name || "product";
+
+    const body = document.createElement("div");
+    body.className = "card-body";
+
+    const title = document.createElement("h3");
+    title.innerHTML = `${p.name || ''} ${p.verified ? '<span class="verified">✔</span>' : ''}`;
+
+    const phoneLink = document.createElement("a");
+    phoneLink.className = currentUser ? "phone" : "phone-disabled";
+    phoneLink.href = currentUser ? `tel:${p.phone}` : "#";
+    phoneLink.textContent = currentUser ? `📞 ${p.phone}` : "📞 Show Phone Number";
+
+    /* stop card click when clicking the phone — and show sign-in alert if needed */
+    phoneLink.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      if (!currentUser) {
+        ev.preventDefault();
+        alert('Sign in to view phone number');
+        return;
+      }
+      // otherwise allow default tel: behavior
+    });
+
+    body.appendChild(title);
+    body.appendChild(phoneLink);
+
+    card.appendChild(img);
+    card.appendChild(body);
+
+    /* clicking anywhere on the card opens detail */
+    card.addEventListener("click", () => showDetail(card));
+
+    productsDiv.appendChild(card);
   });
 }
 
-window.showDetail=(el)=>{
-  const p=JSON.parse(el.dataset.product);
-  let imagesHtml="";
-  if(p.images && p.images.length){ imagesHtml=`<div class="carousel">${p.images.map(url=>`<img src="${url}" class="carousel-img">`).join("")}</div>`; }
-  else{ imagesHtml=`<img src="${p.image}" style="width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px;">`; }
-  document.getElementById("detailBody").innerHTML=`
-    <h2>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h2>
+/* Show detail modal (creates content and wires phone link behavior similarly) */
+window.showDetail = (el) => {
+  const p = JSON.parse(el.dataset.product);
+  let imagesHtml = "";
+  if (p.images && p.images.length) {
+    imagesHtml = `<div class="carousel">${p.images.map(url => `<img src="${url}" class="carousel-img" alt="prod">`).join("")}</div>`;
+  } else {
+    imagesHtml = `<img src="${p.image || ''}" style="width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px;">`;
+  }
+
+  const detailBody = document.getElementById("detailBody");
+  detailBody.innerHTML = `
+    <h2 style="margin-top:0;">${p.name || ''} ${p.verified ? '<span class="verified">✔</span>' : ''}</h2>
     ${imagesHtml}
-    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
-    <p><b>Description:</b> ${p.description}</p>
-    <p><b>Condition:</b> ${p.condition}</p>
-    <p><b>Category:</b> ${p.category}</p>
-    <p><b>Specifications:</b> ${p.specs}</p>
-    <p><b>Location:</b> ${p.region}</p>
-    <p><a href="tel:${currentUser?p.phone:'#'}" class="phone" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser?p.phone:'Show Phone Number'}</a></p>
+    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price ?? ''}</span></p>
+    <p><b>Description:</b> ${p.description || ''}</p>
+    <p><b>Condition:</b> ${p.condition || ''}</p>
+    <p><b>Category:</b> ${p.category || ''}</p>
+    <p><b>Specifications:</b> ${p.specs || ''}</p>
+    <p><b>Location:</b> ${p.region || ''}</p>
+    <p id="detailPhoneWrapper"></p>
   `;
-  document.getElementById("detailModal").style.display="flex";
+
+  /* Phone link logic in detail view */
+  const phoneWrapper = document.getElementById("detailPhoneWrapper");
+  if (currentUser) {
+    const a = document.createElement("a");
+    a.className = "phone";
+    a.href = `tel:${p.phone}`;
+    a.textContent = `📞 ${p.phone}`;
+    phoneWrapper.appendChild(a);
+  } else {
+    const s = document.createElement("span");
+    s.className = "phone-disabled";
+    s.textContent = "📞 Show Phone Number";
+    s.addEventListener("click", () => alert('Sign in to view phone number'));
+    phoneWrapper.appendChild(s);
+  }
+
+  document.getElementById("detailModal").style.display = "flex";
 };
 
-document.addEventListener("click", e=>{
-  if(e.target.classList.contains("carousel-img")){
-    const lb=document.getElementById("lightbox");
-    const lbImg=document.getElementById("lightboxImg");
-    lbImg.src=e.target.src; lb.style.display="flex";
+/* lightbox for carousel images */
+document.addEventListener("click", e => {
+  if (e.target.classList.contains("carousel-img")) {
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lightboxImg");
+    lbImg.src = e.target.src;
+    lb.style.display = "flex";
   }
 });
 
-window.applySearch=()=>{
-  const query=document.getElementById("searchName").value.toLowerCase();
-  const filtered=allProducts.filter(p=>p.name.toLowerCase().includes(query));
+/* Search and filters */
+window.applySearch = () => {
+  const query = document.getElementById("searchName").value.trim().toLowerCase();
+  const filtered = allProducts.filter(p => (p.name || '').toLowerCase().includes(query));
   renderProducts(filtered);
 };
 
-window.applyFilters=()=>{
-  const min=Number(document.getElementById("minPrice").value)||0;
-  const max=Number(document.getElementById("maxPrice").value)||Infinity;
-  const sort=document.getElementById("sortOrder").value;
-  let filtered=allProducts.filter(p=>p.price>=min && p.price<=max);
-  if(sort==='priceAsc') filtered.sort((a,b)=>a.price-b.price);
-  if(sort==='priceDesc') filtered.sort((a,b)=>b.price-a.price);
-  if(sort==='newest') filtered.sort((a,b)=>b.id<b.id?-1:1);
+window.applyFilters = () => {
+  const min = Number(document.getElementById("minPrice").value) || 0;
+  const max = Number(document.getElementById("maxPrice").value) || Infinity;
+  const sort = document.getElementById("sortOrder").value;
+  let filtered = allProducts.filter(p => (p.price ?? 0) >= min && (p.price ?? 0) <= max);
+  if (sort === 'priceAsc') filtered.sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
+  if (sort === 'priceDesc') filtered.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+  if (sort === 'newest') filtered.sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0));
   renderProducts(filtered);
 };
 </script>
