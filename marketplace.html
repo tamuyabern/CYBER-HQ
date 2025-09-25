@@ -5,337 +5,374 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HQ Marketplace</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f9f9f9;
-  }
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
+  header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
+  header h1 { margin:0; }
 
-  header {
-    background: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-  }
+  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
+  .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
+  .action-btn:hover { background:darkorange; }
+  .sign-btn { background:#1da1f2; color:white; }
 
-  #searchBar {
-    width: 80%;
-    padding: 8px;
-    margin: 10px auto;
-    display: block;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+  .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
+  .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
+  .category.active { background:#0a8f3d; color:white; }
 
-  #actions {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  #actions button {
-    background: blue;
-    color: #fff;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
+  /* Search & filter */
+  .search-bar { display:flex; justify-content:center; padding:10px; }
+  .search-bar input { padding:8px 10px; width:300px; border-radius:6px; border:1px solid #ccc; transition:0.3s ease; }
+  .search-bar input:focus { outline:none; border-color:#0a8f3d; box-shadow:0 0 8px rgba(10,143,61,0.5); }
 
-  #products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-    padding: 15px;
-    justify-items: center;
-  }
+  .filters { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; padding:10px; }
+  .filters input, .filters select, .filters button { padding:4px 6px; border-radius:6px; border:1px solid #ccc; font-size:14px; transition:0.3s ease; }
+  .filters input:focus, .filters select:focus { outline:none; border-color:#0a8f3d; box-shadow:0 0 8px rgba(10,143,61,0.5); }
 
-  .card {
-    width: 200px;
-    height: 280px;
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
+  /* Grid Layout */
+  .container { 
+    padding:2rem 1rem; 
+    display:grid; 
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap:1.5rem; 
+    justify-content: center; 
   }
+  @media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
 
-  .card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-  }
+  /* Fix card size */
+.card {
+  width: 200px;            /* fixed width */
+  height: 280px;           /* fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-  .card-body {
-    flex: 1;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 100px;
-  }
+/* Fix image size */
+.card img {
+  width: 100%;
+  height: 160px;           /* consistent height */
+  object-fit: cover;       /* crop/scale to fit */
+}
 
-  .card-title {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 0 5px;
-    text-align: center;
-  }
+/* Fix body size */
+.card-body {
+  flex: 1;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100px;       /* keeps card body equal */
+}
 
-  /* Phone number box */
-  .phone {
-    display: block;
-    background: orange;
-    color: black;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 2px solid #e69500;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    margin-top: 8px;
-    transition: 0.3s ease;
-  }
-  .phone:hover {
-    background: darkorange;
-    color: white;
-  }
+  .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
 
-  /* Disabled phone box */
-  .phone-disabled {
-    display: block;
-    background: #ddd;
-    color: #777;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 2px solid #ccc;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 8px;
-    pointer-events: none;
-  }
+  /* Floating Add Button */
+  .fab { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:55px; height:55px; font-size:28px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; z-index:1100; }
+  .fab:hover { transform:scale(1.1); background:#0c6f2f; }
 
-  /* Product detail modal */
-  #productDetail {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  #productDetail .content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-  }
-  #productDetail img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  #closeDetail {
-    margin-top: 15px;
-    display: inline-block;
-    padding: 8px 15px;
-    background: #333;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-  }
+  /* Modals */
+  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
+  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:520px; max-height:90vh; overflow-y:auto; position:relative; }
+  .modal-content h2 { margin-top:0; color:#0a8f3d; }
+  .close { position:absolute; top:8px; right:12px; cursor:pointer; font-size:1.4rem; color:red; }
 
-  /* Add Product Modal */
-  #addProductModal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-  }
+  /* Professional Add Product Modal */
+#formModal .modal-content {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 15px rgba(10,143,61,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* spacing between inputs */
+}
 
-  #addProductModal .add-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-  }
+#formModal h2 {
+  text-align: center;
+  color: #0a8f3d;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 8px rgba(10,143,61,0.7);
+}
 
-  #addProductModal h2 {
-    margin-bottom: 15px;
-  }
+#formModal input,
+#formModal select,
+#formModal textarea {
+  width: 100%;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: 0.3s ease;
+}
 
-  #addProductModal form input,
-  #addProductModal form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-  }
+#formModal input:focus,
+#formModal select:focus,
+#formModal textarea:focus {
+  border-color: #0a8f3d;
+  box-shadow: 0 0 8px rgba(10,143,61,0.5);
+  outline: none;
+}
 
-  #addProductModal .actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-  }
+#formModal textarea {
+  min-height: 80px;
+  resize: vertical;
+}
 
-  #addProductModal button {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-  }
+#formModal .submit-btn {
+  background: #0a8f3d;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: 0.3s ease;
+}
 
-  #addProductModal button[type="submit"] {
-    background: green;
-    color: white;
-  }
+#formModal .submit-btn:hover {
+  background: #0c6f2f;
+  box-shadow: 0 0 12px rgba(10,143,61,0.7);
+}
 
-  #addProductModal button[type="button"] {
-    background: #ccc;
-    color: black;
-  }
+/* Image previews */
+#imagePreviewContainer {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+#imagePreviewContainer img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+  /* Image previews */
+  #imagePreviewContainer { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+  #imagePreviewContainer img { width:100px; height:100px; object-fit:cover; background:#fff; border-radius:6px; border:1px solid #ccc; }
+
+  /* Verified Badge */
+  .verified { color:#1da1f2; font-size:16px; }
+  .user-info { display:flex; align-items:center; gap:6px; }
+
+  /* Carousel in detail modal */
+  .carousel { display:flex; overflow-x:auto; gap:8px; }
+  .carousel img { width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px; flex:0 0 100%; cursor:pointer; }
+
+  /* Lightbox fullscreen */
+  #lightbox { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:2000; }
+  #lightbox img { max-width:90%; max-height:90%; object-fit:contain; border-radius:6px; }
 </style>
 </head>
 <body>
-
 <header>
   <h1>HQ Marketplace</h1>
+  <div class="actions">
+    <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+    <button class="action-btn sign-btn" id="signBtn" onclick="googleSign()">Sign In</button>
+    <span id="userEmail" class="user-info" style="display:none;"></span>
+  </div>
 </header>
 
-<input type="text" id="searchBar" placeholder="Search products...">
-
-<div id="actions">
-  <button onclick="openAddProduct()">+ Add Product</button>
+<!-- Search -->
+<div class="search-bar">
+  <input type="text" id="searchName" placeholder="Search product..." oninput="applySearch()" />
 </div>
 
-<section id="products">
-  <!-- Example product -->
-  <div class="card" onclick="showDetail('Product 1','https://via.placeholder.com/200x160','This is product 1 description','0700000000')">
-    <img src="https://via.placeholder.com/200x160" alt="Product 1">
-    <div class="card-body">
-      <h2 class="card-title">Product 1</h2>
-      <a href="tel:0700000000" class="phone">0700000000</a>
-      <!-- <span class="phone-disabled">Show Phone Number</span> -->
-    </div>
-  </div>
-</section>
-
-<!-- Product Detail Modal -->
-<div id="productDetail">
-  <div class="content">
-    <h2 id="detailTitle"></h2>
-    <img id="detailImage" src="" alt="">
-    <p id="detailDescription"></p>
-    <a id="detailPhone" href="#" class="phone"></a>
-    <span id="detailPhoneDisabled" class="phone-disabled" style="display:none;">Show Phone Number</span>
-    <a id="closeDetail" onclick="closeDetail()">Close</a>
-  </div>
+<!-- Filters -->
+<div class="filters">
+  <input type="number" id="minPrice" placeholder="Min Price" />
+  <input type="number" id="maxPrice" placeholder="Max Price" />
+  <select id="sortOrder">
+    <option value="newest">Newest</option>
+    <option value="priceAsc">Price Low → High</option>
+    <option value="priceDesc">Price High → Low</option>
+  </select>
+  <button onclick="applyFilters()">Apply</button>
 </div>
 
-<!-- Add Product Modal -->
-<div id="addProductModal">
-  <div class="add-content">
-    <h2>Add Product</h2>
-    <form id="addProductForm">
-      <input type="text" id="productName" placeholder="Product Name" required>
-      <input type="url" id="productImage" placeholder="Image URL" required>
-      <textarea id="productDescription" placeholder="Description" required></textarea>
-      <input type="tel" id="productPhone" placeholder="Phone Number" required>
-      <div class="actions">
-        <button type="submit">Save</button>
-        <button type="button" onclick="closeAddProduct()">Cancel</button>
-      </div>
-    </form>
+<div class="categories" id="categories">
+  <div class="category active" onclick="filterCategory('all', this)">All</div>
+  <div class="category" onclick="filterCategory('Phones', this)">Phones</div>
+  <div class="category" onclick="filterCategory('Cars', this)">Cars</div>
+  <div class="category" onclick="filterCategory('Kitchen', this)">Kitchen</div>
+  <div class="category" onclick="filterCategory('Electronics', this)">Electronics</div>
+  <div class="category" onclick="filterCategory('Furniture', this)">Furniture</div>
+  <div class="category" onclick="filterCategory('Others', this)">Others</div>
+</div>
+
+<div class="container" id="products"></div>
+<button class="fab" onclick="openForm()">+</button>
+
+<div class="modal" id="detailModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeDetail()">×</span>
+    <div id="detailBody"></div>
   </div>
 </div>
 
-<script>
-  const searchBar = document.getElementById("searchBar");
-  const productsContainer = document.getElementById("products");
+<div id="lightbox" onclick="this.style.display='none'">
+  <img id="lightboxImg" src="" />
+</div>
 
-  searchBar.addEventListener("input", function() {
-    const term = this.value.toLowerCase();
-    const products = productsContainer.querySelectorAll(".card");
-    products.forEach(card => {
-      const title = card.querySelector(".card-title").textContent.toLowerCase();
-      card.style.display = title.includes(term) ? "flex" : "none";
-    });
+<div class="modal" id="formModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeForm()">×</span>
+    <h2>Post Your Product</h2>
+    <input type="text" id="name" placeholder="Product Name" required />
+    <input type="text" id="price" placeholder="Price" required />
+    <input type="text" id="phone" placeholder="Phone Number" required />
+    <select id="category">
+      <option value="Phones">Phones</option>
+      <option value="Cars">Cars</option>
+      <option value="Kitchen">Kitchen</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Furniture">Furniture</option>
+      <option value="Others">Others</option>
+    </select>
+    <textarea id="description" placeholder="Description"></textarea>
+    <input type="text" id="condition" placeholder="Condition (New/Used)" />
+    <input type="text" id="specs" placeholder="Specifications" />
+    <input type="text" id="region" placeholder="Location/Region" />
+    <input type="file" id="imageFile" accept="image/*" multiple />
+    <div id="imagePreviewContainer"></div>
+    <button class="submit-btn" onclick="saveProduct()">Save Product</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const firebaseConfig = { apiKey:"AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4", authDomain:"hq-marketplace-ec236.firebaseapp.com", projectId:"hq-marketplace-ec236", storageBucket:"hq-marketplace-ec236.appspot.com", messagingSenderId:"861547577050", appId:"1:861547577050:web:507b1411e3e199eae3afe3" };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+let currentUser = null;
+let uploadedImages = [];
+let allProducts = [];
+
+onAuthStateChanged(auth,user=>{
+  currentUser=user;
+  const signBtn=document.getElementById("signBtn");
+  const userEmail=document.getElementById("userEmail");
+  if(user){ signBtn.textContent="Sign Out"; userEmail.innerHTML=`${user.displayName||user.email} <span class="verified">✔</span>`; userEmail.style.display="inline"; }
+  else{ signBtn.textContent="Sign In"; userEmail.style.display="none"; }
+});
+
+window.googleSign=async()=>{ if(currentUser){ await signOut(auth); return; } try{ await signInWithPopup(auth,provider); } catch(err){ alert("Google sign-in failed: "+err.message); } };
+window.openForm=()=>{ if(!currentUser){ alert("Sign in first"); return; } document.getElementById("formModal").style.display="flex"; };
+window.closeForm=()=>document.getElementById("formModal").style.display="none";
+window.closeDetail=()=>document.getElementById("detailModal").style.display="none";
+
+window.filterCategory=(cat,el)=>{
+  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+  renderProducts(allProducts.filter(p=>cat==='all'||p.category===cat));
+};
+
+document.getElementById("imageFile").addEventListener("change", async (e)=>{
+  const files=e.target.files;
+  uploadedImages=[];
+  const previewContainer=document.getElementById("imagePreviewContainer");
+  previewContainer.innerHTML="";
+  for(const file of files){
+    const imgEl=document.createElement("img");
+    imgEl.src=URL.createObjectURL(file);
+    previewContainer.appendChild(imgEl);
+    const formData=new FormData();
+    formData.append("file",file);
+    formData.append("upload_preset","hq cyber");
+    const cloudName="dqxppopjr";
+    try{ const res=await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,{ method:"POST", body:formData }); const data=await res.json(); if(data.secure_url) uploadedImages.push(data.secure_url); }
+    catch(err){ console.error(err); alert("Upload failed."); }
+  }
+});
+
+window.saveProduct=async()=>{
+  if(!currentUser){ alert("Sign in first"); return; }
+  if(uploadedImages.length===0){ alert("Please upload images"); return; }
+  const product={ name:document.getElementById("name").value, price:Number(document.getElementById("price").value), phone:document.getElementById("phone").value, category:document.getElementById("category").value, description:document.getElementById("description").value, condition:document.getElementById("condition").value, specs:document.getElementById("specs").value, region:document.getElementById("region").value, images:uploadedImages, verified:true };
+  try{ await addDoc(collection(db,"products"),product); alert("Product posted!"); closeForm(); document.getElementById("imageFile").value=""; document.getElementById("imagePreviewContainer").innerHTML=""; uploadedImages=[]; } catch(err){ console.error(err); alert("Save failed."); }
+};
+
+onSnapshot(collection(db,"products"), snapshot=>{
+  allProducts=[];
+  snapshot.forEach(doc=>allProducts.push({...doc.data(), id:doc.id}));
+  renderProducts(allProducts);
+});
+
+function renderProducts(products){
+  const productsDiv=document.getElementById("products");
+  productsDiv.innerHTML="";
+  products.forEach(p=>{
+    const div=document.createElement("div");
+    div.className="card";
+    div.dataset.category=p.category;
+    div.dataset.product=JSON.stringify(p);
+    const imgSrc=p.images && p.images.length?p.images[0]:p.image;
+    div.innerHTML=`<img src="${imgSrc}" alt="${p.name}"><div class="card-body"><h3>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h3><a class="phone" href="tel:${currentUser?p.phone:'#'}" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser?p.phone:'Show Phone Number'}</a></div>`;
+    div.onclick=()=>showDetail(div);
+    productsDiv.appendChild(div);
   });
+}
 
-  function showDetail(title, img, desc, phone) {
-    document.getElementById("detailTitle").textContent = title;
-    document.getElementById("detailImage").src = img;
-    document.getElementById("detailDescription").textContent = desc;
+window.showDetail=(el)=>{
+  const p=JSON.parse(el.dataset.product);
+  let imagesHtml="";
+  if(p.images && p.images.length){ imagesHtml=`<div class="carousel">${p.images.map(url=>`<img src="${url}" class="carousel-img">`).join("")}</div>`; }
+  else{ imagesHtml=`<img src="${p.image}" style="width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px;">`; }
+  document.getElementById("detailBody").innerHTML=`
+    <h2>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h2>
+    ${imagesHtml}
+    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
+    <p><b>Description:</b> ${p.description}</p>
+    <p><b>Condition:</b> ${p.condition}</p>
+    <p><b>Category:</b> ${p.category}</p>
+    <p><b>Specifications:</b> ${p.specs}</p>
+    <p><b>Location:</b> ${p.region}</p>
+    <p><a href="tel:${currentUser?p.phone:'#'}" class="phone" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser?p.phone:'Show Phone Number'}</a></p>
+  `;
+  document.getElementById("detailModal").style.display="flex";
+};
 
-    const loggedIn = true; // change to false to test disabled state
-    if (loggedIn) {
-      document.getElementById("detailPhone").style.display = "block";
-      document.getElementById("detailPhone").textContent = phone;
-      document.getElementById("detailPhone").href = "tel:" + phone;
-      document.getElementById("detailPhoneDisabled").style.display = "none";
-    } else {
-      document.getElementById("detailPhone").style.display = "none";
-      document.getElementById("detailPhoneDisabled").style.display = "block";
-    }
-
-    document.getElementById("productDetail").style.display = "flex";
+document.addEventListener("click", e=>{
+  if(e.target.classList.contains("carousel-img")){
+    const lb=document.getElementById("lightbox");
+    const lbImg=document.getElementById("lightboxImg");
+    lbImg.src=e.target.src; lb.style.display="flex";
   }
+});
 
-  function closeDetail() {
-    document.getElementById("productDetail").style.display = "none";
-  }
+window.applySearch=()=>{
+  const query=document.getElementById("searchName").value.toLowerCase();
+  const filtered=allProducts.filter(p=>p.name.toLowerCase().includes(query));
+  renderProducts(filtered);
+};
 
-  function openAddProduct() {
-    document.getElementById("addProductModal").style.display = "flex";
-  }
-
-  function closeAddProduct() {
-    document.getElementById("addProductModal").style.display = "none";
-  }
-
-  document.getElementById("addProductForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const name = document.getElementById("productName").value;
-    const image = document.getElementById("productImage").value;
-    const desc = document.getElementById("productDescription").value;
-    const phone = document.getElementById("productPhone").value;
-
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <img src="${image}" alt="${name}">
-      <div class="card-body">
-        <h2 class="card-title">${name}</h2>
-        <a href="tel:${phone}" class="phone">${phone}</a>
-      </div>
-    `;
-    card.onclick = () => showDetail(name, image, desc, phone);
-    productsContainer.appendChild(card);
-
-    closeAddProduct();
-    this.reset();
-  });
+window.applyFilters=()=>{
+  const min=Number(document.getElementById("minPrice").value)||0;
+  const max=Number(document.getElementById("maxPrice").value)||Infinity;
+  const sort=document.getElementById("sortOrder").value;
+  let filtered=allProducts.filter(p=>p.price>=min && p.price<=max);
+  if(sort==='priceAsc') filtered.sort((a,b)=>a.price-b.price);
+  if(sort==='priceDesc') filtered.sort((a,b)=>b.price-a.price);
+  if(sort==='newest') filtered.sort((a,b)=>b.id<b.id?-1:1);
+  renderProducts(filtered);
+};
 </script>
-
 </body>
 </html>
