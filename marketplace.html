@@ -1,224 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Display</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HQ Marketplace</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f9f9f9; }
+  header { background:#0a8f3d; color:white; padding:1rem; text-align:center; position:sticky; top:0; z-index:10; }
+  header h1 { margin:0; }
 
-    header {
-      background: #222;
-      color: #fff;
-      text-align: center;
-      padding: 1rem;
-      font-size: 1.25rem;
-    }
+  .actions { display:flex; justify-content:center; gap:1rem; margin:10px 0; flex-wrap:wrap; align-items:center; }
+  .action-btn { background:orange; color:black; border:none; padding:6px 14px; border-radius:20px; cursor:pointer; font-weight:bold; }
+  .action-btn:hover { background:darkorange; }
+  .sign-btn { background:#1da1f2; color:white; }
 
-    /* ✅ Responsive product grid */
-    .container {
-      padding: 1rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-      max-width: 1200px;
-      margin: auto;
-    }
+  .categories { display:flex; overflow-x:auto; gap:8px; padding:10px; background:#eaf7ed; }
+  .category { flex:0 0 auto; background:white; border:1px solid #0a8f3d; border-radius:20px; padding:6px 14px; cursor:pointer; }
+  .category.active { background:#0a8f3d; color:white; }
 
-    /* ✅ Product cards */
-    .card {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      cursor: pointer;
-    }
+  /* Search & filter */
+  .search-bar { display:flex; justify-content:center; padding:10px; }
+  .search-bar input { padding:8px 10px; width:300px; border-radius:6px; border:1px solid #ccc; transition:0.3s ease; }
+  .search-bar input:focus { outline:none; border-color:#0a8f3d; box-shadow:0 0 8px rgba(10,143,61,0.5); }
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    }
+  .filters { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; padding:10px; }
+  .filters input, .filters select, .filters button { padding:4px 6px; border-radius:6px; border:1px solid #ccc; font-size:14px; transition:0.3s ease; }
+  .filters input:focus, .filters select:focus { outline:none; border-color:#0a8f3d; box-shadow:0 0 8px rgba(10,143,61,0.5); }
 
-    .card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
+  /* Grid Layout */
+  .container { 
+    padding:2rem 1rem; 
+    display:grid; 
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap:1.5rem; 
+    justify-content: center; 
+  }
+  @media (max-width:480px) { .container { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width:481px) and (max-width:768px) { .container { grid-template-columns: repeat(3, 1fr); } }
 
-    .card-body {
-      padding: 0.75rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      flex-grow: 1;
-    }
+  /* Fix card size */
+.card {
+  width: 200px;            /* fixed width */
+  height: 280px;           /* fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-    .card-body h3 {
-      font-size: 1rem;
-      margin: 0 0 0.5rem 0;
-    }
+/* Fix image size */
+.card img {
+  width: 100%;
+  height: 160px;           /* consistent height */
+  object-fit: cover;       /* crop/scale to fit */
+}
 
-    .phone {
-      background: orange;
-      color: black;
-      padding: 6px 10px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      text-align: center;
-      display: inline-block;
-    }
+/* Fix body size */
+.card-body {
+  flex: 1;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100px;       /* keeps card body equal */
+}
 
-    /* ✅ Responsive layout tweaks */
-    @media (max-width: 480px) {
-      header {
-        font-size: 1rem;
-      }
+  .phone { background:orange; color:black; padding:5px 8px; border-radius:6px; text-decoration:none; font-weight:bold; display:inline-block; }
 
-      .container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-      }
+  /* Floating Add Button */
+  .fab { position:fixed; bottom:20px; right:20px; background:#0a8f3d; color:white; border:none; border-radius:50%; width:55px; height:55px; font-size:28px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; z-index:1100; }
+  .fab:hover { transform:scale(1.1); background:#0c6f2f; }
 
-      .card img {
-        height: 120px;
-      }
+  /* Modals */
+  .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; }
+  .modal-content { background:white; padding:1rem; border-radius:10px; width:95%; max-width:520px; max-height:90vh; overflow-y:auto; position:relative; }
+  .modal-content h2 { margin-top:0; color:#0a8f3d; }
+  .close { position:absolute; top:8px; right:12px; cursor:pointer; font-size:1.4rem; color:red; }
 
-      .card-body h3 {
-        font-size: 0.9rem;
-      }
+  /* Professional Add Product Modal */
+#formModal .modal-content {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 15px rgba(10,143,61,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* spacing between inputs */
+}
 
-      .phone {
-        font-size: 0.85rem;
-        padding: 5px 8px;
-      }
-    }
+#formModal h2 {
+  text-align: center;
+  color: #0a8f3d;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 8px rgba(10,143,61,0.7);
+}
 
-    @media (min-width: 481px) and (max-width: 768px) {
-      .container {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
+#formModal input,
+#formModal select,
+#formModal textarea {
+  width: 100%;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: 0.3s ease;
+}
 
-    /* ✅ Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 10;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background: rgba(0,0,0,0.5);
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-    }
+#formModal input:focus,
+#formModal select:focus,
+#formModal textarea:focus {
+  border-color: #0a8f3d;
+  box-shadow: 0 0 8px rgba(10,143,61,0.5);
+  outline: none;
+}
 
-    .modal-content {
-      background: #fff;
-      padding: 1rem;
-      border-radius: 10px;
-      max-width: 500px;
-      width: 100%;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+#formModal textarea {
+  min-height: 80px;
+  resize: vertical;
+}
 
-    .close {
-      float: right;
-      font-size: 1.25rem;
-      cursor: pointer;
-    }
+#formModal .submit-btn {
+  background: #0a8f3d;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: 0.3s ease;
+}
 
-    .form-group {
-      margin-bottom: 1rem;
-    }
+#formModal .submit-btn:hover {
+  background: #0c6f2f;
+  box-shadow: 0 0 12px rgba(10,143,61,0.7);
+}
 
-    .form-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
+/* Image previews */
+#imagePreviewContainer {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+#imagePreviewContainer img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
 
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
+  /* Image previews */
+  #imagePreviewContainer { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+  #imagePreviewContainer img { width:100px; height:100px; object-fit:cover; background:#fff; border-radius:6px; border:1px solid #ccc; }
 
-    button {
-      background: #222;
-      color: #fff;
-      border: none;
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+  /* Verified Badge */
+  .verified { color:#1da1f2; font-size:16px; }
+  .user-info { display:flex; align-items:center; gap:6px; }
 
-    button:hover {
-      background: #444;
-    }
-  </style>
+  /* Carousel in detail modal */
+  .carousel { display:flex; overflow-x:auto; gap:8px; }
+  .carousel img { width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px; flex:0 0 100%; cursor:pointer; }
+
+  /* Lightbox fullscreen */
+  #lightbox { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:2000; }
+  #lightbox img { max-width:90%; max-height:90%; object-fit:contain; border-radius:6px; }
+</style>
 </head>
 <body>
-  <header>Product Showcase</header>
-
-  <div class="container">
-    <div class="card">
-      <img src="https://via.placeholder.com/200x150" alt="Product">
-      <div class="card-body">
-        <h3>Sample Product</h3>
-        <a href="#" class="phone">Buy Now</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="https://via.placeholder.com/200x150" alt="Product">
-      <div class="card-body">
-        <h3>Another Product</h3>
-        <a href="#" class="phone">View</a>
-      </div>
-    </div>
+<header>
+  <h1>HQ Marketplace</h1>
+  <div class="actions">
+    <button class="action-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+    <button class="action-btn sign-btn" id="signBtn" onclick="googleSign()">Sign In</button>
+    <span id="userEmail" class="user-info" style="display:none;"></span>
   </div>
+</header>
 
-  <!-- ✅ Modal Example -->
-  <div class="modal" id="productModal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2>Add Product</h2>
-      <div class="form-group">
-        <label>Product Name</label>
-        <input type="text" placeholder="Enter name" />
-      </div>
-      <div class="form-group">
-        <label>Description</label>
-        <textarea rows="3" placeholder="Enter description"></textarea>
-      </div>
-      <button>Add Product</button>
-    </div>
+<!-- Search -->
+<div class="search-bar">
+  <input type="text" id="searchName" placeholder="Search product..." oninput="applySearch()" />
+</div>
+
+<!-- Filters -->
+<div class="filters">
+  <input type="number" id="minPrice" placeholder="Min Price" />
+  <input type="number" id="maxPrice" placeholder="Max Price" />
+  <select id="sortOrder">
+    <option value="newest">Newest</option>
+    <option value="priceAsc">Price Low → High</option>
+    <option value="priceDesc">Price High → Low</option>
+  </select>
+  <button onclick="applyFilters()">Apply</button>
+</div>
+
+<div class="categories" id="categories">
+  <div class="category active" onclick="filterCategory('all', this)">All</div>
+  <div class="category" onclick="filterCategory('Phones', this)">Phones</div>
+  <div class="category" onclick="filterCategory('Cars', this)">Cars</div>
+  <div class="category" onclick="filterCategory('Kitchen', this)">Kitchen</div>
+  <div class="category" onclick="filterCategory('Electronics', this)">Electronics</div>
+  <div class="category" onclick="filterCategory('Furniture', this)">Furniture</div>
+  <div class="category" onclick="filterCategory('Others', this)">Others</div>
+</div>
+
+<div class="container" id="products"></div>
+<button class="fab" onclick="openForm()">+</button>
+
+<div class="modal" id="detailModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeDetail()">×</span>
+    <div id="detailBody"></div>
   </div>
+</div>
 
-  <script>
-    // Simple modal logic
-    function openModal() {
-      document.getElementById('productModal').style.display = 'flex';
-    }
+<div id="lightbox" onclick="this.style.display='none'">
+  <img id="lightboxImg" src="" />
+</div>
 
-    function closeModal() {
-      document.getElementById('productModal').style.display = 'none';
-    }
-  </script>
+<div class="modal" id="formModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeForm()">×</span>
+    <h2>Post Your Product</h2>
+    <input type="text" id="name" placeholder="Product Name" required />
+    <input type="text" id="price" placeholder="Price" required />
+    <input type="text" id="phone" placeholder="Phone Number" required />
+    <select id="category">
+      <option value="Phones">Phones</option>
+      <option value="Cars">Cars</option>
+      <option value="Kitchen">Kitchen</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Furniture">Furniture</option>
+      <option value="Others">Others</option>
+    </select>
+    <textarea id="description" placeholder="Description"></textarea>
+    <input type="text" id="condition" placeholder="Condition (New/Used)" />
+    <input type="text" id="specs" placeholder="Specifications" />
+    <input type="text" id="region" placeholder="Location/Region" />
+    <input type="file" id="imageFile" accept="image/*" multiple />
+    <div id="imagePreviewContainer"></div>
+    <button class="submit-btn" onclick="saveProduct()">Save Product</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const firebaseConfig = { apiKey:"AIzaSyCYhi7mvWs1JZq4Zof3w3eI0d1CXhZRTp4", authDomain:"hq-marketplace-ec236.firebaseapp.com", projectId:"hq-marketplace-ec236", storageBucket:"hq-marketplace-ec236.appspot.com", messagingSenderId:"861547577050", appId:"1:861547577050:web:507b1411e3e199eae3afe3" };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+let currentUser = null;
+let uploadedImages = [];
+let allProducts = [];
+
+onAuthStateChanged(auth,user=>{
+  currentUser=user;
+  const signBtn=document.getElementById("signBtn");
+  const userEmail=document.getElementById("userEmail");
+  if(user){ signBtn.textContent="Sign Out"; userEmail.innerHTML=`${user.displayName||user.email} <span class="verified">✔</span>`; userEmail.style.display="inline"; }
+  else{ signBtn.textContent="Sign In"; userEmail.style.display="none"; }
+});
+
+window.googleSign=async()=>{ if(currentUser){ await signOut(auth); return; } try{ await signInWithPopup(auth,provider); } catch(err){ alert("Google sign-in failed: "+err.message); } };
+window.openForm=()=>{ if(!currentUser){ alert("Sign in first"); return; } document.getElementById("formModal").style.display="flex"; };
+window.closeForm=()=>document.getElementById("formModal").style.display="none";
+window.closeDetail=()=>document.getElementById("detailModal").style.display="none";
+
+window.filterCategory=(cat,el)=>{
+  document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+  renderProducts(allProducts.filter(p=>cat==='all'||p.category===cat));
+};
+
+document.getElementById("imageFile").addEventListener("change", async (e)=>{
+  const files=e.target.files;
+  uploadedImages=[];
+  const previewContainer=document.getElementById("imagePreviewContainer");
+  previewContainer.innerHTML="";
+  for(const file of files){
+    const imgEl=document.createElement("img");
+    imgEl.src=URL.createObjectURL(file);
+    previewContainer.appendChild(imgEl);
+    const formData=new FormData();
+    formData.append("file",file);
+    formData.append("upload_preset","hq cyber");
+    const cloudName="dqxppopjr";
+    try{ const res=await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,{ method:"POST", body:formData }); const data=await res.json(); if(data.secure_url) uploadedImages.push(data.secure_url); }
+    catch(err){ console.error(err); alert("Upload failed."); }
+  }
+});
+
+window.saveProduct=async()=>{
+  if(!currentUser){ alert("Sign in first"); return; }
+  if(uploadedImages.length===0){ alert("Please upload images"); return; }
+  const product={ name:document.getElementById("name").value, price:Number(document.getElementById("price").value), phone:document.getElementById("phone").value, category:document.getElementById("category").value, description:document.getElementById("description").value, condition:document.getElementById("condition").value, specs:document.getElementById("specs").value, region:document.getElementById("region").value, images:uploadedImages, verified:true };
+  try{ await addDoc(collection(db,"products"),product); alert("Product posted!"); closeForm(); document.getElementById("imageFile").value=""; document.getElementById("imagePreviewContainer").innerHTML=""; uploadedImages=[]; } catch(err){ console.error(err); alert("Save failed."); }
+};
+
+onSnapshot(collection(db,"products"), snapshot=>{
+  allProducts=[];
+  snapshot.forEach(doc=>allProducts.push({...doc.data(), id:doc.id}));
+  renderProducts(allProducts);
+});
+
+function renderProducts(products){
+  const productsDiv=document.getElementById("products");
+  productsDiv.innerHTML="";
+  products.forEach(p=>{
+    const div=document.createElement("div");
+    div.className="card";
+    div.dataset.category=p.category;
+    div.dataset.product=JSON.stringify(p);
+    const imgSrc=p.images && p.images.length?p.images[0]:p.image;
+    div.innerHTML=`<img src="${imgSrc}" alt="${p.name}"><div class="card-body"><h3>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h3><a class="phone" href="tel:${currentUser?p.phone:'#'}" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser?p.phone:'Show Phone Number'}</a></div>`;
+    div.onclick=()=>showDetail(div);
+    productsDiv.appendChild(div);
+  });
+}
+
+window.showDetail=(el)=>{
+  const p=JSON.parse(el.dataset.product);
+  let imagesHtml="";
+  if(p.images && p.images.length){ imagesHtml=`<div class="carousel">${p.images.map(url=>`<img src="${url}" class="carousel-img">`).join("")}</div>`; }
+  else{ imagesHtml=`<img src="${p.image}" style="width:100%; max-height:300px; object-fit:contain; background:#fff; border-radius:8px;">`; }
+  document.getElementById("detailBody").innerHTML=`
+    <h2>${p.name} ${p.verified?'<span class="verified">✔</span>':''}</h2>
+    ${imagesHtml}
+    <p><b>Price:</b> <span style="color:green; font-weight:bold;">Ksh ${p.price}</span></p>
+    <p><b>Description:</b> ${p.description}</p>
+    <p><b>Condition:</b> ${p.condition}</p>
+    <p><b>Category:</b> ${p.category}</p>
+    <p><b>Specifications:</b> ${p.specs}</p>
+    <p><b>Location:</b> ${p.region}</p>
+    <p><a href="tel:${currentUser?p.phone:'#'}" class="phone" onclick="if(!currentUser){ alert('Sign in to view phone number'); return false;}">📞 ${currentUser?p.phone:'Show Phone Number'}</a></p>
+  `;
+  document.getElementById("detailModal").style.display="flex";
+};
+
+document.addEventListener("click", e=>{
+  if(e.target.classList.contains("carousel-img")){
+    const lb=document.getElementById("lightbox");
+    const lbImg=document.getElementById("lightboxImg");
+    lbImg.src=e.target.src; lb.style.display="flex";
+  }
+});
+
+window.applySearch=()=>{
+  const query=document.getElementById("searchName").value.toLowerCase();
+  const filtered=allProducts.filter(p=>p.name.toLowerCase().includes(query));
+  renderProducts(filtered);
+};
+
+window.applyFilters=()=>{
+  const min=Number(document.getElementById("minPrice").value)||0;
+  const max=Number(document.getElementById("maxPrice").value)||Infinity;
+  const sort=document.getElementById("sortOrder").value;
+  let filtered=allProducts.filter(p=>p.price>=min && p.price<=max);
+  if(sort==='priceAsc') filtered.sort((a,b)=>a.price-b.price);
+  if(sort==='priceDesc') filtered.sort((a,b)=>b.price-a.price);
+  if(sort==='newest') filtered.sort((a,b)=>b.id<b.id?-1:1);
+  renderProducts(filtered);
+};
+</script>
 </body>
 </html>
